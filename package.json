@@ -1,0 +1,19 @@
+{
+  "name": "dependency-tree",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An accessible web app showing what each invention or historical moment depended on",
+  "license": "AGPL-3.0-only",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  }
+}

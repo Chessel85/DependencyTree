@@ -1,0 +1,47 @@
+import { describe, expect, it } from 'vitest';
+import { AnnouncementBuilder } from '../../../src/core/announce/AnnouncementBuilder';
+import { DateFormatter } from '../../../src/core/dates/DateFormatter';
+import { ListSetBuilder } from '../../../src/core/navigation/ListSetBuilder';
+import { NavigationState } from '../../../src/core/navigation/NavigationState';
+import { TestMoments } from '../../TestMoments';
+
+const words = new AnnouncementBuilder(new DateFormatter());
+
+function laptopState(): NavigationState {
+  const graph = TestMoments.graph(
+    [TestMoments.moment('battery', 1800), TestMoments.moment('chip', 1971), TestMoments.moment('laptop', 1981)],
+    [['laptop', 'battery'], ['laptop', 'chip']],
+  );
+  return new NavigationState(new ListSetBuilder(graph), graph.find('laptop')!);
+}
+
+describe('AnnouncementBuilder', () => {
+  it('announces arrival with the active list and its size', () => {
+    expect(words.arrival(laptopState())).toBe('laptop, 1981. Dependencies, 2.');
+  });
+
+  it('announces position within a list', () => {
+    const state = laptopState();
+    state.activeList.moveBy(1);
+    expect(words.position(state.activeList)).toBe('chip, 1971, 2 of 2.');
+  });
+
+  it('announces an empty list as none', () => {
+    const state = laptopState();
+    state.switchList(1);
+    expect(words.listSwitch(state.activeList)).toBe('Enabled, none.');
+  });
+
+  it('announces a switch to a list with entries', () => {
+    const state = laptopState();
+    state.goEarlier();
+    state.switchList(1);
+    expect(words.listSwitch(state.activeList)).toBe('Enabled, 1. laptop, 1981, 1 of 1.');
+  });
+
+  it('announces the path', () => {
+    const state = laptopState();
+    state.goEarlier();
+    expect(words.path(state.path)).toBe('Path, 2 steps: laptop, battery.');
+  });
+});

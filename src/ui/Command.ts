@@ -1,0 +1,20 @@
+/** Everything the user can ask the navigator to do from the keyboard. */
+export enum Command {
+  GoEarlier,
+  GoLater,
+  Follow,
+  PreviousEntry,
+  NextEntry,
+  FirstEntry,
+  LastEntry,
+  PreviousList,
+  NextList,
+  Back,
+  Summary,
+  Description,
+  Tags,
+  Location,
+  Path,
+  ReadDetails,
+  Help,
+}

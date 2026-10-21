@@ -12,6 +12,14 @@ It is designed from the start to be fully usable with a screen reader, as well a
 
 HTML versions are built from the Markdown with `docs/build.ps1`, which uses pandoc.
 
+## Running it
+
+You need Node.js. In the project folder:
+
+1. `npm install`, once, to fetch the tools.
+2. `npm run dev`, then open http://localhost:5173 in a browser.
+3. `npm test` runs the unit tests.
+
 ## Licences
 
 - Code: GNU Affero General Public License, version 3. See [LICENSE](LICENSE).

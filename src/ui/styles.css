@@ -1,0 +1,43 @@
+body {
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  margin: 0 auto;
+  max-width: 50rem;
+  padding: 1rem;
+}
+
+#navigator {
+  border: 2px solid #555;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  min-height: 4rem;
+}
+
+#navigator:focus {
+  outline: 3px solid #1a5fb4;
+  outline-offset: 2px;
+}
+
+#navigator .list-name {
+  font-weight: bold;
+}
+
+#help table {
+  border-collapse: collapse;
+}
+
+#help th,
+#help td {
+  border: 1px solid #999;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

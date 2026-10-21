@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dependency Tree</title>
+    <link rel="stylesheet" href="/src/ui/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Dependency Tree</h1>
+      <p>Prototype, Step 0A: moments only, from a small hand-made sample.</p>
+    </header>
+    <main>
+      <section aria-labelledby="tree-heading">
+        <h2 id="tree-heading">Tree</h2>
+        <div
+          id="navigator"
+          role="application"
+          tabindex="0"
+          aria-label="Tree navigator"
+          aria-describedby="navigator-hint"
+        ></div>
+        <p id="navigator-hint">Use the arrow keys to move through the tree. Press question mark for keyboard help.</p>
+      </section>
+      <section id="details" aria-labelledby="details-heading">
+        <h2 id="details-heading">Details</h2>
+        <div id="details-content"></div>
+      </section>
+    </main>
+    <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
+    <dialog id="help" aria-labelledby="help-heading">
+      <h2 id="help-heading">Keyboard help</h2>
+      <div id="help-content"></div>
+      <button type="button" id="help-close">Close</button>
+    </dialog>
+    <script type="module" src="/src/ui/main.ts"></script>
+  </body>
+</html>
