@@ -12,20 +12,21 @@
       <p>Prototype, Step 0A: moments only, from a small hand-made sample.</p>
     </header>
     <main>
-      <section aria-labelledby="tree-heading">
-        <h2 id="tree-heading">Tree</h2>
-        <div
-          id="navigator"
-          role="application"
-          tabindex="0"
-          aria-label="Tree navigator"
-          aria-describedby="navigator-hint"
-        ></div>
-        <p id="navigator-hint">Use the arrow keys to move through the tree. Press question mark for keyboard help.</p>
-      </section>
-      <section id="details" aria-labelledby="details-heading">
-        <h2 id="details-heading">Details</h2>
-        <div id="details-content"></div>
+      <section id="moment-card" aria-labelledby="moment-name">
+        <h2 id="moment-name"></h2>
+        <div class="card-part">
+          <label for="moment-summary">Summary</label>
+          <textarea id="moment-summary" readonly rows="3"></textarea>
+        </div>
+        <div class="card-part">
+          <label for="moment-description">Description</label>
+          <textarea id="moment-description" readonly rows="4"></textarea>
+        </div>
+        <div class="card-part">
+          <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
+          <div id="relationship-panel"></div>
+        </div>
+        <button type="button" id="help-open">Keyboard help</button>
       </section>
     </main>
     <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>

@@ -4,27 +4,37 @@ import { NavigationState } from '../navigation/NavigationState';
 import { RelationshipList } from '../navigation/RelationshipList';
 import { ListKind } from '../navigation/ListKind';
 
-/** The wording of everything the navigator says (DES-ANN items). */
+/**
+ * The wording of everything the navigator shows or says. Most of it is read
+ * by the screen reader from standard controls; the rest is spoken through a
+ * live region when the user presses an information key.
+ */
 export class AnnouncementBuilder {
   constructor(private readonly dates: DateFormatter) {}
 
+  /** The summary box: name, date and location, one per line. */
+  summaryLines(moment: Moment): string {
+    return [moment.name, this.dates.spoken(moment.date), moment.location ?? 'Location not known'].join('\n');
+  }
+
   /**
-   * On arriving at a moment, its name and date, then the active list and its
-   * highlighted entry: "Laptop, 1981. Enabled, 12. Smartphone, 1994, 1 of 12." (DES-ANN-001)
+   * The list's label, read when focus arrives in it after moving or switching
+   * tab: "Telephone, 7 March 1876, Dependencies". An empty list adds "none".
    */
-  arrival(state: NavigationState): string {
-    return `${this.nameAndDate(state.currentMoment)}. ${this.listSwitch(state.activeList)}`;
+  listLabel(state: NavigationState): string {
+    const list = state.activeList;
+    const none = list.size === 0 ? ', none' : '';
+    return `${this.nameAndDate(state.currentMoment)}, ${list.kind}${none}`;
   }
 
-  /** On moving within a list: "Smartphone, 1994, 3 of 12." (DES-ANN-002) */
-  position(list: RelationshipList): string {
-    const entry = list.highlighted;
-    return entry ? `${this.nameAndDate(entry)}, ${list.position} of ${list.size}.` : '';
+  /** One entry in a list: "Electric battery, March 1800". */
+  entry(moment: Moment): string {
+    return this.nameAndDate(moment);
   }
 
-  /** On switching list: "Dependencies, 4. Lithium-ion battery, 1991, 1 of 4." (DES-ANN-003) */
-  listSwitch(list: RelationshipList): string {
-    return list.size === 0 ? `${this.listHeading(list)}.` : `${this.listHeading(list)}. ${this.position(list)}`;
+  /** A tab: "Dependencies (2)". */
+  tab(list: RelationshipList): string {
+    return `${list.kind} (${list.size})`;
   }
 
   /** Space: a summary of the current moment. */
@@ -34,7 +44,7 @@ export class AnnouncementBuilder {
     const counts = [ListKind.Dependencies, ListKind.PartOf, ListKind.Enabled]
       .map((kind) => state.list(kind))
       .filter((list): list is RelationshipList => list !== undefined)
-      .map((list) => `${this.listHeading(list)}.`)
+      .map((list) => `${list.kind}, ${list.size === 0 ? 'none' : list.size}.`)
       .join(' ');
     return `${this.nameAndDate(moment)}${place}. ${counts}`;
   }
@@ -65,9 +75,5 @@ export class AnnouncementBuilder {
 
   private nameAndDate(moment: Moment): string {
     return `${moment.name}, ${this.dates.spoken(moment.date)}`;
-  }
-
-  private listHeading(list: RelationshipList): string {
-    return `${list.kind}, ${list.size === 0 ? 'none' : list.size}`;
   }
 }

@@ -31,6 +31,15 @@ export class NavigationState {
     return this.lists[this.activeIndex];
   }
 
+  /** The current moment's lists, in tab order. */
+  get allLists(): readonly RelationshipList[] {
+    return this.lists;
+  }
+
+  get activeListIndex(): number {
+    return this.activeIndex;
+  }
+
   /** The list of the given kind, if the current moment has one. */
   list(kind: ListKind): RelationshipList | undefined {
     return this.lists.find((l) => l.kind === kind);
@@ -64,8 +73,12 @@ export class NavigationState {
 
   /** Ctrl+Left Arrow and Ctrl+Right Arrow: the previous or next list (DES-KEY-003). */
   switchList(delta: number): boolean {
-    const index = this.activeIndex + delta;
-    if (index < 0 || index >= this.lists.length) {
+    return this.selectList(this.activeIndex + delta);
+  }
+
+  /** Makes the list at this position active, for example when its tab is chosen. */
+  selectList(index: number): boolean {
+    if (index < 0 || index >= this.lists.length || index === this.activeIndex) {
       return false;
     }
     this.activeIndex = index;

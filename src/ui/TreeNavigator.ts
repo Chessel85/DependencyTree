@@ -1,66 +1,58 @@
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
 import { NavigationState } from '../core/navigation/NavigationState';
 import { Command } from './Command';
-import { DetailsPanel } from './DetailsPanel';
 import { HelpDialog } from './HelpDialog';
 import { KeyBindings } from './KeyBindings';
 import { LiveAnnouncer } from './LiveAnnouncer';
+import { MomentCard } from './MomentCard';
+import { RelationshipListBox } from './RelationshipListBox';
+import { RelationshipTabs } from './RelationshipTabs';
 
 /**
- * The keyboard navigator: a single focusable widget (DES-SR-001) that turns
- * key presses into navigation, speaks the result, and keeps the Details
- * region and its own visible text up to date. A move that isn't possible
- * changes nothing and says nothing (DES-NAV-008).
+ * Connects the navigation state to the card of standard controls. Keystrokes
+ * in the list move around the tree; Backspace and question mark also work
+ * anywhere in the card. A move that isn't possible changes nothing and says
+ * nothing (DES-NAV-008).
  */
 export class TreeNavigator {
+  private readonly tabs: RelationshipTabs;
+  private readonly listBox: RelationshipListBox;
+
   constructor(
-    private readonly element: HTMLElement,
+    cardElement: HTMLElement,
+    tablist: HTMLElement,
+    panel: HTMLElement,
+    private readonly card: MomentCard,
     private readonly state: NavigationState,
     private readonly keys: KeyBindings,
     private readonly words: AnnouncementBuilder,
     private readonly announcer: LiveAnnouncer,
-    private readonly details: DetailsPanel,
     private readonly help: HelpDialog,
   ) {
-    element.addEventListener('keydown', (event) => this.onKey(event));
-    // Whenever focus arrives, by any route, say where the user is.
-    element.addEventListener('focus', () => this.announcer.say(this.words.arrival(this.state)));
-    element.ownerDocument.addEventListener('keydown', (event) => this.onPageKey(event));
+    this.tabs = new RelationshipTabs(tablist, panel.id, words, (index) => this.chooseTab(index));
+    this.listBox = new RelationshipListBox(panel, words, (index) => this.chooseEntry(index));
+    cardElement.addEventListener('keydown', (event) => this.onKey(event));
   }
 
-  /**
-   * Puts focus in the navigator and says where the user is. The focus event
-   * says it too, but may not fire if the window isn't active yet; the
-   * announcer collapses the two into one.
-   */
+  /** Shows the starting moment and puts focus in its list. */
   start(): void {
-    this.refresh();
-    this.focus();
-    this.announcer.say(this.words.arrival(this.state));
+    this.showMoment();
+    this.focusList();
   }
 
-  /**
-   * Focus moves on the next turn of the event loop, so the screen reader has
-   * finished with the key that caused it before it sees the focus change.
-   */
-  focus(): void {
-    window.setTimeout(() => this.element.focus(), 0);
-  }
-
-  /** Escape from anywhere else on the page, except a dialog, returns to the navigator (DES-KEY-008). */
-  private onPageKey(event: KeyboardEvent): void {
-    const target = event.target as Node | null;
-    const inNavigator = target !== null && this.element.contains(target);
-    const inDialog = target instanceof Element && target.closest('dialog') !== null;
-    if (event.key === 'Escape' && !inNavigator && !inDialog) {
-      event.preventDefault();
-      this.focus();
-    }
+  focusList(): void {
+    // Focus moves after the current key has been handled, so the screen
+    // reader deals with the two separately (DES-SR-004).
+    window.setTimeout(() => this.listBox.focus(), 0);
   }
 
   private onKey(event: KeyboardEvent): void {
     const command = this.keys.commandFor(event);
     if (command === undefined) {
+      return;
+    }
+    const inList = event.target instanceof Node && this.listBox.contains(event.target);
+    if (!inList && command !== Command.Back && command !== Command.Help) {
       return;
     }
     event.preventDefault();
@@ -86,46 +78,49 @@ export class TreeNavigator {
       case Command.Tags: return this.announcer.say(this.words.tags(state.currentMoment));
       case Command.Location: return this.announcer.say(this.words.location(state.currentMoment));
       case Command.Path: return this.announcer.say(this.words.path(state.path));
-      case Command.ReadDetails: return this.details.focus();
       case Command.Help: return this.help.open();
+    }
+  }
+
+  /** Clicking an entry goes to it. */
+  private chooseEntry(index: number): void {
+    this.state.activeList.restoreHighlight(index);
+    this.moved(this.state.follow());
+  }
+
+  /** Choosing a tab shows its list, leaving focus on the tab. */
+  private chooseTab(index: number): void {
+    if (this.state.selectList(index)) {
+      this.tabs.select(index);
+      this.listBox.build(this.state);
     }
   }
 
   private moved(succeeded: boolean): void {
     if (succeeded) {
-      this.refresh();
-      this.announcer.say(this.words.arrival(this.state));
+      this.showMoment();
+      this.focusList();
     }
   }
 
   private highlighted(succeeded: boolean): void {
     if (succeeded) {
-      this.showStatus();
-      this.announcer.say(this.words.position(this.state.activeList));
+      this.listBox.highlight(this.state.activeList.highlightedIndex);
+      this.listBox.focus();
     }
   }
 
   private switched(succeeded: boolean): void {
     if (succeeded) {
-      this.showStatus();
-      this.announcer.say(this.words.listSwitch(this.state.activeList));
+      this.tabs.select(this.state.activeListIndex);
+      this.listBox.build(this.state);
+      this.focusList();
     }
   }
 
-  private refresh(): void {
-    this.details.show(this.state);
-    this.showStatus();
-  }
-
-  /**
-   * The navigator's only content is one line giving the current position,
-   * worded like the arrival announcement, so the screen reader's "read
-   * current line" command (NVDA+Up Arrow) reads it (DES-SR-005). Sighted
-   * users see the same line.
-   */
-  private showStatus(): void {
-    const line = document.createElement('p');
-    line.textContent = this.words.arrival(this.state);
-    this.element.replaceChildren(line);
+  private showMoment(): void {
+    this.card.show(this.state.currentMoment);
+    this.tabs.build(this.state);
+    this.listBox.build(this.state);
   }
 }

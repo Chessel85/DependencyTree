@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.10 (draft)"
+subtitle: "Version 0.11 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -212,7 +212,7 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 | Retired ID | What it was | What happened to it |
 |------------|-------------|---------------------|
-| REQ-ACC-013 | Single focusable widget | Now DES-SR-001. |
+| REQ-ACC-013 | Single focusable widget | Became DES-SR-001, which was withdrawn in version 0.11 in favour of DES-SR-006. |
 | REQ-DATA-010 and REQ-DATA-011 | How dates are stored and displayed | Now DES-DATE-001 to DES-DATE-004. |
 | REQ-REL-006 | "Caters for" relationship | Withdrawn in round 4, because its meaning was unclear. |
 | REQ-REL-009, old wording | The open question on predates | Resolved by the new REQ-REL-002 and REQ-REL-009 wording. |
@@ -227,11 +227,7 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-Answered questions are removed from this table. Their answers are in the Decision Log.
-
-| ID | Topic | Question |
-|------|--------------|--------------------------------------------------|
-| Q-23 | The current moment as a card of standard controls | NVDA+Up Arrow doesn't read the navigator's line of text. You suggested showing the current moment as a large box made of standard controls: a box with the name, date and location; the description; and a tab control with Dependencies, Part of and Enabled, above a list of the current tab's entries. NVDA's own commands, such as NVDA+Up Arrow, then work with no extra effort, and the Details region and the I key are no longer needed. The analyst agrees and recommends it. Details of the recommendation are in the reply to round 8. Go ahead? |
+There are no open questions at the moment. Answered questions are in the Decision Log.
 
 # Decision log
 
@@ -280,9 +276,11 @@ Answered questions are removed from this table. Their answers are in the Decisio
 | DEC-41 | Path wording | 8, 21 October 2026 | P says "Path, 3 moments:" and then the names, without dates. Recorded as DES-KEY-006. |
 | DEC-42 | Visual layouts come after periods | 8, 21 October 2026 | The layout experiment, Step 0D, comes after Step 0B and before the Wikidata import. The product owner hopes to have friends review it. Answers Q-22. |
 | DEC-43 | NVDA+Up Arrow didn't work | 8, 21 October 2026 | The single line of text in the navigator wasn't read by NVDA+Up Arrow. Led to Q-23. |
+| DEC-44 | The current moment is a card of standard controls | 8, 21 October 2026 | A heading, a read-only summary box, a read-only description box, a tab control and a list box, so that NVDA's own commands work. The Details region and the I key are removed. Answers Q-23. Recorded as DES-SR-006, DES-SR-007 and DES-KEY-014. |
 
 # Change history
 
+- **0.11**, 21 October 2026: Recorded DEC-44, answering Q-23. There are no open questions.
 - **0.10**, 21 October 2026: Recorded DEC-41 to DEC-43, answering Q-22. Added Q-23.
 - **0.9**, 21 October 2026: Recorded DEC-38 to DEC-40. Added REQ-ACC-016 and REQ-VIEW-013, and Q-22.
 - **0.8**, 21 October 2026: Recorded DEC-36, answering Q-21, and DEC-37, the findings from the first test of Step 0A. There are no open questions.

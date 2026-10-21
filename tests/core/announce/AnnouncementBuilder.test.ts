@@ -16,33 +16,26 @@ function laptopState(): NavigationState {
 }
 
 describe('AnnouncementBuilder', () => {
-  it('announces arrival with the active list, its size and its highlighted entry', () => {
-    expect(words.arrival(laptopState())).toBe('laptop, 1981. Dependencies, 2. battery, 1800, 1 of 2.');
+  it('labels the active list with the moment and the list name', () => {
+    expect(words.listLabel(laptopState())).toBe('laptop, 1981, Dependencies');
   });
 
-  it('announces arrival at a moment whose active list is empty', () => {
-    const state = laptopState();
-    state.goEarlier();
-    expect(words.arrival(state)).toBe('battery, 1800. Dependencies, none.');
-  });
-
-  it('announces position within a list', () => {
-    const state = laptopState();
-    state.activeList.moveBy(1);
-    expect(words.position(state.activeList)).toBe('chip, 1971, 2 of 2.');
-  });
-
-  it('announces an empty list as none', () => {
+  it('adds "none" to the label of an empty list', () => {
     const state = laptopState();
     state.switchList(1);
-    expect(words.listSwitch(state.activeList)).toBe('Enabled, none.');
+    expect(words.listLabel(state)).toBe('laptop, 1981, Enabled, none');
   });
 
-  it('announces a switch to a list with entries', () => {
-    const state = laptopState();
-    state.goEarlier();
-    state.switchList(1);
-    expect(words.listSwitch(state.activeList)).toBe('Enabled, 1. laptop, 1981, 1 of 1.');
+  it('names a tab with its count', () => {
+    expect(words.tab(laptopState().activeList)).toBe('Dependencies (2)');
+  });
+
+  it('puts the name, date and location on separate lines of the summary box', () => {
+    expect(words.summaryLines(laptopState().currentMoment)).toBe('laptop\n1981\nLocation not known');
+  });
+
+  it('summarises the moment and its lists', () => {
+    expect(words.summary(laptopState())).toBe('laptop, 1981. Dependencies, 2. Enabled, none.');
   });
 
   it('announces the path oldest first, even when the user walked back in time', () => {

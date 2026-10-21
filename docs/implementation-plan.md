@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.10 (draft)"
+subtitle: "Version 0.11 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -68,10 +68,13 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/worker | EntryRepository.ts | D1 queries. |
 | src/worker | Handlers | One file per API endpoint. |
 | src/ui | App.ts | Starts the front end. |
-| src/ui | TreeNavigator.ts | Keystrokes, focus and the ARIA widget. |
+| src/ui | TreeNavigator.ts | Connects the navigation state to the card, and handles keystrokes. |
+| src/ui | MomentCard.ts | The heading, summary box and description box. |
+| src/ui | RelationshipTabs.ts | The tab control. |
+| src/ui | RelationshipListBox.ts | The list box of the active list's entries. |
 | src/ui | KeyBindings.ts | Keystrokes per platform. |
-| src/ui | LiveAnnouncer.ts | Speaks announcements through a live region. |
-| src/ui | DetailsPanel.ts | The Details region. |
+| src/ui | LiveAnnouncer.ts | Speaks the information keys' answers through a live region. |
+| src/ui | Command.ts | The commands a key can give. |
 | src/ui | SearchPanel.ts | The Search region. |
 | src/ui | FilterPanel.ts | The Filters region. |
 | src/ui | HelpDialog.ts | Keyboard help. |
@@ -95,7 +98,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 2. Build the moment, the dates module and the dependency rules, with unit tests. (DES-DATA-001, DES-DATE items, DES-REL-002)
 3. Write a sample file by hand: about 10 moments, joined by dependencies.
 4. Build the navigation state and the announcement wording for moments, with unit tests. (DES-NAV-001 to DES-NAV-008, DES-KEY items for moments, DES-ANN items)
-5. Build a bare web page with the tree navigator, live announcements, the Details region and keyboard help. It reads the sample file, and runs on your computer.
+5. Build a web page showing the current moment as a card of standard controls, with keyboard help. It reads the sample file, and runs on your computer. (DES-SR-006)
 6. You test it with NVDA. We refine the keystrokes and wording.
 
 ### Step 0B: Hand-made periods
@@ -166,10 +169,11 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 | Wikidata's dependency coverage may be thin. The candidate properties are used unevenly. | Measure coverage in Phase 0, and use the curation file to fill the gaps. | DES-IMP-003, DES-IMP-004 |
 | Wikidata's dates may conflict with the predates rule. | Rough dates are compared as ranges, and the import reports and leaves out problem links instead of failing. | DES-REL-002, DES-IMP-007 |
 | Wikidata often links to a whole period rather than to a moment within it. | Use the period's start moment, review a sample in Phase 0, and correct links in the curation file. | DES-REL-007, DES-IMP-008 |
-| Screen readers may behave differently. Focus mode handling and Mac keystrokes differ between NVDA and VoiceOver. | Test on both early, in Phase 0. | DES-SR-001, DES-SR-002 |
+| Screen readers may behave differently. Focus mode handling and Mac keystrokes differ between NVDA and VoiceOver. | Test on both early, in Phase 0. | DES-SR-006, DES-SR-002 |
 
 # Change history
 
+- **0.11**, 21 October 2026: Step 0A now builds a card of standard controls. Updated the module layout to match.
 - **0.10**, 21 October 2026: Step 0D comes after Step 0B (DEC-42).
 - **0.9**, 21 October 2026: Added Step 0D, the visual layout experiment. Its timing is Q-22.
 - **0.8**, 21 October 2026: Step 0A is built and in testing. Step 0B now uses the Part of list on periods.

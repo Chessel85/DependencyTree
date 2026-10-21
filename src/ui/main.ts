@@ -4,10 +4,10 @@ import { DatasetReader, DatasetRecord } from '../core/data/DatasetReader';
 import { DateFormatter } from '../core/dates/DateFormatter';
 import { ListSetBuilder } from '../core/navigation/ListSetBuilder';
 import { NavigationState } from '../core/navigation/NavigationState';
-import { DetailsPanel } from './DetailsPanel';
 import { HelpDialog } from './HelpDialog';
 import { KeyBindings } from './KeyBindings';
 import { LiveAnnouncer } from './LiveAnnouncer';
+import { MomentCard } from './MomentCard';
 import { TreeNavigator } from './TreeNavigator';
 
 const START_ID = 'iphone';
@@ -26,24 +26,27 @@ if (!start) {
   throw new Error(`The sample has no moment with id "${START_ID}".`);
 }
 
-const dates = new DateFormatter();
+const words = new AnnouncementBuilder(new DateFormatter());
 const keys = new KeyBindings();
 const state = new NavigationState(new ListSetBuilder(graph), start);
 
 // The help dialog returns focus to the navigator, which needs the dialog,
 // so the navigator is reached through this variable.
 let navigator: TreeNavigator;
-const details = new DetailsPanel(byId('details'), byId('details-content'), dates);
 const help = new HelpDialog(byId('help'), byId('help-content'), byId('help-close'), keys.listModifierName, () =>
-  navigator.focus(),
+  navigator.focusList(),
 );
+byId('help-open').addEventListener('click', () => help.open());
+
 navigator = new TreeNavigator(
-  byId('navigator'),
+  byId('moment-card'),
+  byId('relationship-tabs'),
+  byId('relationship-panel'),
+  new MomentCard(byId('moment-name'), byId('moment-summary'), byId('moment-description'), words),
   state,
   keys,
-  new AnnouncementBuilder(dates),
+  words,
   new LiveAnnouncer(byId('announcer')),
-  details,
   help,
 );
 navigator.start();

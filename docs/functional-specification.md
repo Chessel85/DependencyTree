@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.10 (draft)"
+subtitle: "Version 0.11 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -65,7 +65,7 @@ From any one moment, looking back through its dependencies, the structure branch
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-SCR-001 | The main screen has four regions, each one a labelled landmark:<br>1. **Search**<br>2. **Filters**, which can be collapsed<br>3. **Tree**: the keyboard navigator and the visual view<br>4. **Details**: everything about the current entry, as ordinary page content with headings and lists | Proposed | REQ-ACC-004, REQ-ACC-014 |
+| DES-SCR-001 | The main screen has three regions, each one a labelled landmark:<br>1. **Search**<br>2. **Filters**, which can be collapsed<br>3. **Tree**: the current moment's card (DES-SR-006), with the visual view around it<br>The Details region of earlier versions is replaced by the card. | Proposed | REQ-ACC-004, REQ-ACC-014 |
 | DES-SCR-002 | Each entry has its own web address, for example /entry/lithium-ion-battery. Opening it shows the main screen with that entry current. | Proposed | REQ-DATA-008 |
 
 # The tree navigator
@@ -79,7 +79,7 @@ The navigator behaves differently on a moment and on a period (DEC-19):
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-NAV-001 | Each moment presents its relationships as a set of lists, which the user moves between as if they were the tabs of a tab control. | Agreed | REQ-NAV-003 |
+| DES-NAV-001 | Each moment presents its relationships as a set of lists, shown as a standard tab control with the active list underneath (DES-SR-006). | Agreed | REQ-NAV-003 |
 | DES-NAV-002 | The lists, in order:<br>1. **Dependencies**: what this moment needed. (Agreed)<br>2. **Part of**: the periods this moment belongs to. A moment can be part of more than one period.<br>3. **Enabled**: what this moment made possible.<br>More lists may be added later. Reading the lists from first to last runs from "before", through "around", to "after". | Agreed | REQ-NAV-003, REQ-NAV-023 |
 | DES-NAV-003 | The Dependencies and Enabled lists are always present, even when empty. The Part of list is only present when it has entries. This means that moving between lists never stops on an empty list that tells the user nothing. | Proposed | REQ-NAV-003, REQ-ACC-015 |
 | DES-NAV-004 | Each list remembers its highlighted entry. Until the user moves within the list, this is its first entry. | Agreed | REQ-NAV-001, REQ-NAV-002, REQ-ACC-015 |
@@ -130,15 +130,15 @@ These keystrokes apply while the navigator has focus.
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
 | DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest, without dates. Example: "Path, 3 moments: Electric battery, Telephone, iPhone." (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
-| DES-KEY-008 | I moves focus to the Details region, for reading in browse mode. Escape, pressed anywhere on the page outside the navigator and any dialog, returns focus to the navigator, which announces where the user is. | Proposed | REQ-ACC-014 |
+| DES-KEY-014 | Tab and Shift+Tab move between the parts of the card. On the tabs, Left Arrow, Right Arrow, Home and End choose a tab, as on any tab control. Backspace and question mark work anywhere in the card. The other keys in this section work in the list. | Agreed | REQ-ACC-007, REQ-NAV-003 |
 
 ## Announcements
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-ANN-001 | Arriving at a moment announces its name, its date, the active list, that list's size and its highlighted entry, so the user knows at once that they are in a list. Example: "Laptop, 1981. Enabled, 12. Smartphone, 1994, 1 of 12." If the list is empty: "Electric battery, March 1800. Dependencies, none." | Proposed | REQ-ANN-007 |
-| DES-ANN-002 | Moving within a list announces the entry's name, its date and its position. Example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
-| DES-ANN-003 | Switching list announces the list's name, its size and the highlighted entry. Examples:<br>• "Dependencies, 4. Lithium-ion battery, 1991, 1 of 4."<br>• "Dependencies, none." | Proposed | REQ-ANN-007 |
+| DES-ANN-001 | On arriving at a moment, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. For example: "Telephone, 7 March 1876, Dependencies, list. Electric battery, March 1800, 1 of 2." An empty list's label ends with "none". The exact wording depends on the screen reader. | Proposed | REQ-ANN-007 |
+| DES-ANN-002 | Moving within a list moves focus to the entry, which the screen reader reads with its position. For example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
+| DES-ANN-003 | Switching list moves focus into the new list, whose label and highlighted entry the screen reader reads. | Proposed | REQ-ANN-007 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
 | DES-ANN-005 | When filters hide entries, the announcement includes the number hidden. Example: "Dependencies, 3, 2 hidden by filters." | Proposed | REQ-ANN-006 |
 | DES-ANN-006 | A new announcement replaces any announcement that hasn't been spoken yet. | Proposed | REQ-ANN-004 |
@@ -149,7 +149,7 @@ These keystrokes apply while the navigator has focus.
 
 ## Worked examples
 
-The dates and counts in these examples are only illustrations.
+The dates and counts in these examples are only illustrations. The words in quotes are what the user hears; the exact wording depends on the screen reader.
 
 Moving between moments. The current entry is the lithium-ion battery. The user arrived from the laptop through the Dependencies list, so the Dependencies list is active (DES-NAV-005).
 
@@ -176,11 +176,10 @@ A period that is still going on. The current entry is the People's Republic of C
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-SR-001 | The navigator is a single focusable widget. When it has focus, NVDA switches to focus mode automatically. It is likely to use the ARIA "application" role, with a live region for announcements. This will be confirmed by testing in Phase 0. | Proposed | REQ-ACC-004, REQ-ACC-007 |
+| DES-SR-006 | The current moment is shown as a card made of standard controls, so the screen reader's own commands work on every part of it, including "read current line" (NVDA+Up Arrow). In order:<br>1. A heading with the moment's name.<br>2. **Summary**: a read-only text box with the name, date and location on three lines.<br>3. **Description**: a read-only text box.<br>4. A tab control with one tab per list, showing its count, for example "Dependencies (2)".<br>5. A list box of the active list's entries, with focus on the highlighted entry.<br>Tab and Shift+Tab move between the parts. | Agreed | REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016 |
 | DES-SR-002 | In VoiceOver, Quick Nav must be off for the arrow keys to reach the application. Keyboard help says so. | Proposed | REQ-ACC-003, REQ-ACC-008 |
-| DES-SR-004 | Whenever the navigator gains focus, by any route, it announces where the user is. Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. | Proposed | REQ-ACC-011, REQ-ANN-007 |
-| DES-SR-005 | The navigator's only content is a single line giving the current position, worded like the arrival announcement and kept up to date. The screen reader's "read current line" command (NVDA+Up Arrow) reads this line, and sighted users see it too. To be confirmed with NVDA in Firefox and Chrome. | Proposed | REQ-ACC-016 |
-| DES-SR-003 | The Details region is ordinary HTML, with headings and lists. It is readable in browse mode and updates whenever the current entry changes. | Proposed | REQ-ACC-014 |
+| DES-SR-004 | Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. | Proposed | REQ-ACC-011 |
+| DES-SR-007 | The list box is rebuilt each time the moment or the tab changes, so the screen reader sees focus enter a new list and reads its label, which names the moment, its date and the list. | Proposed | REQ-ANN-007 |
 
 # Visual presentation
 
@@ -252,6 +251,10 @@ These IDs won't be reused.
 |--------------|-------------|----------------------|
 | DES-REL-003 | Which date to use when a dependency pointed at a whole period. | Withdrawn in version 0.4. Dependencies now always point at moments (DES-REL-006). |
 | DES-KEY-009 | On a period, Left Arrow went to its start moment and Right Arrow to its end moment. | Withdrawn in version 0.5. Replaced by stepping through all of a period's moments (DES-KEY-010). |
+| DES-SR-001 | The navigator was a single focusable widget with the ARIA "application" role. | Withdrawn in version 0.11. NVDA's own reading commands didn't work on it. Replaced by a card of standard controls (DES-SR-006). |
+| DES-SR-003 | The Details region showed everything about the current entry, for reading in browse mode. | Withdrawn in version 0.11. The card shows the same information (DES-SR-006). |
+| DES-SR-005 | The navigator's only content was one line giving the current position. | Withdrawn in version 0.11. NVDA+Up Arrow didn't read it. |
+| DES-KEY-008 | I moved focus to the Details region, and Escape returned. | Withdrawn in version 0.11, with the Details region. |
 | DES-KEY-012 | On a period, Up Arrow went up to the larger period. | Withdrawn in version 0.8. Periods have a Part of list instead, the same as moments (DES-NAV-012). |
 | DES-ANN-010 | A moment dated in the future was announced as "planned". | Withdrawn in version 0.6. The date already shows that it is in the future. |
 
@@ -266,6 +269,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.11**, 21 October 2026: The current moment is now a card of standard controls (DES-SR-006, DES-SR-007), with Tab moving between its parts (DES-KEY-014). Rewrote DES-SCR-001, DES-NAV-001, DES-SR-004 and DES-ANN-001 to DES-ANN-003. Withdrew DES-SR-001, DES-SR-003, DES-SR-005 and DES-KEY-008.
 - **0.10**, 21 October 2026: Settled the wording for P (DES-KEY-006).
 - **0.9**, 21 October 2026: After the second test of Step 0A: the navigator's content is one line that NVDA+Up Arrow reads (DES-SR-005), and P reads the path in date order (DES-KEY-006). Added the visual layout experiment to DES-VIEW-005 and DES-VIEW-010.
 - **0.8**, 21 October 2026: Periods have a Part of list, the same as moments (DES-NAV-012), replacing Up Arrow on a period (DES-KEY-012, withdrawn). After testing Step 0A: arriving at a moment now announces the highlighted entry (DES-ANN-001), Escape returns to the navigator from anywhere on the page (DES-KEY-008), and DES-SR-004 is added.
