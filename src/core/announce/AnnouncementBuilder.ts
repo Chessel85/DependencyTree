@@ -60,7 +60,7 @@ export class AnnouncementBuilder {
     if (distinct.length === 1) {
       return `Path: just ${distinct[0].name}.`;
     }
-    return `Path, ${distinct.length} moments, oldest first: ${distinct.map((m) => m.name).join(', ')}.`;
+    return `Path, ${distinct.length} moments: ${distinct.map((m) => m.name).join(', ')}.`;
   }
 
   private nameAndDate(moment: Moment): string {

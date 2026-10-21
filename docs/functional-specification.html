@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.9 (draft)</p>
+<p class="subtitle">Version 0.10 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -820,8 +820,9 @@ becomes the current entry.</td>
 <td>DES-KEY-006</td>
 <td>Information keys:<br>• Space: summary of the current entry<br>• D:
 description<br>• T: tags<br>• L: location<br>• P: the moments on the
-path taken, each named once, in date order from oldest to newest
-(Agreed)</td>
+path taken, each named once, in date order from oldest to newest,
+without dates. Example: “Path, 3 moments: Electric battery, Telephone,
+iPhone.” (Agreed)</td>
 <td>Proposed</td>
 <td>REQ-NAV-005, REQ-NAV-006, REQ-ACC-005</td>
 </tr>
@@ -1465,6 +1466,8 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.10</strong>, 21 October 2026: Settled the wording for P
+(DES-KEY-006).</li>
 <li><strong>0.9</strong>, 21 October 2026: After the second test of Step
 0A: the navigator’s content is one line that NVDA+Up Arrow reads
 (DES-SR-005), and P reads the path in date order (DES-KEY-006). Added

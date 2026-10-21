@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.9 (draft)"
+subtitle: "Version 0.10 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -128,7 +128,7 @@ These keystrokes apply while the navigator has focus.
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
-| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
+| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest, without dates. Example: "Path, 3 moments: Electric battery, Telephone, iPhone." (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
 | DES-KEY-008 | I moves focus to the Details region, for reading in browse mode. Escape, pressed anywhere on the page outside the navigator and any dialog, returns focus to the navigator, which announces where the user is. | Proposed | REQ-ACC-014 |
 
@@ -266,6 +266,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.10**, 21 October 2026: Settled the wording for P (DES-KEY-006).
 - **0.9**, 21 October 2026: After the second test of Step 0A: the navigator's content is one line that NVDA+Up Arrow reads (DES-SR-005), and P reads the path in date order (DES-KEY-006). Added the visual layout experiment to DES-VIEW-005 and DES-VIEW-010.
 - **0.8**, 21 October 2026: Periods have a Part of list, the same as moments (DES-NAV-012), replacing Up Arrow on a period (DES-KEY-012, withdrawn). After testing Step 0A: arriving at a moment now announces the highlighted entry (DES-ANN-001), Escape returns to the navigator from anywhere on the page (DES-KEY-008), and DES-SR-004 is added.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions. The Part of list is agreed. Impossible moves are silent, except at the ends of a period. The repository is public on GitHub.

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.9 (draft)"
+subtitle: "Version 0.10 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -231,7 +231,7 @@ Answered questions are removed from this table. Their answers are in the Decisio
 
 | ID | Topic | Question |
 |------|--------------|--------------------------------------------------|
-| Q-22 | When to try the visual layouts | The visual view was due in Phase 1. Should the layout experiment (DES-VIEW-005, DES-VIEW-010) come straight after periods (Step 0B), before the Wikidata import, or after it? Trying it with the small hand-made sample first is quicker, and the results are easier to judge. |
+| Q-23 | The current moment as a card of standard controls | NVDA+Up Arrow doesn't read the navigator's line of text. You suggested showing the current moment as a large box made of standard controls: a box with the name, date and location; the description; and a tab control with Dependencies, Part of and Enabled, above a list of the current tab's entries. NVDA's own commands, such as NVDA+Up Arrow, then work with no extra effort, and the Details region and the I key are no longer needed. The analyst agrees and recommends it. Details of the recommendation are in the reply to round 8. Go ahead? |
 
 # Decision log
 
@@ -277,9 +277,13 @@ Answered questions are removed from this table. Their answers are in the Decisio
 | DEC-38 | Findings from the second test of Step 0A | 7, 21 October 2026 | Escape from Details now works. The hint about NVDA+Space is removed. The screen reader's "read current line" command must read the current position. Recorded as REQ-ACC-016 and DES-SR-005. |
 | DEC-39 | The path is read in date order | 7, 21 October 2026 | P names the moments on the path from oldest to newest. Recorded as DES-KEY-006. |
 | DEC-40 | Try different visual layouts | 7, 21 October 2026 | Sighted users should see a tree stretching to the left, with the most recent entry on the right, and links shouldn't pass through other boxes. Try a linear time axis against a time slot for each entry. Recorded as REQ-VIEW-013, DES-VIEW-005 and DES-VIEW-010. Led to Q-22. |
+| DEC-41 | Path wording | 8, 21 October 2026 | P says "Path, 3 moments:" and then the names, without dates. Recorded as DES-KEY-006. |
+| DEC-42 | Visual layouts come after periods | 8, 21 October 2026 | The layout experiment, Step 0D, comes after Step 0B and before the Wikidata import. The product owner hopes to have friends review it. Answers Q-22. |
+| DEC-43 | NVDA+Up Arrow didn't work | 8, 21 October 2026 | The single line of text in the navigator wasn't read by NVDA+Up Arrow. Led to Q-23. |
 
 # Change history
 
+- **0.10**, 21 October 2026: Recorded DEC-41 to DEC-43, answering Q-22. Added Q-23.
 - **0.9**, 21 October 2026: Recorded DEC-38 to DEC-40. Added REQ-ACC-016 and REQ-VIEW-013, and Q-22.
 - **0.8**, 21 October 2026: Recorded DEC-36, answering Q-21, and DEC-37, the findings from the first test of Step 0A. There are no open questions.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions, DEC-31 to DEC-35, answering Q-19 and Q-20. Revised REQ-NAV-015. Added Q-21.

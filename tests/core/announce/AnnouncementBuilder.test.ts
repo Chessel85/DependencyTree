@@ -48,7 +48,7 @@ describe('AnnouncementBuilder', () => {
   it('announces the path oldest first, even when the user walked back in time', () => {
     const state = laptopState();
     state.goEarlier();
-    expect(words.path(state.path)).toBe('Path, 2 moments, oldest first: battery, laptop.');
+    expect(words.path(state.path)).toBe('Path, 2 moments: battery, laptop.');
   });
 
   it('names each moment on the path once', () => {
@@ -56,6 +56,6 @@ describe('AnnouncementBuilder', () => {
     state.goEarlier();
     state.switchList(1);
     state.goLater();
-    expect(words.path(state.path)).toBe('Path, 2 moments, oldest first: battery, laptop.');
+    expect(words.path(state.path)).toBe('Path, 2 moments: battery, laptop.');
   });
 });

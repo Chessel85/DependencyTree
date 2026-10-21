@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.9 (draft)"
+subtitle: "Version 0.10 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -107,11 +107,11 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 ### Step 0D: Visual layout experiment
 
-When this happens is Q-22.
+This comes after Step 0B and before Step 0C (DEC-42). Friends of the product owner may review it.
 
 1. Draw the sample as a tree, with time running left to right and links joining the boxes. (DES-VIEW-001, DES-VIEW-002)
 2. Try the three ways of spacing entries in time, and a layered layout that keeps links out of boxes. (DES-VIEW-005, DES-VIEW-010)
-3. Claude checks each version by taking screenshots and looking at them. You can also ask Be My Eyes or a sighted friend to compare them.
+3. Claude checks each version by taking screenshots and looking at them. Then friends review the versions, and Be My Eyes can be used too.
 4. Keep the best layout, or offer a choice.
 
 ### Step 0C: Real data from Wikidata
@@ -170,6 +170,7 @@ When this happens is Q-22.
 
 # Change history
 
+- **0.10**, 21 October 2026: Step 0D comes after Step 0B (DEC-42).
 - **0.9**, 21 October 2026: Added Step 0D, the visual layout experiment. Its timing is Q-22.
 - **0.8**, 21 October 2026: Step 0A is built and in testing. Step 0B now uses the Part of list on periods.
 - **0.7**, 21 October 2026: The repository is public on GitHub. Step 0B now settles Q-21.
