@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-10-21" />
+  <title>Dependency Tree — Implementation Plan</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dependency Tree — Implementation Plan</h1>
+<p class="subtitle">Version 0.7 (draft)</p>
+<p class="date">2026-10-21</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#about-this-document" id="toc-about-this-document">About
+this document</a></li>
+<li><a href="#guiding-principles" id="toc-guiding-principles">Guiding
+principles</a></li>
+<li><a href="#ways-of-working" id="toc-ways-of-working">Ways of
+working</a></li>
+<li><a href="#architecture-proposed"
+id="toc-architecture-proposed">Architecture (Proposed)</a>
+<ul>
+<li><a href="#overall-shape" id="toc-overall-shape">Overall
+shape</a></li>
+<li><a href="#proposed-module-layout"
+id="toc-proposed-module-layout">Proposed module layout</a></li>
+</ul></li>
+<li><a href="#phases" id="toc-phases">Phases</a>
+<ul>
+<li><a href="#phase-0-foundations-and-navigation-prototype"
+id="toc-phase-0-foundations-and-navigation-prototype">Phase 0:
+Foundations and navigation prototype</a></li>
+<li><a href="#phase-1-read-only-release-on-cloudflare"
+id="toc-phase-1-read-only-release-on-cloudflare">Phase 1: Read-only
+release on Cloudflare</a></li>
+<li><a href="#phase-2-larger-dataset"
+id="toc-phase-2-larger-dataset">Phase 2: Larger dataset</a></li>
+<li><a href="#phase-3-community-contribution"
+id="toc-phase-3-community-contribution">Phase 3: Community
+contribution</a></li>
+<li><a href="#phase-4-richer-relationships"
+id="toc-phase-4-richer-relationships">Phase 4: Richer
+relationships</a></li>
+</ul></li>
+<li><a href="#testing-strategy" id="toc-testing-strategy">Testing
+strategy</a></li>
+<li><a href="#risks" id="toc-risks">Risks</a></li>
+<li><a href="#change-history" id="toc-change-history">Change
+history</a></li>
+</ul>
+</nav>
+<h1 id="about-this-document">About this document</h1>
+<p>This plan sets out how Dependency Tree will be delivered, in phases.
+Each phase ends with something that can be tested with NVDA and
+VoiceOver. Requirement IDs refer to the Requirements Catalogue.</p>
+<h1 id="guiding-principles">Guiding principles</h1>
+<ol type="1">
+<li><strong>Accessibility first.</strong> The keyboard navigator is
+built and tested before the visual view.</li>
+<li><strong>Start small, then use real data.</strong> The first
+prototype uses a handful of made-up moments. Hand-made periods come
+next. Wikidata data follows once navigation feels right, still within
+Phase 0. (DEC-30, REQ-CONT-001, REQ-CONT-007)</li>
+<li><strong>Single-responsibility classes, one per file.</strong> Each
+unit can be read and changed on its own. Files are split by
+responsibility, not by line count. (REQ-CODE-002, DES-CODE-001,
+DES-CODE-002)</li>
+<li><strong>Core logic is independent.</strong> The data model, date
+handling and navigation state are plain TypeScript with no browser or
+Cloudflare code, so they can be unit tested on their own. (DES-CODE-003,
+DES-CODE-004)</li>
+<li><strong>One source of truth.</strong> The navigator and the visual
+view both read from one navigation state. (REQ-VIEW-006)</li>
+</ol>
+<h1 id="ways-of-working">Ways of working</h1>
+<ul>
+<li>Claude writes the code. You direct it, test it with NVDA, and
+decide. (REQ-CODE-001)</li>
+<li>Work proceeds in small steps, each ending with something you can try
+or a test that passes.</li>
+<li>After each discussion round, needs and constraints are added to the
+Requirements Catalogue, and design decisions to the Functional
+Specification. Every decision is logged in the catalogue’s Decision Log.
+Numbered items, questions and decisions are written as tables, which are
+easier to move through with a screen reader. Then the HTML is rebuilt
+with docs/build.ps1.</li>
+</ul>
+<h1 id="architecture-proposed">Architecture (Proposed)</h1>
+<h2 id="overall-shape">Overall shape</h2>
+<ul>
+<li><strong>Import tool</strong>: a TypeScript script run from the
+command line. It reads Wikidata, applies the curation file, validates
+the data, and writes a seed file and a report.</li>
+<li><strong>Cloudflare Worker</strong>: serves the front end and a
+read-only JSON API, backed by the D1 database. (DES-TECH-002,
+DES-TECH-003)</li>
+<li><strong>Front end</strong>: plain TypeScript classes built with
+Vite, with no UI framework. (DES-TECH-004)</li>
+<li><strong>Core library</strong>: shared by all three parts above.</li>
+</ul>
+<h2 id="proposed-module-layout">Proposed module layout</h2>
+<p>Each folder below lists a few of the small class files it would
+contain. One class per file. (DES-CODE-002)</p>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr>
+<th>Folder</th>
+<th>File</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>src/core/model</td>
+<td>Entry.ts</td>
+<td>The base class for moments and periods.</td>
+</tr>
+<tr>
+<td>src/core/model</td>
+<td>Moment.ts</td>
+<td>A moment, with its date and location.</td>
+</tr>
+<tr>
+<td>src/core/model</td>
+<td>Period.ts</td>
+<td>A period, with its start moment, end moment and the moments
+between.</td>
+</tr>
+<tr>
+<td>src/core/model</td>
+<td>Relationship.ts</td>
+<td>A link between two entries.</td>
+</tr>
+<tr>
+<td>src/core/model</td>
+<td>Tag.ts</td>
+<td>A tag.</td>
+</tr>
+<tr>
+<td>src/core/dates</td>
+<td>HistoricDate.ts</td>
+<td>A date with its precision and approximate flag, including BCE
+dates.</td>
+</tr>
+<tr>
+<td>src/core/dates</td>
+<td>DateRange.ts</td>
+<td>The earliest and latest possible times of a date
+(DES-DATE-003).</td>
+</tr>
+<tr>
+<td>src/core/dates</td>
+<td>DateFormatter.ts</td>
+<td>Written and spoken forms.</td>
+</tr>
+<tr>
+<td>src/core/graph</td>
+<td>DependencyGraph.ts</td>
+<td>Lookups in both directions.</td>
+</tr>
+<tr>
+<td>src/core/graph</td>
+<td>CycleDetector.ts</td>
+<td>Finds circular dependencies.</td>
+</tr>
+<tr>
+<td>src/core/graph</td>
+<td>PredatesRule.ts</td>
+<td>Checks that a dependency came first (DES-REL-002).</td>
+</tr>
+<tr>
+<td>src/core/graph</td>
+<td>ContainmentRule.ts</td>
+<td>Checks that everything in a period falls within it
+(DES-DATA-006).</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>NavigationState.ts</td>
+<td>The current entry, the active list, and the highlighted entry in
+each list.</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>RelationshipList.ts</td>
+<td>One list on a moment, such as Dependencies.</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>ListSetBuilder.ts</td>
+<td>Decides which lists a moment shows (DES-NAV-002, DES-NAV-003).</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>PeriodStops.ts</td>
+<td>The stops in a period, in date order, including “Ongoing”
+(DES-NAV-009).</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>PathHistory.ts</td>
+<td>For Backspace and P.</td>
+</tr>
+<tr>
+<td>src/core/announce</td>
+<td>AnnouncementBuilder.ts</td>
+<td>The wording of announcements.</td>
+</tr>
+<tr>
+<td>src/core/announce</td>
+<td>Verbosity.ts</td>
+<td>The verbosity levels.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>WikidataClient.ts</td>
+<td>Queries Wikidata.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>PropertyMapper.ts</td>
+<td>Turns Wikidata properties into entries and links.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>SeedCollector.ts</td>
+<td>Gathers the seed set.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>CurationApplier.ts</td>
+<td>Applies the curation file.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>ImportValidator.ts</td>
+<td>Checks the data.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>ImportReport.ts</td>
+<td>Writes the report.</td>
+</tr>
+<tr>
+<td>src/import</td>
+<td>SeedWriter.ts</td>
+<td>Writes the seed file.</td>
+</tr>
+<tr>
+<td>src/worker</td>
+<td>Router.ts</td>
+<td>Routes API requests.</td>
+</tr>
+<tr>
+<td>src/worker</td>
+<td>EntryRepository.ts</td>
+<td>D1 queries.</td>
+</tr>
+<tr>
+<td>src/worker</td>
+<td>Handlers</td>
+<td>One file per API endpoint.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>App.ts</td>
+<td>Starts the front end.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>TreeNavigator.ts</td>
+<td>Keystrokes, focus and the ARIA widget.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>KeyBindings.ts</td>
+<td>Keystrokes per platform.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>LiveAnnouncer.ts</td>
+<td>Speaks announcements through a live region.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>DetailsPanel.ts</td>
+<td>The Details region.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>SearchPanel.ts</td>
+<td>The Search region.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>FilterPanel.ts</td>
+<td>The Filters region.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>HelpDialog.ts</td>
+<td>Keyboard help.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>TimeAxis.ts</td>
+<td>The time axis, including the line for today.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>GraphView.ts</td>
+<td>Draws the neighbourhood of the current entry.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>NodeRenderer.ts</td>
+<td>Draws moments and periods.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>ZoomController.ts</td>
+<td>Zoom and pan.</td>
+</tr>
+<tr>
+<td>tests</td>
+<td></td>
+<td>Tests that mirror the src folders above.</td>
+</tr>
+</tbody>
+</table>
+<p>The architecture document required by DES-CODE-006 will be kept in
+step with this layout.</p>
+<h1 id="phases">Phases</h1>
+<h2 id="phase-0-foundations-and-navigation-prototype">Phase 0:
+Foundations and navigation prototype</h2>
+<p><strong>Goal:</strong> Prove the navigation model with NVDA, first on
+a small made-up sample and then on real Wikidata data. Phase 0 runs on
+your own computer. Nothing is published yet.</p>
+<h3 id="step-0a-a-handful-of-made-up-moments">Step 0A: A handful of
+made-up moments</h3>
+<ol type="1">
+<li>Set up the public GitHub repository and the TypeScript project, with
+tests. Add the AGPL-3.0 licence. (DES-TECH-006, REQ-CONT-005)</li>
+<li>Build the moment, the dates module and the dependency rules, with
+unit tests. (DES-DATA-001, DES-DATE items, DES-REL-002)</li>
+<li>Write a sample file by hand: about 10 moments, joined by
+dependencies.</li>
+<li>Build the navigation state and the announcement wording for moments,
+with unit tests. (DES-NAV-001 to DES-NAV-008, DES-KEY items for moments,
+DES-ANN items)</li>
+<li>Build a bare web page with the tree navigator, live announcements,
+the Details region and keyboard help. It reads the sample file, and runs
+on your computer.</li>
+<li>You test it with NVDA. We refine the keystrokes and wording.</li>
+</ol>
+<h3 id="step-0b-hand-made-periods">Step 0B: Hand-made periods</h3>
+<ol type="1">
+<li>Add periods to the model, with the containment rule and the stops
+within a period. (DES-DATA-001 to DES-DATA-006, DES-NAV-009 to
+DES-NAV-011)</li>
+<li>Add two or three periods to the sample file by hand, including one
+inside another and one still going on.</li>
+<li>Add the period keystrokes, announcements and the “D’oh” sound, which
+you supply. (DES-KEY-010 to DES-KEY-012, DES-ANN-008, DES-ANN-009,
+DES-ANN-011)</li>
+<li>You test it with NVDA. We refine it, and settle Q-21.</li>
+</ol>
+<h3 id="step-0c-real-data-from-wikidata">Step 0C: Real data from
+Wikidata</h3>
+<ol type="1">
+<li>Build the import tool. Gather a seed set of 50 to 200 entries from
+the iPhone backwards, and produce a coverage report showing how many
+links each Wikidata property contributed. (DES-IMP-002, DES-IMP-003,
+DES-IMP-007)</li>
+<li>Review with a sample of the data how well it works to use a period’s
+start date where Wikidata links to a whole period. (DES-REL-007)</li>
+<li>Review the report together and fill the gaps through the curation
+file. (DES-IMP-004)</li>
+<li>Point the page at the seed file instead of the sample file, and test
+with NVDA in Firefox and Chrome, and with VoiceOver in Safari.</li>
+</ol>
+<p><strong>Exit criteria:</strong> You can explore the seed set
+comfortably by keyboard, and the DES-NAV, DES-KEY and DES-ANN items are
+agreed.</p>
+<h2 id="phase-1-read-only-release-on-cloudflare">Phase 1: Read-only
+release on Cloudflare</h2>
+<p><strong>Goal:</strong> A hosted, usable, read-only application.
+(REQ-CONT-006)</p>
+<ul>
+<li>Create the D1 database schema and a seed loader.</li>
+<li>Build the Worker API: get an entry with its lists, search, and list
+tags.</li>
+<li>Add entry web addresses and Backspace history. (REQ-DATA-008,
+REQ-NAV-004)</li>
+<li>Add search and filters. (DES-FIND items)</li>
+<li>Build the visual view: time axis, zoom and neighbourhood drawing, in
+step with the navigator, showing periods, their moments and uncertain
+dates. (DES-VIEW items)</li>
+<li>Add automated accessibility checks with axe-core, and write a manual
+screen reader test script. (REQ-ACC-012)</li>
+<li>Deploy to Cloudflare.</li>
+</ul>
+<p><strong>Exit criteria:</strong> All “Must” requirements outside the
+Later items are met.</p>
+<h2 id="phase-2-larger-dataset">Phase 2: Larger dataset</h2>
+<ul>
+<li>Broaden the import beyond one working example, through several seed
+starting points.</li>
+<li>Optimise performance towards REQ-NFR-003.</li>
+</ul>
+<h2 id="phase-3-community-contribution">Phase 3: Community
+contribution</h2>
+<ul>
+<li>Accounts, accessible editing forms, revision history and moderation.
+(REQ-CONT-002, REQ-CONT-003)</li>
+<li>Contributions are published under the agreed licences: CC0 for data
+and AGPL-3.0 for code. (REQ-CONT-005)</li>
+</ul>
+<h2 id="phase-4-richer-relationships">Phase 4: Richer relationships</h2>
+<ul>
+<li>Add the “Preceded by”, “Followed by”, “Influenced by” and
+“Influenced” lists. (REQ-NAV-016, REQ-REL-004, REQ-REL-005)</li>
+</ul>
+<h1 id="testing-strategy">Testing strategy</h1>
+<ul>
+<li><strong>Unit tests</strong> for all core classes: dates, graph
+rules, navigation state and announcement wording. (DES-CODE-005)</li>
+<li><strong>Import tests</strong> using saved Wikidata responses, so the
+tests don’t need the internet.</li>
+<li><strong>Keyboard tests</strong> in a browser, using scripted key
+presses that check the announced text.</li>
+<li><strong>Automated accessibility checks</strong> with axe-core.</li>
+<li><strong>Manual screen reader testing</strong> with NVDA and Firefox,
+NVDA and Chrome, and VoiceOver and Safari. (REQ-ACC-012)</li>
+</ul>
+<h1 id="risks">Risks</h1>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 62%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Mitigation</th>
+<th>References</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wikidata’s dependency coverage may be thin. The candidate properties
+are used unevenly.</td>
+<td>Measure coverage in Phase 0, and use the curation file to fill the
+gaps.</td>
+<td>DES-IMP-003, DES-IMP-004</td>
+</tr>
+<tr>
+<td>Wikidata’s dates may conflict with the predates rule.</td>
+<td>Rough dates are compared as ranges, and the import reports and
+leaves out problem links instead of failing.</td>
+<td>DES-REL-002, DES-IMP-007</td>
+</tr>
+<tr>
+<td>Wikidata often links to a whole period rather than to a moment
+within it.</td>
+<td>Use the period’s start moment, review a sample in Phase 0, and
+correct links in the curation file.</td>
+<td>DES-REL-007, DES-IMP-008</td>
+</tr>
+<tr>
+<td>Screen readers may behave differently. Focus mode handling and Mac
+keystrokes differ between NVDA and VoiceOver.</td>
+<td>Test on both early, in Phase 0.</td>
+<td>DES-SR-001, DES-SR-002</td>
+</tr>
+</tbody>
+</table>
+<h1 id="change-history">Change history</h1>
+<ul>
+<li><strong>0.7</strong>, 21 October 2026: The repository is public on
+GitHub. Step 0B now settles Q-21.</li>
+<li><strong>0.6</strong>, 21 October 2026: Split Phase 0 into three
+steps: made-up moments, then hand-made periods, then Wikidata (DEC-30).
+Added the AGPL-3.0 licence to the setup step.</li>
+<li><strong>0.5</strong>, 21 October 2026: Put the module layout and
+risks in tables. Added the PeriodStops class, a Phase 0 review of links
+to whole periods, and a new risk. Removed “Caters for” from Phase
+4.</li>
+<li><strong>0.4</strong>, 21 October 2026: No change to the phases. The
+model now has periods defined by start and end moments, and dependencies
+between moments only (DEC-17).</li>
+<li><strong>0.3</strong>, 20 October 2026: Updated the references to the
+new DES items. Removed the file size check. Added the moment, period and
+date range classes.</li>
+<li><strong>0.2</strong>, 20 October 2026: Added the Cloudflare and
+TypeScript architecture, the module layout, and Wikidata in Phase 0.
+Added a risks section.</li>
+<li><strong>0.1</strong>, 20 October 2026: first draft.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-10-21" />
+  <title>Dependency Tree — Requirements Catalogue</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dependency Tree — Requirements Catalogue</h1>
+<p class="subtitle">Version 0.7 (draft)</p>
+<p class="date">2026-10-21</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#about-this-document" id="toc-about-this-document">About
+this document</a>
+<ul>
+<li><a href="#how-requirements-are-written"
+id="toc-how-requirements-are-written">How requirements are
+written</a></li>
+<li><a href="#requirement-groups"
+id="toc-requirement-groups">Requirement groups</a></li>
+</ul></li>
+<li><a href="#vision-scope-and-terminology-vis"
+id="toc-vision-scope-and-terminology-vis">Vision, scope and terminology
+(VIS)</a></li>
+<li><a href="#accessibility-acc"
+id="toc-accessibility-acc">Accessibility (ACC)</a></li>
+<li><a href="#data-model-data" id="toc-data-model-data">Data model
+(DATA)</a></li>
+<li><a href="#relationships-rel"
+id="toc-relationships-rel">Relationships (REL)</a></li>
+<li><a href="#navigation-nav" id="toc-navigation-nav">Navigation
+(NAV)</a></li>
+<li><a href="#screen-reader-announcements-ann"
+id="toc-screen-reader-announcements-ann">Screen reader announcements
+(ANN)</a></li>
+<li><a href="#visual-presentation-view"
+id="toc-visual-presentation-view">Visual presentation (VIEW)</a></li>
+<li><a href="#search-and-filtering-find"
+id="toc-search-and-filtering-find">Search and filtering (FIND)</a></li>
+<li><a href="#content-and-data-sourcing-cont"
+id="toc-content-and-data-sourcing-cont">Content and data sourcing
+(CONT)</a></li>
+<li><a href="#maintainability-code"
+id="toc-maintainability-code">Maintainability (CODE)</a></li>
+<li><a href="#technology-constraints-tech"
+id="toc-technology-constraints-tech">Technology constraints
+(TECH)</a></li>
+<li><a href="#other-non-functional-requirements-nfr"
+id="toc-other-non-functional-requirements-nfr">Other non-functional
+requirements (NFR)</a></li>
+<li><a href="#retired-requirement-ids"
+id="toc-retired-requirement-ids">Retired requirement IDs</a></li>
+<li><a href="#open-questions" id="toc-open-questions">Open
+questions</a></li>
+<li><a href="#decision-log" id="toc-decision-log">Decision log</a></li>
+<li><a href="#change-history" id="toc-change-history">Change
+history</a></li>
+</ul>
+</nav>
+<h1 id="about-this-document">About this document</h1>
+<p>This is the formal catalogue of requirements for Dependency Tree. It
+records <em>what</em> the system must do, and the constraints it must
+work within. It doesn’t say <em>how</em>.</p>
+<p>Design decisions, such as which keys do what, the wording of
+announcements, or the programming language, are recorded in the
+Functional Specification as numbered design items with the prefix DES.
+Each design item names the requirements it satisfies. The Decision Log
+at the end of this document records every decision, wherever it was
+written down.</p>
+<h2 id="how-requirements-are-written">How requirements are written</h2>
+<p>Each requirement is a row in a table, with these columns:</p>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>A stable identifier, for example REQ-NAV-001. IDs are never reused.
+A requirement’s wording may be revised, but its ID stays the same.</td>
+</tr>
+<tr>
+<td>Requirement</td>
+<td>What the system must do.</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>How important it is, using MoSCoW. See the next table.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Whether it has been decided. See the table after that.</td>
+</tr>
+<tr>
+<td>Source</td>
+<td>Where the requirement came from. “Brief” means the original
+requirements.txt. “Round 1”, “Round 2” and so on mean the product
+owner’s answers in those discussion rounds.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Must</td>
+<td>Required for the first usable release.</td>
+</tr>
+<tr>
+<td>Should</td>
+<td>Important, but the first release could ship without it.</td>
+</tr>
+<tr>
+<td>Could</td>
+<td>Desirable if time allows.</td>
+</tr>
+<tr>
+<td>Later</td>
+<td>Agreed in principle, scheduled for a later phase.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agreed</td>
+<td>Decided by the product owner.</td>
+</tr>
+<tr>
+<td>Proposed</td>
+<td>Recommended by the analyst, awaiting a decision.</td>
+</tr>
+<tr>
+<td>Open</td>
+<td>Depends on an unanswered question (see the Open Questions
+section).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="requirement-groups">Requirement groups</h2>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Group</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VIS</td>
+<td>Vision, scope and terminology</td>
+</tr>
+<tr>
+<td>ACC</td>
+<td>Accessibility</td>
+</tr>
+<tr>
+<td>DATA</td>
+<td>Data model</td>
+</tr>
+<tr>
+<td>REL</td>
+<td>Relationships</td>
+</tr>
+<tr>
+<td>NAV</td>
+<td>Navigation</td>
+</tr>
+<tr>
+<td>ANN</td>
+<td>Screen reader announcements</td>
+</tr>
+<tr>
+<td>VIEW</td>
+<td>Visual presentation</td>
+</tr>
+<tr>
+<td>FIND</td>
+<td>Search and filtering</td>
+</tr>
+<tr>
+<td>CONT</td>
+<td>Content and data sourcing</td>
+</tr>
+<tr>
+<td>CODE</td>
+<td>Maintainability</td>
+</tr>
+<tr>
+<td>TECH</td>
+<td>Technology constraints</td>
+</tr>
+<tr>
+<td>NFR</td>
+<td>Other non-functional requirements</td>
+</tr>
+</tbody>
+</table>
+<h1 id="vision-scope-and-terminology-vis">Vision, scope and terminology
+(VIS)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-VIS-001</td>
+<td>The product is a web application named “Dependency Tree”.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIS-002</td>
+<td>The application presents inventions, historical moments, political
+movements, and technological, scientific and engineering developments,
+together with the things each one depended on.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIS-003</td>
+<td>The application helps a user answer questions of the form “what had
+to exist first for X to be possible?”, for example “why did it take so
+long to build an iPhone?”</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIS-004</td>
+<td>The dataset is intended to be community provided in the long
+term.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIS-005</td>
+<td>The structure is called a “tree”, in the product and in these
+documents. Strictly speaking it is a web, because an entry can have many
+dependents as well as many dependencies. But from any starting entry,
+looking back in time, it reads as a tree, and “tree” is the better
+name.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+</tbody>
+</table>
+<h1 id="accessibility-acc">Accessibility (ACC)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-ACC-001</td>
+<td>Every feature available to sighted users is available to screen
+reader users. Accessibility is a fundamental requirement, not an
+enhancement.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-ACC-002</td>
+<td>The application is fully usable with NVDA on Windows 11.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-ACC-003</td>
+<td>The application is fully usable with VoiceOver on macOS.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-ACC-004</td>
+<td>The tree can be navigated with a screen reader.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-ACC-005</td>
+<td>Dedicated keystrokes are provided for efficient navigation and for
+announcing information about the current entry.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-ACC-006</td>
+<td>The application conforms to WCAG 2.2 level AA.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-007</td>
+<td>Every function is operable by keyboard alone, with no mouse or touch
+required.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-008</td>
+<td>Application keystrokes do not conflict with screen reader, browser
+or operating system shortcuts on the supported platforms. Where a
+conflict can’t be avoided, it is documented with its workaround.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-009</td>
+<td>Keyboard help, listing every application keystroke, is available at
+any time.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-010</td>
+<td>The user can choose how verbose announcements are.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-011</td>
+<td>Moving through the tree never causes unexpected page reloads, focus
+loss, or focus jumps.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-012</td>
+<td>The application is tested with NVDA and Firefox, NVDA and Chrome,
+and VoiceOver and Safari before each release.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-014</td>
+<td>Everything the application announces about an entry can also be read
+at the user’s own pace, using the screen reader’s normal reading
+commands.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ACC-015</td>
+<td>Keyboard navigation is efficient. Common tasks take as few
+keystrokes as possible. In particular, travelling repeatedly in the same
+direction through time needs only one keystroke per step.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2</td>
+</tr>
+</tbody>
+</table>
+<h1 id="data-model-data">Data model (DATA)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-DATA-001</td>
+<td>Each entry has a name, a description and a date.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-DATA-002</td>
+<td>An entry can represent either a single moment in time (for example
+the launch of the iPhone) or something that lasts for a period (for
+example the British Empire). A period is defined by at least a start
+moment and an end moment, and can have any number of moments between
+them.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief, revised in Rounds 2 and 3</td>
+</tr>
+<tr>
+<td>REQ-DATA-003</td>
+<td>Entries carry one or more tags, for example “electronics” or
+“chemistry”.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-DATA-004</td>
+<td>Dates may be before the Common Era (BCE) and may span deep history,
+for example “c. 10,000 BCE” for agriculture.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-DATA-005</td>
+<td>Dates can be known to different precisions, and each date records
+how precisely it is known. For example, the founding of the Roman
+Republic is known to the year (or only approximately), while the iPhone
+launch is known to the day.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Analyst, confirmed in Round 2</td>
+</tr>
+<tr>
+<td>REQ-DATA-006</td>
+<td>A period that is still going on, such as a civilisation that still
+exists, has an open end.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Analyst, confirmed in Round 4</td>
+</tr>
+<tr>
+<td>REQ-DATA-007</td>
+<td>Each entry can hold one or more source references, for example a
+Wikipedia or Wikidata link.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-DATA-008</td>
+<td>Each entry has a stable, unique identifier and a human-readable web
+address, so an entry can be linked to directly.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-DATA-009</td>
+<td>A moment can have a location, for example “Rome” or “China”,
+separate from its tags.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Analyst, confirmed in Round 4</td>
+</tr>
+<tr>
+<td>REQ-DATA-012</td>
+<td>Each entry can hold alternative names, for use by search.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-DATA-013</td>
+<td>Something that lasts for a period contains the moments that happened
+within it, including its start and end moments. Example: the Roman
+Republic contains the writing of the Twelve Tables.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2, confirmed in Round 3</td>
+</tr>
+<tr>
+<td>REQ-DATA-014</td>
+<td>Dates can be in the future, for things that are planned. Example:
+the 2028 Olympic Games.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 4</td>
+</tr>
+</tbody>
+</table>
+<h1 id="relationships-rel">Relationships (REL)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-REL-001</td>
+<td>An entry can depend on one or more other entries. A dependency means
+“this could not have happened without that”. Example: a laptop depends
+on thin, low-power screens.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-REL-002</td>
+<td>A dependency must have happened before the entry that depends on it.
+Example: something can depend on the writing of the Twelve Tables while
+the Roman Republic is still going on.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief, clarified in Round 2</td>
+</tr>
+<tr>
+<td>REQ-REL-003</td>
+<td>An entry can be part of another entry. Periods can be part of larger
+periods. Example: the Tang dynasty is part of Chinese civilisation.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief, confirmed in Round 4</td>
+</tr>
+<tr>
+<td>REQ-REL-004</td>
+<td>An entry can be preceded by or followed by another entry. Example:
+Windows 95 followed Windows 3.1.</td>
+<td>Later</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-REL-005</td>
+<td>An entry can be influenced by another entry. This is a softer link
+than a dependency. Example: the US Constitution was influenced by the
+governance of the Iroquois Confederacy.</td>
+<td>Later</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-REL-007</td>
+<td>The system rejects circular dependencies, where an entry ends up
+depending on itself through a chain of other entries.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-REL-008</td>
+<td>For any moment, the user can see both its dependencies (what it
+needed) and the entries it enabled (its dependents).</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-REL-009</td>
+<td>The rule in REQ-REL-002 takes account of how precisely each date is
+known. A dependency is only rejected when it certainly happened later
+than the entry that depends on it.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2, confirmed in Round 4</td>
+</tr>
+<tr>
+<td>REQ-REL-010</td>
+<td>A dependency can carry a short note explaining why it exists, for
+example “lithium-ion batteries made the laptop portable”.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-REL-011</td>
+<td>Dependencies are always between moments, never to or from a period
+as a whole. Example: Roman law depends on the writing of the Twelve
+Tables, not on the Roman Republic.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2, revised in Round 3</td>
+</tr>
+</tbody>
+</table>
+<h1 id="navigation-nav">Navigation (NAV)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-NAV-001</td>
+<td>From any moment, the user can move to any of its dependencies, which
+lie earlier in time.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-NAV-002</td>
+<td>From any moment, the user can move to any of the entries it enabled,
+which lie later in time.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-NAV-003</td>
+<td>The user can browse each kind of relationship of the current entry
+separately, and choose which kind to browse.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-NAV-004</td>
+<td>The user can go back along the path they took.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NAV-005</td>
+<td>The user can ask for a summary of the current entry at any
+time.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NAV-006</td>
+<td>The user can ask for the path they have taken to reach the current
+entry.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NAV-007</td>
+<td>The user can list the full chain of dependencies of an entry, every
+ancestor back to the earliest, as a flat, sortable list.</td>
+<td>Could</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NAV-015</td>
+<td>When a requested move isn’t possible, the user stays where they are.
+For now this is silent, except at the ends of a period. This is to be
+reviewed after testing.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Analyst, revised in Round 6</td>
+</tr>
+<tr>
+<td>REQ-NAV-016</td>
+<td>When later relationship types are added, they can be browsed in the
+same way as dependencies.</td>
+<td>Later</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-NAV-023</td>
+<td>The user can move from a period into any of the moments it contains,
+and from a moment up to the periods it belongs to.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2, confirmed in Round 4</td>
+</tr>
+<tr>
+<td>REQ-NAV-024</td>
+<td>Within a period, the user can step through its moments in date
+order.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 4</td>
+</tr>
+</tbody>
+</table>
+<h1 id="screen-reader-announcements-ann">Screen reader announcements
+(ANN)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-ANN-004</td>
+<td>Announcements are never stale or duplicated. If the user presses
+keys quickly, only the latest announcement is spoken.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ANN-006</td>
+<td>When filters hide entries, the announcement says so.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ANN-007</td>
+<td>Every move is confirmed by a short announcement that tells the user
+where they are, including their position within any list.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ANN-008</td>
+<td>Dates are announced in natural spoken form, including how precisely
+they are known, for example “around 509 BCE”.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-ANN-009</td>
+<td>Short sounds can be used instead of words, where a sound is quicker
+to understand. Example: a sound when the user can’t go any further.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Round 5</td>
+</tr>
+</tbody>
+</table>
+<h1 id="visual-presentation-view">Visual presentation (VIEW)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-VIEW-001</td>
+<td>The visual presentation resembles a tree of nodes joined by
+links.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIEW-002</td>
+<td>Time runs horizontally, with older dates on the left and more recent
+dates on the right.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIEW-003</td>
+<td>Sighted users can zoom horizontally and vertically, independently of
+each other.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIEW-005</td>
+<td>Thousands of years of early history and the crowded recent centuries
+can both be viewed usefully.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-VIEW-006</td>
+<td>The visual view and the keyboard navigator always show the same
+position. A change in one is reflected in the other.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-VIEW-009</td>
+<td>Clicking an entry in the visual view makes it the current
+entry.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-VIEW-011</td>
+<td>The visual view shows periods with the moments they contain, and
+shows how precisely each date is known.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 2, confirmed in Round 3</td>
+</tr>
+<tr>
+<td>REQ-VIEW-012</td>
+<td>The visual view shows clearly which periods are still going on.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 4</td>
+</tr>
+</tbody>
+</table>
+<h1 id="search-and-filtering-find">Search and filtering (FIND)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-FIND-001</td>
+<td>The user can search for entries.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-FIND-002</td>
+<td>The user can filter entries by tag.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-FIND-003</td>
+<td>The user can filter entries by date range.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief</td>
+</tr>
+<tr>
+<td>REQ-FIND-004</td>
+<td>Search matches entry names, alternative names and descriptions, and
+tolerates minor spelling mistakes.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-FIND-005</td>
+<td>The number of search results is announced to screen reader users
+when results change, without interrupting what is being spoken.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-FIND-006</td>
+<td>Choosing a search result makes it the current entry.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-FIND-007</td>
+<td>Filters apply consistently everywhere entries are shown or
+announced.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-FIND-008</td>
+<td>The tag filter can match any of the selected tags or all of them, as
+the user chooses.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+</tbody>
+</table>
+<h1 id="content-and-data-sourcing-cont">Content and data sourcing
+(CONT)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-CONT-001</td>
+<td>The dataset comes from Wikidata from the outset, not only in a later
+phase.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Brief, Round 1</td>
+</tr>
+<tr>
+<td>REQ-CONT-002</td>
+<td>Community members can add and edit entries and relationships. This
+comes after the first release.</td>
+<td>Later</td>
+<td>Agreed</td>
+<td>Brief, Round 1</td>
+</tr>
+<tr>
+<td>REQ-CONT-003</td>
+<td>Every change to an entry or relationship is recorded with who made
+it and when, and can be reverted.</td>
+<td>Later</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-CONT-004</td>
+<td>Entries imported from Wikidata keep their Wikidata identifier, so
+that they can be refreshed and aren’t duplicated.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-CONT-005</td>
+<td>The data and the code are published under licences that let anyone
+use them, and stop anyone from claiming them as their own or limiting
+others’ use. The data is published under CC0. The code is published
+under AGPL-3.0.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Analyst, Rounds 4 and 5</td>
+</tr>
+<tr>
+<td>REQ-CONT-006</td>
+<td>The first release is read-only for users.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-CONT-007</td>
+<td>The initial dataset has 50 to 200 entries, drawn from Wikidata and
+centred on a working example. “The road to the iPhone” is the default
+example, but it isn’t fixed.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-CONT-008</td>
+<td>“Depends on” and “part of” relationships are imported from
+Wikidata.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-CONT-010</td>
+<td>Entries and relationships that are missing or wrong in Wikidata can
+be added or corrected, and those corrections survive a fresh
+import.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-CONT-011</td>
+<td>Data problems found during import, such as missing dates,
+dependencies that break REQ-REL-002, and circular dependencies, are
+reported rather than dropped silently.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+</tbody>
+</table>
+<h1 id="maintainability-code">Maintainability (CODE)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-CODE-001</td>
+<td>The application is “vibe coded”: Claude writes the code, directed by
+the product owner.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-CODE-002</td>
+<td>The code is divided into units with clear, separate
+responsibilities. Each unit can be read, understood and changed on its
+own. Units don’t mix responsibilities where that can sensibly be
+avoided. The coding standards that achieve this are in the Functional
+Specification, under Non-functional design.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1, Round 2</td>
+</tr>
+</tbody>
+</table>
+<h1 id="technology-constraints-tech">Technology constraints (TECH)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-TECH-001</td>
+<td>The application is hosted on Cloudflare.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+<tr>
+<td>REQ-TECH-002</td>
+<td>The database is one provided by Cloudflare.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 1</td>
+</tr>
+</tbody>
+</table>
+<h1 id="other-non-functional-requirements-nfr">Other non-functional
+requirements (NFR)</h1>
+<table>
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 54%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Requirement</th>
+<th>Priority</th>
+<th>Status</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-NFR-001</td>
+<td>The application runs in current versions of Firefox, Chrome, Edge
+and Safari.</td>
+<td>Must</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NFR-002</td>
+<td>Moving from one entry to another responds within 200 milliseconds on
+a typical laptop, so that screen reader announcements feel
+immediate.</td>
+<td>Should</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NFR-003</td>
+<td>The application handles at least 100,000 entries and 500,000
+relationships without degrading navigation performance.</td>
+<td>Later</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+<tr>
+<td>REQ-NFR-004</td>
+<td>The application is usable on mobile devices, including with
+VoiceOver on iOS and TalkBack on Android.</td>
+<td>Could</td>
+<td>Proposed</td>
+<td>Analyst</td>
+</tr>
+</tbody>
+</table>
+<h1 id="retired-requirement-ids">Retired requirement IDs</h1>
+<p>These IDs are retired and won’t be reused. Most moved to the
+Functional Specification in version 0.3, when design decisions were
+separated from requirements.</p>
+<table>
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 28%" />
+<col style="width: 45%" />
+</colgroup>
+<thead>
+<tr>
+<th>Retired ID</th>
+<th>What it was</th>
+<th>What happened to it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>REQ-ACC-013</td>
+<td>Single focusable widget</td>
+<td>Now DES-SR-001.</td>
+</tr>
+<tr>
+<td>REQ-DATA-010 and REQ-DATA-011</td>
+<td>How dates are stored and displayed</td>
+<td>Now DES-DATE-001 to DES-DATE-004.</td>
+</tr>
+<tr>
+<td>REQ-REL-006</td>
+<td>“Caters for” relationship</td>
+<td>Withdrawn in round 4, because its meaning was unclear.</td>
+</tr>
+<tr>
+<td>REQ-REL-009, old wording</td>
+<td>The open question on predates</td>
+<td>Resolved by the new REQ-REL-002 and REQ-REL-009 wording.</td>
+</tr>
+<tr>
+<td>REQ-NAV-008</td>
+<td></td>
+<td>Withdrawn in version 0.2.</td>
+</tr>
+<tr>
+<td>REQ-NAV-009 to REQ-NAV-014, and REQ-NAV-017 to REQ-NAV-022</td>
+<td>The lists and keystrokes</td>
+<td>Now DES-NAV and DES-KEY items.</td>
+</tr>
+<tr>
+<td>REQ-ANN-001 to REQ-ANN-003, and REQ-ANN-005</td>
+<td>Announcement wording and verbosity levels</td>
+<td>Now DES-ANN items.</td>
+</tr>
+<tr>
+<td>REQ-VIEW-004, REQ-VIEW-007, REQ-VIEW-008 and REQ-VIEW-010</td>
+<td>Drawing details</td>
+<td>Now DES-VIEW items.</td>
+</tr>
+<tr>
+<td>REQ-CONT-009, REQ-CONT-012 and REQ-CONT-013</td>
+<td>How the import works</td>
+<td>Now DES-IMP items.</td>
+</tr>
+<tr>
+<td>REQ-CODE-003 and REQ-CODE-005 to REQ-CODE-008</td>
+<td>Coding standards</td>
+<td>Now DES-CODE items.</td>
+</tr>
+<tr>
+<td>REQ-CODE-004</td>
+<td>The file size limit</td>
+<td>Withdrawn in round 2. There is no fixed limit on file size.</td>
+</tr>
+<tr>
+<td>REQ-TECH-003 to REQ-TECH-007</td>
+<td>Language and libraries</td>
+<td>Now DES-TECH items.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="open-questions">Open questions</h1>
+<p>Answered questions are removed from this table. Their answers are in
+the Decision Log.</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 20%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Topic</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-21</td>
+<td>What Up Arrow does</td>
+<td>Up Arrow does different things on a moment and on a period. On a
+moment, it moves up the active list. On a period, which has no lists, it
+goes up to the larger period this one is part of. Example: from the Tang
+dynasty up to Chinese civilisation. So there are two ways up: from a
+moment, Enter on its Part of list; from a period, Up Arrow. Does that
+make sense, or would you rather periods had a Part of list too, reached
+in the same way as on a moment?</td>
+</tr>
+</tbody>
+</table>
+<h1 id="decision-log">Decision log</h1>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 55%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Decision</th>
+<th>Round</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEC-01</td>
+<td>Keep the name “tree”</td>
+<td>1, 20 October 2026</td>
+<td>Recorded as REQ-VIS-005.</td>
+</tr>
+<tr>
+<td>DEC-02</td>
+<td>Navigation model</td>
+<td>1, 20 October 2026</td>
+<td>Left Arrow goes earlier and Right Arrow goes later. Each entry has
+relationship lists arranged like tabs. Ctrl+Left Arrow and Ctrl+Right
+Arrow switch list, and Up Arrow and Down Arrow move within a list.
+Recorded as REQ-NAV-001 to REQ-NAV-003, DES-NAV-001 to DES-NAV-003, and
+DES-KEY-001 to DES-KEY-003. Partly revised by DEC-19.</td>
+</tr>
+<tr>
+<td>DEC-03</td>
+<td>How the code is built</td>
+<td>1, 20 October 2026</td>
+<td>The application is vibe coded, from small object-oriented units.
+Recorded as REQ-CODE-001, REQ-CODE-002 and DES-CODE-001.</td>
+</tr>
+<tr>
+<td>DEC-04</td>
+<td>Hosting and database</td>
+<td>1, 20 October 2026</td>
+<td>Host on Cloudflare and use a Cloudflare database. Recorded as
+REQ-TECH-001, REQ-TECH-002 and DES-TECH-002.</td>
+</tr>
+<tr>
+<td>DEC-05</td>
+<td>Language</td>
+<td>1, 20 October 2026</td>
+<td>The product owner had no preference, so the analyst chose
+TypeScript. Recorded as DES-TECH-001.</td>
+</tr>
+<tr>
+<td>DEC-06</td>
+<td>Visual library</td>
+<td>1, 20 October 2026</td>
+<td>The choice was delegated to the analyst. Recorded as
+DES-TECH-005.</td>
+</tr>
+<tr>
+<td>DEC-07</td>
+<td>The first release is read-only</td>
+<td>1, 20 October 2026</td>
+<td>Recorded as REQ-CONT-002 and REQ-CONT-006.</td>
+</tr>
+<tr>
+<td>DEC-08</td>
+<td>Starting data</td>
+<td>1, 20 October 2026</td>
+<td>Use Wikidata from the outset, with 50 to 200 entries. The iPhone is
+a good working example but isn’t required. Recorded as REQ-CONT-001,
+REQ-CONT-007 and REQ-CONT-008.</td>
+</tr>
+<tr>
+<td>DEC-09</td>
+<td>Requirements and design are kept separate</td>
+<td>2, 20 October 2026</td>
+<td>The analyst decides where each answer belongs. Needs and constraints
+go in this catalogue. Design decisions go in the Functional
+Specification as DES items, and coding standards go in its
+Non-functional design section. This led to the restructuring in version
+0.3.</td>
+</tr>
+<tr>
+<td>DEC-10</td>
+<td>Coding standards</td>
+<td>2, 20 October 2026</td>
+<td>There is no fixed limit on file size. Classes don’t mix
+responsibilities where that can sensibly be avoided. One class per file.
+Recorded as REQ-CODE-002, DES-CODE-001 and DES-CODE-002. REQ-CODE-004 is
+withdrawn.</td>
+</tr>
+<tr>
+<td>DEC-11</td>
+<td>Each list remembers its highlighted entry</td>
+<td>2, 20 October 2026</td>
+<td>Left Arrow always goes to the highlighted dependency, and Right
+Arrow to the highlighted enabled entry. Answers Q-09. Recorded as
+DES-NAV-004 and DES-KEY-001.</td>
+</tr>
+<tr>
+<td>DEC-12</td>
+<td>Mac keystrokes</td>
+<td>2, 20 October 2026</td>
+<td>Option+Left Arrow and Option+Right Arrow switch list on macOS.
+Answers Q-10. Recorded as DES-KEY-003.</td>
+</tr>
+<tr>
+<td>DEC-13</td>
+<td>The list on arrival matches the direction of travel</td>
+<td>2, 20 October 2026</td>
+<td>Answers Q-11. Recorded as DES-NAV-005. The product owner noted that
+this reflects a general need for efficient keyboard navigation, recorded
+as REQ-ACC-015.</td>
+</tr>
+<tr>
+<td>DEC-14</td>
+<td>Meaning of “predates”</td>
+<td>2, 20 October 2026</td>
+<td>A dependency must have started before the entry that depends on it
+started. Answers Q-05. Recorded as REQ-REL-002.</td>
+</tr>
+<tr>
+<td>DEC-15</td>
+<td>Dates have varying precision</td>
+<td>2, 20 October 2026</td>
+<td>Confirmed REQ-DATA-005. It led to REQ-REL-009 and Q-13.</td>
+</tr>
+<tr>
+<td>DEC-16</td>
+<td>Periods contain moments</td>
+<td>2, 20 October 2026</td>
+<td>The product owner suggested that an entry lasting a period is a
+container of moments with fixed dates. Recorded as Proposed in
+REQ-DATA-002, REQ-DATA-013, REQ-REL-011, REQ-NAV-023 and REQ-VIEW-011,
+pending Q-12.</td>
+</tr>
+<tr>
+<td>DEC-17</td>
+<td>Periods are defined by moments, and dependencies link moments</td>
+<td>3, 21 October 2026</td>
+<td>A period is defined by at least a start moment and an end moment,
+with any number of moments between them. All dependencies are between
+moments, not to a period. Answers Q-12. The product owner confirmed in
+round 4 that this is in the first release. Recorded in REQ-DATA-002,
+REQ-DATA-013 and REQ-REL-011, and in DES-DATA-001 and DES-REL-006.</td>
+</tr>
+<tr>
+<td>DEC-18</td>
+<td>Rough dates</td>
+<td>4, 21 October 2026</td>
+<td>A dependency must always come first. With rough dates, it is
+rejected only when it certainly came later. Where data links to a period
+rather than a moment, the period’s start is used, and this is to be
+reviewed against a sample of real data. Answers Q-13. Recorded as
+REQ-REL-009, DES-REL-002 and DES-REL-007.</td>
+</tr>
+<tr>
+<td>DEC-19</td>
+<td>Moving around moments and periods</td>
+<td>4, 21 October 2026</td>
+<td>On a moment, Ctrl+Left Arrow and Ctrl+Right Arrow switch between its
+lists, Up Arrow and Down Arrow move within a list, and Enter goes to the
+highlighted entry. More lists may come later. On a period, Left Arrow
+and Right Arrow step through its moments, and Enter goes into the
+highlighted moment. Answers Q-14. Led to Q-17 and Q-18. Recorded as
+REQ-NAV-024, DES-NAV-009, DES-KEY-004, DES-KEY-010 and DES-KEY-011.</td>
+</tr>
+<tr>
+<td>DEC-20</td>
+<td>Ongoing periods and future dates</td>
+<td>4, 21 October 2026</td>
+<td>A period can still be going on. It is drawn with a jagged right-hand
+edge at today’s date, and a screen reader user who moves to that point
+hears “Ongoing”. Dates can be in the future for planned things, such as
+the 2028 Olympic Games. Answers Q-15. Recorded as REQ-DATA-006,
+REQ-DATA-014, REQ-VIEW-012, DES-DATA-002, DES-DATE-005, DES-NAV-009,
+DES-ANN-009 and DES-VIEW-002.</td>
+</tr>
+<tr>
+<td>DEC-21</td>
+<td>Periods within periods</td>
+<td>4, 21 October 2026</td>
+<td>A period can be part of a larger period. Answers Q-16. Recorded as
+REQ-REL-003 and DES-DATA-003.</td>
+</tr>
+<tr>
+<td>DEC-22</td>
+<td>Location</td>
+<td>4, 21 October 2026</td>
+<td>A moment can have a location. Answers Q-06. Recorded as REQ-DATA-009
+and DES-DATA-007.</td>
+</tr>
+<tr>
+<td>DEC-23</td>
+<td>“Caters for” is dropped</td>
+<td>4, 21 October 2026</td>
+<td>Nobody remembers what it meant. Answers Q-07. REQ-REL-006 is
+withdrawn.</td>
+</tr>
+<tr>
+<td>DEC-24</td>
+<td>Licence principle</td>
+<td>4, 21 October 2026</td>
+<td>No one should be able to claim anything as their own or limit others
+from using it. The product owner asked for advice on specific licences,
+now in Q-08. Recorded as REQ-CONT-005.</td>
+</tr>
+<tr>
+<td>DEC-25</td>
+<td>Licences</td>
+<td>5, 21 October 2026</td>
+<td>Data under CC0 and code under AGPL-3.0. The product owner has no
+plan to give data back to Wikidata, but agreed with both choices.
+Answers Q-08. Recorded as REQ-CONT-005.</td>
+</tr>
+<tr>
+<td>DEC-26</td>
+<td>Left and Right Arrow on a moment</td>
+<td>5, 21 October 2026</td>
+<td>Left Arrow goes to the highlighted dependency when the Dependencies
+list is active. Right Arrow goes to the highlighted enabled entry when
+the Enabled list is active. Enter does the same. Answers Q-17. Recorded
+as DES-KEY-001.</td>
+</tr>
+<tr>
+<td>DEC-27</td>
+<td>Going up and going back</td>
+<td>5, 21 October 2026</td>
+<td>On a period, Up Arrow goes to the larger period it is part of.
+Backspace always goes back the way the user came. Answers most of Q-18.
+The rest is Q-19. Recorded as DES-KEY-005, DES-KEY-012 and
+DES-NAV-007.</td>
+</tr>
+<tr>
+<td>DEC-28</td>
+<td>Future dates</td>
+<td>5, 21 October 2026</td>
+<td>Future moments aren’t announced as “planned”, because the date shows
+that already. The visual view has a line for today, and planned things
+have dashed outlines. Recorded as DES-VIEW-009. DES-ANN-010 is
+withdrawn.</td>
+</tr>
+<tr>
+<td>DEC-29</td>
+<td>A sound at the ends of a period</td>
+<td>5, 21 October 2026</td>
+<td>Trying to step past the start or end of a period plays a “D’oh”
+sound, which the product owner will supply. Recorded as REQ-ANN-009 and
+DES-ANN-011.</td>
+</tr>
+<tr>
+<td>DEC-30</td>
+<td>Build in small steps</td>
+<td>5, 21 October 2026</td>
+<td>Build first with a handful of made-up moments, then add hand-made
+periods, and only then import from Wikidata. Recorded in the
+Implementation Plan, Phase 0.</td>
+</tr>
+<tr>
+<td>DEC-31</td>
+<td>Left and Right Arrow on the wrong list</td>
+<td>6, 21 October 2026</td>
+<td>Left Arrow when the Dependencies list isn’t active, and Right Arrow
+when the Enabled list isn’t active, do nothing, silently. Recorded as
+DES-KEY-013.</td>
+</tr>
+<tr>
+<td>DEC-32</td>
+<td>The Part of list on a moment</td>
+<td>6, 21 October 2026</td>
+<td>A moment has a Part of list, reached with Ctrl+Left Arrow and
+Ctrl+Right Arrow. Enter on a period in it goes to that period. A moment
+can be part of more than one period. Answers Q-19. It raised Q-21.
+Recorded as DES-NAV-002.</td>
+</tr>
+<tr>
+<td>DEC-33</td>
+<td>Impossible moves are silent</td>
+<td>6, 21 October 2026</td>
+<td>For now, when a move isn’t possible, nothing happens and nothing is
+announced, except for the sound at the ends of a period. To be reviewed
+after testing. Answers Q-20. Recorded as REQ-NAV-015, DES-NAV-008,
+DES-ANN-007 and DES-KEY-012.</td>
+</tr>
+<tr>
+<td>DEC-34</td>
+<td>Public repository</td>
+<td>6, 21 October 2026</td>
+<td>The project is kept in a public repository on GitHub. Recorded as
+DES-TECH-006.</td>
+</tr>
+<tr>
+<td>DEC-35</td>
+<td>Real sample moments</td>
+<td>6, 21 October 2026</td>
+<td>The hand-made sample for Step 0A uses real moments, with dates as
+accurate as can easily be found.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="change-history">Change history</h1>
+<ul>
+<li><strong>0.7</strong>, 21 October 2026: Recorded the round 6
+decisions, DEC-31 to DEC-35, answering Q-19 and Q-20. Revised
+REQ-NAV-015. Added Q-21.</li>
+<li><strong>0.6</strong>, 21 October 2026: Recorded the round 5
+decisions, DEC-25 to DEC-30, answering Q-08, Q-17 and most of Q-18.
+Added REQ-ANN-009. Agreed the licences in REQ-CONT-005. Added Q-19 and
+Q-20.</li>
+<li><strong>0.5</strong>, 21 October 2026: Recorded the round 4
+decisions, DEC-18 to DEC-24. Added REQ-DATA-014, REQ-NAV-024 and
+REQ-VIEW-012. Withdrew REQ-REL-006. Put every requirement, question and
+decision in tables. Added Q-17 and Q-18, and a licence recommendation in
+Q-08.</li>
+<li><strong>0.4</strong>, 21 October 2026: Recorded the round 3 decision
+on periods and moments (DEC-17), answering Q-12. Reworded Q-13 and Q-14.
+Added Q-15 and Q-16.</li>
+<li><strong>0.3</strong>, 20 October 2026: Moved design decisions to the
+Functional Specification as DES items, keeping this catalogue to needs
+and constraints. Recorded the round 2 decisions. Added the
+moments-and-periods model. Withdrew the file size limit. Added questions
+Q-12 to Q-14.</li>
+<li><strong>0.2</strong>, 20 October 2026: Recorded the round 1
+decisions. Added groups ANN, CODE and TECH.</li>
+<li><strong>0.1</strong>, 20 October 2026: first draft created from the
+original brief.</li>
+</ul>
+</body>
+</html>

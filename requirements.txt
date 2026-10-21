@@ -1,0 +1,33 @@
+# Elevator Pitch 
+
+I want to create a web app called "Dependency Tree".
+The big idea is that it shows inventions, moments in history, political movements, technilogical, scientific, engineering developments - but also with their dependencies.  What had to come first in order for each thing to be able to happen.
+Inspired by the question "Why did it take so long to build an iPhone?"  What shoulders needed standing on to get us to the iPhone?
+The intention is that this dataset would be community provided.  Howerver, a lot could be done by extracting data from wikidata.
+
+# Accessibility
+
+Making this application work for screen reader users, as well as sighted users,  is fundamental.  This is because I am blind and use NVDA on Windows 11.
+Making it compatible on Mac is also important.
+
+# Key Features
+
+* Each entry has info of date, name, description. e.g. Light bulb, 1885, Eletric light bulb invented by Eddison 
+* Entries can also represent   a duration e.g. The British Empire, 1650, 1997.
+* The key relationship is that an entry has at least one dependency predating it.  e.g. Laptop requires thin low power screens.
+* An entry can also be part of another entry e.g. Tang dynasty is part of Chinese Civilisation.
+* In later phases may introduce preceded by, and followed by e.g. Windows 95 followed Windows 3.1. 
+* Also for later, was influenced by, caters for relationships which aren't so hard and fast as a dependency e.g. The US Constitution was influenced by Iroquois Confederacy governance.
+* Entries also have tags e.g. electronics, chemistry
+* Visually, this is going to look like a tree.  Nodes with links going to the left and right. The time axis is older dates on the left, recent dates to the right.
+* A screen reader should be able to navigate this tree 
+* Keystrokes can be assigned to enable more efficient navigation and announcing of information for screen readers
+* Zooming horizontally and vertically should be in place for sighted users but maybe meaninless for screen reader users
+* Filtering by tag and date are a minimum.
+* There needs to be a search facility.
+
+* What to do
+
+Can you start a formal requirements catalogue, a separate functional specification, and a plan for implementation.  Always create them as .md documents and convert each to .html with pandoc.  We'll discuss design decisions and extend the requirements catalogue as I make decisions through our discussions together.  
+
+So start this process and ask me just a few key questions to start with and we'll go from there.  The idea is we have several rounds where you ask questions, or make recommendations, to hone my vision as I'm not totally sure currently how this will all work.

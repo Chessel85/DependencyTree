@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2026-10-21" />
+  <title>Dependency Tree — Functional Specification</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Dependency Tree — Functional Specification</h1>
+<p class="subtitle">Version 0.7 (draft)</p>
+<p class="date">2026-10-21</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#about-this-document" id="toc-about-this-document">About
+this document</a></li>
+<li><a href="#data-model" id="toc-data-model">Data model</a>
+<ul>
+<li><a href="#moments-and-periods" id="toc-moments-and-periods">Moments
+and periods</a></li>
+<li><a href="#dates" id="toc-dates">Dates</a></li>
+<li><a href="#relationships"
+id="toc-relationships">Relationships</a></li>
+<li><a href="#why-we-call-it-a-tree" id="toc-why-we-call-it-a-tree">Why
+we call it a tree</a></li>
+</ul></li>
+<li><a href="#screens" id="toc-screens">Screens</a></li>
+<li><a href="#the-tree-navigator" id="toc-the-tree-navigator">The tree
+navigator</a>
+<ul>
+<li><a href="#lists-on-a-moment" id="toc-lists-on-a-moment">Lists on a
+moment</a></li>
+<li><a href="#inside-a-period" id="toc-inside-a-period">Inside a
+period</a></li>
+<li><a href="#anywhere" id="toc-anywhere">Anywhere</a></li>
+<li><a href="#keystrokes" id="toc-keystrokes">Keystrokes</a></li>
+<li><a href="#announcements"
+id="toc-announcements">Announcements</a></li>
+<li><a href="#worked-examples" id="toc-worked-examples">Worked
+examples</a></li>
+<li><a href="#screen-reader-integration"
+id="toc-screen-reader-integration">Screen reader integration</a></li>
+</ul></li>
+<li><a href="#visual-presentation" id="toc-visual-presentation">Visual
+presentation</a></li>
+<li><a href="#search-and-filtering" id="toc-search-and-filtering">Search
+and filtering</a></li>
+<li><a href="#wikidata-import" id="toc-wikidata-import">Wikidata
+import</a></li>
+<li><a href="#non-functional-design"
+id="toc-non-functional-design">Non-functional design</a>
+<ul>
+<li><a href="#technology" id="toc-technology">Technology</a></li>
+<li><a href="#coding-standards" id="toc-coding-standards">Coding
+standards</a></li>
+</ul></li>
+<li><a href="#withdrawn-design-ids"
+id="toc-withdrawn-design-ids">Withdrawn design IDs</a></li>
+<li><a href="#out-of-scope-for-the-first-release"
+id="toc-out-of-scope-for-the-first-release">Out of scope for the first
+release</a></li>
+<li><a href="#change-history" id="toc-change-history">Change
+history</a></li>
+</ul>
+</nav>
+<h1 id="about-this-document">About this document</h1>
+<p>This specification records the design of Dependency Tree: how it
+meets the requirements in the Requirements Catalogue.</p>
+<p>Each design decision is a row in a table, with these columns:</p>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 52%" />
+</colgroup>
+<thead>
+<tr>
+<th>Column</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ID</td>
+<td>For example DES-NAV-001. IDs are never reused.</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>The design decision.</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Agreed: decided by the product owner, or by the analyst where the
+choice was delegated. Proposed: recommended by the analyst, awaiting a
+decision.</td>
+</tr>
+<tr>
+<td>Satisfies</td>
+<td>The requirement IDs the item meets.</td>
+</tr>
+</tbody>
+</table>
+<p>The text between the tables explains how they fit together and gives
+examples.</p>
+<h1 id="data-model">Data model</h1>
+<h2 id="moments-and-periods">Moments and periods</h2>
+<p>There are two kinds of entry: moments and periods. A period is built
+from moments, and every dependency links one moment to another (DEC-17).
+Periods can sit inside larger periods (DEC-21).</p>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-DATA-001</td>
+<td>Every entry is either a <strong>moment</strong>, which has a single
+date, or a <strong>period</strong>. A period is defined by at least two
+moments: a <strong>start moment</strong> and an <strong>end
+moment</strong>. It can have any number of moments between them. A
+period’s dates are the dates of its start and end moments.<br>Example:
+the Roman Republic is defined by its founding, c. 509 BCE, and its end,
+27 BCE. The writing of the Twelve Tables, c. 450 BCE, is one of the
+moments between them.</td>
+<td>Agreed</td>
+<td>REQ-DATA-002</td>
+</tr>
+<tr>
+<td>DES-DATA-002</td>
+<td>A period that is still going on has a start moment but no end moment
+yet. Example: “People’s Republic of China, 1949 to present”.</td>
+<td>Agreed</td>
+<td>REQ-DATA-006</td>
+</tr>
+<tr>
+<td>DES-DATA-003</td>
+<td>A moment can belong to more than one period. A period can be part of
+a larger period. Example: Chinese civilisation contains the Tang
+dynasty.</td>
+<td>Agreed</td>
+<td>REQ-DATA-013, REQ-REL-003</td>
+</tr>
+<tr>
+<td>DES-DATA-004</td>
+<td>An invention or discovery is a moment on its own, not part of any
+period: the date it first came into being. It doesn’t need an end date,
+because it continues to be available. Example: “Lithium-ion battery,
+1991”.</td>
+<td>Proposed</td>
+<td>REQ-DATA-002</td>
+</tr>
+<tr>
+<td>DES-DATA-005</td>
+<td>Every entry has a name, alternative names, a description, tags,
+sources, a stable identifier, an address-friendly name (for example
+“lithium-ion-battery”), and a Wikidata identifier if it was
+imported.</td>
+<td>Proposed</td>
+<td>REQ-DATA-001, REQ-DATA-003, REQ-DATA-007, REQ-DATA-008,
+REQ-DATA-012, REQ-CONT-004</td>
+</tr>
+<tr>
+<td>DES-DATA-006</td>
+<td>Everything in a period falls between its start and end moments,
+allowing for uncertainty in the dates. This includes the start and end
+moments of any smaller period inside it. Breaches are listed in the
+import report.</td>
+<td>Agreed</td>
+<td>REQ-DATA-013, REQ-REL-003, REQ-CONT-011</td>
+</tr>
+<tr>
+<td>DES-DATA-007</td>
+<td>A moment can have a location: a place name such as “Rome” or
+“China”.</td>
+<td>Agreed</td>
+<td>REQ-DATA-009</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dates">Dates</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-DATE-001</td>
+<td>Years are stored as signed astronomical years. 1 BCE is year 0, 2
+BCE is year minus 1, and so on. This allows simple comparison and
+sorting. Users never see this form.</td>
+<td>Proposed</td>
+<td>REQ-DATA-004</td>
+</tr>
+<tr>
+<td>DES-DATE-002</td>
+<td>Each date has a precision. The possible precisions are day, month,
+year, decade, century, millennium, and multiples of ten thousand years
+and more for deep history. These are the same precisions that Wikidata
+uses. Each date also has an “approximate” flag.</td>
+<td>Proposed</td>
+<td>REQ-DATA-005</td>
+</tr>
+<tr>
+<td>DES-DATE-003</td>
+<td>Each date is treated as a range of possible times, from the earliest
+to the latest:<br>• “1991”, with year precision, means any time in
+1991.<br>• “19th century” means 1801 to 1900.<br>• “9 January 2007”,
+with day precision, means that one day.<br>• An approximate date widens
+its range by one unit of its precision on either side. For example,
+“c. 1450”, with year precision, means 1449 to 1451, and “c. 5th century
+BCE” means the 6th to the 4th century BCE.</td>
+<td>Proposed</td>
+<td>REQ-DATA-005, REQ-REL-009</td>
+</tr>
+<tr>
+<td>DES-DATE-004</td>
+<td>Dates are written and spoken in natural form. Examples:<br>• “9
+January 2007”<br>• “1991”<br>• “c. 509 BCE”, spoken as “around 509
+BCE”<br>• “19th century”<br>• “509 BCE to 27 BCE”, for a period<br>•
+“1949 to present”, for a period that is still going on</td>
+<td>Proposed</td>
+<td>REQ-ANN-008</td>
+</tr>
+<tr>
+<td>DES-DATE-005</td>
+<td>A date can be in the future, for something planned. Example: “Los
+Angeles Olympic Games, 14 July 2028 to 30 July 2028”.</td>
+<td>Agreed</td>
+<td>REQ-DATA-014</td>
+</tr>
+</tbody>
+</table>
+<h2 id="relationships">Relationships</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-REL-001</td>
+<td>Only “depends on” is stored. “Enabled” is the same link read in the
+other direction. If the laptop depends on the battery, then the battery
+enabled the laptop.</td>
+<td>Proposed</td>
+<td>REQ-REL-001, REQ-REL-008</td>
+</tr>
+<tr>
+<td>DES-REL-002</td>
+<td>A dependency is rejected only if it <strong>certainly</strong>
+happened later than the moment that depends on it. In other words, it is
+rejected only if the earliest possible date of the dependency is after
+the latest possible date of the dependent. Where the date ranges
+overlap, the dependency is allowed.<br>Example: A, dated c. 1450,
+depends on B, dated only to the 15th century. B might have come first,
+so the dependency is allowed.<br>Example: something dated “1991” can’t
+depend on something dated “9 January 2007”. The dependency is
+rejected.</td>
+<td>Agreed</td>
+<td>REQ-REL-002, REQ-REL-009</td>
+</tr>
+<tr>
+<td>DES-REL-004</td>
+<td>Containment (“part of”) is separate from dependency. It follows
+DES-DATA-006, not the predates rule.</td>
+<td>Proposed</td>
+<td>REQ-REL-003</td>
+</tr>
+<tr>
+<td>DES-REL-005</td>
+<td>Circular dependencies are detected when data is imported, and are
+listed in the report.</td>
+<td>Proposed</td>
+<td>REQ-REL-007</td>
+</tr>
+<tr>
+<td>DES-REL-006</td>
+<td>Dependencies are always between moments. Nothing depends on a period
+as a whole, and a period depends on nothing as a whole. Example: Roman
+law depends on the writing of the Twelve Tables, not on the Roman
+Republic.</td>
+<td>Agreed</td>
+<td>REQ-REL-011</td>
+</tr>
+<tr>
+<td>DES-REL-007</td>
+<td>Where source data links to a period rather than to a moment, the
+period’s start moment is used. This is to be reviewed against a sample
+of real data in Phase 0.</td>
+<td>Agreed</td>
+<td>REQ-REL-009, REQ-REL-011</td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-we-call-it-a-tree">Why we call it a tree</h2>
+<p>From any one moment, looking back through its dependencies, the
+structure branches out like a tree. That is what the product is named
+after. (REQ-VIS-005) Strictly, it is a web, because the same entry can
+be reached by more than one route. The user only ever deals with one
+entry at a time, so the web never has to be managed as a whole.</p>
+<h1 id="screens">Screens</h1>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-SCR-001</td>
+<td>The main screen has four regions, each one a labelled
+landmark:<br>1. <strong>Search</strong><br>2. <strong>Filters</strong>,
+which can be collapsed<br>3. <strong>Tree</strong>: the keyboard
+navigator and the visual view<br>4. <strong>Details</strong>: everything
+about the current entry, as ordinary page content with headings and
+lists</td>
+<td>Proposed</td>
+<td>REQ-ACC-004, REQ-ACC-014</td>
+</tr>
+<tr>
+<td>DES-SCR-002</td>
+<td>Each entry has its own web address, for example
+/entry/lithium-ion-battery. Opening it shows the main screen with that
+entry current.</td>
+<td>Proposed</td>
+<td>REQ-DATA-008</td>
+</tr>
+</tbody>
+</table>
+<h1 id="the-tree-navigator">The tree navigator</h1>
+<p>The navigator behaves differently on a moment and on a period
+(DEC-19):</p>
+<ul>
+<li><strong>On a moment</strong>, the user browses its lists, such as
+Dependencies and Enabled, and presses Enter to go to an entry in one of
+them.</li>
+<li><strong>On a period</strong>, the user steps through its moments in
+date order with Left Arrow and Right Arrow, and presses Enter to go into
+one of them.</li>
+</ul>
+<h2 id="lists-on-a-moment">Lists on a moment</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-NAV-001</td>
+<td>Each moment presents its relationships as a set of lists, which the
+user moves between as if they were the tabs of a tab control.</td>
+<td>Agreed</td>
+<td>REQ-NAV-003</td>
+</tr>
+<tr>
+<td>DES-NAV-002</td>
+<td>The lists, in order:<br>1. <strong>Dependencies</strong>: what this
+moment needed. (Agreed)<br>2. <strong>Part of</strong>: the periods this
+moment belongs to. A moment can be part of more than one period.<br>3.
+<strong>Enabled</strong>: what this moment made possible.<br>More lists
+may be added later. Reading the lists from first to last runs from
+“before”, through “around”, to “after”.</td>
+<td>Agreed</td>
+<td>REQ-NAV-003, REQ-NAV-023</td>
+</tr>
+<tr>
+<td>DES-NAV-003</td>
+<td>The Dependencies and Enabled lists are always present, even when
+empty. The Part of list is only present when it has entries. This means
+that moving between lists never stops on an empty list that tells the
+user nothing.</td>
+<td>Proposed</td>
+<td>REQ-NAV-003, REQ-ACC-015</td>
+</tr>
+<tr>
+<td>DES-NAV-004</td>
+<td>Each list remembers its highlighted entry. Until the user moves
+within the list, this is its first entry.</td>
+<td>Agreed</td>
+<td>REQ-NAV-001, REQ-NAV-002, REQ-ACC-015</td>
+</tr>
+<tr>
+<td>DES-NAV-005</td>
+<td>After moving to another moment, the active list is the kind of list
+the user just moved through, as long as the new moment has one.
+Otherwise, it is the Dependencies list.<br>• After going to a
+dependency, the Dependencies list is active.<br>• After going to an
+enabled entry, the Enabled list is active.</td>
+<td>Agreed</td>
+<td>REQ-ACC-015</td>
+</tr>
+<tr>
+<td>DES-NAV-006</td>
+<td>Entries in each list are sorted by date, oldest first.</td>
+<td>Proposed</td>
+<td>REQ-ACC-015</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inside-a-period">Inside a period</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-NAV-009</td>
+<td>A period is presented as a row of stops in date order, from its
+start moment to its end moment. If the period is still going on, the
+last stop is “Ongoing”, at today’s date.</td>
+<td>Agreed</td>
+<td>REQ-NAV-023, REQ-NAV-024, REQ-DATA-006</td>
+</tr>
+<tr>
+<td>DES-NAV-010</td>
+<td>On arriving at a period from one of its moments, through the Part of
+list, that moment is highlighted. Otherwise, the start moment is
+highlighted.</td>
+<td>Proposed</td>
+<td>REQ-ACC-015</td>
+</tr>
+<tr>
+<td>DES-NAV-011</td>
+<td>A smaller period inside a larger one is a single stop, placed at the
+date of its start moment. Enter goes into it.</td>
+<td>Proposed</td>
+<td>REQ-NAV-023, REQ-REL-003</td>
+</tr>
+</tbody>
+</table>
+<h2 id="anywhere">Anywhere</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-NAV-007</td>
+<td>A path history records each entry visited, together with its active
+list and highlighted entries. Backspace steps back through it.</td>
+<td>Agreed</td>
+<td>REQ-NAV-004, REQ-NAV-006</td>
+</tr>
+<tr>
+<td>DES-NAV-008</td>
+<td>When a move isn’t possible, nothing changes and nothing is announced
+(DES-ANN-007).</td>
+<td>Agreed</td>
+<td>REQ-NAV-015</td>
+</tr>
+</tbody>
+</table>
+<h2 id="keystrokes">Keystrokes</h2>
+<p>These keystrokes apply while the navigator has focus.</p>
+<h3 id="on-a-moment">On a moment</h3>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-KEY-001</td>
+<td>When the Dependencies list is active, Left Arrow goes to its
+highlighted entry, earlier in time. When the Enabled list is active,
+Right Arrow goes to its highlighted entry, later in time. Enter does the
+same. Because the active list follows the direction of travel
+(DES-NAV-005), the user can keep pressing the same arrow to walk through
+time, one key per step.</td>
+<td>Agreed</td>
+<td>REQ-NAV-001, REQ-NAV-002, REQ-ACC-015</td>
+</tr>
+<tr>
+<td>DES-KEY-002</td>
+<td>Up Arrow and Down Arrow move through the active list (Agreed). Home
+and End go to its first and last entry (Proposed).</td>
+<td>Agreed in part</td>
+<td>REQ-NAV-003</td>
+</tr>
+<tr>
+<td>DES-KEY-003</td>
+<td>Ctrl+Left Arrow and Ctrl+Right Arrow go to the previous and next
+list on Windows. Option+Left Arrow and Option+Right Arrow do the same on
+macOS, where Ctrl+Left Arrow and Ctrl+Right Arrow switch desktops.</td>
+<td>Agreed</td>
+<td>REQ-NAV-003, REQ-ACC-008</td>
+</tr>
+<tr>
+<td>DES-KEY-004</td>
+<td>Enter goes to the highlighted entry in the active list.</td>
+<td>Agreed</td>
+<td>REQ-NAV-001, REQ-NAV-002, REQ-NAV-023</td>
+</tr>
+<tr>
+<td>DES-KEY-013</td>
+<td>Left Arrow when the Dependencies list isn’t active, and Right Arrow
+when the Enabled list isn’t active, do nothing, silently.</td>
+<td>Agreed</td>
+<td>REQ-NAV-015</td>
+</tr>
+</tbody>
+</table>
+<h3 id="on-a-period">On a period</h3>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-KEY-010</td>
+<td>Left Arrow and Right Arrow move to the previous and next stop in the
+period (DES-NAV-009). Home and End go to the first and last stop
+(Proposed).</td>
+<td>Agreed in part</td>
+<td>REQ-NAV-024</td>
+</tr>
+<tr>
+<td>DES-KEY-011</td>
+<td>Enter goes into the highlighted moment or smaller period, which
+becomes the current entry.</td>
+<td>Agreed</td>
+<td>REQ-NAV-023</td>
+</tr>
+<tr>
+<td>DES-KEY-012</td>
+<td>Up Arrow goes up to the larger period this period is part of, with
+this period highlighted. If it is part of more than one, it goes to the
+one the user came from, or otherwise the earliest. If it isn’t part of a
+larger period, nothing happens.</td>
+<td>Agreed</td>
+<td>REQ-NAV-023</td>
+</tr>
+</tbody>
+</table>
+<h3 id="anywhere-1">Anywhere</h3>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-KEY-005</td>
+<td>Backspace goes back one step along the path taken.</td>
+<td>Agreed</td>
+<td>REQ-NAV-004</td>
+</tr>
+<tr>
+<td>DES-KEY-006</td>
+<td>Information keys:<br>• Space: summary of the current entry<br>• D:
+description<br>• T: tags<br>• L: location<br>• P: the path taken</td>
+<td>Proposed</td>
+<td>REQ-NAV-005, REQ-NAV-006, REQ-ACC-005</td>
+</tr>
+<tr>
+<td>DES-KEY-007</td>
+<td>Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question
+mark (?): keyboard help<br>• V: cycle verbosity</td>
+<td>Proposed</td>
+<td>REQ-ACC-009, REQ-ACC-010</td>
+</tr>
+<tr>
+<td>DES-KEY-008</td>
+<td>I moves focus to the Details region, for reading in browse mode.
+Escape, pressed from Details, returns focus to the navigator.</td>
+<td>Proposed</td>
+<td>REQ-ACC-014</td>
+</tr>
+</tbody>
+</table>
+<h2 id="announcements">Announcements</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-ANN-001</td>
+<td>Arriving at a moment announces its name, its date, the active list
+and that list’s size. Example: “Laptop, 1981. Enabled, 12.”</td>
+<td>Proposed</td>
+<td>REQ-ANN-007</td>
+</tr>
+<tr>
+<td>DES-ANN-002</td>
+<td>Moving within a list announces the entry’s name, its date and its
+position. Example: “Smartphone, 1994, 3 of 12.”</td>
+<td>Proposed</td>
+<td>REQ-ANN-007</td>
+</tr>
+<tr>
+<td>DES-ANN-003</td>
+<td>Switching list announces the list’s name, its size and the
+highlighted entry. Examples:<br>• “Dependencies, 4. Lithium-ion battery,
+1991, 1 of 4.”<br>• “Dependencies, none.”</td>
+<td>Proposed</td>
+<td>REQ-ANN-007</td>
+</tr>
+<tr>
+<td>DES-ANN-004</td>
+<td>There are three verbosity levels:<br>• Brief: names only<br>•
+Normal: as in the examples in this section (the default)<br>• Full:
+Normal, plus the first sentence of the description</td>
+<td>Proposed</td>
+<td>REQ-ACC-010</td>
+</tr>
+<tr>
+<td>DES-ANN-005</td>
+<td>When filters hide entries, the announcement includes the number
+hidden. Example: “Dependencies, 3, 2 hidden by filters.”</td>
+<td>Proposed</td>
+<td>REQ-ANN-006</td>
+</tr>
+<tr>
+<td>DES-ANN-006</td>
+<td>A new announcement replaces any announcement that hasn’t been spoken
+yet.</td>
+<td>Proposed</td>
+<td>REQ-ANN-004</td>
+</tr>
+<tr>
+<td>DES-ANN-007</td>
+<td>When there is nowhere to go, nothing is announced. The only
+exception is the sound at the ends of a period (DES-ANN-011). This is to
+be reviewed after testing, and spoken messages such as “No earlier
+entries” may be added if silence is confusing.</td>
+<td>Agreed</td>
+<td>REQ-NAV-015</td>
+</tr>
+<tr>
+<td>DES-ANN-008</td>
+<td>Arriving at a period announces its name, its dates, the number of
+moments, and the highlighted stop. Example: “Roman Republic, 509 BCE to
+27 BCE, 6 moments. Start of the Roman Republic, around 509 BCE, 1 of 6.”
+Moving between stops announces the stop’s name, date and position.</td>
+<td>Proposed</td>
+<td>REQ-ANN-007</td>
+</tr>
+<tr>
+<td>DES-ANN-009</td>
+<td>Moving to the end of a period that is still going on announces
+“Ongoing”.</td>
+<td>Agreed</td>
+<td>REQ-DATA-006</td>
+</tr>
+<tr>
+<td>DES-ANN-011</td>
+<td>When the user tries to step past the start or end of a period, a
+short “D’oh” sound plays, and nothing else changes. On a period that is
+still going on, the end is the “Ongoing” stop. The product owner will
+supply the sound as a .wav or .mp3 file.</td>
+<td>Agreed</td>
+<td>REQ-NAV-015, REQ-ANN-009</td>
+</tr>
+</tbody>
+</table>
+<h2 id="worked-examples">Worked examples</h2>
+<p>The dates and counts in these examples are only illustrations.</p>
+<p>Moving between moments. The current entry is the lithium-ion battery.
+The user arrived from the laptop through the Dependencies list, so the
+Dependencies list is active (DES-NAV-005).</p>
+<ol type="1">
+<li>Ctrl+Right Arrow: “Enabled, 8. Laptop, 1981, 1 of 8.”</li>
+<li>Down Arrow twice: “Electric car, 1996, 3 of 8.”</li>
+<li>Right Arrow, or Enter: “Electric car, 1996. Enabled, 5.” The Enabled
+list stays active, so pressing Right Arrow again carries on forward in
+time.</li>
+<li>Backspace: “Lithium-ion battery, 1991. Enabled, 8.” Back where the
+user was.</li>
+</ol>
+<p>Moving into and through a period. The current entry is the writing of
+the Twelve Tables.</p>
+<ol type="1">
+<li>Ctrl+Right Arrow: “Part of, 1. Roman Republic, 509 BCE to 27 BCE, 1
+of 1.”</li>
+<li>Enter: “Roman Republic, 509 BCE to 27 BCE, 6 moments. Twelve Tables,
+around 450 BCE, 2 of 6.” The Twelve Tables is highlighted, because the
+user came from it (DES-NAV-010).</li>
+<li>Left Arrow: “Start of the Roman Republic, around 509 BCE, 1 of
+6.”</li>
+<li>Left Arrow again: the “D’oh” sound plays. The user is already at the
+start.</li>
+<li>Right Arrow: “Twelve Tables, around 450 BCE, 2 of 6.”</li>
+<li>Enter: “Twelve Tables, around 450 BCE. Dependencies, 2.” The user is
+on a moment again, and its lists work as before.</li>
+</ol>
+<p>A period that is still going on. The current entry is the People’s
+Republic of China, and the user is on its last moment.</p>
+<ol type="1">
+<li>Right Arrow: “Ongoing.”</li>
+<li>Right Arrow again: the “D’oh” sound plays.</li>
+</ol>
+<h2 id="screen-reader-integration">Screen reader integration</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-SR-001</td>
+<td>The navigator is a single focusable widget. When it has focus, NVDA
+switches to focus mode automatically. It is likely to use the ARIA
+“application” role, with a live region for announcements. This will be
+confirmed by testing in Phase 0.</td>
+<td>Proposed</td>
+<td>REQ-ACC-004, REQ-ACC-007</td>
+</tr>
+<tr>
+<td>DES-SR-002</td>
+<td>In VoiceOver, Quick Nav must be off for the arrow keys to reach the
+application. Keyboard help says so.</td>
+<td>Proposed</td>
+<td>REQ-ACC-003, REQ-ACC-008</td>
+</tr>
+<tr>
+<td>DES-SR-003</td>
+<td>The Details region is ordinary HTML, with headings and lists. It is
+readable in browse mode and updates whenever the current entry
+changes.</td>
+<td>Proposed</td>
+<td>REQ-ACC-014</td>
+</tr>
+</tbody>
+</table>
+<h1 id="visual-presentation">Visual presentation</h1>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-VIEW-001</td>
+<td>The current entry is centred. Its dependencies are drawn to the left
+and the entries it enabled to the right. The highlighted entry is
+marked.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-001, REQ-VIEW-002, REQ-VIEW-006</td>
+</tr>
+<tr>
+<td>DES-VIEW-002</td>
+<td>Moments are drawn as dots. Periods are drawn as horizontal bars from
+their start moment to their end moment. The moments in between are drawn
+as labelled marks along the bar. Smaller periods are drawn as thinner
+bars inside it. (Proposed)<br>A period that is still going on is drawn
+with a jagged right-hand edge at today’s date. (Agreed)</td>
+<td>Agreed in part</td>
+<td>REQ-VIEW-011, REQ-VIEW-012</td>
+</tr>
+<tr>
+<td>DES-VIEW-003</td>
+<td>A dependency arrow runs from one moment to another (DES-REL-006).
+Where a moment is part of a period, the arrow starts or ends at its mark
+on the period’s bar.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-011, REQ-REL-011</td>
+</tr>
+<tr>
+<td>DES-VIEW-004</td>
+<td>Uncertain dates are drawn with soft, faded edges spanning their
+range of possible times (DES-DATE-003). Exact dates are drawn with sharp
+edges.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-011, REQ-DATA-005</td>
+</tr>
+<tr>
+<td>DES-VIEW-005</td>
+<td>The time axis can be switched between linear and compressed
+(logarithmic).</td>
+<td>Proposed</td>
+<td>REQ-VIEW-005</td>
+</tr>
+<tr>
+<td>DES-VIEW-006</td>
+<td>By default, only the neighbourhood of the current entry is drawn, a
+few steps in each direction. An option draws its whole ancestry.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-005, REQ-NFR-002</td>
+</tr>
+<tr>
+<td>DES-VIEW-007</td>
+<td>Horizontal and vertical zoom are independent. They are controlled by
+the mouse wheel with modifier keys, by pinch gestures, and by on-screen
+buttons.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-003</td>
+</tr>
+<tr>
+<td>DES-VIEW-008</td>
+<td>Clicking an entry makes it current, and updates the navigator to
+match.</td>
+<td>Proposed</td>
+<td>REQ-VIEW-009</td>
+</tr>
+<tr>
+<td>DES-VIEW-009</td>
+<td>A line marks today’s date. Anything dated after it is planned, and
+is drawn with a dashed outline.</td>
+<td>Agreed</td>
+<td>REQ-DATA-014</td>
+</tr>
+</tbody>
+</table>
+<h1 id="search-and-filtering">Search and filtering</h1>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-FIND-001</td>
+<td>Results update after a short pause in typing. Search matches names,
+alternative names and descriptions, and tolerates small spelling
+mistakes. The result count is announced without interrupting.</td>
+<td>Proposed</td>
+<td>REQ-FIND-001, REQ-FIND-004, REQ-FIND-005</td>
+</tr>
+<tr>
+<td>DES-FIND-002</td>
+<td>Choosing a result makes it current and moves focus to the
+navigator.</td>
+<td>Proposed</td>
+<td>REQ-FIND-006</td>
+</tr>
+<tr>
+<td>DES-FIND-003</td>
+<td>Tags are a list of checkboxes, with an any or all choice. The date
+range accepts BCE and CE. Filters apply to search results, lists and the
+visual view.</td>
+<td>Proposed</td>
+<td>REQ-FIND-002, REQ-FIND-003, REQ-FIND-007, REQ-FIND-008</td>
+</tr>
+</tbody>
+</table>
+<h1 id="wikidata-import">Wikidata import</h1>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-IMP-001</td>
+<td>The import is a command-line script that the developer runs. It
+writes a seed file and a report. The seed file is then loaded into the
+database.</td>
+<td>Proposed</td>
+<td>REQ-CONT-001</td>
+</tr>
+<tr>
+<td>DES-IMP-002</td>
+<td>The seed set is gathered by starting from the working example (the
+iPhone, Q2766, by default), and following dependency links backwards in
+time until there are 50 to 200 entries.</td>
+<td>Proposed</td>
+<td>REQ-CONT-007</td>
+</tr>
+<tr>
+<td>DES-IMP-003</td>
+<td>Each imported relationship records the Wikidata property it came
+from. The report shows how many links each property contributed.</td>
+<td>Proposed</td>
+<td>REQ-CONT-008, REQ-CONT-011</td>
+</tr>
+<tr>
+<td>DES-IMP-004</td>
+<td>A curation file in the code repository adds, removes and corrects
+entries and links. It is applied on every import.</td>
+<td>Proposed</td>
+<td>REQ-CONT-010</td>
+</tr>
+<tr>
+<td>DES-IMP-005</td>
+<td>Candidate Wikidata properties. All of these are to be checked
+against real data in Phase 0.<br>• Dependencies: “uses” (P2283), “based
+on” (P144), “depends on software” (P1547) and “has cause” (P828). Also
+“has effect” (P1542) and “immediate cause of” (P1536), which point the
+other way.<br>• Containment: “part of” (P361), “has part(s)” (P527), and
+“significant event” (P793), which gives moments within a period.<br>•
+Moment dates: “time of discovery or invention” (P575), “inception”
+(P571), “point in time” (P585) and “publication date” (P577).<br>•
+Period dates: “start time” (P580) or “inception” (P571) for the start,
+and “end time” (P582) or “dissolved, abolished or demolished date”
+(P576) for the end.<br>• Approximate dates: the “sourcing circumstances”
+qualifier (P1480) with the value “circa”.<br>• Location: “location”
+(P276), or else “country” (P17).<br>• Tags: derived from “instance of”
+(P31) and “subclass of” (P279).</td>
+<td>Proposed</td>
+<td>REQ-CONT-008, REQ-DATA-009</td>
+</tr>
+<tr>
+<td>DES-IMP-006</td>
+<td>Date precision is taken directly from Wikidata’s own precision
+codes: 11 is day, 10 is month, 9 is year, 8 is decade, 7 is century, 6
+is millennium, and lower codes are deeper time.</td>
+<td>Proposed</td>
+<td>REQ-DATA-005</td>
+</tr>
+<tr>
+<td>DES-IMP-007</td>
+<td>The report lists missing dates, broken predates rules, entries that
+fall outside their period, and circular dependencies. Problem links are
+left out of the seed file.</td>
+<td>Proposed</td>
+<td>REQ-CONT-011, REQ-REL-007</td>
+</tr>
+<tr>
+<td>DES-IMP-008</td>
+<td>For each period, the import creates a start moment and an end moment
+from the period’s start and end dates, named for example “Start of the
+Roman Republic” and “End of the Roman Republic”. A Wikidata dependency
+that points at a whole period is attached to its start moment
+(DES-REL-007). It is listed in the report, so that it can be moved to a
+better moment with the curation file (DES-IMP-004).</td>
+<td>Proposed</td>
+<td>REQ-CONT-001, REQ-REL-011</td>
+</tr>
+</tbody>
+</table>
+<h1 id="non-functional-design">Non-functional design</h1>
+<p>This section holds design decisions that aren’t about behaviour: the
+technology choices and the coding standards.</p>
+<h2 id="technology">Technology</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-TECH-001</td>
+<td>TypeScript throughout: front end, server and import tool.</td>
+<td>Agreed (delegated)</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-TECH-002</td>
+<td>Cloudflare D1, Cloudflare’s SQL database, which is based on
+SQLite.</td>
+<td>Agreed</td>
+<td>REQ-TECH-002</td>
+</tr>
+<tr>
+<td>DES-TECH-003</td>
+<td>A Cloudflare Worker serves both the front end and a read-only JSON
+API.</td>
+<td>Proposed</td>
+<td>REQ-TECH-001</td>
+</tr>
+<tr>
+<td>DES-TECH-004</td>
+<td>The front end is plain TypeScript classes with no UI framework,
+built with Vite. This gives full control over focus and
+announcements.</td>
+<td>Proposed</td>
+<td>REQ-ACC-001, REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-TECH-005</td>
+<td>The visual view is drawn in SVG. The D3 library is used only for
+time scales and zooming.</td>
+<td>Proposed (delegated)</td>
+<td>REQ-VIEW-001, REQ-VIEW-003</td>
+</tr>
+<tr>
+<td>DES-TECH-006</td>
+<td>The code and these documents are kept in a public git repository on
+GitHub.</td>
+<td>Agreed</td>
+<td>REQ-CODE-001</td>
+</tr>
+</tbody>
+</table>
+<h2 id="coding-standards">Coding standards</h2>
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 56%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Design</th>
+<th>Status</th>
+<th>Satisfies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-CODE-001</td>
+<td>The code is object-oriented, built from classes with clear public
+interfaces. A class doesn’t mix responsibilities where that can sensibly
+be avoided.</td>
+<td>Agreed</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-CODE-002</td>
+<td>One class per file, and the file is named after the class. There is
+no fixed limit on file size: a file is as large as its single
+responsibility needs. Small types used only by that class, such as an
+enumeration, may sit in the same file.</td>
+<td>Agreed</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-CODE-003</td>
+<td>The core logic (the model, dates, graph rules, navigation state and
+announcement wording) doesn’t depend on the browser, the user interface
+or Cloudflare.</td>
+<td>Proposed</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-CODE-004</td>
+<td>Dependencies between parts of the code point in one direction only.
+The user interface, the server and the import tool all depend on the
+core. The core depends on none of them.</td>
+<td>Proposed</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-CODE-005</td>
+<td>Each core class has unit tests.</td>
+<td>Proposed</td>
+<td>REQ-CODE-002</td>
+</tr>
+<tr>
+<td>DES-CODE-006</td>
+<td>An architecture document lists every module and its
+responsibility.</td>
+<td>Proposed</td>
+<td>REQ-CODE-002</td>
+</tr>
+</tbody>
+</table>
+<h1 id="withdrawn-design-ids">Withdrawn design IDs</h1>
+<p>These IDs won’t be reused.</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 26%" />
+<col style="width: 44%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>What it was</th>
+<th>Why it was withdrawn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DES-REL-003</td>
+<td>Which date to use when a dependency pointed at a whole period.</td>
+<td>Withdrawn in version 0.4. Dependencies now always point at moments
+(DES-REL-006).</td>
+</tr>
+<tr>
+<td>DES-KEY-009</td>
+<td>On a period, Left Arrow went to its start moment and Right Arrow to
+its end moment.</td>
+<td>Withdrawn in version 0.5. Replaced by stepping through all of a
+period’s moments (DES-KEY-010).</td>
+</tr>
+<tr>
+<td>DES-ANN-010</td>
+<td>A moment dated in the future was announced as “planned”.</td>
+<td>Withdrawn in version 0.6. The date already shows that it is in the
+future.</td>
+</tr>
+</tbody>
+</table>
+<p>The Contains list, proposed in version 0.3, is also withdrawn. A
+period’s moments are now reached by stepping through the period
+(DES-NAV-009).</p>
+<h1 id="out-of-scope-for-the-first-release">Out of scope for the first
+release</h1>
+<ul>
+<li>Community editing and user accounts. (REQ-CONT-002,
+REQ-CONT-006)</li>
+<li>Relationship lists beyond those in DES-NAV-002. (REQ-NAV-016)</li>
+<li>Datasets larger than 200 entries. (REQ-NFR-003)</li>
+<li>Mobile-specific layouts. (REQ-NFR-004)</li>
+</ul>
+<h1 id="change-history">Change history</h1>
+<ul>
+<li><strong>0.7</strong>, 21 October 2026: Recorded the round 6
+decisions. The Part of list is agreed. Impossible moves are silent,
+except at the ends of a period. The repository is public on GitHub.</li>
+<li><strong>0.6</strong>, 21 October 2026: Recorded the round 5
+decisions. Left Arrow and Right Arrow on a moment work from their own
+lists (DES-KEY-001). Added the “D’oh” sound at the ends of a period
+(DES-ANN-011) and DES-KEY-013. Agreed Up Arrow on a period, Backspace
+and the line for today. Withdrew DES-ANN-010.</li>
+<li><strong>0.5</strong>, 21 October 2026: Recorded the round 4
+decisions. Moments have lists, and periods are stepped through with Left
+Arrow and Right Arrow (DEC-19). Added ongoing periods, future dates,
+nested periods and locations. Added DES-DATA-007, DES-DATE-005,
+DES-REL-007, DES-NAV-009 to DES-NAV-011, DES-KEY-010 to DES-KEY-012,
+DES-ANN-008 to DES-ANN-010 and DES-VIEW-009. Withdrew DES-KEY-009 and
+the Contains list. Put every design item in tables.</li>
+<li><strong>0.4</strong>, 21 October 2026: Periods are now defined by a
+start moment and an end moment, with any number of moments between, and
+dependencies are always between moments (DEC-17). Added DES-DATA-006,
+DES-REL-006, DES-KEY-009 and DES-IMP-008. Rewrote DES-DATA-001 to
+DES-DATA-003, DES-NAV-002, DES-NAV-003, DES-VIEW-002 and DES-VIEW-003.
+Withdrew DES-REL-003.</li>
+<li><strong>0.3</strong>, 20 October 2026: Added numbered DES items,
+which now hold the design decisions that used to be in the Requirements
+Catalogue. Added the moments-and-periods model, date ranges, the
+predates check, the Part of and Contains lists, the Enter and I keys,
+how periods and uncertain dates are drawn, and a Non-functional design
+section.</li>
+<li><strong>0.2</strong>, 20 October 2026: Tab-style lists and the
+Wikidata import.</li>
+<li><strong>0.1</strong>, 20 October 2026: first draft.</li>
+</ul>
+</body>
+</html>
