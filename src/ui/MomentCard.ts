@@ -16,7 +16,18 @@ export class MomentCard {
 
   show(moment: Moment): void {
     this.heading.textContent = moment.name;
-    this.summary.value = this.words.summaryLines(moment);
-    this.description.value = this.words.description(moment);
+    this.fill(this.summary, this.words.summaryLines(moment));
+    this.fill(this.description, this.words.description(moment));
+  }
+
+  /**
+   * Setting a text box's value leaves the caret at the end, so it is moved
+   * back to the start. Within one moment, the box keeps wherever the user
+   * left the caret.
+   */
+  private fill(box: HTMLTextAreaElement, text: string): void {
+    box.value = text;
+    box.setSelectionRange(0, 0);
+    box.scrollTop = 0;
   }
 }

@@ -32,9 +32,15 @@ body {
   resize: vertical;
 }
 
+.relationships {
+  display: flex;
+  flex-direction: column;
+}
+
 [role='tablist'] {
   display: flex;
   gap: 0.25rem;
+  order: -1;
 }
 
 [role='tab'] {

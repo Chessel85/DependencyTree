@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.11 (draft)</p>
+<p class="subtitle">Version 0.12 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -834,10 +834,11 @@ mark (?): keyboard help<br>• V: cycle verbosity</td>
 </tr>
 <tr>
 <td>DES-KEY-014</td>
-<td>Tab and Shift+Tab move between the parts of the card. On the tabs,
-Left Arrow, Right Arrow, Home and End choose a tab, as on any tab
-control. Backspace and question mark work anywhere in the card. The
-other keys in this section work in the list.</td>
+<td>Tab and Shift+Tab move between the parts of the card, in the order
+given in DES-SR-006. On the tabs, Left Arrow, Right Arrow, Home and End
+choose a tab, as on any tab control. Backspace and question mark work
+anywhere in the card. The other keys in this section work in the
+list.</td>
 <td>Agreed</td>
 <td>REQ-ACC-007, REQ-NAV-003</td>
 </tr>
@@ -1008,7 +1009,12 @@ the name, date and location on three lines.<br>3.
 <strong>Description</strong>: a read-only text box.<br>4. A tab control
 with one tab per list, showing its count, for example “Dependencies
 (2)”.<br>5. A list box of the active list’s entries, with focus on the
-highlighted entry.<br>Tab and Shift+Tab move between the parts.</td>
+highlighted entry.<br>Tab and Shift+Tab move between the parts in this
+order: summary, description, list, tabs. The list comes before the tabs
+because it is used far more, although the tabs are shown above it. When
+a new moment is shown, the caret in each text box starts at the top
+line. Within one moment, each box keeps wherever the user left the
+caret.</td>
 <td>Agreed</td>
 <td>REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016</td>
 </tr>
@@ -1486,6 +1492,9 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.12</strong>, 21 October 2026: The list comes before the
+tabs in the Tab order, and text boxes start at the top line
+(DES-SR-006).</li>
 <li><strong>0.11</strong>, 21 October 2026: The current moment is now a
 card of standard controls (DES-SR-006, DES-SR-007), with Tab moving
 between its parts (DES-KEY-014). Rewrote DES-SCR-001, DES-NAV-001,

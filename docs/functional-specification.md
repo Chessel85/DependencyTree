@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.11 (draft)"
+subtitle: "Version 0.12 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -130,7 +130,7 @@ These keystrokes apply while the navigator has focus.
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
 | DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest, without dates. Example: "Path, 3 moments: Electric battery, Telephone, iPhone." (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
-| DES-KEY-014 | Tab and Shift+Tab move between the parts of the card. On the tabs, Left Arrow, Right Arrow, Home and End choose a tab, as on any tab control. Backspace and question mark work anywhere in the card. The other keys in this section work in the list. | Agreed | REQ-ACC-007, REQ-NAV-003 |
+| DES-KEY-014 | Tab and Shift+Tab move between the parts of the card, in the order given in DES-SR-006. On the tabs, Left Arrow, Right Arrow, Home and End choose a tab, as on any tab control. Backspace and question mark work anywhere in the card. The other keys in this section work in the list. | Agreed | REQ-ACC-007, REQ-NAV-003 |
 
 ## Announcements
 
@@ -176,7 +176,7 @@ A period that is still going on. The current entry is the People's Republic of C
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-SR-006 | The current moment is shown as a card made of standard controls, so the screen reader's own commands work on every part of it, including "read current line" (NVDA+Up Arrow). In order:<br>1. A heading with the moment's name.<br>2. **Summary**: a read-only text box with the name, date and location on three lines.<br>3. **Description**: a read-only text box.<br>4. A tab control with one tab per list, showing its count, for example "Dependencies (2)".<br>5. A list box of the active list's entries, with focus on the highlighted entry.<br>Tab and Shift+Tab move between the parts. | Agreed | REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016 |
+| DES-SR-006 | The current moment is shown as a card made of standard controls, so the screen reader's own commands work on every part of it, including "read current line" (NVDA+Up Arrow). In order:<br>1. A heading with the moment's name.<br>2. **Summary**: a read-only text box with the name, date and location on three lines.<br>3. **Description**: a read-only text box.<br>4. A tab control with one tab per list, showing its count, for example "Dependencies (2)".<br>5. A list box of the active list's entries, with focus on the highlighted entry.<br>Tab and Shift+Tab move between the parts in this order: summary, description, list, tabs. The list comes before the tabs because it is used far more, although the tabs are shown above it. When a new moment is shown, the caret in each text box starts at the top line. Within one moment, each box keeps wherever the user left the caret. | Agreed | REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016 |
 | DES-SR-002 | In VoiceOver, Quick Nav must be off for the arrow keys to reach the application. Keyboard help says so. | Proposed | REQ-ACC-003, REQ-ACC-008 |
 | DES-SR-004 | Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. | Proposed | REQ-ACC-011 |
 | DES-SR-007 | The list box is rebuilt each time the moment or the tab changes, so the screen reader sees focus enter a new list and reads its label, which names the moment, its date and the list. | Proposed | REQ-ANN-007 |
@@ -269,6 +269,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.12**, 21 October 2026: The list comes before the tabs in the Tab order, and text boxes start at the top line (DES-SR-006).
 - **0.11**, 21 October 2026: The current moment is now a card of standard controls (DES-SR-006, DES-SR-007), with Tab moving between its parts (DES-KEY-014). Rewrote DES-SCR-001, DES-NAV-001, DES-SR-004 and DES-ANN-001 to DES-ANN-003. Withdrew DES-SR-001, DES-SR-003, DES-SR-005 and DES-KEY-008.
 - **0.10**, 21 October 2026: Settled the wording for P (DES-KEY-006).
 - **0.9**, 21 October 2026: After the second test of Step 0A: the navigator's content is one line that NVDA+Up Arrow reads (DES-SR-005), and P reads the path in date order (DES-KEY-006). Added the visual layout experiment to DES-VIEW-005 and DES-VIEW-010.

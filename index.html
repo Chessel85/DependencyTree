@@ -22,9 +22,11 @@
           <label for="moment-description">Description</label>
           <textarea id="moment-description" readonly rows="4"></textarea>
         </div>
-        <div class="card-part">
-          <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
+        <!-- The list comes before the tabs, so Tab reaches the list first.
+             The stylesheet still shows the tabs above the list. -->
+        <div class="card-part relationships">
           <div id="relationship-panel"></div>
+          <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
         </div>
         <button type="button" id="help-open">Keyboard help</button>
       </section>
