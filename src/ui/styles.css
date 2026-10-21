@@ -6,13 +6,13 @@ body {
   padding: 1rem;
 }
 
-#moment-card {
+#entry-card {
   border: 2px solid #555;
   border-radius: 0.5rem;
   padding: 1rem;
 }
 
-#moment-card h2 {
+#entry-card h2 {
   margin-top: 0;
 }
 

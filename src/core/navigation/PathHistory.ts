@@ -1,4 +1,4 @@
-import { Moment } from '../model/Moment';
+import { Entry } from '../model/Entry';
 import { Visit } from './Visit';
 
 /** The path the user has taken, for Backspace and P (DES-NAV-007). */
@@ -13,8 +13,8 @@ export class PathHistory {
     return this.visits.pop();
   }
 
-  /** The moments visited before the current one, oldest first. */
-  get moments(): Moment[] {
-    return this.visits.map((v) => v.moment);
+  /** The entries visited before the current one, oldest first. */
+  get entries(): Entry[] {
+    return this.visits.map((v) => v.entry);
   }
 }

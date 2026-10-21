@@ -3,12 +3,14 @@ import { NavigationState } from '../core/navigation/NavigationState';
 
 /**
  * The entries of the active list, as a standard ARIA list box. Focus sits on
- * the highlighted entry, so the screen reader reads it, its position, and
- * NVDA+Up Arrow repeats it (DES-SR-006).
+ * the highlighted entry, so the screen reader reads it with its position,
+ * and NVDA+Up Arrow repeats it (DES-SR-006).
  *
- * The list box is rebuilt whenever the moment or the tab changes. Because the
- * screen reader then sees focus enter a new list, it reads the list's label,
- * which names the moment and the list (DES-ANN-001).
+ * A new list box is built whenever the entry or the tab changes, so the
+ * screen reader sees focus enter a new list and reads its label (DES-SR-007).
+ * If the old list box has focus, it stays until focus has moved into the new
+ * one. Otherwise focus would drop to the page for a moment, and the screen
+ * reader would announce the whole page again.
  */
 export class RelationshipListBox {
   private listbox: HTMLElement | undefined;
@@ -20,16 +22,15 @@ export class RelationshipListBox {
     private readonly onChoose: (index: number) => void,
   ) {}
 
-  build(state: NavigationState): void {
+  build(state: NavigationState, label: string): void {
     const list = state.activeList;
     const listbox = document.createElement('ul');
     listbox.setAttribute('role', 'listbox');
-    listbox.setAttribute('aria-label', this.words.listLabel(state));
-    this.options = list.entries.map((moment, index) => {
+    listbox.setAttribute('aria-label', label);
+    this.options = list.entries.map((entry, index) => {
       const option = document.createElement('li');
       option.setAttribute('role', 'option');
-      option.id = `entry-${moment.id}`;
-      option.textContent = this.words.entry(moment);
+      option.textContent = this.words.entry(entry);
       option.setAttribute('aria-posinset', String(index + 1));
       option.setAttribute('aria-setsize', String(list.size));
       option.addEventListener('click', () => this.onChoose(index));
@@ -39,7 +40,11 @@ export class RelationshipListBox {
     // An empty list box takes focus itself, and its label says "none".
     listbox.tabIndex = this.options.length === 0 ? 0 : -1;
     this.listbox = listbox;
-    this.panel.replaceChildren(listbox);
+    if (this.panel.contains(document.activeElement)) {
+      this.panel.append(listbox);
+    } else {
+      this.panel.replaceChildren(listbox);
+    }
     this.highlight(list.highlightedIndex);
   }
 
@@ -51,9 +56,15 @@ export class RelationshipListBox {
     });
   }
 
+  /** Focuses the highlighted entry, then removes any list box it replaced. */
   focus(): void {
     const target = this.options.find((option) => option.tabIndex === 0) ?? this.listbox;
     target?.focus();
+    for (const child of [...this.panel.children]) {
+      if (child !== this.listbox) {
+        child.remove();
+      }
+    }
   }
 
   contains(node: Node): boolean {

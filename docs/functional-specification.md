@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.12 (draft)"
+subtitle: "Version 0.13 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -45,6 +45,7 @@ There are two kinds of entry: moments and periods. A period is built from moment
 | DES-DATE-003 | Each date is treated as a range of possible times, from the earliest to the latest:<br>• "1991", with year precision, means any time in 1991.<br>• "19th century" means 1801 to 1900.<br>• "9 January 2007", with day precision, means that one day.<br>• An approximate date widens its range by one unit of its precision on either side. For example, "c. 1450", with year precision, means 1449 to 1451, and "c. 5th century BCE" means the 6th to the 4th century BCE. | Proposed | REQ-DATA-005, REQ-REL-009 |
 | DES-DATE-004 | Dates are written and spoken in natural form. Examples:<br>• "9 January 2007"<br>• "1991"<br>• "c. 509 BCE", spoken as "around 509 BCE"<br>• "19th century"<br>• "509 BCE to 27 BCE", for a period<br>• "1949 to present", for a period that is still going on | Proposed | REQ-ANN-008 |
 | DES-DATE-005 | A date can be in the future, for something planned. Example: "Los Angeles Olympic Games, 14 July 2028 to 30 July 2028". | Agreed | REQ-DATA-014 |
+| DES-DATE-006 | In lists and list labels, dates are shortened by how far they are from today:<br>• More than 3 years away: the year only, such as "2007".<br>• More than 12 months but at most 3 years away: month and year, such as "March 2024".<br>• Within 12 months: the full date, as precisely as it is known.<br>Future dates are treated the same way. A date known only roughly, such as "1970s", is never made more precise. The summary box and the Space summary give dates in full. | Agreed | REQ-ANN-008, REQ-ACC-015 |
 
 ## Relationships
 
@@ -65,7 +66,7 @@ From any one moment, looking back through its dependencies, the structure branch
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-SCR-001 | The main screen has three regions, each one a labelled landmark:<br>1. **Search**<br>2. **Filters**, which can be collapsed<br>3. **Tree**: the current moment's card (DES-SR-006), with the visual view around it<br>The Details region of earlier versions is replaced by the card. | Proposed | REQ-ACC-004, REQ-ACC-014 |
+| DES-SCR-001 | The page has no landmarks, because the user is nearly always in focus mode, and landmarks only added to what NVDA said on every move. Headings serve browse mode instead: the page title, and the current entry's name. Search and filters, when they come, will have headings too. | Agreed | REQ-ACC-004, REQ-ACC-015 |
 | DES-SCR-002 | Each entry has its own web address, for example /entry/lithium-ion-battery. Opening it shows the main screen with that entry current. | Proposed | REQ-DATA-008 |
 
 # The tree navigator
@@ -93,7 +94,7 @@ The navigator behaves differently on a moment and on a period (DEC-19):
 | DES-NAV-009 | A period is presented as a row of stops in date order, from its start moment to its end moment. If the period is still going on, the last stop is "Ongoing", at today's date. | Agreed | REQ-NAV-023, REQ-NAV-024, REQ-DATA-006 |
 | DES-NAV-010 | On arriving at a period from one of its moments, through the Part of list, that moment is highlighted. Otherwise, the start moment is highlighted. | Proposed | REQ-ACC-015 |
 | DES-NAV-011 | A smaller period inside a larger one is a single stop, placed at the date of its start moment. Enter goes into it. | Proposed | REQ-NAV-023, REQ-REL-003 |
-| DES-NAV-012 | A period that is part of a larger period has a Part of list, reached with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up works the same way everywhere. (Agreed)<br>The period's stops count as its first list, called Moments. While Moments is active, Left Arrow and Right Arrow step through the stops, and Enter goes into the highlighted one. While Part of is active, Up Arrow and Down Arrow move through it, and Enter goes to the highlighted larger period. (Proposed) | Agreed in part | REQ-NAV-023, REQ-NAV-003 |
+| DES-NAV-012 | A period that is part of a larger period has a Part of list, reached with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up works the same way everywhere. (Agreed)<br>The period's stops are its first list, called Moments. While Moments is active, Left Arrow and Right Arrow step through the stops, and Enter goes into the highlighted one. While Part of is active, Up Arrow and Down Arrow move through it, and Enter goes to the highlighted larger period. (Proposed, built in Step 0B) | Agreed in part | REQ-NAV-023, REQ-NAV-003 |
 
 ## Anywhere
 
@@ -128,7 +129,7 @@ These keystrokes apply while the navigator has focus.
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
-| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest, without dates. Example: "Path, 3 moments: Electric battery, Telephone, iPhone." (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
+| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest, without dates. Example: "Path, 3 entries: Electric battery, Telephone, iPhone." It says "entries" rather than "moments", because a path can include periods. (Agreed, with "entries" proposed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
 | DES-KEY-014 | Tab and Shift+Tab move between the parts of the card, in the order given in DES-SR-006. On the tabs, Left Arrow, Right Arrow, Home and End choose a tab, as on any tab control. Backspace and question mark work anywhere in the card. The other keys in this section work in the list. | Agreed | REQ-ACC-007, REQ-NAV-003 |
 
@@ -136,16 +137,16 @@ These keystrokes apply while the navigator has focus.
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-ANN-001 | On arriving at a moment, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. For example: "Telephone, 7 March 1876, Dependencies, list. Electric battery, March 1800, 1 of 2." An empty list's label ends with "none". The exact wording depends on the screen reader. | Proposed | REQ-ANN-007 |
+| DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry, its shortened date and the list. For example: "Telephone, 1876, Dependencies, list. Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
 | DES-ANN-002 | Moving within a list moves focus to the entry, which the screen reader reads with its position. For example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
-| DES-ANN-003 | Switching list moves focus into the new list, whose label and highlighted entry the screen reader reads. | Proposed | REQ-ANN-007 |
+| DES-ANN-003 | Switching list moves focus into the new list, whose label is just the list's name, followed by the highlighted entry. For example: "Enabled, list. Laptop, 1981, 1 of 8." An empty list says "Enabled, none, list". | Agreed | REQ-ANN-007, REQ-ACC-015 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
 | DES-ANN-005 | When filters hide entries, the announcement includes the number hidden. Example: "Dependencies, 3, 2 hidden by filters." | Proposed | REQ-ANN-006 |
 | DES-ANN-006 | A new announcement replaces any announcement that hasn't been spoken yet. | Proposed | REQ-ANN-004 |
 | DES-ANN-007 | When there is nowhere to go, nothing is announced. The only exception is the sound at the ends of a period (DES-ANN-011). This is to be reviewed after testing, and spoken messages such as "No earlier entries" may be added if silence is confusing. | Agreed | REQ-NAV-015 |
-| DES-ANN-008 | Arriving at a period announces its name, its dates, the number of moments, and the highlighted stop. Example: "Roman Republic, 509 BCE to 27 BCE, 6 moments. Start of the Roman Republic, around 509 BCE, 1 of 6." Moving between stops announces the stop's name, date and position. | Proposed | REQ-ANN-007 |
+| DES-ANN-008 | Arriving at a period works the same way, through the label of its Moments list. For example: "Information Age, 1970s to present, Moments, list. iPhone, 2007, 5 of 6." | Agreed | REQ-ANN-007 |
 | DES-ANN-009 | Moving to the end of a period that is still going on announces "Ongoing". | Agreed | REQ-DATA-006 |
-| DES-ANN-011 | When the user tries to step past the start or end of a period, a short "D'oh" sound plays, and nothing else changes. On a period that is still going on, the end is the "Ongoing" stop. The product owner will supply the sound as a .wav or .mp3 file. | Agreed | REQ-NAV-015, REQ-ANN-009 |
+| DES-ANN-011 | When the user presses Left Arrow at the start of a period's Moments list, or Right Arrow at its end, a short "D'oh" sound plays, and nothing else changes. On a period still going on, the end is the "Ongoing" stop. Up Arrow and Down Arrow at the ends are silent, as in any list. The sound is sounds/bump.wav, supplied by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
 
 ## Worked examples
 
@@ -176,10 +177,10 @@ A period that is still going on. The current entry is the People's Republic of C
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-SR-006 | The current moment is shown as a card made of standard controls, so the screen reader's own commands work on every part of it, including "read current line" (NVDA+Up Arrow). In order:<br>1. A heading with the moment's name.<br>2. **Summary**: a read-only text box with the name, date and location on three lines.<br>3. **Description**: a read-only text box.<br>4. A tab control with one tab per list, showing its count, for example "Dependencies (2)".<br>5. A list box of the active list's entries, with focus on the highlighted entry.<br>Tab and Shift+Tab move between the parts in this order: summary, description, list, tabs. The list comes before the tabs because it is used far more, although the tabs are shown above it. When a new moment is shown, the caret in each text box starts at the top line. Within one moment, each box keeps wherever the user left the caret. | Agreed | REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016 |
+| DES-SR-006 | The current entry, a moment or a period, is shown as a card made of standard controls, so the screen reader's own commands work on every part of it, including "read current line" (NVDA+Up Arrow). In order:<br>1. A heading with the entry's name.<br>2. **Summary**: a read-only text box with three lines: the name, the date or dates, and the location (for a moment) or "Period" or "Period, still going on".<br>3. **Description**: a read-only text box.<br>4. A tab control with one tab per list, showing its count, for example "Dependencies (2)".<br>5. A list box of the active list's entries, with focus on the highlighted entry.<br>Tab and Shift+Tab move between the parts in this order: summary, description, list, tabs. The list comes before the tabs because it is used far more, although the tabs are shown above it. When a new entry is shown, the caret in each text box starts at the top line. Within one entry, each box keeps wherever the user left the caret. | Agreed | REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016 |
 | DES-SR-002 | In VoiceOver, Quick Nav must be off for the arrow keys to reach the application. Keyboard help says so. | Proposed | REQ-ACC-003, REQ-ACC-008 |
 | DES-SR-004 | Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. | Proposed | REQ-ACC-011 |
-| DES-SR-007 | The list box is rebuilt each time the moment or the tab changes, so the screen reader sees focus enter a new list and reads its label, which names the moment, its date and the list. | Proposed | REQ-ANN-007 |
+| DES-SR-007 | A new list box is built each time the entry or the tab changes, so the screen reader sees focus enter a new list and reads its label. The old list box stays until focus has moved into the new one. Otherwise focus would drop to the page for a moment, and the screen reader would announce the document and its landmarks again. | Agreed | REQ-ANN-007, REQ-ACC-015 |
 
 # Visual presentation
 
@@ -269,6 +270,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.13**, 21 October 2026: Built periods (Step 0B). Removed landmarks (DES-SCR-001). After switching tab, the list's label is just its name (DES-ANN-003). Dates in lists are shortened by how far they are from today (DES-DATE-006). The old list box stays until focus has moved (DES-SR-007). Updated DES-ANN-001, DES-ANN-008, DES-ANN-011, DES-NAV-012 and DES-SR-006 for periods.
 - **0.12**, 21 October 2026: The list comes before the tabs in the Tab order, and text boxes start at the top line (DES-SR-006).
 - **0.11**, 21 October 2026: The current moment is now a card of standard controls (DES-SR-006, DES-SR-007), with Tab moving between its parts (DES-KEY-014). Rewrote DES-SCR-001, DES-NAV-001, DES-SR-004 and DES-ANN-001 to DES-ANN-003. Withdrew DES-SR-001, DES-SR-003, DES-SR-005 and DES-KEY-008.
 - **0.10**, 21 October 2026: Settled the wording for P (DES-KEY-006).

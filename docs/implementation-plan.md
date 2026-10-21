@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.11 (draft)"
+subtitle: "Version 0.13 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -41,19 +41,22 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/core/model | Entry.ts | The base class for moments and periods. |
 | src/core/model | Moment.ts | A moment, with its date and location. |
 | src/core/model | Period.ts | A period, with its start moment, end moment and the moments between. |
-| src/core/model | Relationship.ts | A link between two entries. |
-| src/core/model | Tag.ts | A tag. |
+| src/core/model | OngoingStop.ts | The "Ongoing" stop at the end of a period still going on. |
+| src/core/model | Dependency.ts | One "depends on" link between two moments. |
 | src/core/dates | HistoricDate.ts | A date with its precision and approximate flag, including BCE dates. |
 | src/core/dates | DateRange.ts | The earliest and latest possible times of a date (DES-DATE-003). |
 | src/core/dates | DateFormatter.ts | Written and spoken forms. |
+| src/core/dates | DateShortener.ts | Shortens dates in lists by how far they are from today (DES-DATE-006). |
+| src/core/data | Dataset.ts | Every entry, with lookups, and which periods an entry is part of. |
+| src/core/data | DatasetReader.ts | Reads a dataset file. |
 | src/core/graph | DependencyGraph.ts | Lookups in both directions. |
 | src/core/graph | CycleDetector.ts | Finds circular dependencies. |
 | src/core/graph | PredatesRule.ts | Checks that a dependency came first (DES-REL-002). |
 | src/core/graph | ContainmentRule.ts | Checks that everything in a period falls within it (DES-DATA-006). |
 | src/core/navigation | NavigationState.ts | The current entry, the active list, and the highlighted entry in each list. |
-| src/core/navigation | RelationshipList.ts | One list on a moment, such as Dependencies. |
-| src/core/navigation | ListSetBuilder.ts | Decides which lists a moment shows (DES-NAV-002, DES-NAV-003). |
-| src/core/navigation | PeriodStops.ts | The stops in a period, in date order, including "Ongoing" (DES-NAV-009). |
+| src/core/navigation | RelationshipList.ts | One list on an entry, such as Dependencies or a period's Moments. |
+| src/core/navigation | ListSetBuilder.ts | Decides which lists an entry shows, including a period's stops and "Ongoing" (DES-NAV-002, DES-NAV-009, DES-NAV-012). |
+| src/core/navigation | StepResult.ts | What Left Arrow or Right Arrow did: moved, stepped within a period, bumped, or nothing. |
 | src/core/navigation | PathHistory.ts | For Backspace and P. |
 | src/core/announce | AnnouncementBuilder.ts | The wording of announcements. |
 | src/core/announce | Verbosity.ts | The verbosity levels. |
@@ -67,9 +70,10 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/worker | Router.ts | Routes API requests. |
 | src/worker | EntryRepository.ts | D1 queries. |
 | src/worker | Handlers | One file per API endpoint. |
-| src/ui | App.ts | Starts the front end. |
+| src/ui | main.ts | Starts the front end. |
 | src/ui | TreeNavigator.ts | Connects the navigation state to the card, and handles keystrokes. |
-| src/ui | MomentCard.ts | The heading, summary box and description box. |
+| src/ui | EntryCard.ts | The heading, summary box and description box. |
+| src/ui | SoundPlayer.ts | Plays the "D'oh" sound (DES-ANN-011). |
 | src/ui | RelationshipTabs.ts | The tab control. |
 | src/ui | RelationshipListBox.ts | The list box of the active list's entries. |
 | src/ui | KeyBindings.ts | Keystrokes per platform. |
@@ -92,7 +96,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 **Goal:** Prove the navigation model with NVDA, first on a small made-up sample and then on real Wikidata data. Phase 0 runs on your own computer. Nothing is published yet.
 
-### Step 0A: A handful of made-up moments
+### Step 0A: A handful of made-up moments (built)
 
 1. Set up the public GitHub repository and the TypeScript project, with tests. Add the AGPL-3.0 licence. (DES-TECH-006, REQ-CONT-005)
 2. Build the moment, the dates module and the dependency rules, with unit tests. (DES-DATA-001, DES-DATE items, DES-REL-002)
@@ -101,7 +105,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 5. Build a web page showing the current moment as a card of standard controls, with keyboard help. It reads the sample file, and runs on your computer. (DES-SR-006)
 6. You test it with NVDA. We refine the keystrokes and wording.
 
-### Step 0B: Hand-made periods
+### Step 0B: Hand-made periods (built, in testing)
 
 1. Add periods to the model, with the containment rule and the stops within a period. (DES-DATA-001 to DES-DATA-006, DES-NAV-009 to DES-NAV-011)
 2. Add two or three periods to the sample file by hand, including one inside another and one still going on.
@@ -173,6 +177,7 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 
 # Change history
 
+- **0.13**, 21 October 2026: Steps 0A and 0B are built. Updated the module layout to match the code.
 - **0.11**, 21 October 2026: Step 0A now builds a card of standard controls. Updated the module layout to match.
 - **0.10**, 21 October 2026: Step 0D comes after Step 0B (DEC-42).
 - **0.9**, 21 October 2026: Added Step 0D, the visual layout experiment. Its timing is Q-22.

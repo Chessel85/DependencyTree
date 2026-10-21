@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.11 (draft)</p>
+<p class="subtitle">Version 0.13 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -299,13 +299,13 @@ between.</td>
 </tr>
 <tr>
 <td>src/core/model</td>
-<td>Relationship.ts</td>
-<td>A link between two entries.</td>
+<td>OngoingStop.ts</td>
+<td>The “Ongoing” stop at the end of a period still going on.</td>
 </tr>
 <tr>
 <td>src/core/model</td>
-<td>Tag.ts</td>
-<td>A tag.</td>
+<td>Dependency.ts</td>
+<td>One “depends on” link between two moments.</td>
 </tr>
 <tr>
 <td>src/core/dates</td>
@@ -323,6 +323,23 @@ dates.</td>
 <td>src/core/dates</td>
 <td>DateFormatter.ts</td>
 <td>Written and spoken forms.</td>
+</tr>
+<tr>
+<td>src/core/dates</td>
+<td>DateShortener.ts</td>
+<td>Shortens dates in lists by how far they are from today
+(DES-DATE-006).</td>
+</tr>
+<tr>
+<td>src/core/data</td>
+<td>Dataset.ts</td>
+<td>Every entry, with lookups, and which periods an entry is part
+of.</td>
+</tr>
+<tr>
+<td>src/core/data</td>
+<td>DatasetReader.ts</td>
+<td>Reads a dataset file.</td>
 </tr>
 <tr>
 <td>src/core/graph</td>
@@ -354,18 +371,20 @@ each list.</td>
 <tr>
 <td>src/core/navigation</td>
 <td>RelationshipList.ts</td>
-<td>One list on a moment, such as Dependencies.</td>
+<td>One list on an entry, such as Dependencies or a period’s
+Moments.</td>
 </tr>
 <tr>
 <td>src/core/navigation</td>
 <td>ListSetBuilder.ts</td>
-<td>Decides which lists a moment shows (DES-NAV-002, DES-NAV-003).</td>
+<td>Decides which lists an entry shows, including a period’s stops and
+“Ongoing” (DES-NAV-002, DES-NAV-009, DES-NAV-012).</td>
 </tr>
 <tr>
 <td>src/core/navigation</td>
-<td>PeriodStops.ts</td>
-<td>The stops in a period, in date order, including “Ongoing”
-(DES-NAV-009).</td>
+<td>StepResult.ts</td>
+<td>What Left Arrow or Right Arrow did: moved, stepped within a period,
+bumped, or nothing.</td>
 </tr>
 <tr>
 <td>src/core/navigation</td>
@@ -434,7 +453,7 @@ each list.</td>
 </tr>
 <tr>
 <td>src/ui</td>
-<td>App.ts</td>
+<td>main.ts</td>
 <td>Starts the front end.</td>
 </tr>
 <tr>
@@ -445,8 +464,13 @@ keystrokes.</td>
 </tr>
 <tr>
 <td>src/ui</td>
-<td>MomentCard.ts</td>
+<td>EntryCard.ts</td>
 <td>The heading, summary box and description box.</td>
+</tr>
+<tr>
+<td>src/ui</td>
+<td>SoundPlayer.ts</td>
+<td>Plays the “D’oh” sound (DES-ANN-011).</td>
 </tr>
 <tr>
 <td>src/ui</td>
@@ -523,8 +547,8 @@ Foundations and navigation prototype</h2>
 <p><strong>Goal:</strong> Prove the navigation model with NVDA, first on
 a small made-up sample and then on real Wikidata data. Phase 0 runs on
 your own computer. Nothing is published yet.</p>
-<h3 id="step-0a-a-handful-of-made-up-moments">Step 0A: A handful of
-made-up moments</h3>
+<h3 id="step-0a-a-handful-of-made-up-moments-built">Step 0A: A handful
+of made-up moments (built)</h3>
 <ol type="1">
 <li>Set up the public GitHub repository and the TypeScript project, with
 tests. Add the AGPL-3.0 licence. (DES-TECH-006, REQ-CONT-005)</li>
@@ -540,7 +564,8 @@ controls, with keyboard help. It reads the sample file, and runs on your
 computer. (DES-SR-006)</li>
 <li>You test it with NVDA. We refine the keystrokes and wording.</li>
 </ol>
-<h3 id="step-0b-hand-made-periods">Step 0B: Hand-made periods</h3>
+<h3 id="step-0b-hand-made-periods-built-in-testing">Step 0B: Hand-made
+periods (built, in testing)</h3>
 <ol type="1">
 <li>Add periods to the model, with the containment rule and the stops
 within a period. (DES-DATA-001 to DES-DATA-006, DES-NAV-009 to
@@ -679,6 +704,8 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.13</strong>, 21 October 2026: Steps 0A and 0B are built.
+Updated the module layout to match the code.</li>
 <li><strong>0.11</strong>, 21 October 2026: Step 0A now builds a card of
 standard controls. Updated the module layout to match.</li>
 <li><strong>0.10</strong>, 21 October 2026: Step 0D comes after Step 0B

@@ -1,4 +1,4 @@
-import { DatePrecision } from './DatePrecision';
+import { DatePrecision, isCoarser } from './DatePrecision';
 import { DateRange } from './DateRange';
 
 const MONTH_SPAN = 1 / 12;
@@ -24,6 +24,20 @@ export class HistoricDate {
     if (precision === DatePrecision.Day && (day === undefined || day < 1 || day > 31)) {
       throw new Error(`A day date needs a day from 1 to 31, but got ${day}.`);
     }
+  }
+
+  /** Today's date, to the day. */
+  static fromJsDate(date: Date): HistoricDate {
+    return new HistoricDate(date.getFullYear(), DatePrecision.Day, false, date.getMonth() + 1, date.getDate());
+  }
+
+  /** The same date given less precisely, for example 9 January 2007 as just 2007. Never makes it more precise. */
+  atPrecision(precision: DatePrecision): HistoricDate {
+    if (!isCoarser(precision, this.precision)) {
+      return this;
+    }
+    const keepsMonth = precision === DatePrecision.Month;
+    return new HistoricDate(this.year, precision, this.approximate, keepsMonth ? this.month : undefined);
   }
 
   /** The earliest and latest times this date could mean, widened if approximate. */

@@ -1,117 +1,228 @@
 {
   "licence": "CC0-1.0",
-  "note": "Hand-made sample for Step 0A. Years are astronomical: 1 BCE is 0.",
+  "note": "Hand-made sample for Steps 0A and 0B. Years are astronomical: 1 BCE is 0.",
   "moments": [
     {
       "id": "electric-battery",
       "name": "Electric battery",
-      "date": { "year": 1800, "precision": "month", "month": 3 },
+      "date": {
+        "year": 1800,
+        "precision": "month",
+        "month": 3
+      },
       "description": "Alessandro Volta described the voltaic pile, the first battery to give a steady electric current, in a letter to the Royal Society.",
-      "tags": ["energy", "physics"],
+      "tags": [
+        "energy",
+        "physics"
+      ],
       "location": "Italy"
     },
     {
       "id": "electromagnetic-induction",
       "name": "Electromagnetic induction",
-      "date": { "year": 1831, "precision": "day", "month": 8, "day": 29 },
+      "date": {
+        "year": 1831,
+        "precision": "day",
+        "month": 8,
+        "day": 29
+      },
       "description": "Michael Faraday showed that a changing magnetic field produces an electric current, the principle behind generators, transformers and microphones.",
-      "tags": ["physics"],
+      "tags": [
+        "physics"
+      ],
       "location": "London, England",
-      "dependsOn": ["electric-battery"]
+      "dependsOn": [
+        "electric-battery"
+      ]
     },
     {
       "id": "telephone",
       "name": "Telephone",
-      "date": { "year": 1876, "precision": "day", "month": 3, "day": 7 },
+      "date": {
+        "year": 1876,
+        "precision": "day",
+        "month": 3,
+        "day": 7
+      },
       "description": "Alexander Graham Bell was granted a patent for the telephone, which carries speech as an electric current.",
-      "tags": ["communications"],
+      "tags": [
+        "communications"
+      ],
       "location": "Boston, United States",
-      "dependsOn": ["electromagnetic-induction", "electric-battery"]
+      "dependsOn": [
+        "electromagnetic-induction",
+        "electric-battery"
+      ]
     },
     {
       "id": "transistor",
       "name": "Transistor",
-      "date": { "year": 1947, "precision": "day", "month": 12, "day": 16 },
+      "date": {
+        "year": 1947,
+        "precision": "day",
+        "month": 12,
+        "day": 16
+      },
       "description": "John Bardeen and Walter Brattain, working with William Shockley at Bell Labs, made the first working transistor, a point-contact transistor.",
-      "tags": ["electronics"],
+      "tags": [
+        "electronics"
+      ],
       "location": "Murray Hill, New Jersey, United States"
     },
     {
       "id": "integrated-circuit",
       "name": "Integrated circuit",
-      "date": { "year": 1958, "precision": "day", "month": 9, "day": 12 },
+      "date": {
+        "year": 1958,
+        "precision": "day",
+        "month": 9,
+        "day": 12
+      },
       "description": "Jack Kilby at Texas Instruments demonstrated the first integrated circuit, with several components on a single piece of semiconductor.",
-      "tags": ["electronics"],
+      "tags": [
+        "electronics"
+      ],
       "location": "Dallas, United States",
-      "dependsOn": ["transistor"]
+      "dependsOn": [
+        "transistor"
+      ]
     },
     {
       "id": "capacitive-touchscreen",
       "name": "Capacitive touchscreen",
-      "date": { "year": 1965, "precision": "year" },
+      "date": {
+        "year": 1965,
+        "precision": "year"
+      },
       "description": "E. A. Johnson at the Royal Radar Establishment described a touchscreen that senses a finger by the change in capacitance.",
-      "tags": ["electronics", "computing"],
+      "tags": [
+        "electronics",
+        "computing"
+      ],
       "location": "Malvern, England"
     },
     {
       "id": "liquid-crystal-display",
       "name": "Liquid-crystal display",
-      "date": { "year": 1968, "precision": "year" },
+      "date": {
+        "year": 1968,
+        "precision": "year"
+      },
       "description": "George Heilmeier's team at RCA demonstrated the first liquid-crystal displays.",
-      "tags": ["electronics"],
+      "tags": [
+        "electronics"
+      ],
       "location": "Princeton, United States"
     },
     {
       "id": "arpanet",
       "name": "ARPANET",
-      "date": { "year": 1969, "precision": "day", "month": 10, "day": 29 },
+      "date": {
+        "year": 1969,
+        "precision": "day",
+        "month": 10,
+        "day": 29
+      },
       "description": "The first message was sent over ARPANET, from UCLA to the Stanford Research Institute. ARPANET grew into the internet.",
-      "tags": ["computing", "communications"],
+      "tags": [
+        "computing",
+        "communications"
+      ],
       "location": "Los Angeles, United States",
-      "dependsOn": ["telephone", "integrated-circuit"]
+      "dependsOn": [
+        "telephone",
+        "integrated-circuit"
+      ]
     },
     {
       "id": "microprocessor",
       "name": "Microprocessor",
-      "date": { "year": 1971, "precision": "day", "month": 11, "day": 15 },
+      "date": {
+        "year": 1971,
+        "precision": "day",
+        "month": 11,
+        "day": 15
+      },
       "description": "Intel introduced the 4004, the first commercial microprocessor: a whole computer processor on one chip.",
-      "tags": ["electronics", "computing"],
+      "tags": [
+        "electronics",
+        "computing"
+      ],
       "location": "Santa Clara, United States",
-      "dependsOn": ["integrated-circuit"]
+      "dependsOn": [
+        "integrated-circuit"
+      ]
     },
     {
       "id": "mobile-phone",
       "name": "Mobile phone",
-      "date": { "year": 1973, "precision": "day", "month": 4, "day": 3 },
+      "date": {
+        "year": 1973,
+        "precision": "day",
+        "month": 4,
+        "day": 3
+      },
       "description": "Martin Cooper of Motorola made the first public call from a handheld mobile phone.",
-      "tags": ["communications", "electronics"],
+      "tags": [
+        "communications",
+        "electronics"
+      ],
       "location": "New York, United States",
-      "dependsOn": ["telephone", "integrated-circuit"]
+      "dependsOn": [
+        "telephone",
+        "integrated-circuit"
+      ]
     },
     {
       "id": "world-wide-web",
       "name": "World Wide Web",
-      "date": { "year": 1989, "precision": "month", "month": 3 },
+      "date": {
+        "year": 1989,
+        "precision": "month",
+        "month": 3
+      },
       "description": "Tim Berners-Lee wrote the proposal for the World Wide Web at CERN.",
-      "tags": ["computing", "communications"],
+      "tags": [
+        "computing",
+        "communications"
+      ],
       "location": "Geneva, Switzerland",
-      "dependsOn": ["arpanet"]
+      "dependsOn": [
+        "arpanet"
+      ]
     },
     {
       "id": "lithium-ion-battery",
       "name": "Lithium-ion battery",
-      "date": { "year": 1991, "precision": "year" },
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
       "description": "Sony sold the first commercial lithium-ion battery: light, rechargeable and able to hold a lot of energy.",
-      "tags": ["energy", "chemistry"],
+      "tags": [
+        "energy",
+        "chemistry"
+      ],
       "location": "Japan",
-      "dependsOn": ["electric-battery"]
+      "dependsOn": [
+        "electric-battery"
+      ]
     },
     {
       "id": "iphone",
       "name": "iPhone",
-      "date": { "year": 2007, "precision": "day", "month": 1, "day": 9 },
+      "date": {
+        "year": 2007,
+        "precision": "day",
+        "month": 1,
+        "day": 9
+      },
       "description": "Steve Jobs announced the iPhone, a phone controlled by a multi-touch screen, with the web in your pocket.",
-      "tags": ["communications", "computing", "electronics"],
+      "tags": [
+        "communications",
+        "computing",
+        "electronics"
+      ],
       "location": "San Francisco, United States",
       "dependsOn": [
         "microprocessor",
@@ -120,6 +231,159 @@
         "capacitive-touchscreen",
         "mobile-phone",
         "world-wide-web"
+      ]
+    },
+    {
+      "id": "truman-doctrine",
+      "name": "Truman Doctrine",
+      "date": {
+        "year": 1947,
+        "precision": "day",
+        "month": 3,
+        "day": 12
+      },
+      "description": "President Harry S. Truman pledged to support countries resisting Soviet pressure. It is often taken as the start of the Cold War.",
+      "tags": [
+        "politics"
+      ],
+      "location": "Washington, D.C., United States"
+    },
+    {
+      "id": "sputnik-1",
+      "name": "Sputnik 1",
+      "date": {
+        "year": 1957,
+        "precision": "day",
+        "month": 10,
+        "day": 4
+      },
+      "description": "The Soviet Union launched Sputnik 1, the first artificial satellite, starting the Space Race.",
+      "tags": [
+        "spaceflight"
+      ],
+      "location": "Baikonur, Kazakhstan"
+    },
+    {
+      "id": "apollo-11",
+      "name": "Apollo 11 Moon landing",
+      "date": {
+        "year": 1969,
+        "precision": "day",
+        "month": 7,
+        "day": 20
+      },
+      "description": "Neil Armstrong and Buzz Aldrin became the first people to walk on the Moon. The Apollo Guidance Computer that helped get them there was built from integrated circuits.",
+      "tags": [
+        "spaceflight"
+      ],
+      "location": "The Moon",
+      "dependsOn": [
+        "integrated-circuit"
+      ]
+    },
+    {
+      "id": "apollo-soyuz",
+      "name": "Apollo-Soyuz Test Project",
+      "date": {
+        "year": 1975,
+        "precision": "day",
+        "month": 7,
+        "day": 17
+      },
+      "description": "An American Apollo spacecraft and a Soviet Soyuz spacecraft docked in orbit. It is usually taken as the end of the Space Race.",
+      "tags": [
+        "spaceflight",
+        "politics"
+      ],
+      "location": "Earth orbit"
+    },
+    {
+      "id": "fall-of-berlin-wall",
+      "name": "Fall of the Berlin Wall",
+      "date": {
+        "year": 1989,
+        "precision": "day",
+        "month": 11,
+        "day": 9
+      },
+      "description": "East Germany opened the border crossings in the Berlin Wall, and crowds began to tear it down.",
+      "tags": [
+        "politics"
+      ],
+      "location": "Berlin, Germany"
+    },
+    {
+      "id": "dissolution-of-soviet-union",
+      "name": "Dissolution of the Soviet Union",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 26
+      },
+      "description": "The Soviet Union was formally dissolved, ending the Cold War.",
+      "tags": [
+        "politics"
+      ],
+      "location": "Moscow, Russia"
+    },
+    {
+      "id": "start-of-information-age",
+      "name": "Start of the Information Age",
+      "date": {
+        "year": 1970,
+        "precision": "decade"
+      },
+      "description": "The Information Age is usually said to have begun in the 1970s, as computers and digital communication spread. Historians don't agree on an exact date.",
+      "tags": [
+        "computing"
+      ]
+    }
+  ],
+  "periods": [
+    {
+      "id": "cold-war",
+      "name": "Cold War",
+      "description": "A long rivalry between the United States and the Soviet Union and their allies, without direct war between the two.",
+      "tags": [
+        "politics"
+      ],
+      "start": "truman-doctrine",
+      "end": "dissolution-of-soviet-union",
+      "contains": [
+        "space-race",
+        "arpanet",
+        "fall-of-berlin-wall"
+      ]
+    },
+    {
+      "id": "space-race",
+      "name": "Space Race",
+      "description": "The competition between the Soviet Union and the United States to be first to achieve milestones in spaceflight.",
+      "tags": [
+        "spaceflight",
+        "politics"
+      ],
+      "start": "sputnik-1",
+      "end": "apollo-soyuz",
+      "contains": [
+        "apollo-11"
+      ]
+    },
+    {
+      "id": "information-age",
+      "name": "Information Age",
+      "description": "The period in which computers and digital communication have shaped how people work, learn and live. It is still going on.",
+      "tags": [
+        "computing",
+        "communications"
+      ],
+      "start": "start-of-information-age",
+      "contains": [
+        "microprocessor",
+        "mobile-phone",
+        "world-wide-web",
+        "iphone"
       ]
     }
   ]

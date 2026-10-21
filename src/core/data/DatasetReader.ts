@@ -2,7 +2,10 @@ import { DatePrecision } from '../dates/DatePrecision';
 import { HistoricDate } from '../dates/HistoricDate';
 import { DependencyGraph } from '../graph/DependencyGraph';
 import { Dependency } from '../model/Dependency';
+import { Entry } from '../model/Entry';
 import { Moment } from '../model/Moment';
+import { Period } from '../model/Period';
+import { Dataset } from './Dataset';
 
 /** A date as written in a dataset file. Years are astronomical (DES-DATE-001). */
 export interface DateRecord {
@@ -24,17 +27,39 @@ export interface MomentRecord {
   dependsOn?: string[];
 }
 
-export interface DatasetRecord {
-  moments: MomentRecord[];
+/**
+ * A period as written in a dataset file. `start` and `end` name moments.
+ * `contains` names the moments and smaller periods between them. A period
+ * still going on has no `end`.
+ */
+export interface PeriodRecord {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  start: string;
+  end?: string;
+  contains?: string[];
 }
 
-/** Turns a dataset file's contents into a dependency graph. */
+export interface DatasetRecord {
+  moments: MomentRecord[];
+  periods?: PeriodRecord[];
+}
+
+/** Turns a dataset file's contents into a dataset. */
 export class DatasetReader {
-  read(record: DatasetRecord): DependencyGraph {
-    const moments = record.moments.map((m) => this.toMoment(m));
+  read(record: DatasetRecord): Dataset {
+    const graph = this.readMoments(record.moments);
+    const periods = this.readPeriods(record.periods ?? [], graph);
+    return new Dataset(graph, periods);
+  }
+
+  private readMoments(records: MomentRecord[]): DependencyGraph {
+    const moments = records.map((m) => this.toMoment(m));
     const byId = new Map(moments.map((m) => [m.id, m]));
     const links: Dependency[] = [];
-    for (const m of record.moments) {
+    for (const m of records) {
       for (const dependencyId of m.dependsOn ?? []) {
         const dependency = byId.get(dependencyId);
         if (!dependency) {
@@ -44,6 +69,49 @@ export class DatasetReader {
       }
     }
     return new DependencyGraph(moments, links);
+  }
+
+  /** Builds periods smaller ones first, since a period needs the periods it contains. */
+  private readPeriods(records: PeriodRecord[], graph: DependencyGraph): Period[] {
+    const recordsById = new Map(records.map((p) => [p.id, p]));
+    const built = new Map<string, Period>();
+    const building = new Set<string>();
+
+    const build = (record: PeriodRecord): Period => {
+      const done = built.get(record.id);
+      if (done) {
+        return done;
+      }
+      if (building.has(record.id)) {
+        throw new Error(`Period "${record.id}" contains itself.`);
+      }
+      building.add(record.id);
+      const moment = (id: string): Moment => {
+        const found = graph.find(id);
+        if (!found) {
+          throw new Error(`Period "${record.id}" refers to "${id}", which isn't a moment in the dataset.`);
+        }
+        return found;
+      };
+      const member = (id: string): Entry => {
+        const sub = recordsById.get(id);
+        return sub ? build(sub) : moment(id);
+      };
+      const period = new Period(
+        record.id,
+        record.name,
+        record.description,
+        record.tags,
+        moment(record.start),
+        record.end === undefined ? undefined : moment(record.end),
+        (record.contains ?? []).map(member),
+      );
+      building.delete(record.id);
+      built.set(record.id, period);
+      return period;
+    };
+
+    return records.map(build);
   }
 
   private toMoment(m: MomentRecord): Moment {

@@ -1,29 +1,31 @@
-import { Moment } from '../model/Moment';
+import { Entry } from '../model/Entry';
+import { Period } from '../model/Period';
 import { ListKind } from './ListKind';
 import { ListSetBuilder } from './ListSetBuilder';
 import { PathHistory } from './PathHistory';
 import { RelationshipList } from './RelationshipList';
+import { StepResult } from './StepResult';
 import { Visit } from './Visit';
 
 /**
- * Where the user is in the tree: the current moment, its lists, which list is
- * active, and the path taken. It has no user interface. Every action returns
- * false, changing nothing, when it isn't possible (DES-NAV-008).
+ * Where the user is in the tree: the current entry, its lists, which list is
+ * active, and the path taken. It has no user interface. Every action
+ * reports, changing nothing, when it isn't possible (DES-NAV-008).
  */
 export class NavigationState {
-  private current!: Moment;
+  private current!: Entry;
   private lists: RelationshipList[] = [];
   private activeIndex = 0;
   private readonly history = new PathHistory();
 
   constructor(
     private readonly listBuilder: ListSetBuilder,
-    start: Moment,
+    start: Entry,
   ) {
     this.arrive(start, ListKind.Dependencies);
   }
 
-  get currentMoment(): Moment {
+  get currentEntry(): Entry {
     return this.current;
   }
 
@@ -31,7 +33,7 @@ export class NavigationState {
     return this.lists[this.activeIndex];
   }
 
-  /** The current moment's lists, in tab order. */
+  /** The current entry's lists, in tab order. */
   get allLists(): readonly RelationshipList[] {
     return this.lists;
   }
@@ -40,34 +42,39 @@ export class NavigationState {
     return this.activeIndex;
   }
 
-  /** The list of the given kind, if the current moment has one. */
+  /** The list of the given kind, if the current entry has one. */
   list(kind: ListKind): RelationshipList | undefined {
     return this.lists.find((l) => l.kind === kind);
   }
 
-  /** Every moment on the path, ending with the current one. */
-  get path(): Moment[] {
-    return [...this.history.moments, this.current];
+  /** Every entry on the path, ending with the current one. */
+  get path(): Entry[] {
+    return [...this.history.entries, this.current];
   }
 
-  /** Left Arrow: works only when the Dependencies list is active (DES-KEY-001, DES-KEY-013). */
-  goEarlier(): boolean {
-    return this.activeList.kind === ListKind.Dependencies && this.follow();
+  /**
+   * Left Arrow. In a period's Moments list, it steps to the previous stop.
+   * In a Dependencies list, it goes to the highlighted entry. Otherwise it
+   * does nothing (DES-KEY-001, DES-KEY-010, DES-KEY-013).
+   */
+  stepEarlier(): StepResult {
+    return this.step(ListKind.Dependencies, -1);
   }
 
-  /** Right Arrow: works only when the Enabled list is active (DES-KEY-001, DES-KEY-013). */
-  goLater(): boolean {
-    return this.activeList.kind === ListKind.Enabled && this.follow();
+  /** Right Arrow: the same as Left Arrow, but later in time, using the Enabled list. */
+  stepLater(): StepResult {
+    return this.step(ListKind.Enabled, 1);
   }
 
-  /** Enter: goes to the highlighted entry in the active list (DES-KEY-004). */
+  /** Enter: goes to the highlighted entry in the active list (DES-KEY-004, DES-KEY-011). */
   follow(): boolean {
     const target = this.activeList.highlighted;
-    if (!target) {
+    if (!target || !target.isVisitable) {
       return false;
     }
+    const from = this.current;
     this.history.push(this.snapshot());
-    this.arrive(target, this.activeList.kind);
+    this.arrive(target, this.activeList.kind, from);
     return true;
   }
 
@@ -85,23 +92,50 @@ export class NavigationState {
     return true;
   }
 
-  /** Backspace: back one step along the path (DES-KEY-005). */
+  /** Backspace: back one step along the path, to the list and highlights the user left (DES-KEY-005). */
   goBack(): boolean {
     const visit = this.history.pop();
     if (!visit) {
       return false;
     }
-    this.arrive(visit.moment, visit.activeKind);
+    this.show(visit.entry, visit.activeKind);
     for (const list of this.lists) {
       list.restoreHighlight(visit.highlights.get(list.kind) ?? 0);
     }
     return true;
   }
 
-  /** The active list after arriving is the kind just moved through, if the moment has one (DES-NAV-005). */
-  private arrive(moment: Moment, kind: ListKind): void {
-    this.current = moment;
-    this.lists = this.listBuilder.build(moment);
+  private step(followKind: ListKind, delta: number): StepResult {
+    const list = this.activeList;
+    if (list.kind === ListKind.Moments) {
+      return list.moveBy(delta) ? StepResult.Highlighted : StepResult.Bumped;
+    }
+    if (list.kind === followKind) {
+      return this.follow() ? StepResult.Moved : StepResult.Nothing;
+    }
+    return StepResult.Nothing;
+  }
+
+  /**
+   * Arriving at a period always shows its Moments list. If the user came from
+   * one of its stops, that stop is highlighted (DES-NAV-010). Arriving at a
+   * moment shows the kind of list just moved through, if it has one
+   * (DES-NAV-005).
+   */
+  private arrive(entry: Entry, viaKind: ListKind, from?: Entry): void {
+    const isPeriod = entry instanceof Period;
+    this.show(entry, isPeriod ? ListKind.Moments : viaKind);
+    if (isPeriod && from) {
+      const stop = this.activeList.entries.indexOf(from);
+      if (stop >= 0) {
+        this.activeList.restoreHighlight(stop);
+      }
+    }
+  }
+
+  private show(entry: Entry, kind: ListKind): void {
+    this.current = entry;
+    this.lists = this.listBuilder.build(entry);
     const index = this.lists.findIndex((l) => l.kind === kind);
     this.activeIndex = index >= 0 ? index : 0;
   }

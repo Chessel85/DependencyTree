@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.12 (draft)"
+subtitle: "Version 0.13 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -278,9 +278,13 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-43 | NVDA+Up Arrow didn't work | 8, 21 October 2026 | The single line of text in the navigator wasn't read by NVDA+Up Arrow. Led to Q-23. |
 | DEC-44 | The current moment is a card of standard controls | 8, 21 October 2026 | A heading, a read-only summary box, a read-only description box, a tab control and a list box, so that NVDA's own commands work. The Details region and the I key are removed. Answers Q-23. Recorded as DES-SR-006, DES-SR-007 and DES-KEY-014. |
 | DEC-45 | Findings from testing the card | 9, 21 October 2026 | NVDA+Up Arrow now reads the current line. Tabbing into a text box should land on the top line, not the bottom one. Tab from the description should go to the list, not the tabs. Remembering the caret position within a moment is good. Recorded as DES-SR-006. |
+| DEC-46 | Less speech when switching list | 10, 21 October 2026 | Switching list said "Dependency Tree document, main landmark" and the moment's name before the list. Landmarks are removed, and after switching, the list's label is just its name. Recorded as DES-SCR-001, DES-ANN-003 and DES-SR-007. |
+| DEC-47 | Shorter dates in lists | 10, 21 October 2026 | More than 3 years from today: the year only. Within 12 months: the full date, if known. In between: month and year. Recorded as DES-DATE-006. |
+| DEC-48 | Periods built | 10, 21 October 2026 | Step 0B is built with three real periods: the Cold War, the Space Race inside it, and the Information Age, which is still going on. The "D'oh" sound is sounds/bump.wav. Recorded as DES-ANN-011 and DES-NAV-012. |
 
 # Change history
 
+- **0.13**, 21 October 2026: Recorded DEC-46 to DEC-48.
 - **0.12**, 21 October 2026: Recorded DEC-45.
 - **0.11**, 21 October 2026: Recorded DEC-44, answering Q-23. There are no open questions.
 - **0.10**, 21 October 2026: Recorded DEC-41 to DEC-43, answering Q-22. Added Q-23.

@@ -1,18 +1,20 @@
 import { HistoricDate } from '../dates/HistoricDate';
+import { Entry } from './Entry';
 
 /** Something that happened at a single date (DES-DATA-001). */
-export class Moment {
+export class Moment extends Entry {
   constructor(
-    readonly id: string,
-    readonly name: string,
+    id: string,
+    name: string,
     readonly date: HistoricDate,
-    readonly description: string,
-    readonly tags: readonly string[],
+    description: string,
+    tags: readonly string[],
     readonly location?: string,
-  ) {}
+  ) {
+    super(id, name, description, tags);
+  }
 
-  /** Orders moments by date, oldest first, then by name (DES-NAV-006). */
-  static byDate(a: Moment, b: Moment): number {
-    return a.date.range().earliest - b.date.range().earliest || a.name.localeCompare(b.name);
+  get sortKey(): number {
+    return this.date.range().earliest;
   }
 }

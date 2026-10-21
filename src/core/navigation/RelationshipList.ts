@@ -1,20 +1,20 @@
-import { Moment } from '../model/Moment';
+import { Entry } from '../model/Entry';
 import { ListKind } from './ListKind';
 
-/** One list on a moment, such as Dependencies, with its highlighted entry (DES-NAV-004). */
+/** One list on an entry, such as Dependencies or a period's Moments, with its highlighted entry (DES-NAV-004). */
 export class RelationshipList {
   private highlightIndex = 0;
 
   constructor(
     readonly kind: ListKind,
-    readonly entries: readonly Moment[],
+    readonly entries: readonly Entry[],
   ) {}
 
   get size(): number {
     return this.entries.length;
   }
 
-  get highlighted(): Moment | undefined {
+  get highlighted(): Entry | undefined {
     return this.entries[this.highlightIndex];
   }
 

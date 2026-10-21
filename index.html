@@ -7,30 +7,28 @@
     <link rel="stylesheet" href="/src/ui/styles.css" />
   </head>
   <body>
-    <header>
-      <h1>Dependency Tree</h1>
-      <p>Prototype, Step 0A: moments only, from a small hand-made sample.</p>
-    </header>
-    <main>
-      <section id="moment-card" aria-labelledby="moment-name">
-        <h2 id="moment-name"></h2>
-        <div class="card-part">
-          <label for="moment-summary">Summary</label>
-          <textarea id="moment-summary" readonly rows="3"></textarea>
-        </div>
-        <div class="card-part">
-          <label for="moment-description">Description</label>
-          <textarea id="moment-description" readonly rows="4"></textarea>
-        </div>
-        <!-- The list comes before the tabs, so Tab reaches the list first.
-             The stylesheet still shows the tabs above the list. -->
-        <div class="card-part relationships">
-          <div id="relationship-panel"></div>
-          <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
-        </div>
-        <button type="button" id="help-open">Keyboard help</button>
-      </section>
-    </main>
+    <!-- No landmarks: the user is nearly always in focus mode, and headings
+         serve browse mode. Landmarks only added to what NVDA said (DES-SCR-001). -->
+    <h1>Dependency Tree</h1>
+    <p>Prototype, Step 0B: a small hand-made sample of moments and periods.</p>
+    <div id="entry-card">
+      <h2 id="entry-name"></h2>
+      <div class="card-part">
+        <label for="entry-summary">Summary</label>
+        <textarea id="entry-summary" readonly rows="3"></textarea>
+      </div>
+      <div class="card-part">
+        <label for="entry-description">Description</label>
+        <textarea id="entry-description" readonly rows="4"></textarea>
+      </div>
+      <!-- The list comes before the tabs, so Tab reaches the list first.
+           The stylesheet still shows the tabs above the list. -->
+      <div class="card-part relationships">
+        <div id="relationship-panel"></div>
+        <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
+      </div>
+      <button type="button" id="help-open">Keyboard help</button>
+    </div>
     <div id="announcer" class="visually-hidden" aria-live="assertive" aria-atomic="true"></div>
     <dialog id="help" aria-labelledby="help-heading">
       <h2 id="help-heading">Keyboard help</h2>
