@@ -16,8 +16,14 @@ function laptopState(): NavigationState {
 }
 
 describe('AnnouncementBuilder', () => {
-  it('announces arrival with the active list and its size', () => {
-    expect(words.arrival(laptopState())).toBe('laptop, 1981. Dependencies, 2.');
+  it('announces arrival with the active list, its size and its highlighted entry', () => {
+    expect(words.arrival(laptopState())).toBe('laptop, 1981. Dependencies, 2. battery, 1800, 1 of 2.');
+  });
+
+  it('announces arrival at a moment whose active list is empty', () => {
+    const state = laptopState();
+    state.goEarlier();
+    expect(words.arrival(state)).toBe('battery, 1800. Dependencies, none.');
   });
 
   it('announces position within a list', () => {

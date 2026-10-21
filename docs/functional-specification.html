@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.7 (draft)</p>
+<p class="subtitle">Version 0.8 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -652,6 +652,18 @@ date of its start moment. Enter goes into it.</td>
 <td>Proposed</td>
 <td>REQ-NAV-023, REQ-REL-003</td>
 </tr>
+<tr>
+<td>DES-NAV-012</td>
+<td>A period that is part of a larger period has a Part of list, reached
+with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up
+works the same way everywhere. (Agreed)<br>The period’s stops count as
+its first list, called Moments. While Moments is active, Left Arrow and
+Right Arrow step through the stops, and Enter goes into the highlighted
+one. While Part of is active, Up Arrow and Down Arrow move through it,
+and Enter goes to the highlighted larger period. (Proposed)</td>
+<td>Agreed in part</td>
+<td>REQ-NAV-023, REQ-NAV-003</td>
+</tr>
 </tbody>
 </table>
 <h2 id="anywhere">Anywhere</h2>
@@ -779,15 +791,6 @@ becomes the current entry.</td>
 <td>Agreed</td>
 <td>REQ-NAV-023</td>
 </tr>
-<tr>
-<td>DES-KEY-012</td>
-<td>Up Arrow goes up to the larger period this period is part of, with
-this period highlighted. If it is part of more than one, it goes to the
-one the user came from, or otherwise the earliest. If it isn’t part of a
-larger period, nothing happens.</td>
-<td>Agreed</td>
-<td>REQ-NAV-023</td>
-</tr>
 </tbody>
 </table>
 <h3 id="anywhere-1">Anywhere</h3>
@@ -830,7 +833,9 @@ mark (?): keyboard help<br>• V: cycle verbosity</td>
 <tr>
 <td>DES-KEY-008</td>
 <td>I moves focus to the Details region, for reading in browse mode.
-Escape, pressed from Details, returns focus to the navigator.</td>
+Escape, pressed anywhere on the page outside the navigator and any
+dialog, returns focus to the navigator, which announces where the user
+is.</td>
 <td>Proposed</td>
 <td>REQ-ACC-014</td>
 </tr>
@@ -855,8 +860,11 @@ Escape, pressed from Details, returns focus to the navigator.</td>
 <tbody>
 <tr>
 <td>DES-ANN-001</td>
-<td>Arriving at a moment announces its name, its date, the active list
-and that list’s size. Example: “Laptop, 1981. Enabled, 12.”</td>
+<td>Arriving at a moment announces its name, its date, the active list,
+that list’s size and its highlighted entry, so the user knows at once
+that they are in a list. Example: “Laptop, 1981. Enabled, 12.
+Smartphone, 1994, 1 of 12.” If the list is empty: “Electric battery,
+March 1800. Dependencies, none.”</td>
 <td>Proposed</td>
 <td>REQ-ANN-007</td>
 </tr>
@@ -1001,6 +1009,16 @@ confirmed by testing in Phase 0.</td>
 application. Keyboard help says so.</td>
 <td>Proposed</td>
 <td>REQ-ACC-003, REQ-ACC-008</td>
+</tr>
+<tr>
+<td>DES-SR-004</td>
+<td>Whenever the navigator gains focus, by any route, it announces where
+the user is. Focus is moved after the key that caused it has finished,
+so the screen reader handles the two separately. The navigator’s visible
+text isn’t hidden from screen readers, so if NVDA is ever left in browse
+mode there, the user can still read where they are.</td>
+<td>Proposed</td>
+<td>REQ-ACC-011, REQ-ANN-007</td>
 </tr>
 <tr>
 <td>DES-SR-003</td>
@@ -1397,6 +1415,12 @@ its end moment.</td>
 period’s moments (DES-KEY-010).</td>
 </tr>
 <tr>
+<td>DES-KEY-012</td>
+<td>On a period, Up Arrow went up to the larger period.</td>
+<td>Withdrawn in version 0.8. Periods have a Part of list instead, the
+same as moments (DES-NAV-012).</td>
+</tr>
+<tr>
 <td>DES-ANN-010</td>
 <td>A moment dated in the future was announced as “planned”.</td>
 <td>Withdrawn in version 0.6. The date already shows that it is in the
@@ -1418,6 +1442,12 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.8</strong>, 21 October 2026: Periods have a Part of list,
+the same as moments (DES-NAV-012), replacing Up Arrow on a period
+(DES-KEY-012, withdrawn). After testing Step 0A: arriving at a moment
+now announces the highlighted entry (DES-ANN-001), Escape returns to the
+navigator from anywhere on the page (DES-KEY-008), and DES-SR-004 is
+added.</li>
 <li><strong>0.7</strong>, 21 October 2026: Recorded the round 6
 decisions. The Part of list is agreed. Impossible moves are silent,
 except at the ends of a period. The repository is public on GitHub.</li>

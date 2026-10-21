@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.7 (draft)"
+subtitle: "Version 0.8 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -102,8 +102,8 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 1. Add periods to the model, with the containment rule and the stops within a period. (DES-DATA-001 to DES-DATA-006, DES-NAV-009 to DES-NAV-011)
 2. Add two or three periods to the sample file by hand, including one inside another and one still going on.
-3. Add the period keystrokes, announcements and the "D'oh" sound, which you supply. (DES-KEY-010 to DES-KEY-012, DES-ANN-008, DES-ANN-009, DES-ANN-011)
-4. You test it with NVDA. We refine it, and settle Q-21.
+3. Add the period keystrokes, announcements and the "D'oh" sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
+4. You test it with NVDA, and we refine it.
 
 ### Step 0C: Real data from Wikidata
 
@@ -161,6 +161,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 # Change history
 
+- **0.8**, 21 October 2026: Step 0A is built and in testing. Step 0B now uses the Part of list on periods.
 - **0.7**, 21 October 2026: The repository is public on GitHub. Step 0B now settles Q-21.
 - **0.6**, 21 October 2026: Split Phase 0 into three steps: made-up moments, then hand-made periods, then Wikidata (DEC-30). Added the AGPL-3.0 licence to the setup step.
 - **0.5**, 21 October 2026: Put the module layout and risks in tables. Added the PeriodStops class, a Phase 0 review of links to whole periods, and a new risk. Removed "Caters for" from Phase 4.

@@ -8,9 +8,12 @@ import { ListKind } from '../navigation/ListKind';
 export class AnnouncementBuilder {
   constructor(private readonly dates: DateFormatter) {}
 
-  /** On arriving at a moment: "Laptop, 1981. Enabled, 12." (DES-ANN-001) */
+  /**
+   * On arriving at a moment, its name and date, then the active list and its
+   * highlighted entry: "Laptop, 1981. Enabled, 12. Smartphone, 1994, 1 of 12." (DES-ANN-001)
+   */
   arrival(state: NavigationState): string {
-    return `${this.nameAndDate(state.currentMoment)}. ${this.listHeading(state.activeList)}.`;
+    return `${this.nameAndDate(state.currentMoment)}. ${this.listSwitch(state.activeList)}`;
   }
 
   /** On moving within a list: "Smartphone, 1994, 3 of 12." (DES-ANN-002) */

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.7 (draft)"
+subtitle: "Version 0.8 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -225,11 +225,7 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-Answered questions are removed from this table. Their answers are in the Decision Log.
-
-| ID | Topic | Question |
-|------|--------------|--------------------------------------------------|
-| Q-21 | What Up Arrow does | Up Arrow does different things on a moment and on a period. On a moment, it moves up the active list. On a period, which has no lists, it goes up to the larger period this one is part of. Example: from the Tang dynasty up to Chinese civilisation. So there are two ways up: from a moment, Enter on its Part of list; from a period, Up Arrow. Does that make sense, or would you rather periods had a Part of list too, reached in the same way as on a moment? |
+There are no open questions at the moment. Answered questions are in the Decision Log.
 
 # Decision log
 
@@ -270,9 +266,12 @@ Answered questions are removed from this table. Their answers are in the Decisio
 | DEC-33 | Impossible moves are silent | 6, 21 October 2026 | For now, when a move isn't possible, nothing happens and nothing is announced, except for the sound at the ends of a period. To be reviewed after testing. Answers Q-20. Recorded as REQ-NAV-015, DES-NAV-008, DES-ANN-007 and DES-KEY-012. |
 | DEC-34 | Public repository | 6, 21 October 2026 | The project is kept in a public repository on GitHub. Recorded as DES-TECH-006. |
 | DEC-35 | Real sample moments | 6, 21 October 2026 | The hand-made sample for Step 0A uses real moments, with dates as accurate as can easily be found. |
+| DEC-36 | Going up from a period | 6, 21 October 2026 | Periods have a Part of list, reached in the same way as on a moment, instead of using Up Arrow. Answers Q-21. Recorded as DES-NAV-012. DES-KEY-012 is withdrawn. |
+| DEC-37 | Findings from the first test of Step 0A | 6, 21 October 2026 | Escape from the Details region left the user stuck, with the arrow keys not responding. After moving, it wasn't clear that a list was active. Fixed by DES-KEY-008, DES-SR-004 and DES-ANN-001. |
 
 # Change history
 
+- **0.8**, 21 October 2026: Recorded DEC-36, answering Q-21, and DEC-37, the findings from the first test of Step 0A. There are no open questions.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions, DEC-31 to DEC-35, answering Q-19 and Q-20. Revised REQ-NAV-015. Added Q-21.
 - **0.6**, 21 October 2026: Recorded the round 5 decisions, DEC-25 to DEC-30, answering Q-08, Q-17 and most of Q-18. Added REQ-ANN-009. Agreed the licences in REQ-CONT-005. Added Q-19 and Q-20.
 - **0.5**, 21 October 2026: Recorded the round 4 decisions, DEC-18 to DEC-24. Added REQ-DATA-014, REQ-NAV-024 and REQ-VIEW-012. Withdrew REQ-REL-006. Put every requirement, question and decision in tables. Added Q-17 and Q-18, and a licence recommendation in Q-08.

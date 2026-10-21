@@ -25,17 +25,39 @@ export class TreeNavigator {
     private readonly dates: DateFormatter,
   ) {
     element.addEventListener('keydown', (event) => this.onKey(event));
+    // Whenever focus arrives, by any route, say where the user is.
+    element.addEventListener('focus', () => this.announcer.say(this.words.arrival(this.state)));
+    element.ownerDocument.addEventListener('keydown', (event) => this.onPageKey(event));
   }
 
-  /** Puts focus in the navigator and announces where the user is. */
+  /**
+   * Puts focus in the navigator and says where the user is. The focus event
+   * says it too, but may not fire if the window isn't active yet; the
+   * announcer collapses the two into one.
+   */
   start(): void {
     this.refresh();
-    this.element.focus();
+    this.focus();
     this.announcer.say(this.words.arrival(this.state));
   }
 
+  /**
+   * Focus moves on the next turn of the event loop, so the screen reader has
+   * finished with the key that caused it before it sees the focus change.
+   */
   focus(): void {
-    this.element.focus();
+    window.setTimeout(() => this.element.focus(), 0);
+  }
+
+  /** Escape from anywhere else on the page, except a dialog, returns to the navigator (DES-KEY-008). */
+  private onPageKey(event: KeyboardEvent): void {
+    const target = event.target as Node | null;
+    const inNavigator = target !== null && this.element.contains(target);
+    const inDialog = target instanceof Element && target.closest('dialog') !== null;
+    if (event.key === 'Escape' && !inNavigator && !inDialog) {
+      event.preventDefault();
+      this.focus();
+    }
   }
 
   private onKey(event: KeyboardEvent): void {
@@ -97,13 +119,16 @@ export class TreeNavigator {
     this.showStatus();
   }
 
-  /** Visible text for sighted users. Hidden from screen readers, which hear the announcements instead. */
+  /**
+   * Visible text showing the current position. It is left readable, so that
+   * if the screen reader is ever in browse mode here, the user can still
+   * read where they are.
+   */
   private showStatus(): void {
     const moment = this.state.currentMoment;
     const list = this.state.activeList;
     const entry = list.highlighted;
     const status = document.createElement('div');
-    status.setAttribute('aria-hidden', 'true');
     const title = document.createElement('p');
     title.textContent = `${moment.name}, ${this.dates.written(moment.date)}`;
     const listLine = document.createElement('p');

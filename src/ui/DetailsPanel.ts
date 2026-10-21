@@ -12,15 +12,7 @@ export class DetailsPanel {
     private readonly region: HTMLElement,
     private readonly content: HTMLElement,
     private readonly dates: DateFormatter,
-    onEscape: () => void,
-  ) {
-    region.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        onEscape();
-      }
-    });
-  }
+  ) {}
 
   show(state: NavigationState): void {
     const moment = state.currentMoment;

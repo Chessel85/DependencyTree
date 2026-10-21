@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.7 (draft)"
+subtitle: "Version 0.8 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -93,6 +93,7 @@ The navigator behaves differently on a moment and on a period (DEC-19):
 | DES-NAV-009 | A period is presented as a row of stops in date order, from its start moment to its end moment. If the period is still going on, the last stop is "Ongoing", at today's date. | Agreed | REQ-NAV-023, REQ-NAV-024, REQ-DATA-006 |
 | DES-NAV-010 | On arriving at a period from one of its moments, through the Part of list, that moment is highlighted. Otherwise, the start moment is highlighted. | Proposed | REQ-ACC-015 |
 | DES-NAV-011 | A smaller period inside a larger one is a single stop, placed at the date of its start moment. Enter goes into it. | Proposed | REQ-NAV-023, REQ-REL-003 |
+| DES-NAV-012 | A period that is part of a larger period has a Part of list, reached with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up works the same way everywhere. (Agreed)<br>The period's stops count as its first list, called Moments. While Moments is active, Left Arrow and Right Arrow step through the stops, and Enter goes into the highlighted one. While Part of is active, Up Arrow and Down Arrow move through it, and Enter goes to the highlighted larger period. (Proposed) | Agreed in part | REQ-NAV-023, REQ-NAV-003 |
 
 ## Anywhere
 
@@ -121,7 +122,6 @@ These keystrokes apply while the navigator has focus.
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-KEY-010 | Left Arrow and Right Arrow move to the previous and next stop in the period (DES-NAV-009). Home and End go to the first and last stop (Proposed). | Agreed in part | REQ-NAV-024 |
 | DES-KEY-011 | Enter goes into the highlighted moment or smaller period, which becomes the current entry. | Agreed | REQ-NAV-023 |
-| DES-KEY-012 | Up Arrow goes up to the larger period this period is part of, with this period highlighted. If it is part of more than one, it goes to the one the user came from, or otherwise the earliest. If it isn't part of a larger period, nothing happens. | Agreed | REQ-NAV-023 |
 
 ### Anywhere
 
@@ -130,13 +130,13 @@ These keystrokes apply while the navigator has focus.
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
 | DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the path taken | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
-| DES-KEY-008 | I moves focus to the Details region, for reading in browse mode. Escape, pressed from Details, returns focus to the navigator. | Proposed | REQ-ACC-014 |
+| DES-KEY-008 | I moves focus to the Details region, for reading in browse mode. Escape, pressed anywhere on the page outside the navigator and any dialog, returns focus to the navigator, which announces where the user is. | Proposed | REQ-ACC-014 |
 
 ## Announcements
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-ANN-001 | Arriving at a moment announces its name, its date, the active list and that list's size. Example: "Laptop, 1981. Enabled, 12." | Proposed | REQ-ANN-007 |
+| DES-ANN-001 | Arriving at a moment announces its name, its date, the active list, that list's size and its highlighted entry, so the user knows at once that they are in a list. Example: "Laptop, 1981. Enabled, 12. Smartphone, 1994, 1 of 12." If the list is empty: "Electric battery, March 1800. Dependencies, none." | Proposed | REQ-ANN-007 |
 | DES-ANN-002 | Moving within a list announces the entry's name, its date and its position. Example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
 | DES-ANN-003 | Switching list announces the list's name, its size and the highlighted entry. Examples:<br>• "Dependencies, 4. Lithium-ion battery, 1991, 1 of 4."<br>• "Dependencies, none." | Proposed | REQ-ANN-007 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
@@ -178,6 +178,7 @@ A period that is still going on. The current entry is the People's Republic of C
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-SR-001 | The navigator is a single focusable widget. When it has focus, NVDA switches to focus mode automatically. It is likely to use the ARIA "application" role, with a live region for announcements. This will be confirmed by testing in Phase 0. | Proposed | REQ-ACC-004, REQ-ACC-007 |
 | DES-SR-002 | In VoiceOver, Quick Nav must be off for the arrow keys to reach the application. Keyboard help says so. | Proposed | REQ-ACC-003, REQ-ACC-008 |
+| DES-SR-004 | Whenever the navigator gains focus, by any route, it announces where the user is. Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. The navigator's visible text isn't hidden from screen readers, so if NVDA is ever left in browse mode there, the user can still read where they are. | Proposed | REQ-ACC-011, REQ-ANN-007 |
 | DES-SR-003 | The Details region is ordinary HTML, with headings and lists. It is readable in browse mode and updates whenever the current entry changes. | Proposed | REQ-ACC-014 |
 
 # Visual presentation
@@ -249,6 +250,7 @@ These IDs won't be reused.
 |--------------|-------------|----------------------|
 | DES-REL-003 | Which date to use when a dependency pointed at a whole period. | Withdrawn in version 0.4. Dependencies now always point at moments (DES-REL-006). |
 | DES-KEY-009 | On a period, Left Arrow went to its start moment and Right Arrow to its end moment. | Withdrawn in version 0.5. Replaced by stepping through all of a period's moments (DES-KEY-010). |
+| DES-KEY-012 | On a period, Up Arrow went up to the larger period. | Withdrawn in version 0.8. Periods have a Part of list instead, the same as moments (DES-NAV-012). |
 | DES-ANN-010 | A moment dated in the future was announced as "planned". | Withdrawn in version 0.6. The date already shows that it is in the future. |
 
 The Contains list, proposed in version 0.3, is also withdrawn. A period's moments are now reached by stepping through the period (DES-NAV-009).
@@ -262,6 +264,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.8**, 21 October 2026: Periods have a Part of list, the same as moments (DES-NAV-012), replacing Up Arrow on a period (DES-KEY-012, withdrawn). After testing Step 0A: arriving at a moment now announces the highlighted entry (DES-ANN-001), Escape returns to the navigator from anywhere on the page (DES-KEY-008), and DES-SR-004 is added.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions. The Part of list is agreed. Impossible moves are silent, except at the ends of a period. The repository is public on GitHub.
 - **0.6**, 21 October 2026: Recorded the round 5 decisions. Left Arrow and Right Arrow on a moment work from their own lists (DES-KEY-001). Added the "D'oh" sound at the ends of a period (DES-ANN-011) and DES-KEY-013. Agreed Up Arrow on a period, Backspace and the line for today. Withdrew DES-ANN-010.
 - **0.5**, 21 October 2026: Recorded the round 4 decisions. Moments have lists, and periods are stepped through with Left Arrow and Right Arrow (DEC-19). Added ongoing periods, future dates, nested periods and locations. Added DES-DATA-007, DES-DATE-005, DES-REL-007, DES-NAV-009 to DES-NAV-011, DES-KEY-010 to DES-KEY-012, DES-ANN-008 to DES-ANN-010 and DES-VIEW-009. Withdrew DES-KEY-009 and the Contains list. Put every design item in tables.

@@ -30,10 +30,10 @@ const dates = new DateFormatter();
 const keys = new KeyBindings();
 const state = new NavigationState(new ListSetBuilder(graph), start);
 
-// The navigator needs the details panel and help dialog, and they return
-// focus to the navigator, so the navigator is reached through this variable.
+// The help dialog returns focus to the navigator, which needs the dialog,
+// so the navigator is reached through this variable.
 let navigator: TreeNavigator;
-const details = new DetailsPanel(byId('details'), byId('details-content'), dates, () => navigator.focus());
+const details = new DetailsPanel(byId('details'), byId('details-content'), dates);
 const help = new HelpDialog(byId('help'), byId('help-content'), byId('help-close'), keys.listModifierName, () =>
   navigator.focus(),
 );
