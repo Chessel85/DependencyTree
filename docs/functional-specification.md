@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.13 (draft)"
+subtitle: "Version 0.14 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -146,7 +146,7 @@ These keystrokes apply while the navigator has focus.
 | DES-ANN-007 | When there is nowhere to go, nothing is announced. The only exception is the sound at the ends of a period (DES-ANN-011). This is to be reviewed after testing, and spoken messages such as "No earlier entries" may be added if silence is confusing. | Agreed | REQ-NAV-015 |
 | DES-ANN-008 | Arriving at a period works the same way, through the label of its Moments list. For example: "Information Age, 1970s to present, Moments, list. iPhone, 2007, 5 of 6." | Agreed | REQ-ANN-007 |
 | DES-ANN-009 | Moving to the end of a period that is still going on announces "Ongoing". | Agreed | REQ-DATA-006 |
-| DES-ANN-011 | When the user presses Left Arrow at the start of a period's Moments list, or Right Arrow at its end, a short "D'oh" sound plays, and nothing else changes. On a period still going on, the end is the "Ongoing" stop. Up Arrow and Down Arrow at the ends are silent, as in any list. The sound is sounds/bump.wav, supplied by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
+| DES-ANN-011 | When the user presses Left Arrow at the start of a period's Moments list, or Right Arrow at its end, a short bump sound plays, and nothing else changes. On a period still going on, the end is the "Ongoing" stop. Up Arrow and Down Arrow at the ends are silent, as in any list. The sound is sounds/bump.wav, recorded by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
 
 ## Worked examples
 
@@ -164,14 +164,14 @@ Moving into and through a period. The current entry is the writing of the Twelve
 1. Ctrl+Right Arrow: "Part of, 1. Roman Republic, 509 BCE to 27 BCE, 1 of 1."
 2. Enter: "Roman Republic, 509 BCE to 27 BCE, 6 moments. Twelve Tables, around 450 BCE, 2 of 6." The Twelve Tables is highlighted, because the user came from it (DES-NAV-010).
 3. Left Arrow: "Start of the Roman Republic, around 509 BCE, 1 of 6."
-4. Left Arrow again: the "D'oh" sound plays. The user is already at the start.
+4. Left Arrow again: the bump sound plays. The user is already at the start.
 5. Right Arrow: "Twelve Tables, around 450 BCE, 2 of 6."
 6. Enter: "Twelve Tables, around 450 BCE. Dependencies, 2." The user is on a moment again, and its lists work as before.
 
 A period that is still going on. The current entry is the People's Republic of China, and the user is on its last moment.
 
 1. Right Arrow: "Ongoing."
-2. Right Arrow again: the "D'oh" sound plays.
+2. Right Arrow again: the bump sound plays.
 
 ## Screen reader integration
 
@@ -270,6 +270,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Built periods (Step 0B). Removed landmarks (DES-SCR-001). After switching tab, the list's label is just its name (DES-ANN-003). Dates in lists are shortened by how far they are from today (DES-DATE-006). The old list box stays until focus has moved (DES-SR-007). Updated DES-ANN-001, DES-ANN-008, DES-ANN-011, DES-NAV-012 and DES-SR-006 for periods.
 - **0.12**, 21 October 2026: The list comes before the tabs in the Tab order, and text boxes start at the top line (DES-SR-006).
 - **0.11**, 21 October 2026: The current moment is now a card of standard controls (DES-SR-006, DES-SR-007), with Tab moving between its parts (DES-KEY-014). Rewrote DES-SCR-001, DES-NAV-001, DES-SR-004 and DES-ANN-001 to DES-ANN-003. Withdrew DES-SR-001, DES-SR-003, DES-SR-005 and DES-KEY-008.

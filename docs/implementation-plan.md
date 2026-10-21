@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.13 (draft)"
+subtitle: "Version 0.14 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -73,7 +73,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/ui | main.ts | Starts the front end. |
 | src/ui | TreeNavigator.ts | Connects the navigation state to the card, and handles keystrokes. |
 | src/ui | EntryCard.ts | The heading, summary box and description box. |
-| src/ui | SoundPlayer.ts | Plays the "D'oh" sound (DES-ANN-011). |
+| src/ui | SoundPlayer.ts | Plays the bump sound (DES-ANN-011). |
 | src/ui | RelationshipTabs.ts | The tab control. |
 | src/ui | RelationshipListBox.ts | The list box of the active list's entries. |
 | src/ui | KeyBindings.ts | Keystrokes per platform. |
@@ -109,7 +109,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 1. Add periods to the model, with the containment rule and the stops within a period. (DES-DATA-001 to DES-DATA-006, DES-NAV-009 to DES-NAV-011)
 2. Add two or three periods to the sample file by hand, including one inside another and one still going on.
-3. Add the period keystrokes, announcements and the "D'oh" sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
+3. Add the period keystrokes, announcements and the bump sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
 4. You test it with NVDA, and we refine it.
 
 ### Step 0D: Visual layout experiment
@@ -177,6 +177,7 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 
 # Change history
 
+- **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Steps 0A and 0B are built. Updated the module layout to match the code.
 - **0.11**, 21 October 2026: Step 0A now builds a card of standard controls. Updated the module layout to match.
 - **0.10**, 21 October 2026: Step 0D comes after Step 0B (DEC-42).
