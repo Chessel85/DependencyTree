@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.8 (draft)"
+subtitle: "Version 0.9 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -105,6 +105,15 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 3. Add the period keystrokes, announcements and the "D'oh" sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
 4. You test it with NVDA, and we refine it.
 
+### Step 0D: Visual layout experiment
+
+When this happens is Q-22.
+
+1. Draw the sample as a tree, with time running left to right and links joining the boxes. (DES-VIEW-001, DES-VIEW-002)
+2. Try the three ways of spacing entries in time, and a layered layout that keeps links out of boxes. (DES-VIEW-005, DES-VIEW-010)
+3. Claude checks each version by taking screenshots and looking at them. You can also ask Be My Eyes or a sighted friend to compare them.
+4. Keep the best layout, or offer a choice.
+
 ### Step 0C: Real data from Wikidata
 
 1. Build the import tool. Gather a seed set of 50 to 200 entries from the iPhone backwards, and produce a coverage report showing how many links each Wikidata property contributed. (DES-IMP-002, DES-IMP-003, DES-IMP-007)
@@ -161,6 +170,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 
 # Change history
 
+- **0.9**, 21 October 2026: Added Step 0D, the visual layout experiment. Its timing is Q-22.
 - **0.8**, 21 October 2026: Step 0A is built and in testing. Step 0B now uses the Part of list on periods.
 - **0.7**, 21 October 2026: The repository is public on GitHub. Step 0B now settles Q-21.
 - **0.6**, 21 October 2026: Split Phase 0 into three steps: made-up moments, then hand-made periods, then Wikidata (DEC-30). Added the AGPL-3.0 licence to the setup step.

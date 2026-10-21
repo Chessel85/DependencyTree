@@ -54,12 +54,13 @@ export class AnnouncementBuilder {
     return moment.location ? `Location: ${moment.location}.` : 'No location.';
   }
 
-  /** P: the path taken, oldest first. */
+  /** P: the moments on the path taken, each once, in date order from oldest to newest (DES-KEY-006). */
   path(moments: readonly Moment[]): string {
-    if (moments.length === 1) {
-      return `Path: just ${moments[0].name}.`;
+    const distinct = [...new Map(moments.map((m) => [m.id, m])).values()].sort(Moment.byDate);
+    if (distinct.length === 1) {
+      return `Path: just ${distinct[0].name}.`;
     }
-    return `Path, ${moments.length} steps: ${moments.map((m) => m.name).join(', ')}.`;
+    return `Path, ${distinct.length} moments, oldest first: ${distinct.map((m) => m.name).join(', ')}.`;
   }
 
   private nameAndDate(moment: Moment): string {

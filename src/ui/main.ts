@@ -45,6 +45,5 @@ navigator = new TreeNavigator(
   new LiveAnnouncer(byId('announcer')),
   details,
   help,
-  dates,
 );
 navigator.start();

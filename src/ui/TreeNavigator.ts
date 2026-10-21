@@ -1,5 +1,4 @@
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
-import { DateFormatter } from '../core/dates/DateFormatter';
 import { NavigationState } from '../core/navigation/NavigationState';
 import { Command } from './Command';
 import { DetailsPanel } from './DetailsPanel';
@@ -22,7 +21,6 @@ export class TreeNavigator {
     private readonly announcer: LiveAnnouncer,
     private readonly details: DetailsPanel,
     private readonly help: HelpDialog,
-    private readonly dates: DateFormatter,
   ) {
     element.addEventListener('keydown', (event) => this.onKey(event));
     // Whenever focus arrives, by any route, say where the user is.
@@ -120,26 +118,14 @@ export class TreeNavigator {
   }
 
   /**
-   * Visible text showing the current position. It is left readable, so that
-   * if the screen reader is ever in browse mode here, the user can still
-   * read where they are.
+   * The navigator's only content is one line giving the current position,
+   * worded like the arrival announcement, so the screen reader's "read
+   * current line" command (NVDA+Up Arrow) reads it (DES-SR-005). Sighted
+   * users see the same line.
    */
   private showStatus(): void {
-    const moment = this.state.currentMoment;
-    const list = this.state.activeList;
-    const entry = list.highlighted;
-    const status = document.createElement('div');
-    const title = document.createElement('p');
-    title.textContent = `${moment.name}, ${this.dates.written(moment.date)}`;
-    const listLine = document.createElement('p');
-    const listName = document.createElement('span');
-    listName.className = 'list-name';
-    listName.textContent = `${list.kind}: `;
-    listLine.append(
-      listName,
-      entry ? `${entry.name}, ${this.dates.written(entry.date)} (${list.position} of ${list.size})` : 'none',
-    );
-    status.append(title, listLine);
-    this.element.replaceChildren(status);
+    const line = document.createElement('p');
+    line.textContent = this.words.arrival(this.state);
+    this.element.replaceChildren(line);
   }
 }

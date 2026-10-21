@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.8 (draft)"
+subtitle: "Version 0.9 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -81,6 +81,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-ACC-012 | The application is tested with NVDA and Firefox, NVDA and Chrome, and VoiceOver and Safari before each release. | Must | Proposed | Analyst |
 | REQ-ACC-014 | Everything the application announces about an entry can also be read at the user's own pace, using the screen reader's normal reading commands. | Must | Proposed | Analyst |
 | REQ-ACC-015 | Keyboard navigation is efficient. Common tasks take as few keystrokes as possible. In particular, travelling repeatedly in the same direction through time needs only one keystroke per step. | Must | Agreed | Round 2 |
+| REQ-ACC-016 | The screen reader's command for reading the current line (NVDA+Up Arrow) reads the user's current position in the tree. | Must | Agreed | Round 7 |
 
 # Data model (DATA)
 
@@ -152,6 +153,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-VIEW-009 | Clicking an entry in the visual view makes it the current entry. | Must | Proposed | Analyst |
 | REQ-VIEW-011 | The visual view shows periods with the moments they contain, and shows how precisely each date is known. | Must | Agreed | Round 2, confirmed in Round 3 |
 | REQ-VIEW-012 | The visual view shows clearly which periods are still going on. | Must | Agreed | Round 4 |
+| REQ-VIEW-013 | Links between entries are drawn so that they don't pass through other entries. | Should | Agreed | Round 7 |
 
 # Search and filtering (FIND)
 
@@ -225,7 +227,11 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-There are no open questions at the moment. Answered questions are in the Decision Log.
+Answered questions are removed from this table. Their answers are in the Decision Log.
+
+| ID | Topic | Question |
+|------|--------------|--------------------------------------------------|
+| Q-22 | When to try the visual layouts | The visual view was due in Phase 1. Should the layout experiment (DES-VIEW-005, DES-VIEW-010) come straight after periods (Step 0B), before the Wikidata import, or after it? Trying it with the small hand-made sample first is quicker, and the results are easier to judge. |
 
 # Decision log
 
@@ -268,9 +274,13 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-35 | Real sample moments | 6, 21 October 2026 | The hand-made sample for Step 0A uses real moments, with dates as accurate as can easily be found. |
 | DEC-36 | Going up from a period | 6, 21 October 2026 | Periods have a Part of list, reached in the same way as on a moment, instead of using Up Arrow. Answers Q-21. Recorded as DES-NAV-012. DES-KEY-012 is withdrawn. |
 | DEC-37 | Findings from the first test of Step 0A | 6, 21 October 2026 | Escape from the Details region left the user stuck, with the arrow keys not responding. After moving, it wasn't clear that a list was active. Fixed by DES-KEY-008, DES-SR-004 and DES-ANN-001. |
+| DEC-38 | Findings from the second test of Step 0A | 7, 21 October 2026 | Escape from Details now works. The hint about NVDA+Space is removed. The screen reader's "read current line" command must read the current position. Recorded as REQ-ACC-016 and DES-SR-005. |
+| DEC-39 | The path is read in date order | 7, 21 October 2026 | P names the moments on the path from oldest to newest. Recorded as DES-KEY-006. |
+| DEC-40 | Try different visual layouts | 7, 21 October 2026 | Sighted users should see a tree stretching to the left, with the most recent entry on the right, and links shouldn't pass through other boxes. Try a linear time axis against a time slot for each entry. Recorded as REQ-VIEW-013, DES-VIEW-005 and DES-VIEW-010. Led to Q-22. |
 
 # Change history
 
+- **0.9**, 21 October 2026: Recorded DEC-38 to DEC-40. Added REQ-ACC-016 and REQ-VIEW-013, and Q-22.
 - **0.8**, 21 October 2026: Recorded DEC-36, answering Q-21, and DEC-37, the findings from the first test of Step 0A. There are no open questions.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions, DEC-31 to DEC-35, answering Q-19 and Q-20. Revised REQ-NAV-015. Added Q-21.
 - **0.6**, 21 October 2026: Recorded the round 5 decisions, DEC-25 to DEC-30, answering Q-08, Q-17 and most of Q-18. Added REQ-ANN-009. Agreed the licences in REQ-CONT-005. Added Q-19 and Q-20.

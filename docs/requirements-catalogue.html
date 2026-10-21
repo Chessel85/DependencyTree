@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Requirements Catalogue</h1>
-<p class="subtitle">Version 0.8 (draft)</p>
+<p class="subtitle">Version 0.9 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -580,6 +580,14 @@ direction through time needs only one keystroke per step.</td>
 <td>Must</td>
 <td>Agreed</td>
 <td>Round 2</td>
+</tr>
+<tr>
+<td>REQ-ACC-016</td>
+<td>The screen reader’s command for reading the current line (NVDA+Up
+Arrow) reads the user’s current position in the tree.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 7</td>
 </tr>
 </tbody>
 </table>
@@ -1062,6 +1070,14 @@ shows how precisely each date is known.</td>
 <td>Agreed</td>
 <td>Round 4</td>
 </tr>
+<tr>
+<td>REQ-VIEW-013</td>
+<td>Links between entries are drawn so that they don’t pass through
+other entries.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Round 7</td>
+</tr>
 </tbody>
 </table>
 <h1 id="search-and-filtering-find">Search and filtering (FIND)</h1>
@@ -1462,8 +1478,33 @@ separated from requirements.</p>
 </tbody>
 </table>
 <h1 id="open-questions">Open questions</h1>
-<p>There are no open questions at the moment. Answered questions are in
+<p>Answered questions are removed from this table. Their answers are in
 the Decision Log.</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 20%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Topic</th>
+<th>Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-22</td>
+<td>When to try the visual layouts</td>
+<td>The visual view was due in Phase 1. Should the layout experiment
+(DES-VIEW-005, DES-VIEW-010) come straight after periods (Step 0B),
+before the Wikidata import, or after it? Trying it with the small
+hand-made sample first is quicker, and the results are easier to
+judge.</td>
+</tr>
+</tbody>
+</table>
 <h1 id="decision-log">Decision log</h1>
 <table>
 <colgroup>
@@ -1781,10 +1822,37 @@ DES-KEY-012 is withdrawn.</td>
 keys not responding. After moving, it wasn’t clear that a list was
 active. Fixed by DES-KEY-008, DES-SR-004 and DES-ANN-001.</td>
 </tr>
+<tr>
+<td>DEC-38</td>
+<td>Findings from the second test of Step 0A</td>
+<td>7, 21 October 2026</td>
+<td>Escape from Details now works. The hint about NVDA+Space is removed.
+The screen reader’s “read current line” command must read the current
+position. Recorded as REQ-ACC-016 and DES-SR-005.</td>
+</tr>
+<tr>
+<td>DEC-39</td>
+<td>The path is read in date order</td>
+<td>7, 21 October 2026</td>
+<td>P names the moments on the path from oldest to newest. Recorded as
+DES-KEY-006.</td>
+</tr>
+<tr>
+<td>DEC-40</td>
+<td>Try different visual layouts</td>
+<td>7, 21 October 2026</td>
+<td>Sighted users should see a tree stretching to the left, with the
+most recent entry on the right, and links shouldn’t pass through other
+boxes. Try a linear time axis against a time slot for each entry.
+Recorded as REQ-VIEW-013, DES-VIEW-005 and DES-VIEW-010. Led to
+Q-22.</td>
+</tr>
 </tbody>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.9</strong>, 21 October 2026: Recorded DEC-38 to DEC-40.
+Added REQ-ACC-016 and REQ-VIEW-013, and Q-22.</li>
 <li><strong>0.8</strong>, 21 October 2026: Recorded DEC-36, answering
 Q-21, and DEC-37, the findings from the first test of Step 0A. There are
 no open questions.</li>

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.8 (draft)"
+subtitle: "Version 0.9 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -128,7 +128,7 @@ These keystrokes apply while the navigator has focus.
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-KEY-005 | Backspace goes back one step along the path taken. | Agreed | REQ-NAV-004 |
-| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the path taken | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
+| DES-KEY-006 | Information keys:<br>• Space: summary of the current entry<br>• D: description<br>• T: tags<br>• L: location<br>• P: the moments on the path taken, each named once, in date order from oldest to newest (Agreed) | Proposed | REQ-NAV-005, REQ-NAV-006, REQ-ACC-005 |
 | DES-KEY-007 | Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question mark (?): keyboard help<br>• V: cycle verbosity | Proposed | REQ-ACC-009, REQ-ACC-010 |
 | DES-KEY-008 | I moves focus to the Details region, for reading in browse mode. Escape, pressed anywhere on the page outside the navigator and any dialog, returns focus to the navigator, which announces where the user is. | Proposed | REQ-ACC-014 |
 
@@ -178,7 +178,8 @@ A period that is still going on. The current entry is the People's Republic of C
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-SR-001 | The navigator is a single focusable widget. When it has focus, NVDA switches to focus mode automatically. It is likely to use the ARIA "application" role, with a live region for announcements. This will be confirmed by testing in Phase 0. | Proposed | REQ-ACC-004, REQ-ACC-007 |
 | DES-SR-002 | In VoiceOver, Quick Nav must be off for the arrow keys to reach the application. Keyboard help says so. | Proposed | REQ-ACC-003, REQ-ACC-008 |
-| DES-SR-004 | Whenever the navigator gains focus, by any route, it announces where the user is. Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. The navigator's visible text isn't hidden from screen readers, so if NVDA is ever left in browse mode there, the user can still read where they are. | Proposed | REQ-ACC-011, REQ-ANN-007 |
+| DES-SR-004 | Whenever the navigator gains focus, by any route, it announces where the user is. Focus is moved after the key that caused it has finished, so the screen reader handles the two separately. | Proposed | REQ-ACC-011, REQ-ANN-007 |
+| DES-SR-005 | The navigator's only content is a single line giving the current position, worded like the arrival announcement and kept up to date. The screen reader's "read current line" command (NVDA+Up Arrow) reads this line, and sighted users see it too. To be confirmed with NVDA in Firefox and Chrome. | Proposed | REQ-ACC-016 |
 | DES-SR-003 | The Details region is ordinary HTML, with headings and lists. It is readable in browse mode and updates whenever the current entry changes. | Proposed | REQ-ACC-014 |
 
 # Visual presentation
@@ -189,10 +190,11 @@ A period that is still going on. The current entry is the People's Republic of C
 | DES-VIEW-002 | Moments are drawn as dots. Periods are drawn as horizontal bars from their start moment to their end moment. The moments in between are drawn as labelled marks along the bar. Smaller periods are drawn as thinner bars inside it. (Proposed)<br>A period that is still going on is drawn with a jagged right-hand edge at today's date. (Agreed) | Agreed in part | REQ-VIEW-011, REQ-VIEW-012 |
 | DES-VIEW-003 | A dependency arrow runs from one moment to another (DES-REL-006). Where a moment is part of a period, the arrow starts or ends at its mark on the period's bar. | Proposed | REQ-VIEW-011, REQ-REL-011 |
 | DES-VIEW-004 | Uncertain dates are drawn with soft, faded edges spanning their range of possible times (DES-DATE-003). Exact dates are drawn with sharp edges. | Proposed | REQ-VIEW-011, REQ-DATA-005 |
-| DES-VIEW-005 | The time axis can be switched between linear and compressed (logarithmic). | Proposed | REQ-VIEW-005 |
+| DES-VIEW-005 | Three ways of spacing entries along the time axis are to be tried in an experiment, and the best kept, or offered as a choice:<br>• Linear time, where distance is proportional to the years between entries.<br>• Compressed (logarithmic) time, which gives recent centuries more room.<br>• Time slots, where each entry has its own column in date order, however far apart the dates are. | Proposed | REQ-VIEW-005 |
 | DES-VIEW-006 | By default, only the neighbourhood of the current entry is drawn, a few steps in each direction. An option draws its whole ancestry. | Proposed | REQ-VIEW-005, REQ-NFR-002 |
 | DES-VIEW-007 | Horizontal and vertical zoom are independent. They are controlled by the mouse wheel with modifier keys, by pinch gestures, and by on-screen buttons. | Proposed | REQ-VIEW-003 |
 | DES-VIEW-008 | Clicking an entry makes it current, and updates the navigator to match. | Proposed | REQ-VIEW-009 |
+| DES-VIEW-010 | Entries are laid out with a layered graph drawing method, which places entries to reduce crossing links and routes links around boxes rather than through them. A library such as ELK (elkjs) is a candidate, to be judged in the experiment. | Proposed | REQ-VIEW-001, REQ-VIEW-013 |
 | DES-VIEW-009 | A line marks today's date. Anything dated after it is planned, and is drawn with a dashed outline. | Agreed | REQ-DATA-014 |
 
 # Search and filtering
@@ -264,6 +266,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.9**, 21 October 2026: After the second test of Step 0A: the navigator's content is one line that NVDA+Up Arrow reads (DES-SR-005), and P reads the path in date order (DES-KEY-006). Added the visual layout experiment to DES-VIEW-005 and DES-VIEW-010.
 - **0.8**, 21 October 2026: Periods have a Part of list, the same as moments (DES-NAV-012), replacing Up Arrow on a period (DES-KEY-012, withdrawn). After testing Step 0A: arriving at a moment now announces the highlighted entry (DES-ANN-001), Escape returns to the navigator from anywhere on the page (DES-KEY-008), and DES-SR-004 is added.
 - **0.7**, 21 October 2026: Recorded the round 6 decisions. The Part of list is agreed. Impossible moves are silent, except at the ends of a period. The repository is public on GitHub.
 - **0.6**, 21 October 2026: Recorded the round 5 decisions. Left Arrow and Right Arrow on a moment work from their own lists (DES-KEY-001). Added the "D'oh" sound at the ends of a period (DES-ANN-011) and DES-KEY-013. Agreed Up Arrow on a period, Backspace and the line for today. Withdrew DES-ANN-010.

@@ -45,9 +45,17 @@ describe('AnnouncementBuilder', () => {
     expect(words.listSwitch(state.activeList)).toBe('Enabled, 1. laptop, 1981, 1 of 1.');
   });
 
-  it('announces the path', () => {
+  it('announces the path oldest first, even when the user walked back in time', () => {
     const state = laptopState();
     state.goEarlier();
-    expect(words.path(state.path)).toBe('Path, 2 steps: laptop, battery.');
+    expect(words.path(state.path)).toBe('Path, 2 moments, oldest first: battery, laptop.');
+  });
+
+  it('names each moment on the path once', () => {
+    const state = laptopState();
+    state.goEarlier();
+    state.switchList(1);
+    state.goLater();
+    expect(words.path(state.path)).toBe('Path, 2 moments, oldest first: battery, laptop.');
   });
 });
