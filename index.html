@@ -28,6 +28,7 @@
         <div id="relationship-panel"></div>
         <div id="relationship-tabs" role="tablist" aria-label="Relationships"></div>
       </div>
+      <button type="button" id="index-open">Index</button>
       <button type="button" id="help-open">Keyboard help</button>
     </div>
     <h2>Visual view</h2>
@@ -45,6 +46,16 @@
       <h2 id="help-heading">Keyboard help</h2>
       <div id="help-content"></div>
       <button type="button" id="help-close">Close</button>
+    </dialog>
+    <dialog id="index" aria-labelledby="index-heading">
+      <h2 id="index-heading">Index</h2>
+      <div class="card-part">
+        <label for="index-search">Search</label>
+        <input type="text" id="index-search" autocomplete="off" />
+      </div>
+      <p id="index-count" aria-live="polite"></p>
+      <ul id="index-list" role="listbox" aria-label="Entries"></ul>
+      <button type="button" id="index-close">Close</button>
     </dialog>
     <script type="module" src="/src/ui/main.ts"></script>
   </body>

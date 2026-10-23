@@ -16,4 +16,5 @@ export enum Command {
   Location,
   Path,
   Help,
+  Index,
 }

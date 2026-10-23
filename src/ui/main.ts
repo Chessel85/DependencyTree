@@ -5,6 +5,7 @@ import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
 import { DatasetReader, DatasetRecord } from '../core/data/DatasetReader';
 import { DateFormatter } from '../core/dates/DateFormatter';
 import { DateShortener } from '../core/dates/DateShortener';
+import { EntryIndex } from '../core/find/EntryIndex';
 import { HistoricDate } from '../core/dates/HistoricDate';
 import { Entry } from '../core/model/Entry';
 import { Moment } from '../core/model/Moment';
@@ -12,6 +13,7 @@ import { ListSetBuilder } from '../core/navigation/ListSetBuilder';
 import { NavigationState } from '../core/navigation/NavigationState';
 import { EntryCard } from './EntryCard';
 import { HelpDialog } from './HelpDialog';
+import { IndexDialog } from './IndexDialog';
 import { KeyBindings } from './KeyBindings';
 import { LiveAnnouncer } from './LiveAnnouncer';
 import { SoundPlayer } from './SoundPlayer';
@@ -63,6 +65,20 @@ const help = new HelpDialog(byId('help'), byId('help-content'), byId('help-close
 );
 byId('help-open').addEventListener('click', () => help.open());
 
+// The index of every entry, opened with slash or the Index button (DES-FIND-004).
+const index = new IndexDialog(
+  byId('index'),
+  byId('index-search'),
+  byId('index-count'),
+  byId('index-list'),
+  byId('index-close'),
+  new EntryIndex([...dataset.graph.allMoments, ...dataset.periods]),
+  words,
+  (entry) => navigator.goTo(entry),
+  () => navigator.focusList(),
+);
+byId('index-open').addEventListener('click', () => index.open());
+
 navigator = new TreeNavigator(
   byId('entry-card'),
   byId('relationship-tabs'),
@@ -74,6 +90,7 @@ navigator = new TreeNavigator(
   new LiveAnnouncer(byId('announcer')),
   new SoundPlayer(bumpSound),
   help,
+  index,
 );
 navigator.start();
 

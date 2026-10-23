@@ -17,7 +17,7 @@ describe('SeedCollector', () => {
   it('follows dependencies backwards from the root', async () => {
     const graph = await collect(
       [TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971, ['Q1']), TestItems.moment('Q1', 1958)],
-      { root: 'Q3' },
+      { roots: ['Q3'] },
     );
     expect([...graph.entries.keys()]).toEqual(['Q3', 'Q2', 'Q1']);
     expect(graph.links).toContainEqual({ dependent: 'Q2', dependency: 'Q1', source: 'P2283' });
@@ -25,14 +25,14 @@ describe('SeedCollector', () => {
 
   it('reads "has effect" backwards, so the effect depends on the cause', async () => {
     const cause = TestItems.item('Q1', 'cause', { P585: [TestItems.time('+1914-00-00')], P1542: [TestItems.link('Q2')] });
-    const graph = await collect([cause, TestItems.moment('Q2', 1918)], { root: 'Q2' });
+    const graph = await collect([cause, TestItems.moment('Q2', 1918)], { roots: ['Q2'] });
     expect(graph.has('Q1')).toBe(true);
     expect(graph.links).toContainEqual({ dependent: 'Q2', dependency: 'Q1', source: 'P1542' });
   });
 
   it('leaves out an item with no date, and does not walk through it', async () => {
     const undated = TestItems.item('Q2', 'undated', { P2283: [TestItems.link('Q1')] });
-    const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), undated, TestItems.moment('Q1', 1958)], { root: 'Q3' });
+    const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), undated, TestItems.moment('Q1', 1958)], { roots: ['Q3'] });
     expect(graph.undated.has('Q2')).toBe(true);
     expect(graph.has('Q2')).toBe(false);
     expect(graph.has('Q1')).toBe(false);
@@ -41,7 +41,7 @@ describe('SeedCollector', () => {
   it('uses a date from the curation file', async () => {
     const undated = TestItems.item('Q2', 'undated');
     const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), undated], {
-      root: 'Q3',
+      roots: ['Q3'],
       entries: { Q2: { date: { year: 1991, precision: 'year' } } },
     });
     expect(graph.has('Q2')).toBe(true);
@@ -50,15 +50,24 @@ describe('SeedCollector', () => {
   it('stops at the most entries allowed', async () => {
     const graph = await collect(
       [TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971, ['Q1']), TestItems.moment('Q1', 1958)],
-      { root: 'Q3', maxEntries: 2 },
+      { roots: ['Q3'], maxEntries: 2 },
     );
     expect(graph.size).toBe(2);
     expect(graph.stoppedAtLimit).toBe(true);
   });
 
+  it('leaves out an item that came after everything that links to it', async () => {
+    const graph = await collect([TestItems.moment('Q3', 2007, ['Q2', 'Q4']), TestItems.moment('Q2', 2009), TestItems.moment('Q4', 1991)], {
+      roots: ['Q3'],
+    });
+    expect(graph.tooLate.has('Q2')).toBe(true);
+    expect(graph.has('Q2')).toBe(false);
+    expect(graph.has('Q4')).toBe(true);
+  });
+
   it('skips excluded items', async () => {
     const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971)], {
-      root: 'Q3',
+      roots: ['Q3'],
       exclude: ['Q2'],
     });
     expect(graph.has('Q2')).toBe(false);
@@ -70,7 +79,7 @@ describe('SeedCollector', () => {
       P580: [TestItems.time('+1957-00-00')],
       P582: [TestItems.time('+1975-00-00')],
     });
-    const graph = await collect([moment, period], { root: 'Q2' });
+    const graph = await collect([moment, period], { roots: ['Q2'] });
     expect(graph.isPeriod('Q1')).toBe(true);
     expect(graph.memberships).toContainEqual({ period: 'Q1', member: 'Q2', source: 'P361' });
   });

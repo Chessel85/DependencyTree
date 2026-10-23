@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.19 (draft)</p>
+<p class="subtitle">Version 0.20 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -391,6 +391,12 @@ Moments.</td>
 <td>For Backspace and P.</td>
 </tr>
 <tr>
+<td>src/core/find</td>
+<td>EntryIndex.ts</td>
+<td>Every entry in alphabetical order, with a simple search
+(DES-FIND-004).</td>
+</tr>
+<tr>
 <td>src/core/announce</td>
 <td>AnnouncementBuilder.ts</td>
 <td>The wording of announcements.</td>
@@ -555,8 +561,8 @@ keystrokes.</td>
 </tr>
 <tr>
 <td>src/ui</td>
-<td>SearchPanel.ts</td>
-<td>The Search region.</td>
+<td>IndexDialog.ts</td>
+<td>The index, with its search box and list (DES-FIND-004).</td>
 </tr>
 <tr>
 <td>src/ui</td>
@@ -778,35 +784,47 @@ and operating system with hardware properties, so those were added
 sample’s periods and their members.</td>
 </tr>
 <tr>
+<td>ChatGPT “uses” its own later models, GPT-4 to GPT-5.2, and GPT-3
+lists its many sizes as parts.</td>
+<td>The walk now skips items that came after everything linking to them
+(DES-IMP-002), which also drops iPhone OS 1 to 3. One “GPT-3” item
+duplicating the series is excluded.</td>
+</tr>
+<tr>
+<td>The roots of ChatGPT, such as reinforcement learning from human
+feedback, have no dates.</td>
+<td>Two were dated from Wikipedia (DEC-56). ChatGPT’s chain is short:
+GPT-3, Proximal Policy Optimization and transfer learning.</td>
+</tr>
+<tr>
 <td>Many technology items have no date at all, such as the lithium-ion
 battery, the liquid-crystal display, the touchscreen and the
 microphone.</td>
-<td>56 items were left out for having no date (DES-IMP-009). The
-curation file dates the first three. This is Q-26.</td>
+<td>The curation file dates these from the sample, and six more from
+Wikipedia (DEC-56).</td>
 </tr>
 <tr>
 <td>“Has cause” and “has effect” are well used for history. From the
 Cold War and the dissolution of the Soviet Union, they bring in the
 World Wars, treaties and Soviet politics.</td>
-<td>About half the seed set is now political history. This is Q-25.</td>
+<td>About half the seed set is political history. It is kept
+(DEC-55).</td>
 </tr>
 <tr>
 <td>Treaties, conferences and programmes have start and end times, so
 they become periods, such as the Treaty of Versailles.</td>
-<td>29 periods, each with a start moment made by the import, and most
+<td>30 periods, each with a start moment made by the import, and most
 with an end moment.</td>
-</tr>
-<tr>
-<td>The first iPhone’s later operating systems, iPhone OS 2 and 3, came
-after it.</td>
-<td>The predates rule leaves those links out, and the report lists
-them.</td>
 </tr>
 </tbody>
 </table>
-<p>The first import gave 83 Wikidata items: 108 moments, including the
-start and end moments made for periods, 29 periods and 69 dependencies.
-The report is data/import-report.md.</p>
+<p>The latest import, from the iPhone and ChatGPT, gave 78 Wikidata
+items: 103 moments, including the start and end moments made for
+periods, 30 periods and 67 dependencies. The report is
+data/import-report.md.</p>
+<p>The index (DES-FIND-004), planned for Phase 1 as part of search, was
+brought forward so that any entry can be chosen as the place to start
+(DEC-59).</p>
 <ol type="1">
 <li>Build the import tool. Gather a seed set of 50 to 200 entries from
 the iPhone backwards, and produce a coverage report showing how many
@@ -926,6 +944,9 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.20</strong>, 23 October 2026: Added ChatGPT as a second
+root, the walk skipping later items, and the index, brought forward from
+Phase 1 (DEC-55 to DEC-59).</li>
 <li><strong>0.19</strong>, 23 October 2026: Step 0C is built, and in
 review. Added the import classes to the module layout, and what the
 first import found (DEC-54).</li>

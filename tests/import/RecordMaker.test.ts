@@ -33,7 +33,7 @@ const coldWar = TestItems.item('Q1', 'Cold War', {
 describe('RecordMaker', () => {
   it('names entries and gives them address-friendly IDs, keeping the Wikidata ID', async () => {
     const { data } = await make([TestItems.item('Q9', 'lithium-ion battery', { P575: [TestItems.time('+1991-00-00')] })], {
-      root: 'Q9',
+      roots: ['Q9'],
     });
     expect(data.moments[0]).toMatchObject({
       id: 'lithium-ion-battery',
@@ -45,26 +45,26 @@ describe('RecordMaker', () => {
   });
 
   it('keeps a name that starts with a small letter on purpose', async () => {
-    const { data } = await make([TestItems.item('Q9', 'iPhone', { P575: [TestItems.time('+2007-00-00')] })], { root: 'Q9' });
+    const { data } = await make([TestItems.item('Q9', 'iPhone', { P575: [TestItems.time('+2007-00-00')] })], { roots: ['Q9'] });
     expect(data.moments[0].name).toBe('iPhone');
   });
 
   it('makes a start and end moment for each period (DES-IMP-008)', async () => {
-    const { data } = await make([coldWar], { root: 'Q1' });
-    expect(data.periods![0]).toMatchObject({ id: 'cold-war', start: 'start-of-cold-war', end: 'end-of-cold-war' });
-    expect(data.moments.map((m) => m.name)).toEqual(['Start of the Cold War', 'End of the Cold War']);
+    const { data } = await make([coldWar], { roots: ['Q1'] });
+    expect(data.periods![0]).toMatchObject({ id: 'cold-war', start: 'cold-war-begins', end: 'cold-war-ends' });
+    expect(data.moments.map((m) => m.name)).toEqual(['Cold War begins', 'Cold War ends']);
   });
 
   it('moves a dependency on a whole period to its start moment, and notes it', async () => {
     const treaty = TestItems.moment('Q2', 1990, ['Q1']);
-    const { data, log } = await make([treaty, coldWar], { root: 'Q2' });
-    expect(data.moments.find((m) => m.id === 'q2')!.dependsOn).toEqual(['start-of-cold-war']);
+    const { data, log } = await make([treaty, coldWar], { roots: ['Q2'] });
+    expect(data.moments.find((m) => m.id === 'q2')!.dependsOn).toEqual(['cold-war-begins']);
     expect(log.moved).toEqual([{ dependent: 'Q2', dependency: 'Cold War', source: 'P2283', periods: ['Cold War'] }]);
   });
 
   it('records where each dependency came from', async () => {
     const { data } = await make([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971), TestItems.moment('Q1', 1958)], {
-      root: 'Q3',
+      roots: ['Q3'],
       addLinks: [{ dependent: 'Q3', dependency: 'Q1' }],
     });
     expect(data.moments.find((m) => m.id === 'q3')!.linkSources).toEqual({ q2: 'P2283', q1: 'curation' });
@@ -72,7 +72,7 @@ describe('RecordMaker', () => {
 
   it('notes a curated link that Wikidata now has', async () => {
     const { log } = await make([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971)], {
-      root: 'Q3',
+      roots: ['Q3'],
       addLinks: [{ dependent: 'Q3', dependency: 'Q2' }],
     });
     expect(log.curation).toHaveLength(1);

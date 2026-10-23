@@ -15,6 +15,7 @@ const PLAIN_KEYS: Record<string, Command> = {
   l: Command.Location,
   p: Command.Path,
   '?': Command.Help,
+  '/': Command.Index,
 };
 
 /**

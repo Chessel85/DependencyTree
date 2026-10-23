@@ -31,6 +31,7 @@ export class HelpDialog {
       ['T', 'Tags.'],
       ['L', 'Location.'],
       ['P', 'The path you took.'],
+      ['Slash', 'The index, to find any entry and go to it. Type to narrow the list, Down Arrow to move into it, and Enter to go. Escape closes it. Works anywhere in the card.'],
       ['Question mark', 'This help. Escape closes it.'],
     ];
     const table = document.createElement('table');

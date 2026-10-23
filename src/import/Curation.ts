@@ -27,7 +27,8 @@ export interface CuratedMember {
 
 /** The curation file as written (DES-IMP-004). Every item is named by its Wikidata ID. */
 export interface CurationRecord {
-  root: string;
+  /** The top items the walk starts from, such as the iPhone. The page opens at the first. */
+  roots: string[];
   maxEntries?: number;
   seeds?: string[];
   exclude?: string[];
@@ -47,18 +48,18 @@ export class Curation {
     return new Curation(JSON.parse(readFileSync(file, 'utf8')) as CurationRecord);
   }
 
-  get root(): string {
-    return this.record.root;
+  get roots(): string[] {
+    return this.record.roots;
   }
 
   get maxEntries(): number {
     return this.record.maxEntries ?? DEFAULT_MAX_ENTRIES;
   }
 
-  /** Where the walk starts: the root, the extra seeds, and both ends of every added link and membership. */
+  /** Where the walk starts: the roots, the extra seeds, and both ends of every added link and membership. */
   get startingPoints(): string[] {
     const ids = [
-      this.root,
+      ...this.roots,
       ...(this.record.seeds ?? []),
       ...this.addLinks.flatMap((l) => [l.dependent, l.dependency]),
       ...this.addMembers.flatMap((m) => [m.period, m.member]),

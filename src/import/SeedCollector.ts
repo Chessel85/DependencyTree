@@ -13,7 +13,9 @@ const PERIOD_ROUNDS = 3;
  * curation file's seeds, it follows dependency links backwards, one step at
  * a time, until there are no more or it reaches the most entries allowed.
  * Then it adds the periods the gathered entries say they are part of.
- * Items without a usable date are noted and not walked through.
+ * Items without a usable date are noted and not walked through, and so are
+ * items that certainly came after every gathered entry that links to them,
+ * since the walk goes backwards in time.
  */
 export class SeedCollector {
   private readonly seen = new Set<string>();
@@ -61,6 +63,10 @@ export class SeedCollector {
         graph.undated.set(entity.id, entity);
         continue;
       }
+      if (this.isTooLate(graph, entity)) {
+        graph.tooLate.set(entity.id, entity);
+        continue;
+      }
       if (graph.size >= this.curation.maxEntries) {
         graph.stoppedAtLimit = true;
         continue;
@@ -69,6 +75,15 @@ export class SeedCollector {
       added.push(entity);
     }
     return added;
+  }
+
+  /** True if the item was reached through links, and certainly came after every entry those links came from. */
+  private isTooLate(graph: ImportedGraph, entity: WikidataEntity): boolean {
+    const dependents = graph.links
+      .filter((l) => graph.canonical(l.dependency) === entity.id && graph.has(l.dependent))
+      .map((l) => graph.entries.get(graph.canonical(l.dependent))!);
+    const range = this.dates.range(entity)!;
+    return dependents.length > 0 && dependents.every((d) => range.isCertainlyAfter(this.dates.range(d)!));
   }
 
   /** Records what the new items depend on, in both directions, and returns those items for the next step. */

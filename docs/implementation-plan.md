@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.19 (draft)"
+subtitle: "Version 0.20 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -58,6 +58,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/core/navigation | ListSetBuilder.ts | Decides which lists an entry shows, including a period's stops and "Ongoing" (DES-NAV-002, DES-NAV-009, DES-NAV-012). |
 | src/core/navigation | StepResult.ts | What Left Arrow or Right Arrow did: moved, bumped, or nothing. |
 | src/core/navigation | PathHistory.ts | For Backspace and P. |
+| src/core/find | EntryIndex.ts | Every entry in alphabetical order, with a simple search (DES-FIND-004). |
 | src/core/announce | AnnouncementBuilder.ts | The wording of announcements. |
 | src/core/announce | Verbosity.ts | The verbosity levels. |
 | src/import | main.ts | Runs the import: npm run import. |
@@ -90,7 +91,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/ui | KeyBindings.ts | Keystrokes per platform. |
 | src/ui | LiveAnnouncer.ts | Speaks the information keys' answers through a live region. |
 | src/ui | Command.ts | The commands a key can give. |
-| src/ui | SearchPanel.ts | The Search region. |
+| src/ui | IndexDialog.ts | The index, with its search box and list (DES-FIND-004). |
 | src/ui | FilterPanel.ts | The Filters region. |
 | src/ui | HelpDialog.ts | Keyboard help. |
 | src/ui/visual | GraphLayout.ts | The shapes a layout produces: boxes, links, period bars and axis labels. |
@@ -163,12 +164,15 @@ What the first import found (DEC-54):
 | The iPhone series, Q2766, has no date and only two "uses" links, to two file transfer protocols. | The root is the original iPhone, Q621427, instead. |
 | With only the properties first proposed, the walk from the iPhone stopped at 3 entries. | The original iPhone lists its battery, display, touchscreen, sensors and operating system with hardware properties, so those were added (DES-IMP-005). |
 | Of the 18 hand-made links in the sample, Wikidata has only 4. | The other 14 are added by the curation file, together with the sample's periods and their members. |
-| Many technology items have no date at all, such as the lithium-ion battery, the liquid-crystal display, the touchscreen and the microphone. | 56 items were left out for having no date (DES-IMP-009). The curation file dates the first three. This is Q-26. |
-| "Has cause" and "has effect" are well used for history. From the Cold War and the dissolution of the Soviet Union, they bring in the World Wars, treaties and Soviet politics. | About half the seed set is now political history. This is Q-25. |
-| Treaties, conferences and programmes have start and end times, so they become periods, such as the Treaty of Versailles. | 29 periods, each with a start moment made by the import, and most with an end moment. |
-| The first iPhone's later operating systems, iPhone OS 2 and 3, came after it. | The predates rule leaves those links out, and the report lists them. |
+| ChatGPT "uses" its own later models, GPT-4 to GPT-5.2, and GPT-3 lists its many sizes as parts. | The walk now skips items that came after everything linking to them (DES-IMP-002), which also drops iPhone OS 1 to 3. One "GPT-3" item duplicating the series is excluded. |
+| The roots of ChatGPT, such as reinforcement learning from human feedback, have no dates. | Two were dated from Wikipedia (DEC-56). ChatGPT's chain is short: GPT-3, Proximal Policy Optimization and transfer learning. |
+| Many technology items have no date at all, such as the lithium-ion battery, the liquid-crystal display, the touchscreen and the microphone. | The curation file dates these from the sample, and six more from Wikipedia (DEC-56). |
+| "Has cause" and "has effect" are well used for history. From the Cold War and the dissolution of the Soviet Union, they bring in the World Wars, treaties and Soviet politics. | About half the seed set is political history. It is kept (DEC-55). |
+| Treaties, conferences and programmes have start and end times, so they become periods, such as the Treaty of Versailles. | 30 periods, each with a start moment made by the import, and most with an end moment. |
 
-The first import gave 83 Wikidata items: 108 moments, including the start and end moments made for periods, 29 periods and 69 dependencies. The report is data/import-report.md.
+The latest import, from the iPhone and ChatGPT, gave 78 Wikidata items: 103 moments, including the start and end moments made for periods, 30 periods and 67 dependencies. The report is data/import-report.md.
+
+The index (DES-FIND-004), planned for Phase 1 as part of search, was brought forward so that any entry can be chosen as the place to start (DEC-59).
 
 
 1. Build the import tool. Gather a seed set of 50 to 200 entries from the iPhone backwards, and produce a coverage report showing how many links each Wikidata property contributed. (DES-IMP-002, DES-IMP-003, DES-IMP-007)
@@ -226,6 +230,7 @@ The first import gave 83 Wikidata items: 108 moments, including the start and en
 
 # Change history
 
+- **0.20**, 23 October 2026: Added ChatGPT as a second root, the walk skipping later items, and the index, brought forward from Phase 1 (DEC-55 to DEC-59).
 - **0.19**, 23 October 2026: Step 0C is built, and in review. Added the import classes to the module layout, and what the first import found (DEC-54).
 - **0.18**, 23 October 2026: Step 0D keeps linear time and layered, with a choice (DEC-53). Removed the two dropped layouts from the module layout.
 - **0.17**, 23 October 2026: Step 0D is built, and in review. Added the visual classes to the module layout, the screenshot findings, and a licence risk for elkjs.

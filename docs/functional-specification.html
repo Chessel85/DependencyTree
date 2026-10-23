@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.19 (draft)</p>
+<p class="subtitle">Version 0.20 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -844,10 +844,11 @@ include periods. (Agreed, with “entries” proposed)</td>
 </tr>
 <tr>
 <td>DES-KEY-007</td>
-<td>Other keys:<br>• Slash (/): search<br>• F: filters<br>• Question
-mark (?): keyboard help<br>• V: cycle verbosity</td>
-<td>Proposed</td>
-<td>REQ-ACC-009, REQ-ACC-010</td>
+<td>Other keys:<br>• Slash (/): the index, which works anywhere in the
+card (DES-FIND-004). (Agreed)<br>• F: filters<br>• Question mark (?):
+keyboard help<br>• V: cycle verbosity</td>
+<td>Agreed in part</td>
+<td>REQ-ACC-009, REQ-ACC-010, REQ-FIND-009</td>
 </tr>
 <tr>
 <td>DES-KEY-014</td>
@@ -1247,6 +1248,24 @@ visual view.</td>
 <td>Proposed</td>
 <td>REQ-FIND-002, REQ-FIND-003, REQ-FIND-007, REQ-FIND-008</td>
 </tr>
+<tr>
+<td>DES-FIND-004</td>
+<td>The <strong>index</strong> is a dialog listing every entry the user
+can go to, in alphabetical order, as “Name, date”. It is opened with
+slash (/) from anywhere in the card, or with the Index button on the
+card. Focus starts in a search box. Each word typed must appear in an
+entry’s name or description, ignoring capitals and accents, and name
+matches come first. The number of entries is announced after a short
+pause in typing. Down Arrow moves from the search box into the list, and
+Up Arrow on the first entry goes back. Enter goes to the entry, which
+becomes current and is recorded in the path, and focus returns to the
+card. Enter in the search box goes to the first entry. Escape closes the
+index without moving.<br>Example: typing “chat” leaves “ChatGPT, 2022”,
+and Enter goes to it. Spelling mistakes are not yet tolerated
+(DES-FIND-001).</td>
+<td>Agreed in part</td>
+<td>REQ-FIND-001, REQ-FIND-005, REQ-FIND-006, REQ-FIND-009</td>
+</tr>
 </tbody>
 </table>
 <h1 id="wikidata-import">Wikidata import</h1>
@@ -1276,12 +1295,15 @@ database.</td>
 </tr>
 <tr>
 <td>DES-IMP-002</td>
-<td>The seed set is gathered by starting from the working example, the
-original iPhone (Q621427), and following dependency links backwards in
-time, one step at a time, until there are no more or there are 200
-entries. Q2766 is the whole iPhone series, which has no date. The
-curation file can add more starting points, and the periods that
-gathered entries are part of are added at the end.</td>
+<td>The seed set is gathered by starting from the working examples,
+called roots, and following dependency links backwards in time, one step
+at a time, until there are no more or there are 200 entries. The roots
+are the original iPhone (Q621427) and ChatGPT (Q115564437) (DEC-58).
+Q2766 is the whole iPhone series, which has no date. The walk skips an
+item that certainly came after every entry that links to it, such as
+GPT-5, which ChatGPT “uses”, and the report lists it. The curation file
+can add more starting points, and the periods that gathered entries are
+part of are added at the end. The page opens at the first root.</td>
 <td>Proposed</td>
 <td>REQ-CONT-007</td>
 </tr>
@@ -1353,10 +1375,13 @@ left out of the seed file.</td>
 <td>DES-IMP-009</td>
 <td>An item with no usable date is left out, and the walk doesn’t go
 through it. It is listed in the report with how many entries depend on
-it, so the curation file can give it a date. Example: Wikidata has no
-date for the lithium-ion battery, the liquid-crystal display or the
-touchscreen.</td>
-<td>Proposed</td>
+it. Where it matters, Claude looks up a first date in the item’s English
+Wikipedia article, and the curation file gives that date with a note
+naming the article (DEC-56). Where the article states no clear first
+date, the item stays out. Example: the microphone is dated 1876 from
+Wikipedia, but the accelerometer has no clear date, so it is left
+out.</td>
+<td>Agreed</td>
 <td>REQ-CONT-011</td>
 </tr>
 <tr>
@@ -1380,12 +1405,12 @@ starting at the root.</td>
 <tr>
 <td>DES-IMP-008</td>
 <td>For each period, the import creates a start moment and an end moment
-from the period’s start and end dates, named for example “Start of the
-Roman Republic” and “End of the Roman Republic”. A Wikidata dependency
-that points at a whole period is attached to its start moment
-(DES-REL-007). It is listed in the report, so that it can be moved to a
-better moment with the curation file (DES-IMP-004).</td>
-<td>Proposed</td>
+from the period’s start and end dates, named with “begins” and “ends”,
+for example “World War I begins” and “World War I ends” (DEC-57). A
+Wikidata dependency that points at a whole period is attached to its
+start moment (DES-REL-007). It is listed in the report, so that it can
+be moved to a better moment with the curation file (DES-IMP-004).</td>
+<td>Agreed in part</td>
 <td>REQ-CONT-001, REQ-REL-011</td>
 </tr>
 </tbody>
@@ -1601,6 +1626,12 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.20</strong>, 23 October 2026: Added the index
+(DES-FIND-004), opened with slash (DES-KEY-007). The import starts from
+two roots, the iPhone and ChatGPT, and skips items that came later
+(DES-IMP-002). Period moments are named with “begins” and “ends”
+(DES-IMP-008). Undated items may be dated from Wikipedia
+(DES-IMP-009).</li>
 <li><strong>0.19</strong>, 23 October 2026: Built the Wikidata import
 (Step 0C). Rewrote DES-IMP-002, DES-IMP-004 and DES-IMP-005 with what
 real data showed (DEC-54). Added DES-IMP-009 to DES-IMP-011.</li>

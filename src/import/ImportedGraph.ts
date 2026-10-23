@@ -20,6 +20,8 @@ export class ImportedGraph {
   readonly entries = new Map<string, WikidataEntity>();
   /** Items reached that have no usable date, so are left out (DES-IMP-007). */
   readonly undated = new Map<string, WikidataEntity>();
+  /** Items reached only from entries that certainly came before them, so are left out (DES-IMP-002). */
+  readonly tooLate = new Map<string, WikidataEntity>();
   readonly links: ImportedLink[] = [];
   readonly memberships: ImportedMembership[] = [];
   /** True if the walk stopped because it reached the most entries allowed (DES-IMP-002). */

@@ -31,6 +31,12 @@ export class ImportReport {
       ...this.byProperty(),
       ...this.undated(),
       ...this.section(
+        'Items left out for coming later',
+        "These were reached only from entries that certainly came before them, so they can't be dependencies, and the walk doesn't go through them.",
+        ['Wikidata ID', 'Name'],
+        [...this.graph.tooLate.values()].map((e) => [e.id, e.label ?? '(no English label)']),
+      ),
+      ...this.section(
         'Entries with no English name',
         'These have no English label in Wikidata, so their Wikidata ID is used as the name. The curation file can name them.',
         ['Wikidata ID', 'Description'],
@@ -86,6 +92,7 @@ export class ImportReport {
         ['Periods', String(periods.length)],
         ['Dependencies in the seed file', String(dependencies)],
         ['Items left out for having no date', String(this.graph.undated.size)],
+        ['Items left out for coming later than what links to them', String(this.graph.tooLate.size)],
         ['Links read to items outside the seed set', String(outside)],
         ['Stopped at the most entries allowed', this.graph.stoppedAtLimit ? 'Yes' : 'No'],
       ],

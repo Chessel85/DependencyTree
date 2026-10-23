@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.19 (draft)"
+subtitle: "Version 0.20 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -168,6 +168,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-FIND-006 | Choosing a search result makes it the current entry. | Should | Proposed | Analyst |
 | REQ-FIND-007 | Filters apply consistently everywhere entries are shown or announced. | Should | Proposed | Analyst |
 | REQ-FIND-008 | The tag filter can match any of the selected tags or all of them, as the user chooses. | Should | Proposed | Analyst |
+| REQ-FIND-009 | An index lists every entry, and choosing one makes it the current entry. It is reached from the main page and with a keyboard shortcut. | Must | Agreed | Round 14 |
 
 # Content and data sourcing (CONT)
 
@@ -179,7 +180,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-CONT-004 | Entries imported from Wikidata keep their Wikidata identifier, so that they can be refreshed and aren't duplicated. | Must | Proposed | Analyst |
 | REQ-CONT-005 | The data and the code are published under licences that let anyone use them, and stop anyone from claiming them as their own or limiting others' use. The data is published under CC0. The code is published under AGPL-3.0. | Should | Agreed | Analyst, Rounds 4 and 5 |
 | REQ-CONT-006 | The first release is read-only for users. | Must | Agreed | Round 1 |
-| REQ-CONT-007 | The initial dataset has 50 to 200 entries, drawn from Wikidata and centred on a working example. "The road to the iPhone" is the default example, but it isn't fixed. | Must | Agreed | Round 1 |
+| REQ-CONT-007 | The initial dataset has 50 to 200 entries, drawn from Wikidata and centred on one or more working examples. "The road to the iPhone" and ChatGPT are the current examples, but they aren't fixed. | Must | Agreed | Round 1, Round 14 |
 | REQ-CONT-008 | "Depends on" and "part of" relationships are imported from Wikidata. | Must | Agreed | Round 1 |
 | REQ-CONT-010 | Entries and relationships that are missing or wrong in Wikidata can be added or corrected, and those corrections survive a fresh import. | Must | Proposed | Analyst |
 | REQ-CONT-011 | Data problems found during import, such as missing dates, dependencies that break REQ-REL-002, and circular dependencies, are reported rather than dropped silently. | Must | Proposed | Analyst |
@@ -228,13 +229,7 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-Answered questions are in the Decision Log.
-
-| ID | Question | Background |
-|--------|----------------|--------------------------------------------------|
-| Q-25 | Should the seed set keep the political history that "has cause" and "has effect" bring in? | From the Cold War and the dissolution of the Soviet Union, these links bring in about 40 entries, such as World War I, the Treaty of Versailles, perestroika and the 1991 coup attempt. They are real dependencies, but crowd out the road to the iPhone. The choices: keep them; exclude the political seeds and keep only the Space Race; or stop reading "has cause" and "has effect". |
-| Q-26 | Should undated technology items be given dates in the curation file? | 56 items were left out for having no date. Some matter to the iPhone, such as the microphone, accelerometer, proximity sensor, loudspeaker, antenna and rechargeable battery. Dating them by hand would bring them, and what they depend on, into the seed set. |
-| Q-27 | How should the start and end moments of a period be named? | The import writes "Start of the" and then the period's name. That reads well for "Start of the Cold War" and "Start of the space race", but not for "Start of the World War I" or "Start of the Nazism". The choices: leave it and correct names in the curation file; drop "the" when the name begins with a capital letter, giving "Start of Cold War"; or use a form such as "World War I begins". |
+There are no open questions at the moment. Answered questions are in the Decision Log.
 
 # Decision log
 
@@ -294,9 +289,15 @@ Answered questions are in the Decision Log.
 | DEC-52 | Visual layout experiment built | 12, 23 October 2026 | Step 0D is built, with four layouts chosen from a drop-down list. The analyst decided that the drawing is hidden from screen readers, because the card already gives everything it shows, and that clicking an entry goes to it and is recorded in the path. Recorded as DES-VIEW-008, DES-VIEW-011 and DES-VIEW-012. Led to Q-24. |
 | DEC-53 | Linear and layered layouts, with a choice | 12, 23 October 2026 | The user must be able to switch between linear time and the layered layout, so both are kept. Compressed time and time slots are dropped. Answers Q-24. Recorded as REQ-VIEW-014, DES-VIEW-005 and DES-VIEW-011. |
 | DEC-54 | Wikidata import built | 13, 23 October 2026 | Step 0C is built. The analyst checked the proposed properties against real data and widened them: the root is the original iPhone (Q621427), hardware properties count as dependencies, and launch dates and "mul" labels are read. The sample's links and periods are carried over through the curation file. The page keeps the sample unless ?data=seed is added. Recorded as DES-IMP-002, DES-IMP-004, DES-IMP-005 and DES-IMP-009 to DES-IMP-011. Led to Q-25 to Q-27. |
+| DEC-55 | Keep the political history | 14, 23 October 2026 | The entries that "has cause" and "has effect" bring in, such as the World Wars and the end of the Soviet Union, stay in the seed set. Answers Q-25. |
+| DEC-56 | Dates from Wikipedia | 14, 23 October 2026 | The product owner has no way to date items other than Wikipedia, so Claude looks up a few that matter. The microphone, loudspeaker, antenna, rechargeable battery, Proximal Policy Optimization and transfer learning were dated this way. The accelerometer, proximity sensor, reinforcement learning from human feedback and unsupervised learning have no clear first date, so stay out. Answers Q-26. Recorded as DES-IMP-009. |
+| DEC-57 | "Begins" and "ends" | 14, 23 October 2026 | A period's start and end moments are named like "World War I begins" and "World War I ends". Answers Q-27. Recorded as DES-IMP-008. |
+| DEC-58 | More than one top item | 14, 23 October 2026 | The import starts from several roots. ChatGPT joins the iPhone, chosen as the only candidate with a rich chain of links in Wikidata. The International Space Station, the Large Hadron Collider and the Tesla Model S were checked, but have few dated links. Recorded as REQ-CONT-007 and DES-IMP-002. |
+| DEC-59 | An index | 14, 23 October 2026 | An index of every entry, with a search box, reached from the main page and with slash. Choosing an entry makes it current, so any entry can become the starting point for walking back. Recorded as REQ-FIND-009, DES-FIND-004 and DES-KEY-007. |
 
 # Change history
 
+- **0.20**, 23 October 2026: Recorded DEC-55 to DEC-59, answering Q-25 to Q-27. Added REQ-FIND-009, the index. REQ-CONT-007 allows several working examples.
 - **0.19**, 23 October 2026: Recorded DEC-54, the Wikidata import. Added Q-25 to Q-27.
 - **0.18**, 23 October 2026: Recorded DEC-53, answering Q-24. Added REQ-VIEW-014.
 - **0.17**, 23 October 2026: Recorded DEC-52, and added Q-24.

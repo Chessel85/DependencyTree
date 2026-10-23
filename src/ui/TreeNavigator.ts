@@ -5,6 +5,7 @@ import { StepResult } from '../core/navigation/StepResult';
 import { Command } from './Command';
 import { EntryCard } from './EntryCard';
 import { HelpDialog } from './HelpDialog';
+import { IndexDialog } from './IndexDialog';
 import { KeyBindings } from './KeyBindings';
 import { LiveAnnouncer } from './LiveAnnouncer';
 import { RelationshipListBox } from './RelationshipListBox';
@@ -14,7 +15,7 @@ import { SoundPlayer } from './SoundPlayer';
 /**
  * Connects the navigation state to the card of standard controls. Keystrokes
  * in the list move around the tree; Backspace and question mark also work
- * anywhere in the card. A move that isn't possible changes nothing and says
+ * anywhere in the card, and so does slash, for the index. A move that isn't possible changes nothing and says
  * nothing (DES-NAV-008), except that Left Arrow or Right Arrow on an empty
  * Dependencies or Enabled list plays a sound (DES-ANN-011). Anything that
  * shows the same position, such as the visual view, can watch for changes.
@@ -35,6 +36,7 @@ export class TreeNavigator {
     private readonly announcer: LiveAnnouncer,
     private readonly bump: SoundPlayer,
     private readonly help: HelpDialog,
+    private readonly index: IndexDialog,
   ) {
     this.tabs = new RelationshipTabs(tablist, panel.id, words, (index) => this.chooseTab(index));
     this.listBox = new RelationshipListBox(panel, words, (index) => this.chooseEntry(index));
@@ -69,7 +71,7 @@ export class TreeNavigator {
       return;
     }
     const inList = event.target instanceof Node && this.listBox.contains(event.target);
-    if (!inList && command !== Command.Back && command !== Command.Help) {
+    if (!inList && command !== Command.Back && command !== Command.Help && command !== Command.Index) {
       return;
     }
     event.preventDefault();
@@ -97,6 +99,7 @@ export class TreeNavigator {
       case Command.Location: return this.announcer.say(this.words.location(entry));
       case Command.Path: return this.announcer.say(this.words.path(state.path));
       case Command.Help: return this.help.open();
+      case Command.Index: return this.index.open();
     }
   }
 

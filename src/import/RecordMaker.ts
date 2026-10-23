@@ -48,7 +48,7 @@ export class RecordMaker {
     this.addLinks(graph, moments);
     this.addMembers(graph, periods);
     return {
-      start: this.ids.get(graph.canonical(this.curation.root)),
+      start: this.ids.get(graph.canonical(this.curation.roots[0])),
       moments: [...moments.values()],
       periods: [...periods.values()],
     };
@@ -61,13 +61,13 @@ export class RecordMaker {
       const curated = this.curation.entry(entity.id);
       const name = curated?.name ?? RecordMaker.capitalised(entity.label ?? entity.id);
       let id = curated?.id ?? RecordMaker.slug(name, entity.id);
-      if (taken.has(id) || (graph.isPeriod(entity.id) && taken.has(`start-of-${id}`))) {
+      if (taken.has(id) || (graph.isPeriod(entity.id) && taken.has(`${id}-begins`))) {
         id = `${id}-${entity.id.toLowerCase()}`;
       }
       taken.add(id);
       if (graph.isPeriod(entity.id)) {
-        taken.add(`start-of-${id}`).add(`end-of-${id}`);
-        this.startIds.set(entity.id, `start-of-${id}`);
+        taken.add(`${id}-begins`).add(`${id}-ends`);
+        this.startIds.set(entity.id, `${id}-begins`);
       }
       this.ids.set(entity.id, id);
       this.names.set(entity.id, name);
@@ -93,33 +93,33 @@ export class RecordMaker {
 
   private addPeriod(entity: WikidataEntity, moments: Map<string, MomentRecord>, periods: Map<string, PeriodRecord>): void {
     const id = this.ids.get(entity.id)!;
-    const inner = this.curation.entry(entity.id)?.name ?? entity.label ?? this.names.get(entity.id)!;
+    const name = this.names.get(entity.id)!;
     const tags = this.tags(entity);
     const start = this.dates.start(entity)!;
     const end = this.dates.end(entity);
     moments.set(`start:${entity.id}`, {
-      id: `start-of-${id}`,
-      name: `Start of the ${inner}`,
+      id: `${id}-begins`,
+      name: `${name} begins`,
       date: start.date,
-      description: `The start of the ${inner}.`,
+      description: `The start of the period ${name}.`,
       tags,
     });
     if (end) {
       moments.set(`end:${entity.id}`, {
-        id: `end-of-${id}`,
-        name: `End of the ${inner}`,
+        id: `${id}-ends`,
+        name: `${name} ends`,
         date: end.date,
-        description: `The end of the ${inner}.`,
+        description: `The end of the period ${name}.`,
         tags,
       });
     }
     periods.set(entity.id, {
       id,
-      name: this.names.get(entity.id)!,
+      name,
       description: this.description(entity),
       tags,
-      start: `start-of-${id}`,
-      ...(end ? { end: `end-of-${id}` } : {}),
+      start: `${id}-begins`,
+      ...(end ? { end: `${id}-ends` } : {}),
       contains: [],
       wikidata: entity.id,
     });

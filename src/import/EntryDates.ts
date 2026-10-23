@@ -1,4 +1,7 @@
 import { DateRecord } from '../core/data/DatasetReader';
+import { DatePrecision } from '../core/dates/DatePrecision';
+import { DateRange } from '../core/dates/DateRange';
+import { HistoricDate } from '../core/dates/HistoricDate';
 import { Curation } from './Curation';
 import { PropertyMapper } from './PropertyMapper';
 import { WikidataDateReader } from './WikidataDateReader';
@@ -45,6 +48,16 @@ export class EntryDates {
   /** Undefined for a period still going on. */
   end(entity: WikidataEntity): SourcedDate | undefined {
     return this.curated(entity, 'end') ?? this.first(entity, PropertyMapper.PERIOD_END);
+  }
+
+  /** The times the item could have happened: a moment's date, or a period's start. Undefined if undated. */
+  range(entity: WikidataEntity): DateRange | undefined {
+    const found = this.isPeriod(entity) ? this.start(entity) : this.momentDate(entity);
+    if (!found) {
+      return undefined;
+    }
+    const d = found.date;
+    return new HistoricDate(d.year, d.precision as DatePrecision, d.approximate ?? false, d.month, d.day).range();
   }
 
   private curated(entity: WikidataEntity, field: 'date' | 'start' | 'end'): SourcedDate | undefined {

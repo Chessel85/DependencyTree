@@ -31,7 +31,7 @@ export class CurationApplier {
       graph.memberships.push({ period: membership.period, member: membership.member, source: 'curation' });
     }
     for (const id of Object.keys(this.curation.record.entries ?? {})) {
-      if (!graph.has(id)) {
+      if (!graph.has(id) && !this.curation.isExcluded(id)) {
         this.log.curation.push(`The corrections to ${id} weren't used, because it isn't in the seed set.`);
       }
     }
