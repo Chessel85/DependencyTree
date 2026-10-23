@@ -4,6 +4,8 @@ A web application that shows inventions, historical moments and other developmen
 
 It is designed from the start to be fully usable with a screen reader, as well as visually.
 
+Try it at https://chessel85.github.io/DependencyTree/. It is rebuilt there each time the main branch changes.
+
 ## Documents
 
 - [Requirements Catalogue](docs/requirements-catalogue.md)
