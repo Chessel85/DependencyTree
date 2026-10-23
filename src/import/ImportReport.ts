@@ -37,10 +37,17 @@ export class ImportReport {
         [...this.graph.tooLate.values()].map((e) => [e.id, e.label ?? '(no English label)']),
       ),
       ...this.section(
-        'Entries with no English name',
-        'These have no English label in Wikidata, so their Wikidata ID is used as the name. The curation file can name them.',
+        'Items left out for having no English name',
+        'These have no English label and no English Wikipedia article, so they are left out. The curation file can name them.',
         ['Wikidata ID', 'Description'],
-        [...this.graph.entries.values()].filter((e) => !e.label).map((e) => [e.id, e.description ?? '']),
+        [...this.graph.unnamed.values()].map((e) => [e.id, e.description ?? '']),
+      ),
+      ...this.periods(),
+      ...this.section(
+        'Items imported as moments instead of periods',
+        'Wikidata gives these as periods, but none of their events or parts falls on their start or end date, so they are moments at their start date. The curation file can name their start and end moments.',
+        ['Item', 'No real moment found for'],
+        this.log.notPeriods.map((n) => [n.name, n.missing]),
       ),
       ...this.section(
         'Links moved to a period\'s start moment',
@@ -91,6 +98,7 @@ export class ImportReport {
         ['Moments, including start and end moments made for periods', String(this.record.moments.length)],
         ['Periods', String(periods.length)],
         ['Dependencies in the seed file', String(dependencies)],
+        ['Items left out for having no English name', String(this.graph.unnamed.size)],
         ['Items left out for having no date', String(this.graph.undated.size)],
         ['Items left out for coming later than what links to them', String(this.graph.tooLate.size)],
         ['Links read to items outside the seed set', String(outside)],
@@ -117,6 +125,17 @@ export class ImportReport {
       '"Read" counts every link found, including links to items outside the seed set. "Kept" counts the links in the seed file.',
       ['Property', 'Name', 'Read', 'Kept'],
       properties.map((p) => [p, PropertyMapper.nameOf(p), String(read.get(p) ?? 0), String(kept.get(p) ?? 0)]),
+    );
+  }
+
+  /** Each period with the real moments it starts and ends with (DES-IMP-008). */
+  private periods(): string[] {
+    const name = (id: string) => this.record.moments.find((m) => m.id === id)?.name ?? id;
+    return this.section(
+      'Periods and their start and end moments',
+      '',
+      ['Period', 'Starts with', 'Ends with'],
+      (this.record.periods ?? []).map((p) => [p.name, name(p.start), p.end ? name(p.end) : 'still going on']),
     );
   }
 

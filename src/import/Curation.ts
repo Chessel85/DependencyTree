@@ -9,6 +9,9 @@ export interface CuratedEntry {
   date?: DateRecord;
   start?: DateRecord;
   end?: DateRecord;
+  /** For a period: the Wikidata items of the real moments it starts and ends with (DES-IMP-008). */
+  startMoment?: string;
+  endMoment?: string;
   note?: string;
 }
 
@@ -63,6 +66,7 @@ export class Curation {
       ...(this.record.seeds ?? []),
       ...this.addLinks.flatMap((l) => [l.dependent, l.dependency]),
       ...this.addMembers.flatMap((m) => [m.period, m.member]),
+      ...Object.values(this.record.entries ?? {}).flatMap((e) => [e.startMoment ?? [], e.endMoment ?? []].flat()),
     ];
     return [...new Set(ids)].filter((id) => !this.isExcluded(id));
   }

@@ -28,7 +28,12 @@ async function make(items: WikidataEntityRecord[], record: CurationRecord): Prom
 const coldWar = TestItems.item('Q1', 'Cold War', {
   P580: [TestItems.time('+1947-00-00')],
   P582: [TestItems.time('+1991-12-25', 11)],
+  P793: [TestItems.link('Q10'), TestItems.link('Q11'), TestItems.link('Q12')],
 });
+const truman = TestItems.item('Q10', 'Truman Doctrine', { P585: [TestItems.time('+1947-03-12', 11)] });
+const resignation = TestItems.item('Q11', 'Gorbachev resigns', { P585: [TestItems.time('+1991-12-25', 11)] });
+const apollo = TestItems.item('Q12', 'Apollo 11', { P619: [TestItems.time('+1969-07-16', 11)] });
+const coldWarItems = [coldWar, truman, resignation, apollo];
 
 describe('RecordMaker', () => {
   it('names entries and gives them address-friendly IDs, keeping the Wikidata ID', async () => {
@@ -49,16 +54,30 @@ describe('RecordMaker', () => {
     expect(data.moments[0].name).toBe('iPhone');
   });
 
-  it('makes a start and end moment for each period (DES-IMP-008)', async () => {
-    const { data } = await make([coldWar], { roots: ['Q1'] });
-    expect(data.periods![0]).toMatchObject({ id: 'cold-war', start: 'cold-war-begins', end: 'cold-war-ends' });
-    expect(data.moments.map((m) => m.name)).toEqual(['Cold War begins', 'Cold War ends']);
+  it('starts and ends a period with the real events on its start and end dates (DES-IMP-008)', async () => {
+    const { data } = await make(coldWarItems, { roots: ['Q1'] });
+    expect(data.periods![0]).toMatchObject({ id: 'cold-war', start: 'truman-doctrine', end: 'gorbachev-resigns', contains: [] });
+    // Apollo 11 is not on either date, and nothing else reaches it, so it isn't fetched.
+    expect(data.moments.map((m) => m.id).sort()).toEqual(['gorbachev-resigns', 'truman-doctrine']);
+  });
+
+  it('imports a period with no real start moment as a moment at its start date, and notes it', async () => {
+    const lonely = TestItems.item('Q1', 'Walkie-talkie', { P580: [TestItems.time('+1940-00-00')] });
+    const { data, log } = await make([lonely], { roots: ['Q1'] });
+    expect(data.periods).toEqual([]);
+    expect(data.moments[0]).toMatchObject({ id: 'walkie-talkie', date: { year: 1940, precision: 'year' } });
+    expect(log.notPeriods).toEqual([{ name: 'Walkie-talkie', missing: 'start' }]);
+  });
+
+  it('uses the start and end moments the curation file names', async () => {
+    const { data } = await make(coldWarItems, { roots: ['Q1'], entries: { Q1: { startMoment: 'Q12' } } });
+    expect(data.periods![0]).toMatchObject({ start: 'apollo-11', end: 'gorbachev-resigns' });
   });
 
   it('moves a dependency on a whole period to its start moment, and notes it', async () => {
     const treaty = TestItems.moment('Q2', 1990, ['Q1']);
-    const { data, log } = await make([treaty, coldWar], { roots: ['Q2'] });
-    expect(data.moments.find((m) => m.id === 'q2')!.dependsOn).toEqual(['cold-war-begins']);
+    const { data, log } = await make([treaty, ...coldWarItems], { roots: ['Q2'] });
+    expect(data.moments.find((m) => m.id === 'q2')!.dependsOn).toEqual(['truman-doctrine']);
     expect(log.moved).toEqual([{ dependent: 'Q2', dependency: 'Cold War', source: 'P2283', periods: ['Cold War'] }]);
   });
 

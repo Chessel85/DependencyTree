@@ -17,6 +17,7 @@ export interface WikidataEntityRecord {
   id: string;
   labels?: Record<string, { value: string }>;
   descriptions?: Record<string, { value: string }>;
+  sitelinks?: Record<string, { title: string }>;
   claims?: Record<string, WikidataClaim[]>;
 }
 
@@ -36,10 +37,14 @@ export class WikidataEntity {
     return this.record.id;
   }
 
-  /** The English label, or else the label for all languages ("mul"), which many items now use instead. */
+  /**
+   * The English label, or else the label for all languages ("mul"), which
+   * many items now use instead, or else the title of the English Wikipedia
+   * article. Undefined if the item has no English name at all.
+   */
   get label(): string | undefined {
     const labels = this.record.labels ?? {};
-    return (labels.en ?? labels.mul)?.value;
+    return (labels.en ?? labels.mul)?.value ?? this.record.sitelinks?.enwiki?.title;
   }
 
   get description(): string | undefined {

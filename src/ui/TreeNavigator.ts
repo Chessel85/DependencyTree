@@ -89,6 +89,8 @@ export class TreeNavigator {
       case Command.Back: return this.moved(state.goBack());
       case Command.PreviousEntry: return this.highlighted(list.moveBy(-1));
       case Command.NextEntry: return this.highlighted(list.moveBy(1));
+      case Command.PreviousPage: return this.highlighted(list.movePage(-1));
+      case Command.NextPage: return this.highlighted(list.movePage(1));
       case Command.FirstEntry: return this.highlighted(list.moveToFirst());
       case Command.LastEntry: return this.highlighted(list.moveToLast());
       case Command.PreviousList: return this.switched(state.switchList(-1));

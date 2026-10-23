@@ -23,6 +23,7 @@ export class HelpDialog {
       ['Right Arrow', 'When the Enabled list is active, go to its highlighted entry, later in time. A sound plays if the list is empty.'],
       ['Enter', 'Go to the highlighted entry in the active list. On a period, go into the highlighted moment.'],
       ['Up Arrow and Down Arrow', 'Move through the active list.'],
+      ['Page Up and Page Down', 'Move ten entries up or down the active list.'],
       ['Home and End', 'Go to the first or last entry in the active list.'],
       [`${listModifierName}+Left Arrow and ${listModifierName}+Right Arrow`, 'In the list, go to the previous or next tab.'],
       ['Backspace', 'Go back one step along the path you took. Works anywhere in the card.'],
@@ -31,7 +32,7 @@ export class HelpDialog {
       ['T', 'Tags.'],
       ['L', 'Location.'],
       ['P', 'The path you took.'],
-      ['Slash', 'The index, to find any entry and go to it. Type to narrow the list, Down Arrow to move into it, and Enter to go. Escape closes it. Works anywhere in the card.'],
+      ['Slash', 'The index, to find any entry and go to it. Type to narrow the list, Down Arrow to move into it, and Enter to go. Page Up and Page Down move ten entries. Escape closes it. Works anywhere in the card.'],
       ['Question mark', 'This help. Escape closes it.'],
     ];
     const table = document.createElement('table');

@@ -4,19 +4,20 @@ import { EntryDates } from './EntryDates';
 import { ImportedGraph } from './ImportedGraph';
 import { ImportLog } from './ImportLog';
 import { LabelLookup } from './LabelLookup';
+import { PeriodAnchors } from './PeriodAnchors';
 import { PropertyMapper } from './PropertyMapper';
 import { WikidataEntity } from './WikidataEntity';
 
 /**
- * Turns the gathered items into a dataset. Each period gets a start moment
- * and, unless it is still going on, an end moment (DES-IMP-008). A
+ * Turns the gathered items into a dataset. Each period starts and ends with
+ * real moments (DES-IMP-008), and one without them becomes a moment. A
  * dependency on or from a whole period is moved to its start moment, and
  * noted (DES-REL-007). Links to items outside the seed set are left out.
  */
 export class RecordMaker {
   private readonly ids = new Map<string, string>();
   private readonly names = new Map<string, string>();
-  private readonly startIds = new Map<string, string>();
+  private anchors!: PeriodAnchors;
 
   constructor(
     private readonly curation: Curation,
@@ -35,15 +36,19 @@ export class RecordMaker {
   }
 
   make(graph: ImportedGraph): DatasetRecord {
+    this.anchors = new PeriodAnchors(graph, this.dates, this.curation);
     this.nameEntries(graph);
     const moments = new Map<string, MomentRecord>();
     const periods = new Map<string, PeriodRecord>();
     for (const entity of graph.entries.values()) {
-      if (graph.isPeriod(entity.id)) {
-        this.addPeriod(entity, moments, periods);
+      if (this.anchors.isPeriod(entity.id)) {
+        periods.set(entity.id, this.period(entity));
       } else {
-        moments.set(entity.id, this.moment(entity));
+        moments.set(entity.id, this.moment(entity, graph.isPeriod(entity.id)));
       }
+    }
+    for (const [id, missing] of this.anchors.missing) {
+      this.log.notPeriods.push({ name: this.names.get(id)!, missing });
     }
     this.addLinks(graph, moments);
     this.addMembers(graph, periods);
@@ -61,24 +66,21 @@ export class RecordMaker {
       const curated = this.curation.entry(entity.id);
       const name = curated?.name ?? RecordMaker.capitalised(entity.label ?? entity.id);
       let id = curated?.id ?? RecordMaker.slug(name, entity.id);
-      if (taken.has(id) || (graph.isPeriod(entity.id) && taken.has(`${id}-begins`))) {
+      if (taken.has(id)) {
         id = `${id}-${entity.id.toLowerCase()}`;
       }
       taken.add(id);
-      if (graph.isPeriod(entity.id)) {
-        taken.add(`${id}-begins`).add(`${id}-ends`);
-        this.startIds.set(entity.id, `${id}-begins`);
-      }
       this.ids.set(entity.id, id);
       this.names.set(entity.id, name);
     }
   }
 
-  private moment(entity: WikidataEntity): MomentRecord {
+  /** A moment, or an item Wikidata gives as a period that has no real start or end moment, dated by its start. */
+  private moment(entity: WikidataEntity, fromPeriod: boolean): MomentRecord {
     const record: MomentRecord = {
       id: this.ids.get(entity.id)!,
       name: this.names.get(entity.id)!,
-      date: this.dates.momentDate(entity)!.date,
+      date: (fromPeriod ? this.dates.start(entity) : this.dates.momentDate(entity))!.date,
       description: this.description(entity),
       tags: this.tags(entity),
       wikidata: entity.id,
@@ -91,38 +93,18 @@ export class RecordMaker {
     return record;
   }
 
-  private addPeriod(entity: WikidataEntity, moments: Map<string, MomentRecord>, periods: Map<string, PeriodRecord>): void {
-    const id = this.ids.get(entity.id)!;
-    const name = this.names.get(entity.id)!;
-    const tags = this.tags(entity);
-    const start = this.dates.start(entity)!;
-    const end = this.dates.end(entity);
-    moments.set(`start:${entity.id}`, {
-      id: `${id}-begins`,
-      name: `${name} begins`,
-      date: start.date,
-      description: `The start of the period ${name}.`,
-      tags,
-    });
-    if (end) {
-      moments.set(`end:${entity.id}`, {
-        id: `${id}-ends`,
-        name: `${name} ends`,
-        date: end.date,
-        description: `The end of the period ${name}.`,
-        tags,
-      });
-    }
-    periods.set(entity.id, {
-      id,
-      name,
+  private period(entity: WikidataEntity): PeriodRecord {
+    const anchors = this.anchors.of(entity.id)!;
+    return {
+      id: this.ids.get(entity.id)!,
+      name: this.names.get(entity.id)!,
       description: this.description(entity),
-      tags,
-      start: `${id}-begins`,
-      ...(end ? { end: `${id}-ends` } : {}),
+      tags: this.tags(entity),
+      start: this.ids.get(anchors.start)!,
+      ...(anchors.end ? { end: this.ids.get(anchors.end)! } : {}),
       contains: [],
       wikidata: entity.id,
-    });
+    };
   }
 
   private addLinks(graph: ImportedGraph, moments: Map<string, MomentRecord>): void {
@@ -133,12 +115,12 @@ export class RecordMaker {
       if (!graph.has(dependent) || !graph.has(dependency)) {
         continue;
       }
-      const from = this.momentId(graph, dependent);
-      const to = this.momentId(graph, dependency);
+      const from = this.momentId(dependent);
+      const to = this.momentId(dependency);
       if (from === to) {
         continue;
       }
-      const periods = [dependent, dependency].filter((id) => graph.isPeriod(id));
+      const periods = [dependent, dependency].filter((id) => this.anchors.isPeriod(id));
       if (periods.length > 0) {
         this.log.moved.push({
           dependent: this.names.get(dependent)!,
@@ -164,15 +146,16 @@ export class RecordMaker {
         continue;
       }
       const memberId = this.ids.get(member)!;
-      if (memberId !== period.id && !period.contains!.includes(memberId)) {
+      const isStop = memberId === period.id || memberId === period.start || memberId === period.end;
+      if (!isStop && !period.contains!.includes(memberId)) {
         period.contains!.push(memberId);
       }
     }
   }
 
   /** The moment that stands for an entry in a dependency: itself, or a period's start moment. */
-  private momentId(graph: ImportedGraph, id: string): string {
-    return graph.isPeriod(id) ? this.startIds.get(id)! : this.ids.get(id)!;
+  private momentId(id: string): string {
+    return this.anchors.isPeriod(id) ? this.ids.get(this.anchors.of(id)!.start)! : this.ids.get(id)!;
   }
 
   private description(entity: WikidataEntity): string {

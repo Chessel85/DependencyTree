@@ -6,6 +6,8 @@ const PLAIN_KEYS: Record<string, Command> = {
   Enter: Command.Follow,
   ArrowUp: Command.PreviousEntry,
   ArrowDown: Command.NextEntry,
+  PageUp: Command.PreviousPage,
+  PageDown: Command.NextPage,
   Home: Command.FirstEntry,
   End: Command.LastEntry,
   Backspace: Command.Back,

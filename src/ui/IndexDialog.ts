@@ -1,5 +1,6 @@
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
 import { EntryIndex } from '../core/find/EntryIndex';
+import { PAGE_SIZE } from '../core/navigation/RelationshipList';
 import { Entry } from '../core/model/Entry';
 
 /** How long typing must pause before the number of results is announced (DES-FIND-001). */
@@ -86,6 +87,8 @@ export class IndexDialog {
       case 'ArrowUp':
         // Up Arrow on the first entry goes back to the search box.
         return this.handled(event, () => (this.highlighted === 0 ? this.search.focus() : this.moveTo(this.highlighted - 1)));
+      case 'PageUp': return this.handled(event, () => this.moveTo(Math.max(this.highlighted - PAGE_SIZE, 0)));
+      case 'PageDown': return this.handled(event, () => this.moveTo(Math.min(this.highlighted + PAGE_SIZE, last)));
       case 'Home': return this.handled(event, () => this.moveTo(0));
       case 'End': return this.handled(event, () => this.moveTo(last));
       case 'Enter': return this.handled(event, () => this.choose(this.highlighted));

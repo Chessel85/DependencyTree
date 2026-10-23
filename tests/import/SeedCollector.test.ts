@@ -38,6 +38,13 @@ describe('SeedCollector', () => {
     expect(graph.has('Q1')).toBe(false);
   });
 
+  it('leaves out an item with no English name', async () => {
+    const unnamed = { ...TestItems.moment('Q2', 1991), labels: { ru: { value: 'Декларация' } } };
+    const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), unnamed], { roots: ['Q3'] });
+    expect(graph.unnamed.has('Q2')).toBe(true);
+    expect(graph.has('Q2')).toBe(false);
+  });
+
   it('uses a date from the curation file', async () => {
     const undated = TestItems.item('Q2', 'undated');
     const graph = await collect([TestItems.moment('Q3', 2007, ['Q2']), undated], {

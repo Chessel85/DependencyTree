@@ -1,6 +1,9 @@
 import { Entry } from '../model/Entry';
 import { ListKind } from './ListKind';
 
+/** How many entries Page Up and Page Down move by (DES-KEY-002). */
+export const PAGE_SIZE = 10;
+
 /** One list on an entry, such as Dependencies or a period's Moments, with its highlighted entry (DES-NAV-004). */
 export class RelationshipList {
   private highlightIndex = 0;
@@ -26,6 +29,12 @@ export class RelationshipList {
   /** Moves the highlight by `delta` places. Returns false, changing nothing, if that would leave the list. */
   moveBy(delta: number): boolean {
     return this.highlightAt(this.highlightIndex + delta);
+  }
+
+  /** Page Up or Page Down: moves by a page, stopping at the first or last entry. */
+  movePage(direction: -1 | 1): boolean {
+    const target = Math.min(Math.max(this.highlightIndex + direction * PAGE_SIZE, 0), this.size - 1);
+    return this.highlightAt(target);
   }
 
   moveToFirst(): boolean {

@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.20 (draft)</p>
+<p class="subtitle">Version 0.21 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -349,6 +349,17 @@ import report.</td>
 “China”.</td>
 <td>Agreed</td>
 <td>REQ-DATA-009</td>
+</tr>
+<tr>
+<td>DES-DATA-008</td>
+<td>A period’s start and end moments are real events, never entries made
+only to mark its dates. So a period has at least two moments: the first
+of its stops is its start, and the last is its end. There are no stops
+called “start” or “end”.<br>Example: the European Theater of World War
+II starts with the 1939 Invasion of Poland and ends with the German
+Instrument of Surrender.</td>
+<td>Agreed</td>
+<td>REQ-DATA-002</td>
 </tr>
 </tbody>
 </table>
@@ -743,8 +754,9 @@ time, one key per step.</td>
 </tr>
 <tr>
 <td>DES-KEY-002</td>
-<td>Up Arrow and Down Arrow move through the active list (Agreed). Home
-and End go to its first and last entry (Proposed).</td>
+<td>Up Arrow and Down Arrow move through the active list (Agreed). Page
+Up and Page Down move ten entries, stopping at the first or last
+(Agreed). Home and End go to its first and last entry (Proposed).</td>
 <td>Agreed in part</td>
 <td>REQ-NAV-003</td>
 </tr>
@@ -1257,12 +1269,12 @@ card. Focus starts in a search box. Each word typed must appear in an
 entry’s name or description, ignoring capitals and accents, and name
 matches come first. The number of entries is announced after a short
 pause in typing. Down Arrow moves from the search box into the list, and
-Up Arrow on the first entry goes back. Enter goes to the entry, which
-becomes current and is recorded in the path, and focus returns to the
-card. Enter in the search box goes to the first entry. Escape closes the
-index without moving.<br>Example: typing “chat” leaves “ChatGPT, 2022”,
-and Enter goes to it. Spelling mistakes are not yet tolerated
-(DES-FIND-001).</td>
+Up Arrow on the first entry goes back. Page Up and Page Down move ten
+entries. Enter goes to the entry, which becomes current and is recorded
+in the path, and focus returns to the card. Enter in the search box goes
+to the first entry. Escape closes the index without moving.<br>Example:
+typing “chat” leaves “ChatGPT, 2022”, and Enter goes to it. Spelling
+mistakes are not yet tolerated (DES-FIND-001).</td>
 <td>Agreed in part</td>
 <td>REQ-FIND-001, REQ-FIND-005, REQ-FIND-006, REQ-FIND-009</td>
 </tr>
@@ -1403,15 +1415,32 @@ starting at the root.</td>
 <td>REQ-CONT-001</td>
 </tr>
 <tr>
+<td>DES-IMP-012</td>
+<td>An item’s name is its English label, else its label for all
+languages, else the title of its English Wikipedia article. An item with
+none of these is left out, and the report lists it.</td>
+<td>Agreed</td>
+<td>REQ-DATA-001</td>
+</tr>
+<tr>
 <td>DES-IMP-008</td>
-<td>For each period, the import creates a start moment and an end moment
-from the period’s start and end dates, named with “begins” and “ends”,
-for example “World War I begins” and “World War I ends” (DEC-57). A
-Wikidata dependency that points at a whole period is attached to its
-start moment (DES-REL-007). It is listed in the report, so that it can
-be moved to a better moment with the curation file (DES-IMP-004).</td>
+<td>Each period starts and ends with real moments (DES-DATA-008). The
+import fetches the events (“significant event”, P793) and parts (“has
+part(s)”, P527) a period lists, and keeps the moments among them that
+could have happened on its start or end date. The start moment is the
+earliest member that could have happened on the start date, and the end
+moment the latest that could have happened on the end date. A member
+that is itself a period offers its own start or end moment. The curation
+file can name the start and end moments instead. An item with no real
+start moment, or no real end moment when it has an end date, is imported
+as a moment at its start date, and the report lists it. A Wikidata
+dependency that points at a whole period is attached to its start moment
+(DES-REL-007), and listed in the report.<br>Example: the curation file
+gives World War I’s start as Austria-Hungary’s declaration of war on
+Serbia, and its end as the Armistice of Compiègne. The Reykjavík Summit
+has no events in Wikidata, so it is a moment.</td>
 <td>Agreed in part</td>
-<td>REQ-CONT-001, REQ-REL-011</td>
+<td>REQ-CONT-001, REQ-REL-011, REQ-DATA-002</td>
 </tr>
 </tbody>
 </table>
@@ -1626,6 +1655,11 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.21</strong>, 23 October 2026: Periods start and end with
+real moments, with no made-up start or end stops (DES-DATA-008,
+DES-IMP-008). Page Up and Page Down move ten entries (DES-KEY-002,
+DES-FIND-004). Items with no English name are left out
+(DES-IMP-012).</li>
 <li><strong>0.20</strong>, 23 October 2026: Added the index
 (DES-FIND-004), opened with slash (DES-KEY-007). The import starts from
 two roots, the iPhone and ChatGPT, and skips items that came later

@@ -5,6 +5,8 @@ export enum Command {
   Follow,
   PreviousEntry,
   NextEntry,
+  PreviousPage,
+  NextPage,
   FirstEntry,
   LastEntry,
   PreviousList,

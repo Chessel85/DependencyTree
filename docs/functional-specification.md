@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.20 (draft)"
+subtitle: "Version 0.21 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -35,6 +35,7 @@ There are two kinds of entry: moments and periods. A period is built from moment
 | DES-DATA-005 | Every entry has a name, alternative names, a description, tags, sources, a stable identifier, an address-friendly name (for example "lithium-ion-battery"), and a Wikidata identifier if it was imported. | Proposed | REQ-DATA-001, REQ-DATA-003, REQ-DATA-007, REQ-DATA-008, REQ-DATA-012, REQ-CONT-004 |
 | DES-DATA-006 | Everything in a period falls between its start and end moments, allowing for uncertainty in the dates. This includes the start and end moments of any smaller period inside it. Breaches are listed in the import report. | Agreed | REQ-DATA-013, REQ-REL-003, REQ-CONT-011 |
 | DES-DATA-007 | A moment can have a location: a place name such as "Rome" or "China". | Agreed | REQ-DATA-009 |
+| DES-DATA-008 | A period's start and end moments are real events, never entries made only to mark its dates. So a period has at least two moments: the first of its stops is its start, and the last is its end. There are no stops called "start" or "end".<br>Example: the European Theater of World War II starts with the 1939 Invasion of Poland and ends with the German Instrument of Surrender. | Agreed | REQ-DATA-002 |
 
 ## Dates
 
@@ -112,7 +113,7 @@ These keystrokes apply while the navigator has focus.
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-KEY-001 | When the Dependencies list is active, Left Arrow goes to its highlighted entry, earlier in time. When the Enabled list is active, Right Arrow goes to its highlighted entry, later in time. Enter does the same. Because the active list follows the direction of travel (DES-NAV-005), the user can keep pressing the same arrow to walk through time, one key per step. | Agreed | REQ-NAV-001, REQ-NAV-002, REQ-ACC-015 |
-| DES-KEY-002 | Up Arrow and Down Arrow move through the active list (Agreed). Home and End go to its first and last entry (Proposed). | Agreed in part | REQ-NAV-003 |
+| DES-KEY-002 | Up Arrow and Down Arrow move through the active list (Agreed). Page Up and Page Down move ten entries, stopping at the first or last (Agreed). Home and End go to its first and last entry (Proposed). | Agreed in part | REQ-NAV-003 |
 | DES-KEY-003 | Ctrl+Left Arrow and Ctrl+Right Arrow go to the previous and next list on Windows. Option+Left Arrow and Option+Right Arrow do the same on macOS, where Ctrl+Left Arrow and Ctrl+Right Arrow switch desktops. | Agreed | REQ-NAV-003, REQ-ACC-008 |
 | DES-KEY-004 | Enter goes to the highlighted entry in the active list. | Agreed | REQ-NAV-001, REQ-NAV-002, REQ-NAV-023 |
 | DES-KEY-013 | Left Arrow when the Dependencies list isn't active, and Right Arrow when the Enabled list isn't active, do nothing, silently. This includes a period's Moments and Part of lists. | Agreed | REQ-NAV-015 |
@@ -209,7 +210,7 @@ Nowhere earlier to go. The current entry is the electric battery, which has no d
 | DES-FIND-001 | Results update after a short pause in typing. Search matches names, alternative names and descriptions, and tolerates small spelling mistakes. The result count is announced without interrupting. | Proposed | REQ-FIND-001, REQ-FIND-004, REQ-FIND-005 |
 | DES-FIND-002 | Choosing a result makes it current and moves focus to the navigator. | Proposed | REQ-FIND-006 |
 | DES-FIND-003 | Tags are a list of checkboxes, with an any or all choice. The date range accepts BCE and CE. Filters apply to search results, lists and the visual view. | Proposed | REQ-FIND-002, REQ-FIND-003, REQ-FIND-007, REQ-FIND-008 |
-| DES-FIND-004 | The **index** is a dialog listing every entry the user can go to, in alphabetical order, as "Name, date". It is opened with slash (/) from anywhere in the card, or with the Index button on the card. Focus starts in a search box. Each word typed must appear in an entry's name or description, ignoring capitals and accents, and name matches come first. The number of entries is announced after a short pause in typing. Down Arrow moves from the search box into the list, and Up Arrow on the first entry goes back. Enter goes to the entry, which becomes current and is recorded in the path, and focus returns to the card. Enter in the search box goes to the first entry. Escape closes the index without moving.<br>Example: typing "chat" leaves "ChatGPT, 2022", and Enter goes to it. Spelling mistakes are not yet tolerated (DES-FIND-001). | Agreed in part | REQ-FIND-001, REQ-FIND-005, REQ-FIND-006, REQ-FIND-009 |
+| DES-FIND-004 | The **index** is a dialog listing every entry the user can go to, in alphabetical order, as "Name, date". It is opened with slash (/) from anywhere in the card, or with the Index button on the card. Focus starts in a search box. Each word typed must appear in an entry's name or description, ignoring capitals and accents, and name matches come first. The number of entries is announced after a short pause in typing. Down Arrow moves from the search box into the list, and Up Arrow on the first entry goes back. Page Up and Page Down move ten entries. Enter goes to the entry, which becomes current and is recorded in the path, and focus returns to the card. Enter in the search box goes to the first entry. Escape closes the index without moving.<br>Example: typing "chat" leaves "ChatGPT, 2022", and Enter goes to it. Spelling mistakes are not yet tolerated (DES-FIND-001). | Agreed in part | REQ-FIND-001, REQ-FIND-005, REQ-FIND-006, REQ-FIND-009 |
 
 # Wikidata import
 
@@ -225,7 +226,8 @@ Nowhere earlier to go. The current entry is the electric battery, which has no d
 | DES-IMP-009 | An item with no usable date is left out, and the walk doesn't go through it. It is listed in the report with how many entries depend on it. Where it matters, Claude looks up a first date in the item's English Wikipedia article, and the curation file gives that date with a note naming the article (DEC-56). Where the article states no clear first date, the item stays out. Example: the microphone is dated 1876 from Wikipedia, but the accelerometer has no clear date, so it is left out. | Agreed | REQ-CONT-011 |
 | DES-IMP-010 | Each Wikidata answer is kept in a cache folder, .cache/wikidata, which isn't in the repository. Running the import again uses the cache and gives the same result. "npm run import -- --refresh" asks Wikidata afresh. Each moment and period in the seed file keeps its Wikidata ID, and each dependency the property it came from. | Proposed | REQ-CONT-004, REQ-CONT-008 |
 | DES-IMP-011 | Until the seed set has been reviewed, the page opens the hand-made sample. Adding ?data=seed to the address opens the seed set instead, starting at the root. | Proposed | REQ-CONT-001 |
-| DES-IMP-008 | For each period, the import creates a start moment and an end moment from the period's start and end dates, named with "begins" and "ends", for example "World War I begins" and "World War I ends" (DEC-57). A Wikidata dependency that points at a whole period is attached to its start moment (DES-REL-007). It is listed in the report, so that it can be moved to a better moment with the curation file (DES-IMP-004). | Agreed in part | REQ-CONT-001, REQ-REL-011 |
+| DES-IMP-012 | An item's name is its English label, else its label for all languages, else the title of its English Wikipedia article. An item with none of these is left out, and the report lists it. | Agreed | REQ-DATA-001 |
+| DES-IMP-008 | Each period starts and ends with real moments (DES-DATA-008). The import fetches the events ("significant event", P793) and parts ("has part(s)", P527) a period lists, and keeps the moments among them that could have happened on its start or end date. The start moment is the earliest member that could have happened on the start date, and the end moment the latest that could have happened on the end date. A member that is itself a period offers its own start or end moment. The curation file can name the start and end moments instead. An item with no real start moment, or no real end moment when it has an end date, is imported as a moment at its start date, and the report lists it. A Wikidata dependency that points at a whole period is attached to its start moment (DES-REL-007), and listed in the report.<br>Example: the curation file gives World War I's start as Austria-Hungary's declaration of war on Serbia, and its end as the Armistice of Compiègne. The Reykjavík Summit has no events in Wikidata, so it is a moment. | Agreed in part | REQ-CONT-001, REQ-REL-011, REQ-DATA-002 |
 
 # Non-functional design
 
@@ -279,6 +281,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.21**, 23 October 2026: Periods start and end with real moments, with no made-up start or end stops (DES-DATA-008, DES-IMP-008). Page Up and Page Down move ten entries (DES-KEY-002, DES-FIND-004). Items with no English name are left out (DES-IMP-012).
 - **0.20**, 23 October 2026: Added the index (DES-FIND-004), opened with slash (DES-KEY-007). The import starts from two roots, the iPhone and ChatGPT, and skips items that came later (DES-IMP-002). Period moments are named with "begins" and "ends" (DES-IMP-008). Undated items may be dated from Wikipedia (DES-IMP-009).
 - **0.19**, 23 October 2026: Built the Wikidata import (Step 0C). Rewrote DES-IMP-002, DES-IMP-004 and DES-IMP-005 with what real data showed (DEC-54). Added DES-IMP-009 to DES-IMP-011.
 - **0.18**, 23 October 2026: The visual view keeps two layouts, linear time and layered, and the user switches between them (DES-VIEW-005, DES-VIEW-011). Compressed time and time slots are dropped.

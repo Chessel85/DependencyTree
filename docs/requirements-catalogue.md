@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.20 (draft)"
+subtitle: "Version 0.21 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -291,12 +291,16 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-54 | Wikidata import built | 13, 23 October 2026 | Step 0C is built. The analyst checked the proposed properties against real data and widened them: the root is the original iPhone (Q621427), hardware properties count as dependencies, and launch dates and "mul" labels are read. The sample's links and periods are carried over through the curation file. The page keeps the sample unless ?data=seed is added. Recorded as DES-IMP-002, DES-IMP-004, DES-IMP-005 and DES-IMP-009 to DES-IMP-011. Led to Q-25 to Q-27. |
 | DEC-55 | Keep the political history | 14, 23 October 2026 | The entries that "has cause" and "has effect" bring in, such as the World Wars and the end of the Soviet Union, stay in the seed set. Answers Q-25. |
 | DEC-56 | Dates from Wikipedia | 14, 23 October 2026 | The product owner has no way to date items other than Wikipedia, so Claude looks up a few that matter. The microphone, loudspeaker, antenna, rechargeable battery, Proximal Policy Optimization and transfer learning were dated this way. The accelerometer, proximity sensor, reinforcement learning from human feedback and unsupervised learning have no clear first date, so stay out. Answers Q-26. Recorded as DES-IMP-009. |
-| DEC-57 | "Begins" and "ends" | 14, 23 October 2026 | A period's start and end moments are named like "World War I begins" and "World War I ends". Answers Q-27. Recorded as DES-IMP-008. |
+| DEC-57 | "Begins" and "ends" | 14, 23 October 2026 | A period's start and end moments are named like "World War I begins" and "World War I ends". Answers Q-27. Recorded as DES-IMP-008. Replaced by DEC-60. |
 | DEC-58 | More than one top item | 14, 23 October 2026 | The import starts from several roots. ChatGPT joins the iPhone, chosen as the only candidate with a rich chain of links in Wikidata. The International Space Station, the Large Hadron Collider and the Tesla Model S were checked, but have few dated links. Recorded as REQ-CONT-007 and DES-IMP-002. |
 | DEC-59 | An index | 14, 23 October 2026 | An index of every entry, with a search box, reached from the main page and with slash. Choosing an entry makes it current, so any entry can become the starting point for walking back. Recorded as REQ-FIND-009, DES-FIND-004 and DES-KEY-007. |
+| DEC-60 | Periods start and end with real moments | 15, 23 October 2026 | A period's start and end are real moments, such as the invasion that started a war and the surrender that ended it, not entries called "begins" and "ends". So every period has at least two moments, and its first and last stops are its start and end. Replaces DEC-57. Recorded as DES-DATA-008 and DES-IMP-008. |
+| DEC-61 | Page Up and Page Down in lists | 15, 23 October 2026 | In the index list, Page Up and Page Down left NVDA saying only "Dependency tree document". They now move ten entries, in the index and in the card's lists. Recorded as DES-KEY-002 and DES-FIND-004. |
+| DEC-62 | Entries need an English name | 15, 23 October 2026 | An entry was named Q33593042, because it had no English label. An item's English Wikipedia title is now used when there is no label, and an item with neither is left out. Recorded as DES-IMP-012. |
 
 # Change history
 
+- **0.21**, 23 October 2026: Recorded DEC-60 to DEC-62, from testing the index and the seed set.
 - **0.20**, 23 October 2026: Recorded DEC-55 to DEC-59, answering Q-25 to Q-27. Added REQ-FIND-009, the index. REQ-CONT-007 allows several working examples.
 - **0.19**, 23 October 2026: Recorded DEC-54, the Wikidata import. Added Q-25 to Q-27.
 - **0.18**, 23 October 2026: Recorded DEC-53, answering Q-24. Added REQ-VIEW-014.

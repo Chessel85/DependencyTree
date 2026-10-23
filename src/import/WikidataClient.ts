@@ -19,7 +19,8 @@ export class WikidataClient implements WikidataSource {
       address.search = new URLSearchParams({
         action: 'wbgetentities',
         ids: batch.join('|'),
-        props: 'labels|descriptions|claims',
+        props: 'labels|descriptions|claims|sitelinks',
+        sitefilter: 'enwiki',
         languages: 'en|mul',
         format: 'json',
       }).toString();

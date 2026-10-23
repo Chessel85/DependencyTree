@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.20 (draft)</p>
+<p class="subtitle">Version 0.21 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -454,6 +454,12 @@ curation file or Wikidata.</td>
 </tr>
 <tr>
 <td>src/import</td>
+<td>PeriodAnchors.ts</td>
+<td>Finds the real moments each period starts and ends with
+(DES-IMP-008).</td>
+</tr>
+<tr>
+<td>src/import</td>
 <td>ImportedGraph.ts</td>
 <td>The items gathered, and the links read between them.</td>
 </tr>
@@ -475,8 +481,7 @@ curation file or Wikidata.</td>
 <tr>
 <td>src/import</td>
 <td>RecordMaker.ts</td>
-<td>Turns the gathered items into a dataset, with start and end moments
-for periods (DES-IMP-008).</td>
+<td>Turns the gathered items into a dataset (DES-IMP-008).</td>
 </tr>
 <tr>
 <td>src/import</td>
@@ -811,16 +816,19 @@ World Wars, treaties and Soviet politics.</td>
 (DEC-55).</td>
 </tr>
 <tr>
-<td>Treaties, conferences and programmes have start and end times, so
-they become periods, such as the Treaty of Versailles.</td>
-<td>30 periods, each with a start moment made by the import, and most
-with an end moment.</td>
+<td>Treaties, conferences, programmes and wars have start and end times,
+so Wikidata gives them as periods. But it seldom lists an event on both
+dates: it doesn’t list Japan’s surrender among World War II’s events,
+for example.</td>
+<td>Only 4 of about 40 found real start and end moments by themselves.
+The curation file names them for the Cold War, both World Wars and their
+main theatres, and the interwar period, giving 11 periods. The rest,
+such as treaties and summits, are moments (DES-IMP-008).</td>
 </tr>
 </tbody>
 </table>
-<p>The latest import, from the iPhone and ChatGPT, gave 78 Wikidata
-items: 103 moments, including the start and end moments made for
-periods, 30 periods and 67 dependencies. The report is
+<p>The latest import, from the iPhone and ChatGPT, gave 95 entries: 84
+moments and 11 periods, with 65 dependencies. The report is
 data/import-report.md.</p>
 <p>The index (DES-FIND-004), planned for Phase 1 as part of search, was
 brought forward so that any entry can be chosen as the place to start
@@ -944,6 +952,9 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.21</strong>, 23 October 2026: Periods start and end with
+real moments, found by the new PeriodAnchors class or named in the
+curation file (DEC-60).</li>
 <li><strong>0.20</strong>, 23 October 2026: Added ChatGPT as a second
 root, the walk skipping later items, and the index, brought forward from
 Phase 1 (DEC-55 to DEC-59).</li>

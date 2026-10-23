@@ -22,6 +22,12 @@ export interface MemberNote {
   member: string;
 }
 
+/** An item Wikidata gives as a period, imported as a moment because it has no real start or end moment. */
+export interface NotPeriodNote {
+  name: string;
+  missing: string;
+}
+
 export interface CycleNote {
   /** The moments around the circle, in order. */
   moments: string[];
@@ -35,6 +41,7 @@ export class ImportLog {
   readonly predates: PredatesNote[] = [];
   readonly outsidePeriod: MemberNote[] = [];
   readonly cycles: CycleNote[] = [];
+  readonly notPeriods: NotPeriodNote[] = [];
   /** Things in the curation file that had no effect, so may be out of date. */
   readonly curation: string[] = [];
 }

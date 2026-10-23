@@ -13,7 +13,7 @@ const PERIOD_ROUNDS = 3;
  * curation file's seeds, it follows dependency links backwards, one step at
  * a time, until there are no more or it reaches the most entries allowed.
  * Then it adds the periods the gathered entries say they are part of.
- * Items without a usable date are noted and not walked through, and so are
+ * Items without an English name or a usable date are noted and not walked through, and so are
  * items that certainly came after every gathered entry that links to them,
  * since the walk goes backwards in time.
  */
@@ -59,6 +59,10 @@ export class SeedCollector {
       if (graph.has(entity.id) || this.curation.isExcluded(entity.id)) {
         continue;
       }
+      if (!entity.label && !this.curation.entry(entity.id)?.name) {
+        graph.unnamed.set(entity.id, entity);
+        continue;
+      }
       if (!this.dates.isDated(entity)) {
         graph.undated.set(entity.id, entity);
         continue;
@@ -77,8 +81,15 @@ export class SeedCollector {
     return added;
   }
 
-  /** True if the item was reached through links, and certainly came after every entry those links came from. */
+  /**
+   * True if the item was reached through links, and certainly came after
+   * every entry those links came from. Items the curation file names are
+   * always kept.
+   */
   private isTooLate(graph: ImportedGraph, entity: WikidataEntity): boolean {
+    if (this.curation.startingPoints.includes(entity.id)) {
+      return false;
+    }
     const dependents = graph.links
       .filter((l) => graph.canonical(l.dependency) === entity.id && graph.has(l.dependent))
       .map((l) => graph.entries.get(graph.canonical(l.dependent))!);
@@ -105,11 +116,17 @@ export class SeedCollector {
     return next;
   }
 
-  /** Adds the periods that gathered entries are part of, and reads which gathered entries each period lists. */
+  /**
+   * Adds the periods that gathered entries are part of, and reads which
+   * gathered entries each period lists. For each period, it also adds the
+   * moments among its events and parts that fall on its start or end date,
+   * since those are the real moments it starts and ends with (DES-IMP-008).
+   */
   private async addPeriods(graph: ImportedGraph): Promise<void> {
     let newcomers = [...graph.entries.values()];
     for (let round = 0; round < PERIOD_ROUNDS && newcomers.length > 0; round++) {
       const larger: string[] = [];
+      const events: [WikidataEntity, string][] = [];
       for (const entity of newcomers) {
         for (const period of this.mapper.partOf(entity)) {
           graph.memberships.push({ period, member: entity.id, source: PropertyMapper.PART_OF });
@@ -118,16 +135,32 @@ export class SeedCollector {
         if (graph.isPeriod(entity.id)) {
           for (const member of this.mapper.members(entity)) {
             graph.memberships.push({ period: entity.id, member: member.target, source: member.property });
+            events.push([entity, member.target]);
           }
         }
       }
-      const candidates = [...new Set(larger)].filter((id) => !this.seen.has(id));
+      const candidates = [...new Set([...larger, ...events.map(([, id]) => id)])].filter((id) => !this.seen.has(id));
       const fetched = await this.source.entities(candidates);
-      const periods = candidates.filter((id) => {
+      const periods = [...new Set(larger)].filter((id) => {
         const entity = fetched.get(id);
         return entity !== undefined && this.dates.isPeriod(entity);
       });
-      newcomers = await this.gather(graph, periods);
+      const boundaries = events
+        .filter(([period, id]) => {
+          const event = fetched.get(id);
+          return event !== undefined && !this.dates.isPeriod(event) && this.dates.isDated(event) && this.isAtBoundary(period, event);
+        })
+        .map(([, id]) => id);
+      newcomers = await this.gather(graph, [...periods, ...boundaries]);
     }
+  }
+
+  /** True if the event could have happened on the period's start date, or on its end date. */
+  private isAtBoundary(period: WikidataEntity, event: WikidataEntity): boolean {
+    const start = this.dates.range(period);
+    const end = this.dates.endRange(period);
+    const eventStart = this.dates.range(event)!;
+    const eventEnd = this.dates.endRange(event) ?? eventStart;
+    return (start !== undefined && EntryDates.overlap(start, eventStart)) || (end !== undefined && EntryDates.overlap(end, eventEnd));
   }
 }

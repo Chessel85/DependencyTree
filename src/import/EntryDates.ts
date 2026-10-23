@@ -53,11 +53,22 @@ export class EntryDates {
   /** The times the item could have happened: a moment's date, or a period's start. Undefined if undated. */
   range(entity: WikidataEntity): DateRange | undefined {
     const found = this.isPeriod(entity) ? this.start(entity) : this.momentDate(entity);
-    if (!found) {
-      return undefined;
-    }
-    const d = found.date;
+    return found && EntryDates.toRange(found.date);
+  }
+
+  /** The times the item could have finished: a moment's date, or a period's end. Undefined for a period still going on. */
+  endRange(entity: WikidataEntity): DateRange | undefined {
+    const found = this.isPeriod(entity) ? this.end(entity) : this.momentDate(entity);
+    return found && EntryDates.toRange(found.date);
+  }
+
+  static toRange(d: DateRecord): DateRange {
     return new HistoricDate(d.year, d.precision as DatePrecision, d.approximate ?? false, d.month, d.day).range();
+  }
+
+  /** True if the two ranges could be the same time: neither certainly comes after the other. */
+  static overlap(a: DateRange, b: DateRange): boolean {
+    return !a.isCertainlyAfter(b) && !b.isCertainlyAfter(a);
   }
 
   private curated(entity: WikidataEntity, field: 'date' | 'start' | 'end'): SourcedDate | undefined {

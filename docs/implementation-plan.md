@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.20 (draft)"
+subtitle: "Version 0.21 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -70,11 +70,12 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/import | PropertyMapper.ts | Which properties are read, and what each means (DES-IMP-005). |
 | src/import | Curation.ts | The curation file (DES-IMP-004). |
 | src/import | EntryDates.ts | Whether an item is a moment or a period, and its dates, from the curation file or Wikidata. |
+| src/import | PeriodAnchors.ts | Finds the real moments each period starts and ends with (DES-IMP-008). |
 | src/import | ImportedGraph.ts | The items gathered, and the links read between them. |
 | src/import | SeedCollector.ts | Gathers the seed set (DES-IMP-002). |
 | src/import | CurationApplier.ts | Applies the curation file's links and members. |
 | src/import | LabelLookup.ts | Labels of locations and tags. |
-| src/import | RecordMaker.ts | Turns the gathered items into a dataset, with start and end moments for periods (DES-IMP-008). |
+| src/import | RecordMaker.ts | Turns the gathered items into a dataset (DES-IMP-008). |
 | src/import | ImportValidator.ts | Leaves out what breaks the rules (DES-IMP-007). |
 | src/import | ImportLog.ts | What each stage found, for the report. |
 | src/import | ImportReport.ts | Writes the report. |
@@ -168,9 +169,9 @@ What the first import found (DEC-54):
 | The roots of ChatGPT, such as reinforcement learning from human feedback, have no dates. | Two were dated from Wikipedia (DEC-56). ChatGPT's chain is short: GPT-3, Proximal Policy Optimization and transfer learning. |
 | Many technology items have no date at all, such as the lithium-ion battery, the liquid-crystal display, the touchscreen and the microphone. | The curation file dates these from the sample, and six more from Wikipedia (DEC-56). |
 | "Has cause" and "has effect" are well used for history. From the Cold War and the dissolution of the Soviet Union, they bring in the World Wars, treaties and Soviet politics. | About half the seed set is political history. It is kept (DEC-55). |
-| Treaties, conferences and programmes have start and end times, so they become periods, such as the Treaty of Versailles. | 30 periods, each with a start moment made by the import, and most with an end moment. |
+| Treaties, conferences, programmes and wars have start and end times, so Wikidata gives them as periods. But it seldom lists an event on both dates: it doesn't list Japan's surrender among World War II's events, for example. | Only 4 of about 40 found real start and end moments by themselves. The curation file names them for the Cold War, both World Wars and their main theatres, and the interwar period, giving 11 periods. The rest, such as treaties and summits, are moments (DES-IMP-008). |
 
-The latest import, from the iPhone and ChatGPT, gave 78 Wikidata items: 103 moments, including the start and end moments made for periods, 30 periods and 67 dependencies. The report is data/import-report.md.
+The latest import, from the iPhone and ChatGPT, gave 95 entries: 84 moments and 11 periods, with 65 dependencies. The report is data/import-report.md.
 
 The index (DES-FIND-004), planned for Phase 1 as part of search, was brought forward so that any entry can be chosen as the place to start (DEC-59).
 
@@ -230,6 +231,7 @@ The index (DES-FIND-004), planned for Phase 1 as part of search, was brought for
 
 # Change history
 
+- **0.21**, 23 October 2026: Periods start and end with real moments, found by the new PeriodAnchors class or named in the curation file (DEC-60).
 - **0.20**, 23 October 2026: Added ChatGPT as a second root, the walk skipping later items, and the index, brought forward from Phase 1 (DEC-55 to DEC-59).
 - **0.19**, 23 October 2026: Step 0C is built, and in review. Added the import classes to the module layout, and what the first import found (DEC-54).
 - **0.18**, 23 October 2026: Step 0D keeps linear time and layered, with a choice (DEC-53). Removed the two dropped layouts from the module layout.

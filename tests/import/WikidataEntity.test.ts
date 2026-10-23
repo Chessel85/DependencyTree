@@ -8,6 +8,12 @@ describe('WikidataEntity', () => {
     expect(entity.label).toBe('iOS');
   });
 
+  it('uses the English Wikipedia title when there is no English or all-languages label', () => {
+    const entity = new WikidataEntity({ id: 'Q1', labels: { ru: { value: 'Декларация' } }, sitelinks: { enwiki: { title: 'Declaration' } } });
+    expect(entity.label).toBe('Declaration');
+    expect(new WikidataEntity({ id: 'Q2', labels: { ru: { value: 'Декларация' } } }).label).toBeUndefined();
+  });
+
   it('uses only the preferred statements when there are any', () => {
     const entity = new WikidataEntity(
       TestItems.item('Q1', 'a', { P2283: [TestItems.link('Q2'), TestItems.link('Q3', 'preferred')] }),

@@ -326,18 +326,6 @@
         "politics"
       ],
       "location": "Moscow, Russia"
-    },
-    {
-      "id": "start-of-information-age",
-      "name": "Start of the Information Age",
-      "date": {
-        "year": 1970,
-        "precision": "decade"
-      },
-      "description": "The Information Age is usually said to have begun in the 1970s, as computers and digital communication spread. Historians don't agree on an exact date.",
-      "tags": [
-        "computing"
-      ]
     }
   ],
   "periods": [
@@ -373,14 +361,13 @@
     {
       "id": "information-age",
       "name": "Information Age",
-      "description": "The period in which computers and digital communication have shaped how people work, learn and live. It is still going on.",
+      "description": "The period in which computers and digital communication have shaped how people work, learn and live. It is taken here to start with the microprocessor, and is still going on.",
       "tags": [
         "computing",
         "communications"
       ],
-      "start": "start-of-information-age",
+      "start": "microprocessor",
       "contains": [
-        "microprocessor",
         "mobile-phone",
         "world-wide-web",
         "iphone"
