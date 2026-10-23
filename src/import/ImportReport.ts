@@ -95,7 +95,7 @@ export class ImportReport {
       ['What', 'Count'],
       [
         ['Wikidata items in the seed set', String(this.graph.size)],
-        ['Moments, including start and end moments made for periods', String(this.record.moments.length)],
+        ['Moments', String(this.record.moments.length)],
         ['Periods', String(periods.length)],
         ['Dependencies in the seed file', String(dependencies)],
         ['Items left out for having no English name', String(this.graph.unnamed.size)],

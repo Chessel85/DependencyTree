@@ -7,7 +7,7 @@ Made on 2026-10-23. The seed file is data/seed.json, and the corrections are in 
 | What | Count |
 |---|---|
 | Wikidata items in the seed set | 95 |
-| Moments, including start and end moments made for periods | 84 |
+| Moments | 84 |
 | Periods | 11 |
 | Dependencies in the seed file | 65 |
 | Items left out for having no English name | 4 |
