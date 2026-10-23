@@ -39,10 +39,9 @@ export class AnnouncementBuilder {
     return `${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
   }
 
-  /** The list's label after switching tab: just "Dependencies", or "Dependencies, none" (DES-ANN-003). */
+  /** The list's label after switching tab: just "Dependencies". An empty list shows "None" as its only item (DES-ANN-003). */
   switchLabel(state: NavigationState): string {
-    const list = state.activeList;
-    return list.size === 0 ? `${list.kind}, none` : list.kind;
+    return state.activeList.kind;
   }
 
   /** One entry in a list: "Electric battery, 1800", or "Cold War, 1947 to 1991", or "Ongoing". */

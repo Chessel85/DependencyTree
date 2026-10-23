@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.14 (draft)"
+subtitle: "Version 0.15 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -139,7 +139,7 @@ These keystrokes apply while the navigator has focus.
 |--------------|--------------------------------------------------|----------|--------------|
 | DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry, its shortened date and the list. For example: "Telephone, 1876, Dependencies, list. Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
 | DES-ANN-002 | Moving within a list moves focus to the entry, which the screen reader reads with its position. For example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
-| DES-ANN-003 | Switching list moves focus into the new list, whose label is just the list's name, followed by the highlighted entry. For example: "Enabled, list. Laptop, 1981, 1 of 8." An empty list says "Enabled, none, list". | Agreed | REQ-ANN-007, REQ-ACC-015 |
+| DES-ANN-003 | Switching list moves focus into the new list, whose label is just the list's name, followed by the highlighted entry. For example: "Enabled, list. Laptop, 1981, 1 of 8." An empty list holds one item, "None", so NVDA+Up Arrow has something to read: "Enabled, list. None." Enter does nothing on it. | Agreed | REQ-ANN-007, REQ-ACC-015 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
 | DES-ANN-005 | When filters hide entries, the announcement includes the number hidden. Example: "Dependencies, 3, 2 hidden by filters." | Proposed | REQ-ANN-006 |
 | DES-ANN-006 | A new announcement replaces any announcement that hasn't been spoken yet. | Proposed | REQ-ANN-004 |
@@ -270,6 +270,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.15**, 23 October 2026: An empty list shows "None" as its only item (DES-ANN-003).
 - **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Built periods (Step 0B). Removed landmarks (DES-SCR-001). After switching tab, the list's label is just its name (DES-ANN-003). Dates in lists are shortened by how far they are from today (DES-DATE-006). The old list box stays until focus has moved (DES-SR-007). Updated DES-ANN-001, DES-ANN-008, DES-ANN-011, DES-NAV-012 and DES-SR-006 for periods.
 - **0.12**, 21 October 2026: The list comes before the tabs in the Tab order, and text boxes start at the top line (DES-SR-006).

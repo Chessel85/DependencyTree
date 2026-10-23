@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.14 (draft)</p>
+<p class="subtitle">Version 0.15 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -897,8 +897,9 @@ reader reads with its position. For example: “Smartphone, 1994, 3 of
 <td>DES-ANN-003</td>
 <td>Switching list moves focus into the new list, whose label is just
 the list’s name, followed by the highlighted entry. For example:
-“Enabled, list. Laptop, 1981, 1 of 8.” An empty list says “Enabled,
-none, list”.</td>
+“Enabled, list. Laptop, 1981, 1 of 8.” An empty list holds one item,
+“None”, so NVDA+Up Arrow has something to read: “Enabled, list. None.”
+Enter does nothing on it.</td>
 <td>Agreed</td>
 <td>REQ-ANN-007, REQ-ACC-015</td>
 </tr>
@@ -1511,6 +1512,8 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.15</strong>, 23 October 2026: An empty list shows “None”
+as its only item (DES-ANN-003).</li>
 <li><strong>0.14</strong>, 21 October 2026: Renamed the “D’oh” sound to
 the bump sound.</li>
 <li><strong>0.13</strong>, 21 October 2026: Built periods (Step 0B).

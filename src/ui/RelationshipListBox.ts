@@ -11,6 +11,9 @@ import { NavigationState } from '../core/navigation/NavigationState';
  * If the old list box has focus, it stays until focus has moved into the new
  * one. Otherwise focus would drop to the page for a moment, and the screen
  * reader would announce the whole page again.
+ *
+ * An empty list shows one item, "None", so NVDA+Up Arrow has something to
+ * read. It can't be followed.
  */
 export class RelationshipListBox {
   private listbox: HTMLElement | undefined;
@@ -36,9 +39,11 @@ export class RelationshipListBox {
       option.addEventListener('click', () => this.onChoose(index));
       return option;
     });
+    if (this.options.length === 0) {
+      this.options = [this.noneOption()];
+    }
     listbox.append(...this.options);
-    // An empty list box takes focus itself, and its label says "none".
-    listbox.tabIndex = this.options.length === 0 ? 0 : -1;
+    listbox.tabIndex = -1;
     this.listbox = listbox;
     if (this.panel.contains(document.activeElement)) {
       this.panel.append(listbox);
@@ -48,11 +53,20 @@ export class RelationshipListBox {
     this.highlight(list.highlightedIndex);
   }
 
+  private noneOption(): HTMLElement {
+    const option = document.createElement('li');
+    option.setAttribute('role', 'option');
+    option.textContent = 'None';
+    return option;
+  }
+
   /** Marks the entry at this position as highlighted. Only it is in the Tab order. */
   highlight(index: number): void {
+    // An empty list's highlight is -1, but its "None" item still takes focus.
+    const shown = Math.max(index, 0);
     this.options.forEach((option, i) => {
-      option.setAttribute('aria-selected', String(i === index));
-      option.tabIndex = i === index ? 0 : -1;
+      option.setAttribute('aria-selected', String(i === shown));
+      option.tabIndex = i === shown ? 0 : -1;
     });
   }
 

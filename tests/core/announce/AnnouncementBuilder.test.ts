@@ -29,10 +29,10 @@ describe('AnnouncementBuilder', () => {
     expect(words.switchLabel(laptopState())).toBe('Dependencies');
   });
 
-  it('adds "none" to the label of an empty list', () => {
+  it('labels an empty list with just its name', () => {
     const state = laptopState();
     state.switchList(1);
-    expect(words.switchLabel(state)).toBe('Enabled, none');
+    expect(words.switchLabel(state)).toBe('Enabled');
   });
 
   it('names a tab with its count', () => {

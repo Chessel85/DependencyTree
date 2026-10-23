@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.14 (draft)"
+subtitle: "Version 0.15 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -282,9 +282,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-47 | Shorter dates in lists | 10, 21 October 2026 | More than 3 years from today: the year only. Within 12 months: the full date, if known. In between: month and year. Recorded as DES-DATE-006. |
 | DEC-48 | Periods built | 10, 21 October 2026 | Step 0B is built with three real periods: the Cold War, the Space Race inside it, and the Information Age, which is still going on. The "D'oh" sound is sounds/bump.wav. Recorded as DES-ANN-011 and DES-NAV-012. |
 | DEC-49 | The bump sound | 10, 21 October 2026 | The sound at the ends of a period is called the bump sound. The product owner recorded it, so it can be published in the repository as sounds/bump.wav. Recorded as DES-ANN-011. |
+| DEC-50 | "None" in an empty list | 11, 23 October 2026 | NVDA+Up Arrow was silent in an empty list. An empty list now shows one item, "None", and its label no longer adds "none". Recorded as DES-ANN-003. |
 
 # Change history
 
+- **0.15**, 23 October 2026: Recorded DEC-50.
 - **0.14**, 21 October 2026: Recorded DEC-49, and renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Recorded DEC-46 to DEC-48.
 - **0.12**, 21 October 2026: Recorded DEC-45.
