@@ -1,13 +1,13 @@
-import { DependencyGraph } from '../graph/DependencyGraph';
+import { LinkGraph } from '../graph/LinkGraph';
 import { Entry } from '../model/Entry';
 import { Period } from '../model/Period';
 
-/** Every entry in the data: the moments with their dependencies, and the periods with what they contain. */
+/** Every entry in the data: the moments with the links between them, and the periods with what they contain. */
 export class Dataset {
   private readonly periodsById = new Map<string, Period>();
 
   constructor(
-    readonly graph: DependencyGraph,
+    readonly graph: LinkGraph,
     readonly periods: readonly Period[],
   ) {
     for (const period of periods) {

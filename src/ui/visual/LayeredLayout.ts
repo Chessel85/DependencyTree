@@ -28,9 +28,10 @@ export class LayeredLayout implements LayoutEngine {
       const at = positions.get(m)!;
       return this.maker.make(m, at.x + this.margin, at.y);
     });
-    const links: LinkPath[] = [...routes].map(([d, points]) => ({
-      dependency: d.dependency,
-      dependent: d.dependent,
+    const links: LinkPath[] = [...routes].map(([l, points]) => ({
+      earlier: l.earlier,
+      later: l.later,
+      kind: l.kind,
       points: points.map((p) => ({ x: p.x + this.margin, y: p.y })),
       curved: false,
     }));

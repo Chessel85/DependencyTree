@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.24 (draft)</p>
+<p class="subtitle">Version 0.25 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -269,8 +269,9 @@ examples.</p>
 <h1 id="data-model">Data model</h1>
 <h2 id="moments-and-periods">Moments and periods</h2>
 <p>There are two kinds of entry: moments and periods. A period is built
-from moments, and every dependency links one moment to another (DEC-17).
-Periods can sit inside larger periods (DEC-21).</p>
+from moments, and every link joins one moment to another (DEC-17).
+Periods can sit inside larger periods (DEC-21). An idea is a kind of
+moment (DEC-71).</p>
 <table>
 <colgroup>
 <col style="width: 15%" />
@@ -349,6 +350,16 @@ import report.</td>
 “China”.</td>
 <td>Agreed</td>
 <td>REQ-DATA-009</td>
+</tr>
+<tr>
+<td>DES-DATA-009</td>
+<td>A moment can be an <strong>idea</strong>, such as revanchism or
+Leninism. Like an invention (DES-DATA-004), an idea is dated by when it
+first appeared, and has no end. It is linked like any other
+moment.<br>Example: the 1939 Invasion of Poland was caused by
+revanchism, an idea from the 1870s.</td>
+<td>Agreed</td>
+<td>REQ-DATA-015</td>
 </tr>
 <tr>
 <td>DES-DATA-008</td>
@@ -458,19 +469,24 @@ The summary box and the Space summary give dates in full.</td>
 <tbody>
 <tr>
 <td>DES-REL-001</td>
-<td>Only “depends on” is stored. “Enabled” is the same link read in the
-other direction. If the laptop depends on the battery, then the battery
-enabled the laptop.</td>
-<td>Proposed</td>
-<td>REQ-REL-001, REQ-REL-008</td>
+<td>Every link has one of three kinds: <strong>depends on</strong>,
+<strong>caused by</strong> or <strong>influenced by</strong>. Each link
+is stored once, on the later moment, and read backwards from the earlier
+one:<br>• Depends on: Depended on, and read backwards, Enabled. If the
+laptop depends on the battery, the battery enabled the laptop.<br>•
+Caused by: Caused by, and read backwards, Caused.<br>• Influenced by:
+Influenced by, and read backwards, Influenced.<br>Two moments are joined
+by one link at most.</td>
+<td>Agreed</td>
+<td>REQ-REL-001, REQ-REL-005, REQ-REL-008, REQ-REL-012, REQ-REL-013</td>
 </tr>
 <tr>
 <td>DES-REL-002</td>
-<td>A dependency is rejected only if it <strong>certainly</strong>
-happened later than the moment that depends on it. In other words, it is
-rejected only if the earliest possible date of the dependency is after
-the latest possible date of the dependent. Where the date ranges
-overlap, the dependency is allowed.<br>Example: A, dated c. 1450,
+<td>A link of any kind is rejected only if its earlier end
+<strong>certainly</strong> happened later than its later end. In other
+words, it is rejected only if the earliest possible date of the earlier
+moment is after the latest possible date of the later one. Where the
+date ranges overlap, the link is allowed.<br>Example: A, dated c. 1450,
 depends on B, dated only to the 15th century. B might have come first,
 so the dependency is allowed.<br>Example: something dated “1991” can’t
 depend on something dated “9 January 2007”. The dependency is
@@ -487,36 +503,65 @@ DES-DATA-006, not the predates rule.</td>
 </tr>
 <tr>
 <td>DES-REL-005</td>
-<td>Circular dependencies are detected when data is imported, and are
-listed in the report.</td>
+<td>Circular links, through links of any kind, are detected when data is
+imported, and are listed in the report.</td>
 <td>Proposed</td>
 <td>REQ-REL-007</td>
 </tr>
 <tr>
 <td>DES-REL-006</td>
-<td>Dependencies are always between moments. Nothing depends on a period
-as a whole, and a period depends on nothing as a whole. Example: Roman
-law depends on the writing of the Twelve Tables, not on the Roman
-Republic.</td>
+<td>Links of every kind are always between moments. Nothing depends on,
+is caused by or is influenced by a period as a whole, and the same is
+true the other way round. Example: Roman law depends on the writing of
+the Twelve Tables, not on the Roman Republic.</td>
 <td>Agreed</td>
 <td>REQ-REL-011</td>
 </tr>
 <tr>
 <td>DES-REL-007</td>
-<td>Where source data links to a period rather than to a moment, the
-period’s start moment is used. This is to be reviewed against a sample
-of real data in Phase 0.</td>
+<td>Where source data links to a whole period, one of its moments is
+used instead:<br>• Where the period is the later end of the link, its
+start moment.<br>• Where the period is a cause, its end moment, because
+a war’s effects come after it. If the end moment came after the later
+end of the link, the start moment is used instead.<br>• Where the period
+is depended on or an influence, its start moment.<br>The curation file
+can choose the other end for any link. Agreed for now, to see how it
+goes (Q-29).<br>Example: the Paris Peace Conference was caused by World
+War I, so it links to the Armistice of Compiègne. The Cold War, as an
+effect of World War II, links from the Truman Doctrine to the Japanese
+Instrument of Surrender.</td>
 <td>Agreed</td>
 <td>REQ-REL-009, REQ-REL-011</td>
+</tr>
+<tr>
+<td>DES-REL-008</td>
+<td>A cause has a <strong>strength</strong>: immediate, ordinary or
+contributing, matching Wikidata’s “has immediate cause”, “has cause” and
+“has contributing factor”. Ordinary is the default, and isn’t stored.
+Only causes have a strength.</td>
+<td>Agreed</td>
+<td>REQ-REL-014</td>
+</tr>
+<tr>
+<td>DES-REL-009</td>
+<td>A link can have a <strong>note</strong>: a sentence or two saying
+why it exists, shown to the user (DES-ANN-014). Notes come from the
+curation file. Where the reason is itself an event, the event is added
+instead, with links on either side.<br>Example: rather than a note
+saying that the Allies built up troops in Britain before the Normandy
+landings, add Operation Bolero between the Battle of the Atlantic and
+the landings.</td>
+<td>Agreed</td>
+<td>REQ-REL-010</td>
 </tr>
 </tbody>
 </table>
 <h2 id="why-we-call-it-a-tree">Why we call it a tree</h2>
-<p>From any one moment, looking back through its dependencies, the
-structure branches out like a tree. That is what the product is named
-after. (REQ-VIS-005) Strictly, it is a web, because the same entry can
-be reached by more than one route. The user only ever deals with one
-entry at a time, so the web never has to be managed as a whole.</p>
+<p>From any one moment, looking back through its links, the structure
+branches out like a tree. That is what the product is named after.
+(REQ-VIS-005) Strictly, it is a web, because the same entry can be
+reached by more than one route. The user only ever deals with one entry
+at a time, so the web never has to be managed as a whole.</p>
 <h1 id="screens">Screens</h1>
 <table>
 <colgroup>
@@ -559,8 +604,8 @@ entry current.</td>
 (DEC-19):</p>
 <ul>
 <li><strong>On a moment</strong>, the user browses its lists, such as
-Dependencies and Enabled, and presses Enter to go to an entry in one of
-them.</li>
+Depended on, Caused by and Enabled, and presses Enter to go to an entry
+in one of them.</li>
 <li><strong>On a period</strong>, the user moves through its moments in
 date order with Up Arrow and Down Arrow, and presses Enter to go into
 one of them.</li>
@@ -591,22 +636,27 @@ standard tab control with the active list underneath (DES-SR-006).</td>
 </tr>
 <tr>
 <td>DES-NAV-002</td>
-<td>The lists, in order:<br>1. <strong>Dependencies</strong>: what this
-moment needed. (Agreed)<br>2. <strong>Part of</strong>: the periods this
-moment belongs to. A moment can be part of more than one period.<br>3.
-<strong>Enabled</strong>: what this moment made possible.<br>More lists
-may be added later. Reading the lists from first to last runs from
-“before”, through “around”, to “after”.</td>
+<td>The lists, in order:<br>1. <strong>Depended on</strong>: what this
+moment needed.<br>2. <strong>Caused by</strong>: what brought it
+about.<br>3. <strong>Influenced by</strong>: what shaped it.<br>4.
+<strong>Part of</strong>: the periods this moment belongs to. A moment
+can be part of more than one period.<br>5. <strong>Enabled</strong>:
+what this moment made possible.<br>6. <strong>Caused</strong>: what it
+brought about.<br>7. <strong>Influenced</strong>: what it
+shaped.<br>Reading the lists from first to last runs from “before”,
+through “around”, to “after”. The first three are the <strong>earlier
+lists</strong>, and the last three the <strong>later
+lists</strong>.</td>
 <td>Agreed</td>
-<td>REQ-NAV-003, REQ-NAV-023</td>
+<td>REQ-NAV-003, REQ-NAV-023, REQ-REL-008</td>
 </tr>
 <tr>
 <td>DES-NAV-003</td>
-<td>The Dependencies and Enabled lists are always present, even when
-empty. The Part of list is only present when it has entries. This means
-that moving between lists never stops on an empty list that tells the
-user nothing.</td>
-<td>Proposed</td>
+<td>Only the lists that have entries are shown, so moving between lists
+never stops on an empty list that tells the user nothing. A moment with
+no lists at all shows an empty Depended on list, holding “None”
+(DES-ANN-003).</td>
+<td>Agreed</td>
 <td>REQ-NAV-003, REQ-ACC-015</td>
 </tr>
 <tr>
@@ -620,9 +670,11 @@ within the list, this is its first entry.</td>
 <td>DES-NAV-005</td>
 <td>After moving to another moment, the active list is the kind of list
 the user just moved through, as long as the new moment has one.
-Otherwise, it is the Dependencies list.<br>• After going to a
-dependency, the Dependencies list is active.<br>• After going to an
-enabled entry, the Enabled list is active.</td>
+Otherwise, it is the first list going the same way through time.
+Otherwise, it is the first list.<br>• After going to a dependency, the
+Depended on list is active. If the new moment depended on nothing but
+has causes, the Caused by list is active.<br>• After going to an enabled
+entry, the Enabled list is active.</td>
 <td>Agreed</td>
 <td>REQ-ACC-015</td>
 </tr>
@@ -743,12 +795,13 @@ list and highlighted entries. Backspace steps back through it.</td>
 <tbody>
 <tr>
 <td>DES-KEY-001</td>
-<td>When the Dependencies list is active, Left Arrow goes to its
-highlighted entry, earlier in time. When the Enabled list is active,
-Right Arrow goes to its highlighted entry, later in time. Enter does the
-same. Because the active list follows the direction of travel
-(DES-NAV-005), the user can keep pressing the same arrow to walk through
-time, one key per step.</td>
+<td>When an earlier list (Depended on, Caused by or Influenced by) is
+active, Left Arrow goes to its highlighted entry, earlier in time. When
+a later list (Enabled, Caused or Influenced) is active, Right Arrow goes
+to its highlighted entry, later in time. Enter does the same. Because
+the active list follows the direction of travel (DES-NAV-005), the user
+can keep pressing the same arrow to walk through time, one key per
+step.</td>
 <td>Agreed</td>
 <td>REQ-NAV-001, REQ-NAV-002, REQ-ACC-015</td>
 </tr>
@@ -776,9 +829,10 @@ macOS, where Ctrl+Left Arrow and Ctrl+Right Arrow switch desktops.</td>
 </tr>
 <tr>
 <td>DES-KEY-013</td>
-<td>Left Arrow when the Dependencies list isn’t active, and Right Arrow
-when the Enabled list isn’t active, do nothing, silently. This includes
-a period’s Moments and Part of lists.</td>
+<td>Left Arrow when no earlier list is active, and Right Arrow when no
+later list is active, do nothing, silently. This includes a period’s
+Moments and Part of lists. The exception is a moment with nothing at all
+that way, where the bump sound plays (DES-ANN-011).</td>
 <td>Agreed</td>
 <td>REQ-NAV-015</td>
 </tr>
@@ -850,7 +904,8 @@ description<br>• T: tags<br>• L: location<br>• P: the moments on the
 path taken, each named once, in date order from oldest to newest,
 without dates. Example: “Path, 3 entries: Electric battery, Telephone,
 iPhone.” It says “entries” rather than “moments”, because a path can
-include periods. (Agreed, with “entries” proposed)</td>
+include periods. (Agreed, with “entries” proposed)<br>• N: the note on
+the link to the highlighted entry, or “No note.” (DES-ANN-014)</td>
 <td>Proposed</td>
 <td>REQ-NAV-005, REQ-NAV-006, REQ-ACC-005</td>
 </tr>
@@ -896,8 +951,8 @@ list.</td>
 <td>On arriving at an entry, focus enters its new list, and the screen
 reader reads the list’s label and the highlighted entry. The label names
 the entry (DES-ANN-012), its shortened date and the list. For example:
-“Event: Telephone, 1876, Dependencies, list. Electric battery, 1800, 1
-of 2.” An empty list’s label ends with “none”.</td>
+“Event: Telephone, 1876, Depended on, list. Electric battery, 1800, 1 of
+2.” An empty list’s label ends with “none”.</td>
 <td>Agreed</td>
 <td>REQ-ANN-007</td>
 </tr>
@@ -914,8 +969,9 @@ reader reads with its position. For example: “Smartphone, 1994, 3 of
 <td>Switching list moves focus into the new list, whose label is just
 the list’s name, followed by the highlighted entry. For example:
 “Enabled, list. Laptop, 1981, 1 of 8.” An empty list holds one item,
-“None”, so NVDA+Up Arrow has something to read: “Enabled, list. None.”
-Enter does nothing on it.</td>
+“None”, so NVDA+Up Arrow has something to read: “Depended on, list.
+None.” Enter does nothing on it. Since empty lists are hidden
+(DES-NAV-003), this happens only on a moment with no links at all.</td>
 <td>Agreed</td>
 <td>REQ-ANN-007, REQ-ACC-015</td>
 </tr>
@@ -930,7 +986,7 @@ Normal, plus the first sentence of the description</td>
 <tr>
 <td>DES-ANN-005</td>
 <td>When filters hide entries, the announcement includes the number
-hidden. Example: “Dependencies, 3, 2 hidden by filters.”</td>
+hidden. Example: “Depended on, 3, 2 hidden by filters.”</td>
 <td>Proposed</td>
 <td>REQ-ANN-006</td>
 </tr>
@@ -967,28 +1023,50 @@ list. iPhone, 2007, 5 of 6.”</td>
 </tr>
 <tr>
 <td>DES-ANN-011</td>
-<td>When the user presses Left Arrow on an empty Dependencies list, or
-Right Arrow on an empty Enabled list, a short bump sound plays, and
-nothing else changes. For example, Left Arrow on the electric battery,
-which has no dependencies. Up Arrow and Down Arrow at the ends of a list
-are silent, as in any list. The sound is sounds/bump.wav, recorded by
-the product owner.</td>
+<td>When the user presses Left Arrow on a moment with no earlier lists,
+or Right Arrow on a moment with no later lists, a short bump sound
+plays, and nothing else changes, whichever list is active. For example,
+Left Arrow on the electric battery, which depended on nothing and had no
+causes or influences. Up Arrow and Down Arrow at the ends of a list are
+silent, as in any list. The sound is sounds/bump.wav, recorded by the
+product owner.</td>
 <td>Agreed</td>
 <td>REQ-NAV-015, REQ-ANN-009</td>
 </tr>
 <tr>
 <td>DES-ANN-012</td>
 <td>Where the tree names a moment and it could be taken for a period,
-the name starts with “Event:”. This covers the label on arrival, the
-index, the Space summary, the heading and the summary box. The
-Dependencies, Enabled and Moments lists hold only moments, so their
-entries have no “Event:”. A period has no word before its name, because
-its range of dates shows it is a period. The path (P) gives names alone,
-as it is a list of names.<br>Example: arriving at the iPhone says
-“Event: iPhone, 2007, Dependencies”, and its dependencies are read as,
-for example, “Touchscreen, 1965”.</td>
-<td>Agreed</td>
+the name starts with “Event:”, or “Idea:” for an idea (DES-DATA-009).
+This covers the label on arrival, the index, the Space summary, the
+heading and the summary box. The linked lists and the Moments list hold
+only moments, so their entries have no “Event:”. A period has no word
+before its name, because its range of dates shows it is a period. The
+path (P) gives names alone, as it is a list of names.<br>Example:
+arriving at the iPhone says “Event: iPhone, 2007, Depended on”, and its
+dependencies are read as, for example, “Touchscreen, 1965”. (Agreed,
+with “Idea:” proposed)</td>
+<td>Agreed in part</td>
 <td>REQ-ANN-007</td>
+</tr>
+<tr>
+<td>DES-ANN-013</td>
+<td>In the Caused by and Caused lists, an entry ends with the cause’s
+strength when it isn’t ordinary: “immediate” or
+“contributing”.<br>Example: “Caused by, list. Assassination of Archduke
+Franz Ferdinand, 1914, immediate, 1 of 7.” Q-28 asks whether this is
+clear.</td>
+<td>Proposed</td>
+<td>REQ-ANN-010, REQ-REL-014</td>
+</tr>
+<tr>
+<td>DES-ANN-014</td>
+<td>An entry whose link has a note ends with “note”, after any strength.
+While that entry is highlighted, the card shows a Note box with the note
+(DES-SR-006), and N reads it. The Note box is hidden when the
+highlighted entry’s link has no note. Q-28 asks whether this is
+clear.</td>
+<td>Proposed</td>
+<td>REQ-ANN-010, REQ-REL-010</td>
 </tr>
 </tbody>
 </table>
@@ -997,8 +1075,8 @@ for example, “Touchscreen, 1965”.</td>
 words in quotes are what the user hears; the exact wording depends on
 the screen reader.</p>
 <p>Moving between moments. The current entry is the lithium-ion battery.
-The user arrived from the laptop through the Dependencies list, so the
-Dependencies list is active (DES-NAV-005).</p>
+The user arrived from the laptop through the Depended on list, so that
+list is active (DES-NAV-005).</p>
 <ol type="1">
 <li>Ctrl+Right Arrow: “Enabled, 8. Laptop, 1981, 1 of 8.”</li>
 <li>Down Arrow twice: “Electric car, 1996, 3 of 8.”</li>
@@ -1021,7 +1099,7 @@ user came from it (DES-NAV-010).</li>
 <li>Left Arrow: nothing happens. Left Arrow and Right Arrow don’t move
 within a list.</li>
 <li>Down Arrow: “Twelve Tables, around 450 BCE, 2 of 6.”</li>
-<li>Enter: “Twelve Tables, around 450 BCE. Dependencies, 2.” The user is
+<li>Enter: “Twelve Tables, around 450 BCE. Depended on, 2.” The user is
 on a moment again, and its lists work as before.</li>
 </ol>
 <p>A period that is still going on. The current entry is the People’s
@@ -1031,7 +1109,7 @@ Republic of China, and the user is on its last moment.</p>
 nothing.</li>
 </ol>
 <p>Nowhere earlier to go. The current entry is the electric battery,
-which has no dependencies.</p>
+which has nothing earlier: no dependencies, causes or influences.</p>
 <ol type="1">
 <li>Left Arrow: the bump sound plays, and the user stays where they
 are.</li>
@@ -1062,14 +1140,16 @@ order:<br>1. A heading with the entry’s name.<br>2.
 <strong>Summary</strong>: a read-only text box with three lines: the
 name, the date or dates, and the location (for a moment) or “Period” or
 “Period, still going on”.<br>3. <strong>Description</strong>: a
-read-only text box.<br>4. A tab control with one tab per list, showing
-its count, for example “Dependencies (2)”.<br>5. A list box of the
-active list’s entries, with focus on the highlighted entry.<br>Tab and
-Shift+Tab move between the parts in this order: summary, description,
-list, tabs. The list comes before the tabs because it is used far more,
-although the tabs are shown above it. When a new entry is shown, the
-caret in each text box starts at the top line. Within one entry, each
-box keeps wherever the user left the caret.</td>
+read-only text box.<br>4. <strong>Note</strong>: a read-only text box
+with the note on the link to the highlighted entry. It is shown only
+when there is a note (DES-ANN-014).<br>5. A tab control with one tab per
+list, showing its count, for example “Depended on (2)”.<br>6. A list box
+of the active list’s entries, with focus on the highlighted
+entry.<br>Tab and Shift+Tab move between the parts in this order:
+summary, description, note, list, tabs. The list comes before the tabs
+because it is used far more, although the tabs are shown above it. When
+a new entry is shown, the caret in each text box starts at the top line.
+Within one entry, each box keeps wherever the user left the caret.</td>
 <td>Agreed</td>
 <td>REQ-ACC-004, REQ-ACC-007, REQ-ACC-014, REQ-ACC-016</td>
 </tr>
@@ -1118,12 +1198,12 @@ announce the document and its landmarks again.</td>
 <tbody>
 <tr>
 <td>DES-VIEW-001</td>
-<td>The current entry is centred. Its dependencies are drawn to the left
-and the entries it enabled to the right. The highlighted entry is
-marked.<br>In Step 0D, the whole sample is drawn, and the drawing
-scrolls to put the current entry in the middle. The current entry has a
-blue outline, the highlighted entry in the list an orange one, and the
-current moment’s links are drawn in blue.</td>
+<td>The current entry is centred. What it is linked to earlier is drawn
+to the left, and what it is linked to later to the right. The
+highlighted entry is marked.<br>In Step 0D, the whole sample is drawn,
+and the drawing scrolls to put the current entry in the middle. The
+current entry has a blue outline, the highlighted entry in the list an
+orange one, and the current moment’s links are drawn in blue.</td>
 <td>Proposed</td>
 <td>REQ-VIEW-001, REQ-VIEW-002, REQ-VIEW-006</td>
 </tr>
@@ -1139,11 +1219,13 @@ with a jagged right-hand edge at today’s date. (Agreed)</td>
 </tr>
 <tr>
 <td>DES-VIEW-003</td>
-<td>A dependency arrow runs from one moment to another (DES-REL-006).
-Where a moment is part of a period, the arrow starts or ends at its mark
-on the period’s bar.</td>
-<td>Proposed</td>
-<td>REQ-VIEW-011, REQ-REL-011</td>
+<td>A link is an arrow from the earlier moment to the later one
+(DES-REL-006). Where a moment is part of a period, the arrow starts or
+ends at its mark on the period’s bar. (Proposed)<br>A depends-on arrow
+is solid, a caused-by arrow dashed, and an influenced-by arrow dotted. A
+sentence above the drawing says so. (Agreed, built)</td>
+<td>Agreed in part</td>
+<td>REQ-VIEW-011, REQ-REL-011, REQ-ANN-010</td>
 </tr>
 <tr>
 <td>DES-VIEW-004</td>
@@ -1322,14 +1404,15 @@ database.</td>
 <tr>
 <td>DES-IMP-002</td>
 <td>The seed set is gathered by starting from the working examples,
-called roots, and following dependency links backwards in time, one step
-at a time, until there are no more or there are 200 entries. The roots
-are the original iPhone (Q621427) and ChatGPT (Q115564437) (DEC-58).
-Q2766 is the whole iPhone series, which has no date. The walk skips an
-item that certainly came after every entry that links to it, such as
-GPT-5, which ChatGPT “uses”, and the report lists it. The curation file
-can add more starting points, and the periods that gathered entries are
-part of are added at the end. The page opens at the first root.</td>
+called roots, and following links of every kind backwards in time, one
+step at a time, until there are no more or there are 200 entries. The
+roots are the original iPhone (Q621427) and ChatGPT (Q115564437)
+(DEC-58). Q2766 is the whole iPhone series, which has no date. The walk
+skips an item that certainly came after every entry that links to it,
+such as GPT-5, which ChatGPT “uses”, and the report lists it. The
+curation file can add more starting points, and the periods that
+gathered entries are part of are added at the end. The page opens at the
+first root.</td>
 <td>Proposed</td>
 <td>REQ-CONT-007</td>
 </tr>
@@ -1346,38 +1429,47 @@ from. The report shows how many links each property contributed.</td>
 entries and links. It is applied on every import. It names every item by
 its Wikidata ID, and can give: the root, the most entries allowed, extra
 starting points, items to exclude, corrections to an item’s ID, name,
-description or dates, links to add or remove, and members to add to a
-period. The report notes corrections that had no effect, such as an
-added link that Wikidata now has.</td>
+description or dates, whether an item is an idea, links to add or
+remove, and members to add to a period. An added link names its later
+and earlier items, and can give its kind (depends on unless stated), a
+cause’s strength, a note for the user (DES-REL-009), and which end of a
+period it uses (DES-REL-007). Adding a link that Wikidata already has
+changes its kind, strength, note or end. The report notes corrections
+that had no effect, such as an added link that Wikidata now has.</td>
 <td>Proposed</td>
 <td>REQ-CONT-010</td>
 </tr>
 <tr>
 <td>DES-IMP-005</td>
 <td>The Wikidata properties used, checked against real data in Step 0C
-(DEC-54).<br>• Dependencies: “uses” (P2283), “based on” (P144), “depends
-on software” (P1547) and “has cause” (P828). Also these hardware
-properties, which the original iPhone uses for its parts: “source of
-energy” (P618), “display technology” (P5307), “sensors” (P9192), “input
-device” (P479), “connector” (P2935), “operating system” (P306) and “CPU”
-(P880). “Has part(s)” (P527) on a moment gives its parts as
-dependencies.<br>• Read backwards: “has effect” (P1542) and “immediate
-cause of” (P1536), found through the Wikidata query service.<br>•
-Containment: “part of” (P361), and on a period, “has part(s)” (P527) and
-“significant event” (P793).<br>• Moment dates, in this order: “time of
-discovery or invention” (P575), “inception” (P571), “point in time”
-(P585), “publication date” (P577) and “launch date” (P619), which
-spaceflights use.<br>• Periods: an item with a “start time” (P580) or
-“end time” (P582) is a period. The start is P580 or “inception” (P571),
-and the end is P582 or “dissolved, abolished or demolished date” (P576).
-A period with no end date is taken to be still going on.<br>•
-Approximate dates: the “sourcing circumstances” qualifier (P1480) with
-the value “circa”.<br>• Location: “location” (P276), else “country of
-origin” (P495), else “country” (P17).<br>• Tags: the labels of “instance
-of” (P31) and “subclass of” (P279), up to three.<br>• Names: the English
-label, or else the label for all languages (“mul”), which many items,
-such as the original iPhone, now use instead. Preferred statements are
-used when there are any, and deprecated ones never.</td>
+(DEC-54).<br>• Depends on: “uses” (P2283), “based on” (P144) and
+“depends on software” (P1547). Also these hardware properties, which the
+original iPhone uses for its parts: “source of energy” (P618), “display
+technology” (P5307), “sensors” (P9192), “input device” (P479),
+“connector” (P2935), “operating system” (P306) and “CPU” (P880). “Has
+part(s)” (P527) on a moment gives its parts as dependencies.<br>• Caused
+by: “has cause” (P828), “has immediate cause” (P1478), immediate, and
+“has contributing factor” (P1479), contributing.<br>• Caused by, read
+backwards through the Wikidata query service: “has effect” (P1542),
+“immediate cause of” (P1536), immediate, and “contributing factor of”
+(P1537), contributing.<br>• Influenced by: “influenced by” (P737). It
+isn’t read backwards, because that would find later items, and the walk
+goes back in time.<br>• Containment: “part of” (P361), and on a period,
+“has part(s)” (P527) and “significant event” (P793).<br>• Moment dates,
+in this order: “time of discovery or invention” (P575), “inception”
+(P571), “point in time” (P585), “publication date” (P577) and “launch
+date” (P619), which spaceflights use.<br>• Periods: an item with a
+“start time” (P580) or “end time” (P582) is a period. The start is P580
+or “inception” (P571), and the end is P582 or “dissolved, abolished or
+demolished date” (P576). A period with no end date is taken to be still
+going on.<br>• Approximate dates: the “sourcing circumstances” qualifier
+(P1480) with the value “circa”.<br>• Location: “location” (P276), else
+“country of origin” (P495), else “country” (P17).<br>• Tags: the labels
+of “instance of” (P31) and “subclass of” (P279), up to three.<br>•
+Names: the English label, or else the label for all languages (“mul”),
+which many items, such as the original iPhone, now use instead.
+Preferred statements are used when there are any, and deprecated ones
+never.</td>
 <td>Proposed</td>
 <td>REQ-CONT-008, REQ-DATA-009</td>
 </tr>
@@ -1400,8 +1492,8 @@ left out of the seed file.</td>
 <tr>
 <td>DES-IMP-009</td>
 <td>An item with no usable date is left out, and the walk doesn’t go
-through it. It is listed in the report with how many entries depend on
-it. Where it matters, Claude looks up a first date in the item’s English
+through it. It is listed in the report with how many entries link to it.
+Where it matters, Claude looks up a first date in the item’s English
 Wikipedia article, and the curation file gives that date with a note
 naming the article (DEC-56). Where the article states no clear first
 date, the item stays out. Example: the microphone is dated 1876 from
@@ -1416,16 +1508,15 @@ out.</td>
 which isn’t in the repository. Running the import again uses the cache
 and gives the same result. “npm run import – –refresh” asks Wikidata
 afresh. Each moment and period in the seed file keeps its Wikidata ID,
-and each dependency the property it came from.</td>
+and each link its kind and the property it came from.</td>
 <td>Proposed</td>
 <td>REQ-CONT-004, REQ-CONT-008</td>
 </tr>
 <tr>
 <td>DES-IMP-011</td>
-<td>Until the seed set has been reviewed, the page opens the hand-made
-sample. Adding ?data=seed to the address opens the seed set instead,
-starting at the root.</td>
-<td>Proposed</td>
+<td>The page opens the seed set, starting at the first root. The
+hand-made sample is dropped (DEC-73).</td>
+<td>Agreed</td>
 <td>REQ-CONT-001</td>
 </tr>
 <tr>
@@ -1435,6 +1526,18 @@ languages, else the title of its English Wikipedia article. An item with
 none of these is left out, and the report lists it.</td>
 <td>Agreed</td>
 <td>REQ-DATA-001</td>
+</tr>
+<tr>
+<td>DES-IMP-013</td>
+<td>An item is an idea (DES-DATA-009) if Wikidata gives it as an
+instance of ideology, political ideology, political concept, concept,
+theory, scientific theory, economic theory, doctrine, school of thought,
+philosophical movement, political movement or religion. The curation
+file can say otherwise.<br>Example: the New Union Treaty is a draft
+treaty, though Wikidata calls it a concept, so the curation file says it
+isn’t an idea.</td>
+<td>Proposed</td>
+<td>REQ-DATA-015</td>
 </tr>
 <tr>
 <td>DES-IMP-008</td>
@@ -1447,8 +1550,8 @@ moment the latest that could have happened on the end date. A member
 that is itself a period offers its own start or end moment. The curation
 file can name the start and end moments instead. An item with no real
 start moment, or no real end moment when it has an end date, is imported
-as a moment at its start date, and the report lists it. A Wikidata
-dependency that points at a whole period is attached to its start moment
+as a moment at its start date, and the report lists it. A link that
+points at a whole period is attached to one of its moments
 (DES-REL-007), and listed in the report.<br>Example: the curation file
 gives World War I’s start as Austria-Hungary’s declaration of war on
 Serbia, and its end as the Armistice of Compiègne. The Reykjavík Summit
@@ -1669,6 +1772,18 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.25</strong>, 23 October 2026: Three kinds of link, depends
+on, caused by and influenced by, with a strength for causes and a note
+on any link (DES-REL-001, DES-REL-008, DES-REL-009). A link to a whole
+period uses its end when the period is a cause (DES-REL-007). Ideas
+(DES-DATA-009, DES-IMP-013). Six linked lists, with empty ones hidden,
+and the Dependencies list renamed Depended on (DES-NAV-002, DES-NAV-003,
+DES-NAV-005). Left Arrow and Right Arrow follow any earlier or later
+list, and bump when there is nothing that way (DES-KEY-001, DES-KEY-013,
+DES-ANN-011). Strength and notes in lists, the Note box and the N key
+(DES-ANN-013, DES-ANN-014, DES-SR-006, DES-KEY-006). Arrow styles by
+kind (DES-VIEW-003). Import properties by kind (DES-IMP-005), and the
+page opens the seed set (DES-IMP-011).</li>
 <li><strong>0.24</strong>, 23 October 2026: The Dependencies, Enabled
 and Moments lists no longer say “Event:” (DES-ANN-012).</li>
 <li><strong>0.23</strong>, 23 October 2026: A moment’s name starts with

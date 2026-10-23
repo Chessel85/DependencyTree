@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.24 (draft)</p>
+<p class="subtitle">Version 0.25 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -289,7 +289,7 @@ contain. One class per file. (DES-CODE-002)</p>
 <tr>
 <td>src/core/model</td>
 <td>Moment.ts</td>
-<td>A moment, with its date and location.</td>
+<td>A moment, with its date and location. It may be an idea.</td>
 </tr>
 <tr>
 <td>src/core/model</td>
@@ -304,8 +304,15 @@ between.</td>
 </tr>
 <tr>
 <td>src/core/model</td>
-<td>Dependency.ts</td>
-<td>One “depends on” link between two moments.</td>
+<td>Link.ts</td>
+<td>One link between two moments, with its kind, a cause’s strength and
+a note.</td>
+</tr>
+<tr>
+<td>src/core/model</td>
+<td>LinkKind.ts</td>
+<td>The three kinds of link: depends on, caused by and influenced by
+(DES-REL-001).</td>
 </tr>
 <tr>
 <td>src/core/dates</td>
@@ -343,8 +350,8 @@ of.</td>
 </tr>
 <tr>
 <td>src/core/graph</td>
-<td>DependencyGraph.ts</td>
-<td>Lookups in both directions.</td>
+<td>LinkGraph.ts</td>
+<td>Links looked up in both directions, by kind.</td>
 </tr>
 <tr>
 <td>src/core/graph</td>
@@ -354,7 +361,7 @@ of.</td>
 <tr>
 <td>src/core/graph</td>
 <td>PredatesRule.ts</td>
-<td>Checks that a dependency came first (DES-REL-002).</td>
+<td>Checks that a link’s earlier end came first (DES-REL-002).</td>
 </tr>
 <tr>
 <td>src/core/graph</td>
@@ -371,14 +378,21 @@ each list.</td>
 <tr>
 <td>src/core/navigation</td>
 <td>RelationshipList.ts</td>
-<td>One list on an entry, such as Dependencies or a period’s
-Moments.</td>
+<td>One list on an entry, such as Depended on or a period’s Moments,
+with the link to each entry.</td>
+</tr>
+<tr>
+<td>src/core/navigation</td>
+<td>ListKind.ts</td>
+<td>The kinds of list, and which are earlier and later lists
+(DES-NAV-002).</td>
 </tr>
 <tr>
 <td>src/core/navigation</td>
 <td>ListSetBuilder.ts</td>
-<td>Decides which lists an entry shows, including a period’s stops and
-“Ongoing” (DES-NAV-002, DES-NAV-009, DES-NAV-012).</td>
+<td>Decides which lists an entry shows, leaving out empty ones,
+including a period’s stops and “Ongoing” (DES-NAV-002, DES-NAV-003,
+DES-NAV-009, DES-NAV-012).</td>
 </tr>
 <tr>
 <td>src/core/navigation</td>
@@ -439,7 +453,8 @@ Moments.</td>
 <tr>
 <td>src/import</td>
 <td>PropertyMapper.ts</td>
-<td>Which properties are read, and what each means (DES-IMP-005).</td>
+<td>Which properties are read, the kind of link each gives, and which
+classes are ideas (DES-IMP-005, DES-IMP-013).</td>
 </tr>
 <tr>
 <td>src/import</td>
@@ -481,7 +496,8 @@ curation file or Wikidata.</td>
 <tr>
 <td>src/import</td>
 <td>RecordMaker.ts</td>
-<td>Turns the gathered items into a dataset (DES-IMP-008).</td>
+<td>Turns the gathered items into a dataset, choosing which end of a
+period each link uses (DES-IMP-008, DES-REL-007).</td>
 </tr>
 <tr>
 <td>src/import</td>
@@ -532,7 +548,7 @@ keystrokes.</td>
 <tr>
 <td>src/ui</td>
 <td>EntryCard.ts</td>
-<td>The heading, summary box and description box.</td>
+<td>The heading, summary box, description box and note box.</td>
 </tr>
 <tr>
 <td>src/ui</td>
@@ -827,12 +843,14 @@ such as treaties and summits, are moments (DES-IMP-008).</td>
 </tr>
 </tbody>
 </table>
-<p>The latest import, from the iPhone and ChatGPT, gave 95 entries: 84
+<p>The first import, from the iPhone and ChatGPT, gave 95 entries: 84
 moments and 11 periods, with 65 dependencies. The report is
 data/import-report.md.</p>
 <p>The index (DES-FIND-004), planned for Phase 1 as part of search, was
 brought forward so that any entry can be chosen as the place to start
 (DEC-59).</p>
+<p>The page now opens the seed set, and the hand-made sample is dropped
+(DEC-73).</p>
 <ol type="1">
 <li>Build the import tool. Gather a seed set of 50 to 200 entries from
 the iPhone backwards, and produce a coverage report showing how many
@@ -848,6 +866,71 @@ with NVDA in Firefox and Chrome, and with VoiceOver in Safari.</li>
 <p><strong>Exit criteria:</strong> You can explore the seed set
 comfortably by keyboard, and the DES-NAV, DES-KEY and DES-ANN items are
 agreed.</p>
+<h3 id="step-0e-kinds-of-link-built-in-testing">Step 0E: Kinds of link
+(built, in testing)</h3>
+<p>This came from the question whether a series of battles is a set of
+dependencies or just a timeline (DEC-66). Links now say how one entry
+led to another.</p>
+<ol type="1">
+<li>Give every link a kind: depends on, caused by or influenced by, with
+a strength for causes and a note on any link. (DES-REL-001, DES-REL-008,
+DES-REL-009)</li>
+<li>Show six linked lists on a moment, hiding empty ones, and let Left
+Arrow and Right Arrow follow any list going their way. (DES-NAV-002,
+DES-NAV-003, DES-KEY-001)</li>
+<li>Read strengths and notes in lists, with the Note box and the N key.
+Mark ideas with “Idea:”. (DES-ANN-012 to DES-ANN-014)</li>
+<li>Import causes and influences from Wikidata, and link to the right
+end of a period. (DES-IMP-005, DES-REL-007)</li>
+<li>You test it with NVDA, and answer Q-28.</li>
+</ol>
+<p>What the second import found (DEC-74):</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr>
+<th>Finding</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>121 moments and 11 periods, with 43 depends-on, 41 caused-by and 18
+influenced-by links, and 5 ideas.</td>
+<td>Causes now outnumber hand-made links many times over. Only 14 links
+come from the curation file.</td>
+</tr>
+<tr>
+<td>Wikidata has good causes for World War I, World War II and the end
+of the Soviet Union, with immediate and contributing causes for World
+War I.</td>
+<td>These are the richest chains for history.</td>
+</tr>
+<tr>
+<td>“Influenced by” links programming languages: Fortran, ALGOL, Pascal,
+Simula and Unix.</td>
+<td>Influence suits ideas and software as well as history.</td>
+</tr>
+<tr>
+<td>The Normandy landings, Operation Bolero, the Battle of the Atlantic
+and the Tehran Conference have no causes or effects in Wikidata.</td>
+<td>A chain of battles would have to come from the curation file.</td>
+</tr>
+<tr>
+<td>Cisleithania and the Lands of the Crown of Saint Stephen list their
+crown lands, back to 976, as parts, so as dependencies.</td>
+<td>Both are excluded.</td>
+</tr>
+<tr>
+<td>Wikidata gives the children’s novel Dunno on the Moon as a cause of
+Perestroika.</td>
+<td>It is excluded.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="phase-1-read-only-release-on-cloudflare">Phase 1: Read-only
 release on Cloudflare</h2>
 <p><strong>Goal:</strong> A hosted, usable, read-only application.
@@ -884,8 +967,9 @@ and AGPL-3.0 for code. (REQ-CONT-005)</li>
 </ul>
 <h2 id="phase-4-richer-relationships">Phase 4: Richer relationships</h2>
 <ul>
-<li>Add the “Preceded by”, “Followed by”, “Influenced by” and
-“Influenced” lists. (REQ-NAV-016, REQ-REL-004, REQ-REL-005)</li>
+<li>Add the “Preceded by” and “Followed by” lists. (REQ-NAV-016,
+REQ-REL-004) The Influenced by and Influenced lists were brought forward
+to Step 0E.</li>
 </ul>
 <h1 id="testing-strategy">Testing strategy</h1>
 <ul>
@@ -930,8 +1014,9 @@ leaves out problem links instead of failing.</td>
 <tr>
 <td>Wikidata often links to a whole period rather than to a moment
 within it.</td>
-<td>Use the period’s start moment, review a sample in Phase 0, and
-correct links in the curation file.</td>
+<td>Use the period’s end moment for a cause and its start moment
+otherwise, review the report’s list of moved links, and correct links in
+the curation file.</td>
 <td>DES-REL-007, DES-IMP-008</td>
 </tr>
 <tr>
@@ -952,6 +1037,10 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.25</strong>, 23 October 2026: Added Step 0E, kinds of
+link, with what the second import found (DEC-74). The page opens the
+seed set. Updated the module layout. Influence moved from Phase 4 to
+Step 0E.</li>
 <li><strong>0.24</strong>, 23 October 2026: No change to the plan;
 version kept in step with the other documents.</li>
 <li><strong>0.23</strong>, 23 October 2026: No change to the plan;

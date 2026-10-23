@@ -1,10 +1,21 @@
+import { CauseStrength } from '../core/model/Link';
+import { LinkKind } from '../core/model/LinkKind';
 import { WikidataEntity } from './WikidataEntity';
 
-/** A dependency between two Wikidata items, with the property or "curation" it came from (DES-IMP-003). */
+/**
+ * A link between two Wikidata items: `later` depends on, was caused by or was
+ * influenced by `earlier`. It keeps the property or "curation" it came from
+ * (DES-IMP-003). `at` says which end of a period `earlier` stands for, when
+ * the curation file chooses (DES-REL-007).
+ */
 export interface ImportedLink {
-  dependent: string;
-  dependency: string;
+  later: string;
+  earlier: string;
+  kind: LinkKind;
   source: string;
+  strength?: CauseStrength;
+  note?: string;
+  at?: 'start' | 'end';
 }
 
 /** A Wikidata item that is part of a period, with the property or "curation" it came from. */
@@ -60,9 +71,10 @@ export class ImportedGraph {
     return this.aliases.get(id) ?? id;
   }
 
-  hasLink(dependent: string, dependency: string): boolean {
-    return this.links.some(
-      (l) => this.canonical(l.dependent) === this.canonical(dependent) && this.canonical(l.dependency) === this.canonical(dependency),
+  /** The links from `later` back to `earlier`, of any kind. */
+  linksBetween(later: string, earlier: string): ImportedLink[] {
+    return this.links.filter(
+      (l) => this.canonical(l.later) === this.canonical(later) && this.canonical(l.earlier) === this.canonical(earlier),
     );
   }
 }

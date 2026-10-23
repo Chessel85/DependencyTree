@@ -77,23 +77,57 @@ describe('RecordMaker', () => {
   it('moves a dependency on a whole period to its start moment, and notes it', async () => {
     const treaty = TestItems.moment('Q2', 1990, ['Q1']);
     const { data, log } = await make([treaty, ...coldWarItems], { roots: ['Q2'] });
-    expect(data.moments.find((m) => m.id === 'q2')!.dependsOn).toEqual(['truman-doctrine']);
-    expect(log.moved).toEqual([{ dependent: 'Q2', dependency: 'Cold War', source: 'P2283', periods: ['Cold War'] }]);
+    expect(data.moments.find((m) => m.id === 'q2')!.links).toEqual([{ to: 'truman-doctrine', kind: 'depends on', source: 'P2283' }]);
+    expect(log.moved).toEqual([
+      { later: 'Q2', earlier: 'Cold War', kind: 'depends on', source: 'P2283', ends: [{ period: 'Cold War', end: 'start' }] },
+    ]);
   });
 
-  it('records where each dependency came from', async () => {
+  it('moves a cause that is a whole period to its end moment (DES-REL-007)', async () => {
+    const summit = TestItems.item('Q2', 'summit', { P585: [TestItems.time('+1992-00-00')], P828: [TestItems.link('Q1')] });
+    const { data } = await make([summit, ...coldWarItems], { roots: ['Q2'] });
+    expect(data.moments.find((m) => m.id === 'summit')!.links).toEqual([{ to: 'gorbachev-resigns', kind: 'caused by', source: 'P828' }]);
+  });
+
+  it("uses a cause's start moment when its end came later than the effect", async () => {
+    const crisis = TestItems.item('Q2', 'crisis', { P585: [TestItems.time('+1962-00-00')], P828: [TestItems.link('Q1')] });
+    const { data } = await make([crisis, ...coldWarItems], { roots: ['Q2'] });
+    expect(data.moments.find((m) => m.id === 'crisis')!.links![0].to).toBe('truman-doctrine');
+  });
+
+  it('records where each link came from, with its kind and note', async () => {
     const { data } = await make([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971), TestItems.moment('Q1', 1958)], {
       roots: ['Q3'],
-      addLinks: [{ dependent: 'Q3', dependency: 'Q1' }],
+      addLinks: [{ later: 'Q3', earlier: 'Q1', kind: 'influenced by', note: 'Why.' }],
     });
-    expect(data.moments.find((m) => m.id === 'q3')!.linkSources).toEqual({ q2: 'P2283', q1: 'curation' });
+    expect(data.moments.find((m) => m.id === 'q3')!.links).toEqual([
+      { to: 'q2', kind: 'depends on', source: 'P2283' },
+      { to: 'q1', kind: 'influenced by', note: 'Why.', source: 'curation' },
+    ]);
   });
 
   it('notes a curated link that Wikidata now has', async () => {
     const { log } = await make([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971)], {
       roots: ['Q3'],
-      addLinks: [{ dependent: 'Q3', dependency: 'Q2' }],
+      addLinks: [{ later: 'Q3', earlier: 'Q2' }],
     });
     expect(log.curation).toHaveLength(1);
+  });
+
+  it("adds a curated note to a link Wikidata has, without noting it", async () => {
+    const { data, log } = await make([TestItems.moment('Q3', 2007, ['Q2']), TestItems.moment('Q2', 1971)], {
+      roots: ['Q3'],
+      addLinks: [{ later: 'Q3', earlier: 'Q2', note: 'Why.' }],
+    });
+    expect(data.moments.find((m) => m.id === 'q3')!.links).toEqual([{ to: 'q2', kind: 'depends on', note: 'Why.', source: 'P2283' }]);
+    expect(log.curation).toEqual([]);
+  });
+
+  it('marks an item that is an instance of an idea class as an idea (DES-DATA-009)', async () => {
+    const idea = TestItems.item('Q2', 'revanchism', { P571: [TestItems.time('+1871-00-00')], P31: [TestItems.link('Q7257')] });
+    const war = TestItems.item('Q3', 'war', { P585: [TestItems.time('+1914-00-00')], P828: [TestItems.link('Q2')] });
+    const { data } = await make([war, idea], { roots: ['Q3'] });
+    expect(data.moments.find((m) => m.id === 'revanchism')!.idea).toBe(true);
+    expect(data.moments.find((m) => m.id === 'war')!.idea).toBeUndefined();
   });
 });

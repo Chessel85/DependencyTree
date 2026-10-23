@@ -17,6 +17,7 @@ export enum Command {
   Tags,
   Location,
   Path,
+  Note,
   Help,
   Index,
 }

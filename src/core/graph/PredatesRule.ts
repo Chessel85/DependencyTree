@@ -1,16 +1,17 @@
-import { Dependency } from '../model/Dependency';
+import { Link } from '../model/Link';
 
 /**
- * A dependency must come before the moment that depends on it. With rough
- * dates, it is rejected only when it certainly came later (DES-REL-002).
+ * Whatever a moment depended on, was caused by or was influenced by must
+ * come before it. With rough dates, a link is rejected only when the earlier
+ * end certainly came later (DES-REL-002).
  */
 export class PredatesRule {
-  allows(link: Dependency): boolean {
-    return !link.dependency.date.range().isCertainlyAfter(link.dependent.date.range());
+  allows(link: Link): boolean {
+    return !link.earlier.date.range().isCertainlyAfter(link.later.date.range());
   }
 
   /** The links that break the rule. */
-  breaches(links: readonly Dependency[]): Dependency[] {
+  breaches(links: readonly Link[]): Link[] {
     return links.filter((link) => !this.allows(link));
   }
 }

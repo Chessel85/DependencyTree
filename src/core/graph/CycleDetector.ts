@@ -1,10 +1,10 @@
 import { Moment } from '../model/Moment';
-import { DependencyGraph } from './DependencyGraph';
+import { LinkGraph } from './LinkGraph';
 
-/** Finds chains of dependencies that lead back to where they started (DES-REL-005). */
+/** Finds chains of links, of any kind, that lead back to where they started (DES-REL-005). */
 export class CycleDetector {
   /** Each cycle found, as the moments along it. Empty when there are none. */
-  findCycles(graph: DependencyGraph): Moment[][] {
+  findCycles(graph: LinkGraph): Moment[][] {
     const cycles: Moment[][] = [];
     const finished = new Set<string>();
     const onPath: Moment[] = [];
@@ -19,8 +19,8 @@ export class CycleDetector {
         return;
       }
       onPath.push(moment);
-      for (const dependency of graph.dependenciesOf(moment)) {
-        visit(dependency);
+      for (const link of graph.earlierLinks(moment)) {
+        visit(link.earlier);
       }
       onPath.pop();
       finished.add(moment.id);

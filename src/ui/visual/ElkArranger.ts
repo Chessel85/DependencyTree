@@ -1,12 +1,12 @@
 import ELK, { ElkExtendedEdge, ElkNode } from 'elkjs/lib/elk.bundled.js';
-import { Dependency } from '../../core/model/Dependency';
+import { Link } from '../../core/model/Link';
 import { Moment } from '../../core/model/Moment';
 import { Point } from './GraphLayout';
 
-/** Where ELK put each moment, and the route of each dependency around the boxes. */
+/** Where ELK put each moment, and the route of each link around the boxes. */
 export interface ElkArrangement {
   positions: Map<Moment, Point>;
-  routes: Map<Dependency, Point[]>;
+  routes: Map<Link, Point[]>;
 }
 
 /**
@@ -21,7 +21,7 @@ export class ElkArranger {
 
   constructor(
     private readonly moments: readonly Moment[],
-    private readonly dependencies: readonly Dependency[],
+    private readonly links: readonly Link[],
     private readonly widthOf: (moment: Moment) => number,
     private readonly height: number,
   ) {}
@@ -31,7 +31,7 @@ export class ElkArranger {
   }
 
   private async arrange(): Promise<ElkArrangement> {
-    const { moments, dependencies, widthOf, height } = this;
+    const { moments, links, widthOf, height } = this;
     const years = [...new Set(moments.map((m) => m.date.year))].sort((a, b) => a - b);
     const byId = new Map(moments.map((m) => [m.id, m]));
     const children: ElkNode[] = moments.map((m) => ({
@@ -40,10 +40,10 @@ export class ElkArranger {
       height,
       layoutOptions: { 'elk.partitioning.partition': String(years.indexOf(m.date.year)) },
     }));
-    const edges: ElkExtendedEdge[] = dependencies.map((d, i) => ({
+    const edges: ElkExtendedEdge[] = links.map((l, i) => ({
       id: `link-${i}`,
-      sources: [d.dependency.id],
-      targets: [d.dependent.id],
+      sources: [l.earlier.id],
+      targets: [l.later.id],
     }));
     const result = await new ELK().layout({
       id: 'root',
@@ -67,12 +67,12 @@ export class ElkArranger {
     for (const node of result.children ?? []) {
       positions.set(byId.get(node.id)!, { x: node.x ?? 0, y: node.y ?? 0 });
     }
-    const routes = new Map<Dependency, Point[]>();
+    const routes = new Map<Link, Point[]>();
     for (const edge of result.edges ?? []) {
       const section = edge.sections?.[0];
       if (section) {
         const index = Number(edge.id.slice('link-'.length));
-        routes.set(dependencies[index], [section.startPoint, ...(section.bendPoints ?? []), section.endPoint]);
+        routes.set(links[index], [section.startPoint, ...(section.bendPoints ?? []), section.endPoint]);
       }
     }
     return { positions, routes };

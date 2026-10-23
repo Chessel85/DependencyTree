@@ -1,5 +1,5 @@
 {
-  "note": "Corrections applied on every Wikidata import (DES-IMP-004). Every item is named by its Wikidata ID. Years are astronomical: 1 BCE is 0. The first seeds, links and dates are carried over from the hand-made sample. Dates marked 'Wikipedia' come from that item's English Wikipedia article, because Wikidata has none.",
+  "note": "Corrections applied on every Wikidata import (DES-IMP-004). Every item is named by its Wikidata ID. Years are astronomical: 1 BCE is 0. A link joins a later item to an earlier one, and is a dependency unless its kind says otherwise; its note is shown to the user. Dates marked 'Wikipedia' come from that item's English Wikipedia article, because Wikidata has none.",
   "roots": [
     "Q621427",
     "Q115564437"
@@ -13,7 +13,10 @@
     "Q5167679"
   ],
   "exclude": [
-    "Q141647689"
+    "Q141647689",
+    "Q533534",
+    "Q696970",
+    "Q3647984"
   ],
   "entries": {
     "Q621427": {
@@ -125,65 +128,78 @@
       "startMoment": "Q253224",
       "endMoment": "Q150812",
       "note": "The interwar period: from the Armistice of Compiègne to the 1939 Invasion of Poland."
+    },
+    "Q533534": {
+      "note": "Excluded: Cisleithania lists Austria's crown lands, back to 976, as its parts, which would make each one a dependency."
+    },
+    "Q696970": {
+      "note": "Excluded: the Lands of the Crown of Saint Stephen list Hungary's crown lands as their parts, for the same reason as Cisleithania."
+    },
+    "Q218877": {
+      "idea": false,
+      "note": "The New Union Treaty was a draft treaty, not an idea, though Wikidata classes it as a concept."
+    },
+    "Q3647984": {
+      "note": "Excluded: Wikidata says this children's novel, Dunno on the Moon, has the effect Perestroika."
     }
   },
   "addLinks": [
     {
-      "dependent": "Q988780",
-      "dependency": "Q663273",
+      "later": "Q988780",
+      "earlier": "Q663273",
       "note": "Electromagnetic induction needed the battery."
     },
     {
-      "dependent": "Q11035",
-      "dependency": "Q988780"
+      "later": "Q11035",
+      "earlier": "Q988780"
     },
     {
-      "dependent": "Q11035",
-      "dependency": "Q663273"
+      "later": "Q11035",
+      "earlier": "Q663273"
     },
     {
-      "dependent": "Q80831",
-      "dependency": "Q5339"
+      "later": "Q80831",
+      "earlier": "Q5339"
     },
     {
-      "dependent": "Q177524",
-      "dependency": "Q11035"
+      "later": "Q177524",
+      "earlier": "Q11035"
     },
     {
-      "dependent": "Q177524",
-      "dependency": "Q80831"
+      "later": "Q177524",
+      "earlier": "Q80831"
     },
     {
-      "dependent": "Q5297",
-      "dependency": "Q80831"
+      "later": "Q5297",
+      "earlier": "Q80831"
     },
     {
-      "dependent": "Q17517",
-      "dependency": "Q11035"
+      "later": "Q17517",
+      "earlier": "Q11035"
     },
     {
-      "dependent": "Q466",
-      "dependency": "Q177524"
+      "later": "Q466",
+      "earlier": "Q177524"
     },
     {
-      "dependent": "Q2822895",
-      "dependency": "Q663273"
+      "later": "Q2822895",
+      "earlier": "Q663273"
     },
     {
-      "dependent": "Q621427",
-      "dependency": "Q5297"
+      "later": "Q621427",
+      "earlier": "Q5297"
     },
     {
-      "dependent": "Q621427",
-      "dependency": "Q17517"
+      "later": "Q621427",
+      "earlier": "Q17517"
     },
     {
-      "dependent": "Q621427",
-      "dependency": "Q466"
+      "later": "Q621427",
+      "earlier": "Q466"
     },
     {
-      "dependent": "Q43653",
-      "dependency": "Q80831"
+      "later": "Q43653",
+      "earlier": "Q80831"
     }
   ],
   "removeLinks": [],

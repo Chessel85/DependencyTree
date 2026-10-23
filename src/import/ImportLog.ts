@@ -1,20 +1,27 @@
-/** A dependency, named for the report. */
+/** A link, named for the report: `later` depends on, was caused by or was influenced by `earlier`. */
 export interface LinkNote {
-  dependent: string;
-  dependency: string;
+  later: string;
+  earlier: string;
+  kind: string;
   source: string;
 }
 
-/** A dependency on or from a whole period, moved to the period's start moment (DES-IMP-008). */
-export interface MovedLinkNote extends LinkNote {
-  /** One period, or two if the link joins two periods. */
-  periods: string[];
+/** One end of a link that was a whole period, and the moment of the period used instead. */
+export interface PeriodEnd {
+  period: string;
+  end: 'start' | 'end';
 }
 
-/** A dependency that broke the predates rule, with both dates as written. */
+/** A link on or from a whole period, moved to one of the period's moments (DES-REL-007, DES-IMP-008). */
+export interface MovedLinkNote extends LinkNote {
+  /** One period, or two if the link joins two periods. */
+  ends: PeriodEnd[];
+}
+
+/** A link that broke the predates rule, with both dates as written. */
 export interface PredatesNote extends LinkNote {
-  dependentDate: string;
-  dependencyDate: string;
+  laterDate: string;
+  earlierDate: string;
 }
 
 export interface MemberNote {

@@ -1,8 +1,9 @@
 import { DatePrecision } from '../dates/DatePrecision';
 import { HistoricDate } from '../dates/HistoricDate';
-import { DependencyGraph } from '../graph/DependencyGraph';
-import { Dependency } from '../model/Dependency';
+import { LinkGraph } from '../graph/LinkGraph';
 import { Entry } from '../model/Entry';
+import { CauseStrength, Link } from '../model/Link';
+import { LinkKind } from '../model/LinkKind';
 import { Moment } from '../model/Moment';
 import { Period } from '../model/Period';
 import { Dataset } from './Dataset';
@@ -16,6 +17,16 @@ export interface DateRecord {
   approximate?: boolean;
 }
 
+/** A link as written in a dataset file, on the later moment: it names the earlier one (DES-REL-001). */
+export interface LinkRecord {
+  to: string;
+  kind: `${LinkKind}`;
+  strength?: CauseStrength;
+  note?: string;
+  /** Where the link came from: a Wikidata property, or "curation" (DES-IMP-003). */
+  source?: string;
+}
+
 /** A moment as written in a dataset file. */
 export interface MomentRecord {
   id: string;
@@ -24,11 +35,11 @@ export interface MomentRecord {
   description: string;
   tags: string[];
   location?: string;
-  dependsOn?: string[];
+  /** True for an idea, such as revanchism (DES-DATA-009). */
+  idea?: boolean;
+  links?: LinkRecord[];
   /** The Wikidata item this moment was imported from (DES-DATA-005). */
   wikidata?: string;
-  /** Where each dependency came from: a Wikidata property, or "curation" (DES-IMP-003). */
-  linkSources?: Record<string, string>;
 }
 
 /**
@@ -63,24 +74,24 @@ export class DatasetReader {
     return new Dataset(graph, periods);
   }
 
-  private readMoments(records: MomentRecord[]): DependencyGraph {
+  private readMoments(records: MomentRecord[]): LinkGraph {
     const moments = records.map((m) => this.toMoment(m));
     const byId = new Map(moments.map((m) => [m.id, m]));
-    const links: Dependency[] = [];
+    const links: Link[] = [];
     for (const m of records) {
-      for (const dependencyId of m.dependsOn ?? []) {
-        const dependency = byId.get(dependencyId);
-        if (!dependency) {
-          throw new Error(`"${m.id}" depends on "${dependencyId}", which isn't in the dataset.`);
+      for (const link of m.links ?? []) {
+        const earlier = byId.get(link.to);
+        if (!earlier) {
+          throw new Error(`"${m.id}" ${link.kind} "${link.to}", which isn't in the dataset.`);
         }
-        links.push(new Dependency(byId.get(m.id)!, dependency));
+        links.push(new Link(byId.get(m.id)!, earlier, link.kind as LinkKind, link.strength, link.note));
       }
     }
-    return new DependencyGraph(moments, links);
+    return new LinkGraph(moments, links);
   }
 
   /** Builds periods smaller ones first, since a period needs the periods it contains. */
-  private readPeriods(records: PeriodRecord[], graph: DependencyGraph): Period[] {
+  private readPeriods(records: PeriodRecord[], graph: LinkGraph): Period[] {
     const recordsById = new Map(records.map((p) => [p.id, p]));
     const built = new Map<string, Period>();
     const building = new Set<string>();
@@ -130,6 +141,6 @@ export class DatasetReader {
       m.date.month,
       m.date.day,
     );
-    return new Moment(m.id, m.name, date, m.description, m.tags, m.location);
+    return new Moment(m.id, m.name, date, m.description, m.tags, m.location, m.idea ?? false);
   }
 }

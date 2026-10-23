@@ -1,6 +1,8 @@
 import { Entry } from '../model/Entry';
+import { LinkKind } from '../model/LinkKind';
+import { Moment } from '../model/Moment';
 import { Period } from '../model/Period';
-import { ListKind } from './ListKind';
+import { EARLIER_LISTS, LATER_LISTS, ListKind } from './ListKind';
 import { ListSetBuilder } from './ListSetBuilder';
 import { PathHistory } from './PathHistory';
 import { RelationshipList } from './RelationshipList';
@@ -22,7 +24,7 @@ export class NavigationState {
     private readonly listBuilder: ListSetBuilder,
     start: Entry,
   ) {
-    this.arrive(start, ListKind.Dependencies);
+    this.arrive(start, ListKind.DependedOn);
   }
 
   get currentEntry(): Entry {
@@ -53,17 +55,18 @@ export class NavigationState {
   }
 
   /**
-   * Left Arrow. In a Dependencies list, it goes to the highlighted entry, or
-   * bumps if the list is empty. Otherwise it does nothing, including in a
-   * period's Moments list (DES-KEY-001, DES-KEY-013, DES-ANN-011).
+   * Left Arrow. In a list of earlier moments, such as Depended on or Caused
+   * by, it goes to the highlighted entry. On a moment with nothing earlier,
+   * it bumps. Otherwise it does nothing, including in a period's Moments
+   * list (DES-KEY-001, DES-KEY-013, DES-ANN-011).
    */
   stepEarlier(): StepResult {
-    return this.step(ListKind.Dependencies);
+    return this.step(EARLIER_LISTS);
   }
 
-  /** Right Arrow: the same as Left Arrow, but later in time, using the Enabled list. */
+  /** Right Arrow: the same as Left Arrow, but later in time, using the lists of later moments. */
   stepLater(): StepResult {
-    return this.step(ListKind.Enabled);
+    return this.step(LATER_LISTS);
   }
 
   /** Enter: goes to the highlighted entry in the active list (DES-KEY-004, DES-KEY-011). */
@@ -119,18 +122,19 @@ export class NavigationState {
     return true;
   }
 
-  private step(followKind: ListKind): StepResult {
-    if (this.activeList.kind !== followKind) {
-      return StepResult.Nothing;
+  private step(follows: ReadonlyMap<ListKind, LinkKind>): StepResult {
+    if (follows.has(this.activeList.kind)) {
+      return this.follow() ? StepResult.Moved : StepResult.Bumped;
     }
-    return this.follow() ? StepResult.Moved : StepResult.Bumped;
+    const nowhereToGo = !this.lists.some((l) => follows.has(l.kind) && l.size > 0);
+    return this.current instanceof Moment && nowhereToGo ? StepResult.Bumped : StepResult.Nothing;
   }
 
   /**
    * Arriving at a period always shows its Moments list. If the user came from
    * one of its stops, that stop is highlighted (DES-NAV-010). Arriving at a
-   * moment shows the kind of list just moved through, if it has one
-   * (DES-NAV-005).
+   * moment shows the kind of list just moved through, if it has one, or
+   * else the first list going the same way through time (DES-NAV-005).
    */
   private arrive(entry: Entry, viaKind: ListKind, from?: Entry): void {
     const isPeriod = entry instanceof Period;
@@ -146,8 +150,10 @@ export class NavigationState {
   private show(entry: Entry, kind: ListKind): void {
     this.current = entry;
     this.lists = this.listBuilder.build(entry);
+    const sameWay = [EARLIER_LISTS, LATER_LISTS].find((lists) => lists.has(kind));
     const index = this.lists.findIndex((l) => l.kind === kind);
-    this.activeIndex = index >= 0 ? index : 0;
+    const fallback = sameWay ? this.lists.findIndex((l) => sameWay.has(l.kind)) : -1;
+    this.activeIndex = index >= 0 ? index : Math.max(fallback, 0);
   }
 
   private snapshot(): Visit {

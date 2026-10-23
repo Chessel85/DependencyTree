@@ -1,17 +1,39 @@
 import { Entry } from '../model/Entry';
+import { Link } from '../model/Link';
 import { ListKind } from './ListKind';
 
 /** How many entries Page Up and Page Down move by (DES-KEY-002). */
 export const PAGE_SIZE = 10;
 
-/** One list on an entry, such as Dependencies or a period's Moments, with its highlighted entry (DES-NAV-004). */
+/**
+ * One list on an entry, such as Depended on or a period's Moments, with its
+ * highlighted entry (DES-NAV-004). A list of linked moments also keeps the
+ * link to each, for its strength and note.
+ */
 export class RelationshipList {
   private highlightIndex = 0;
 
   constructor(
     readonly kind: ListKind,
     readonly entries: readonly Entry[],
+    private readonly links: readonly Link[] = [],
   ) {}
+
+  /** The moments at the earlier or later end of these links, oldest first (DES-NAV-006). */
+  static ofLinks(kind: ListKind, links: readonly Link[], earlier: boolean): RelationshipList {
+    const other = (l: Link) => (earlier ? l.earlier : l.later);
+    const sorted = [...links].sort((a, b) => Entry.byDate(other(a), other(b)));
+    return new RelationshipList(kind, sorted.map(other), sorted);
+  }
+
+  /** The link to the entry at this position, if the list is one of linked moments. */
+  linkAt(index: number): Link | undefined {
+    return this.links[index];
+  }
+
+  get highlightedLink(): Link | undefined {
+    return this.links[this.highlightIndex];
+  }
 
   get size(): number {
     return this.entries.length;

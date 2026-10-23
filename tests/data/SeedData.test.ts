@@ -15,11 +15,11 @@ describe('The Wikidata seed file', () => {
     expect(size).toBeLessThanOrEqual(250);
   });
 
-  it('has no dependency that came later than its dependent', () => {
-    expect(new PredatesRule().breaches(dataset.graph.dependencies)).toEqual([]);
+  it('has no link whose earlier end came later', () => {
+    expect(new PredatesRule().breaches(dataset.graph.links)).toEqual([]);
   });
 
-  it('has no circular dependencies', () => {
+  it('has no circular links', () => {
     expect(new CycleDetector().findCycles(dataset.graph)).toEqual([]);
   });
 

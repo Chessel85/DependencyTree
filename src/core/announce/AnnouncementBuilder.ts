@@ -2,9 +2,9 @@ import { DateFormatter } from '../dates/DateFormatter';
 import { DateShortener } from '../dates/DateShortener';
 import { HistoricDate } from '../dates/HistoricDate';
 import { Entry } from '../model/Entry';
+import { Link } from '../model/Link';
 import { Moment } from '../model/Moment';
 import { Period } from '../model/Period';
-import { ListKind } from '../navigation/ListKind';
 import { NavigationState } from '../navigation/NavigationState';
 import { RelationshipList } from '../navigation/RelationshipList';
 
@@ -24,11 +24,14 @@ export class AnnouncementBuilder {
 
   /**
    * An entry's name as the tree gives it: a moment's starts with "Event:",
-   * so it can be told from a period, whose range of dates already shows
-   * what it is (DES-ANN-012).
+   * or "Idea:" for an idea, so it can be told from a period, whose range of
+   * dates already shows what it is (DES-ANN-012).
    */
   title(entry: Entry): string {
-    return entry instanceof Moment ? `Event: ${entry.name}` : entry.name;
+    if (entry instanceof Moment) {
+      return `${entry.isIdea ? 'Idea' : 'Event'}: ${entry.name}`;
+    }
+    return entry.name;
   }
 
   /** The summary box: the name, the date, and the location or kind of period, one per line. */
@@ -56,13 +59,16 @@ export class AnnouncementBuilder {
   /**
    * One entry in a relationship list: "Electric battery, 1800", or "Cold War,
    * 1947 to 1991", or "Ongoing". Each list holds only moments or only
-   * periods, so no "Event:" is needed (DES-ANN-012).
+   * periods, so no "Event:" is needed (DES-ANN-012). If it is reached through
+   * a link, the link's strength follows (DES-ANN-013), and "note" if the link
+   * has one (DES-ANN-014): "July Crisis, 1914, immediate, note".
    */
-  entry(entry: Entry): string {
+  entry(entry: Entry, link?: Link): string {
     if (!entry.isVisitable) {
       return entry.name;
     }
-    return `${entry.name}, ${this.shortDate(entry)}`;
+    const extras = [link?.strength, link?.note ? 'note' : undefined].filter((e) => e !== undefined);
+    return [entry.name, this.shortDate(entry), ...extras].join(', ');
   }
 
   /** An entry where moments and periods are mixed, as in the index: "Event: Electric battery, 1800". */
@@ -82,17 +88,18 @@ export class AnnouncementBuilder {
   summary(state: NavigationState): string {
     const entry = state.currentEntry;
     const place = entry instanceof Moment && entry.location ? `, ${entry.location}` : '';
-    const counts = [ListKind.Moments, ListKind.Dependencies, ListKind.PartOf, ListKind.Enabled]
-      .map((kind) => state.list(kind))
-      .filter((list): list is RelationshipList => list !== undefined)
-      .map((list) => `${list.kind}, ${list.size === 0 ? 'none' : list.size}.`)
-      .join(' ');
+    const counts = state.allLists.map((list) => `${list.kind}, ${list.size === 0 ? 'none' : list.size}.`).join(' ');
     return `${this.title(entry)}, ${this.fullDate(entry)}${place}. ${counts}`;
   }
 
   /** D */
   description(entry: Entry): string {
     return entry.description || 'No description.';
+  }
+
+  /** N: the note on the link to the highlighted entry (DES-ANN-014). */
+  note(link: Link | undefined): string {
+    return link?.note ? `Note: ${link.note}` : 'No note.';
   }
 
   /** T */

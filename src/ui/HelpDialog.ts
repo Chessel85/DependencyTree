@@ -18,9 +18,9 @@ export class HelpDialog {
 
   private table(listModifierName: string): HTMLTableElement {
     const rows: [string, string][] = [
-      ['Tab and Shift+Tab', 'Move between the summary, the description, the tabs and the list.'],
-      ['Left Arrow', 'When the Dependencies list is active, go to its highlighted entry, earlier in time. A sound plays if the list is empty.'],
-      ['Right Arrow', 'When the Enabled list is active, go to its highlighted entry, later in time. A sound plays if the list is empty.'],
+      ['Tab and Shift+Tab', 'Move between the summary, the description, the note when there is one, the list and the tabs.'],
+      ['Left Arrow', 'When the Depended on, Caused by or Influenced by list is active, go to its highlighted entry, earlier in time. A sound plays if there is nothing earlier.'],
+      ['Right Arrow', 'When the Enabled, Caused or Influenced list is active, go to its highlighted entry, later in time. A sound plays if there is nothing later.'],
       ['Enter', 'Go to the highlighted entry in the active list. On a period, go into the highlighted moment.'],
       ['Up Arrow and Down Arrow', 'Move through the active list.'],
       ['Page Up and Page Down', 'Move ten entries up or down the active list.'],
@@ -32,6 +32,7 @@ export class HelpDialog {
       ['T', 'Tags.'],
       ['L', 'Location.'],
       ['P', 'The path you took.'],
+      ['N', 'The note on the link to the highlighted entry. Entries with a note end with "note".'],
       ['Slash', 'The index, to find any entry and go to it. Type to narrow the list, Down Arrow to move into it, and Enter to go. Page Up and Page Down move ten entries. Escape closes it. Works anywhere in the card.'],
       ['Question mark', 'This help. Escape closes it.'],
     ];

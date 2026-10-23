@@ -10,8 +10,7 @@ function moment(id: string, year: number, dependsOn: string[] = []): MomentRecor
     date: { year, precision: 'year' },
     description: '',
     tags: [],
-    dependsOn,
-    linkSources: Object.fromEntries(dependsOn.map((d) => [d, 'P2283'])),
+    links: dependsOn.map((to) => ({ to, kind: 'depends on', source: 'P2283' })),
   };
 }
 
@@ -25,10 +24,9 @@ describe('ImportValidator', () => {
   it('leaves out a dependency that came later, and notes it', () => {
     const record: DatasetRecord = { moments: [moment('iphone', 2007, ['ios-2']), moment('ios-2', 2008)] };
     const log = validate(record);
-    expect(record.moments[0].dependsOn).toEqual([]);
-    expect(record.moments[0].linkSources).toEqual({});
+    expect(record.moments[0].links).toEqual([]);
     expect(log.predates).toEqual([
-      { dependent: 'iphone', dependency: 'ios-2', source: 'P2283', dependentDate: '2007', dependencyDate: '2008' },
+      { later: 'iphone', earlier: 'ios-2', kind: 'depends on', source: 'P2283', laterDate: '2007', earlierDate: '2008' },
     ]);
   });
 
@@ -36,7 +34,7 @@ describe('ImportValidator', () => {
     const record: DatasetRecord = { moments: [moment('a', 1990, ['b']), moment('b', 1990, ['a'])] };
     const log = validate(record);
     expect(log.cycles).toHaveLength(1);
-    const links = record.moments.flatMap((m) => m.dependsOn!.map((d) => `${m.id}>${d}`));
+    const links = record.moments.flatMap((m) => m.links!.map((l) => `${m.id}>${l.to}`));
     expect(links).toHaveLength(1);
   });
 

@@ -1,7 +1,7 @@
 import { writeFileSync } from 'node:fs';
 import { DatasetRecord } from '../core/data/DatasetReader';
 
-/** Writes the seed file, in the same form as the hand-made sample, so the app can read either. */
+/** Writes the seed file, in the form DatasetReader reads. */
 export class SeedWriter {
   write(file: string, record: DatasetRecord, when: Date): void {
     const seed = {

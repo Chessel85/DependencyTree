@@ -9,8 +9,8 @@ import { WikidataSource } from './WikidataSource';
 const PERIOD_ROUNDS = 3;
 
 /**
- * Gathers the seed set (DES-IMP-002). Starting from the root and the
- * curation file's seeds, it follows dependency links backwards, one step at
+ * Gathers the seed set (DES-IMP-002). Starting from the roots and the
+ * curation file's seeds, it follows links of every kind backwards, one step at
  * a time, until there are no more or it reaches the most entries allowed.
  * Then it adds the periods the gathered entries say they are part of.
  * Items without an English name or a usable date are noted and not walked through, and so are
@@ -36,7 +36,7 @@ export class SeedCollector {
         break;
       }
       const added = await this.gather(graph, step);
-      step = await this.readDependencies(graph, added);
+      step = await this.readLinks(graph, added);
     }
     await this.addPeriods(graph);
     return graph;
@@ -91,25 +91,30 @@ export class SeedCollector {
       return false;
     }
     const dependents = graph.links
-      .filter((l) => graph.canonical(l.dependency) === entity.id && graph.has(l.dependent))
-      .map((l) => graph.entries.get(graph.canonical(l.dependent))!);
+      .filter((l) => graph.canonical(l.earlier) === entity.id && graph.has(l.later))
+      .map((l) => graph.entries.get(graph.canonical(l.later))!);
     const range = this.dates.range(entity)!;
     return dependents.length > 0 && dependents.every((d) => range.isCertainlyAfter(this.dates.range(d)!));
   }
 
-  /** Records what the new items depend on, in both directions, and returns those items for the next step. */
-  private async readDependencies(graph: ImportedGraph, added: readonly WikidataEntity[]): Promise<string[]> {
+  /**
+   * Records what the new items depend on, were caused by or were influenced
+   * by, read from their own statements and backwards from other items'
+   * statements, and returns those earlier items for the next step.
+   */
+  private async readLinks(graph: ImportedGraph, added: readonly WikidataEntity[]): Promise<string[]> {
     const next: string[] = [];
     for (const entity of added) {
-      for (const link of this.mapper.dependencies(entity, graph.isPeriod(entity.id))) {
-        graph.links.push({ dependent: entity.id, dependency: link.target, source: link.property });
+      for (const link of this.mapper.earlierLinks(entity, graph.isPeriod(entity.id))) {
+        const { target, property, ...meaning } = link;
+        graph.links.push({ later: entity.id, earlier: target, source: property, ...meaning });
         next.push(link.target);
       }
     }
     const ids = added.map((e) => e.id);
-    for (const property of PropertyMapper.ENABLED) {
+    for (const [property, meaning] of Object.entries(PropertyMapper.LATER)) {
       for (const link of ids.length > 0 ? await this.source.linksTo(property, ids) : []) {
-        graph.links.push({ dependent: link.target, dependency: link.subject, source: property });
+        graph.links.push({ later: link.target, earlier: link.subject, source: property, ...meaning });
         next.push(link.subject);
       }
     }

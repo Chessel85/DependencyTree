@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { DateRecord } from '../core/data/DatasetReader';
+import { CauseStrength } from '../core/model/Link';
 
 /** Corrections to one Wikidata item. Giving `date` makes it a moment, and giving `start` makes it a period. */
 export interface CuratedEntry {
@@ -12,14 +13,24 @@ export interface CuratedEntry {
   /** For a period: the Wikidata items of the real moments it starts and ends with (DES-IMP-008). */
   startMoment?: string;
   endMoment?: string;
+  /** True if the item is an idea, false if it isn't, whatever Wikidata's classes say (DES-DATA-009). */
+  idea?: boolean;
   note?: string;
 }
 
-/** A link named by Wikidata IDs: `dependent` depends on `dependency`. */
+/**
+ * A link named by Wikidata IDs: `later` depends on, was caused by or was
+ * influenced by `earlier`. The kind is "depends on" unless given. The note
+ * is shown to the user (DES-REL-009). `at` chooses which end of a period
+ * `earlier` stands for (DES-REL-007).
+ */
 export interface CuratedLink {
-  dependent: string;
-  dependency: string;
+  later: string;
+  earlier: string;
+  kind?: 'depends on' | 'caused by' | 'influenced by';
+  strength?: CauseStrength;
   note?: string;
+  at?: 'start' | 'end';
 }
 
 export interface CuratedMember {
@@ -64,7 +75,7 @@ export class Curation {
     const ids = [
       ...this.roots,
       ...(this.record.seeds ?? []),
-      ...this.addLinks.flatMap((l) => [l.dependent, l.dependency]),
+      ...this.addLinks.flatMap((l) => [l.later, l.earlier]),
       ...this.addMembers.flatMap((m) => [m.period, m.member]),
       ...Object.values(this.record.entries ?? {}).flatMap((e) => [e.startMoment ?? [], e.endMoment ?? []].flat()),
     ];

@@ -20,14 +20,27 @@ describe('SeedCollector', () => {
       { roots: ['Q3'] },
     );
     expect([...graph.entries.keys()]).toEqual(['Q3', 'Q2', 'Q1']);
-    expect(graph.links).toContainEqual({ dependent: 'Q2', dependency: 'Q1', source: 'P2283' });
+    expect(graph.links).toContainEqual({ later: 'Q2', earlier: 'Q1', kind: 'depends on', source: 'P2283' });
   });
 
-  it('reads "has effect" backwards, so the effect depends on the cause', async () => {
+  it('reads "has effect" backwards, so the effect is caused by the cause', async () => {
     const cause = TestItems.item('Q1', 'cause', { P585: [TestItems.time('+1914-00-00')], P1542: [TestItems.link('Q2')] });
     const graph = await collect([cause, TestItems.moment('Q2', 1918)], { roots: ['Q2'] });
     expect(graph.has('Q1')).toBe(true);
-    expect(graph.links).toContainEqual({ dependent: 'Q2', dependency: 'Q1', source: 'P1542' });
+    expect(graph.links).toContainEqual({ later: 'Q2', earlier: 'Q1', kind: 'caused by', source: 'P1542' });
+  });
+
+  it('reads how direct a cause is, and influences', async () => {
+    const war = TestItems.item('Q3', 'war', {
+      P585: [TestItems.time('+1914-00-00')],
+      P1478: [TestItems.link('Q2')],
+      P1479: [TestItems.link('Q1')],
+      P737: [TestItems.link('Q4')],
+    });
+    const graph = await collect([war, TestItems.moment('Q2', 1914), TestItems.moment('Q1', 1871), TestItems.moment('Q4', 1800)], { roots: ['Q3'] });
+    expect(graph.links).toContainEqual({ later: 'Q3', earlier: 'Q2', kind: 'caused by', strength: 'immediate', source: 'P1478' });
+    expect(graph.links).toContainEqual({ later: 'Q3', earlier: 'Q1', kind: 'caused by', strength: 'contributing', source: 'P1479' });
+    expect(graph.links).toContainEqual({ later: 'Q3', earlier: 'Q4', kind: 'influenced by', source: 'P737' });
   });
 
   it('leaves out an item with no date, and does not walk through it', async () => {

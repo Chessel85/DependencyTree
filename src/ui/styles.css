@@ -214,6 +214,14 @@ body {
   stroke-width: 1.5;
 }
 
+#visual-view .link.cause {
+  stroke-dasharray: 8 4;
+}
+
+#visual-view .link.influence {
+  stroke-dasharray: 2 4;
+}
+
 #visual-view .arrow-head {
   fill: #8a8a8a;
 }

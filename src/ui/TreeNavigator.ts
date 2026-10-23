@@ -16,8 +16,8 @@ import { SoundPlayer } from './SoundPlayer';
  * Connects the navigation state to the card of standard controls. Keystrokes
  * in the list move around the tree; Backspace and question mark also work
  * anywhere in the card, and so does slash, for the index. A move that isn't possible changes nothing and says
- * nothing (DES-NAV-008), except that Left Arrow or Right Arrow on an empty
- * Dependencies or Enabled list plays a sound (DES-ANN-011). Anything that
+ * nothing (DES-NAV-008), except that Left Arrow or Right Arrow plays a sound
+ * on a moment with nothing earlier or later (DES-ANN-011). Anything that
  * shows the same position, such as the visual view, can watch for changes.
  */
 export class TreeNavigator {
@@ -100,6 +100,7 @@ export class TreeNavigator {
       case Command.Tags: return this.announcer.say(this.words.tags(entry));
       case Command.Location: return this.announcer.say(this.words.location(entry));
       case Command.Path: return this.announcer.say(this.words.path(state.path));
+      case Command.Note: return this.announcer.say(this.words.note(list.highlightedLink));
       case Command.Help: return this.help.open();
       case Command.Index: return this.index.open();
     }
@@ -160,6 +161,7 @@ export class TreeNavigator {
   }
 
   private changed(): void {
+    this.card.showNote(this.state.activeList.highlightedLink);
     for (const watcher of this.watchers) {
       watcher();
     }

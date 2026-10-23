@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Requirements Catalogue</h1>
-<p class="subtitle">Version 0.24 (draft)</p>
+<p class="subtitle">Version 0.25 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -414,12 +414,13 @@ section).</td>
 </tr>
 <tr>
 <td>REQ-VIS-002</td>
-<td>The application presents inventions, historical moments, political
-movements, and technological, scientific and engineering developments,
-together with the things each one depended on.</td>
+<td>The application presents inventions, historical moments, ideas,
+political movements, and technological, scientific and engineering
+developments, together with what each one depended on, what caused it
+and what influenced it.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Brief</td>
+<td>Brief, revised in Round 19</td>
 </tr>
 <tr>
 <td>REQ-VIS-003</td>
@@ -429,6 +430,15 @@ long to build an iPhone?”</td>
 <td>Must</td>
 <td>Agreed</td>
 <td>Brief</td>
+</tr>
+<tr>
+<td>REQ-VIS-006</td>
+<td>The application helps a user understand why things happened as they
+did, not only in what order. A plain timeline of events is not the aim:
+links between entries say how one led to another.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 19</td>
 </tr>
 <tr>
 <td>REQ-VIS-004</td>
@@ -710,6 +720,15 @@ the 2028 Olympic Games.</td>
 <td>Agreed</td>
 <td>Round 4</td>
 </tr>
+<tr>
+<td>REQ-DATA-015</td>
+<td>An entry can be an idea, such as revanchism or Leninism, as well as
+an event or an invention. Ideas are part of the picture: they can cause
+and influence other entries.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 19</td>
+</tr>
 </tbody>
 </table>
 <h1 id="relationships-rel">Relationships (REL)</h1>
@@ -734,20 +753,22 @@ the 2028 Olympic Games.</td>
 <tr>
 <td>REQ-REL-001</td>
 <td>An entry can depend on one or more other entries. A dependency means
-“this could not have happened without that”. Example: a laptop depends
-on thin, low-power screens.</td>
+“this could not have happened without that”. It suits inventions and
+developments best. Example: a laptop depends on thin, low-power
+screens.</td>
 <td>Must</td>
 <td>Agreed</td>
 <td>Brief</td>
 </tr>
 <tr>
 <td>REQ-REL-002</td>
-<td>A dependency must have happened before the entry that depends on it.
-Example: something can depend on the writing of the Twelve Tables while
-the Roman Republic is still going on.</td>
+<td>Whatever an entry depends on, was caused by or was influenced by
+must have happened before it. Example: something can depend on the
+writing of the Twelve Tables while the Roman Republic is still going
+on.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Brief, clarified in Round 2</td>
+<td>Brief, clarified in Rounds 2 and 19</td>
 </tr>
 <tr>
 <td>REQ-REL-003</td>
@@ -768,53 +789,84 @@ Windows 95 followed Windows 3.1.</td>
 <tr>
 <td>REQ-REL-005</td>
 <td>An entry can be influenced by another entry. This is a softer link
-than a dependency. Example: the US Constitution was influenced by the
-governance of the Iroquois Confederacy.</td>
-<td>Later</td>
+than a dependency or a cause. Example: the US Constitution was
+influenced by the governance of the Iroquois Confederacy.</td>
+<td>Must</td>
 <td>Agreed</td>
-<td>Brief</td>
+<td>Brief, brought forward in Round 19</td>
 </tr>
 <tr>
 <td>REQ-REL-007</td>
-<td>The system rejects circular dependencies, where an entry ends up
-depending on itself through a chain of other entries.</td>
+<td>The system rejects circular links, where an entry ends up depending
+on, being caused by or being influenced by itself through a chain of
+other entries.</td>
 <td>Must</td>
 <td>Proposed</td>
 <td>Analyst</td>
 </tr>
 <tr>
 <td>REQ-REL-008</td>
-<td>For any moment, the user can see both its dependencies (what it
-needed) and the entries it enabled (its dependents).</td>
+<td>For any moment, the user can see every link in both directions: what
+it depended on and what it enabled, what caused it and what it caused,
+and what influenced it and what it influenced.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Round 1</td>
+<td>Round 1, widened in Round 19</td>
 </tr>
 <tr>
 <td>REQ-REL-009</td>
 <td>The rule in REQ-REL-002 takes account of how precisely each date is
-known. A dependency is only rejected when it certainly happened later
-than the entry that depends on it.</td>
+known. A link is only rejected when its earlier end certainly happened
+later than its later end.</td>
 <td>Must</td>
 <td>Agreed</td>
 <td>Round 2, confirmed in Round 4</td>
 </tr>
 <tr>
 <td>REQ-REL-010</td>
-<td>A dependency can carry a short note explaining why it exists, for
-example “lithium-ion batteries made the laptop portable”.</td>
+<td>A link of any kind can carry a short note explaining why it exists,
+for example “lithium-ion batteries made the laptop portable”. Where a
+note would explain a step that is itself an event, the event is added
+instead.</td>
 <td>Should</td>
-<td>Proposed</td>
-<td>Analyst</td>
+<td>Agreed</td>
+<td>Analyst, agreed in Round 19</td>
 </tr>
 <tr>
 <td>REQ-REL-011</td>
-<td>Dependencies are always between moments, never to or from a period
-as a whole. Example: Roman law depends on the writing of the Twelve
-Tables, not on the Roman Republic.</td>
+<td>Links of every kind are always between moments, never to or from a
+period as a whole. Example: Roman law depends on the writing of the
+Twelve Tables, not on the Roman Republic.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Round 2, revised in Round 3</td>
+<td>Round 2, revised in Rounds 3 and 19</td>
+</tr>
+<tr>
+<td>REQ-REL-012</td>
+<td>Every link has a kind: depends on, caused by or influenced by. A
+cause brought the later entry about, but need not be something it could
+not have happened without. Causes suit historical events best. Example:
+World War II was caused in part by the Treaty of Versailles.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 19</td>
+</tr>
+<tr>
+<td>REQ-REL-013</td>
+<td>Any kind of link can join any two moments, whatever they are about,
+so that inventions, events and ideas can be joined. Example: the atomic
+bombing of Hiroshima depended on the atomic bomb, an invention.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 19</td>
+</tr>
+<tr>
+<td>REQ-REL-014</td>
+<td>A cause can record how directly it brought its effect about: as an
+immediate cause, an ordinary cause or a contributing factor.</td>
+<td>Should</td>
+<td>Agreed</td>
+<td>Round 19</td>
 </tr>
 </tbody>
 </table>
@@ -839,19 +891,19 @@ Tables, not on the Roman Republic.</td>
 <tbody>
 <tr>
 <td>REQ-NAV-001</td>
-<td>From any moment, the user can move to any of its dependencies, which
-lie earlier in time.</td>
+<td>From any moment, the user can move to anything it depended on, was
+caused by or was influenced by, which lie earlier in time.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Round 1</td>
+<td>Round 1, widened in Round 19</td>
 </tr>
 <tr>
 <td>REQ-NAV-002</td>
-<td>From any moment, the user can move to any of the entries it enabled,
-which lie later in time.</td>
+<td>From any moment, the user can move to anything it enabled, caused or
+influenced, which lie later in time.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Round 1</td>
+<td>Round 1, widened in Round 19</td>
 </tr>
 <tr>
 <td>REQ-NAV-003</td>
@@ -903,8 +955,8 @@ Arrow has nothing to go to. This is to be reviewed after testing.</td>
 </tr>
 <tr>
 <td>REQ-NAV-016</td>
-<td>When later relationship types are added, they can be browsed in the
-same way as dependencies.</td>
+<td>When later relationship types, such as preceded by and followed by,
+are added, they can be browsed in the same way as the others.</td>
 <td>Later</td>
 <td>Agreed</td>
 <td>Round 1</td>
@@ -985,6 +1037,14 @@ to understand. Example: a sound when the user can’t go any further.</td>
 <td>Should</td>
 <td>Agreed</td>
 <td>Round 5</td>
+</tr>
+<tr>
+<td>REQ-ANN-010</td>
+<td>The user can always tell which kind of link joins two entries, how
+directly a cause acted, and whether a link has a note.</td>
+<td>Must</td>
+<td>Agreed</td>
+<td>Round 19</td>
 </tr>
 </tbody>
 </table>
@@ -1259,11 +1319,12 @@ ChatGPT are the current examples, but they aren’t fixed.</td>
 </tr>
 <tr>
 <td>REQ-CONT-008</td>
-<td>“Depends on” and “part of” relationships are imported from
-Wikidata.</td>
+<td>Links of every kind, and “part of” relationships, are imported from
+Wikidata, keeping the kind of each link and how directly each cause
+acted.</td>
 <td>Must</td>
 <td>Agreed</td>
-<td>Round 1</td>
+<td>Round 1, widened in Round 19</td>
 </tr>
 <tr>
 <td>REQ-CONT-010</td>
@@ -1276,9 +1337,9 @@ import.</td>
 </tr>
 <tr>
 <td>REQ-CONT-011</td>
-<td>Data problems found during import, such as missing dates,
-dependencies that break REQ-REL-002, and circular dependencies, are
-reported rather than dropped silently.</td>
+<td>Data problems found during import, such as missing dates, links that
+break REQ-REL-002, and circular links, are reported rather than dropped
+silently.</td>
 <td>Must</td>
 <td>Proposed</td>
 <td>Analyst</td>
@@ -1497,8 +1558,41 @@ DES-SR-006.</td>
 </tbody>
 </table>
 <h1 id="open-questions">Open questions</h1>
-<p>There are no open questions at the moment. Answered questions are in
-the Decision Log.</p>
+<p>Answered questions are in the Decision Log.</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 46%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-28</td>
+<td>Is it clear to hear how strong a cause is, and that a link has a
+note, from a word at the end of a list entry? For example:
+“Assassination of Archduke Franz Ferdinand, 1914, immediate, note.”</td>
+<td>The product owner asked how strength should be shown: in a separate
+list for each strength, or in words at the end of each entry. The
+analyst built words at the end (DES-ANN-013, DES-ANN-014), because
+separate lists would mean up to three more tabs. To be answered after
+testing with NVDA.</td>
+</tr>
+<tr>
+<td>Q-29</td>
+<td>Does it work for a link to a whole period to use its end moment when
+the period is a cause, and its start moment otherwise?</td>
+<td>Agreed for now in DEC-69, to be reviewed as the data grows. The
+import report lists every link moved this way.</td>
+</tr>
+</tbody>
+</table>
 <h1 id="decision-log">Decision log</h1>
 <table>
 <colgroup>
@@ -2063,10 +2157,108 @@ hold events, so their entries don’t need “Event:”. It stays where
 moments and periods could be confused: on arrival, in the index, in
 Space, and in the heading and summary box. Recorded as DES-ANN-012.</td>
 </tr>
+<tr>
+<td>DEC-66</td>
+<td>Three kinds of link</td>
+<td>19, 23 October 2026</td>
+<td>Every link has a kind: depends on, caused by or influenced by. Each
+link is stored once and read in both directions: Depended on and
+Enabled, Caused by and Caused, Influenced by and Influenced.
+Dependencies suit inventions, and causes suit historical events, because
+a series of battles is mostly a timeline unless the links say how one
+led to another. The Dependencies list is renamed Depended on, to match
+the others. Recorded as REQ-VIS-002, REQ-VIS-006, REQ-REL-005,
+REQ-REL-012, REQ-NAV-001, REQ-NAV-002, DES-REL-001 and DES-NAV-002.</td>
+</tr>
+<tr>
+<td>DEC-67</td>
+<td>How strong a cause is</td>
+<td>19, 23 October 2026</td>
+<td>A cause can be immediate, ordinary or contributing, as Wikidata
+records them. The product owner asked how to present this. The analyst
+proposed a word at the end of the list entry, now Q-28. Recorded as
+REQ-REL-014, DES-REL-008 and DES-ANN-013.</td>
+</tr>
+<tr>
+<td>DEC-68</td>
+<td>Any link between any two moments</td>
+<td>19, 23 October 2026</td>
+<td>Inventions, events and ideas can be joined by any kind of link.
+Example: Hiroshima depended on the atomic bomb. Recorded as
+REQ-REL-013.</td>
+</tr>
+<tr>
+<td>DEC-69</td>
+<td>Which end of a period a link uses</td>
+<td>19, 23 October 2026</td>
+<td>A link to a whole period uses its end moment when the period is a
+cause, and its start moment for the other kinds. The curation file can
+choose the other end. Agreed for now, to see how it goes (Q-29).
+Example: the Paris Peace Conference was caused by World War I, so it
+links to the Armistice of Compiègne. Recorded as DES-REL-007.</td>
+</tr>
+<tr>
+<td>DEC-70</td>
+<td>Notes on links</td>
+<td>19, 23 October 2026</td>
+<td>Where a step needs explaining, adding the event in the middle is
+preferred to a note, but notes are kept for steps too small to be
+events. Example: “the Allies build up troops in Britain” is an event,
+Operation Bolero. A note is shown on the card only when it has content.
+Recorded as REQ-REL-010, DES-REL-009, DES-ANN-014 and DES-SR-006.</td>
+</tr>
+<tr>
+<td>DEC-71</td>
+<td>Ideas are kept</td>
+<td>19, 23 October 2026</td>
+<td>Ideas that Wikidata gives as causes, such as revanchism and
+Leninism, are part of the picture. They are moments, dated by when they
+first appeared, and their names start with “Idea:”. Recorded as
+REQ-DATA-015, DES-DATA-009, DES-ANN-012 and DES-IMP-013.</td>
+</tr>
+<tr>
+<td>DEC-72</td>
+<td>Empty lists are hidden</td>
+<td>19, 23 October 2026</td>
+<td>With six kinds of linked list, a moment shows only the lists that
+have entries. Left Arrow and Right Arrow now follow any list going their
+way through time, and the bump sound plays when there is nothing at all
+that way. Recorded as DES-NAV-003, DES-NAV-005, DES-KEY-001, DES-KEY-013
+and DES-ANN-011.</td>
+</tr>
+<tr>
+<td>DEC-73</td>
+<td>The hand-made sample is dropped</td>
+<td>19, 23 October 2026</td>
+<td>The page opens the Wikidata seed set, and the sample file and its
+tests are removed. Recorded as DES-IMP-011.</td>
+</tr>
+<tr>
+<td>DEC-74</td>
+<td>The second import</td>
+<td>19, 23 October 2026</td>
+<td>The analyst imported again with the three kinds of link: 121 moments
+and 11 periods, with 43 depends-on, 41 caused-by and 18 influenced-by
+links, and 5 ideas. Wikidata has causes for World War I, World War II
+and the end of the Soviet Union, and influences between programming
+languages, but none for the Normandy landings, Operation Bolero or the
+Battle of the Atlantic, so such a chain would come from the curation
+file. Cisleithania and the Lands of the Crown of Saint Stephen are
+excluded, because they list centuries of crown lands as their parts. A
+children’s novel given as an effect of Perestroika is excluded. Recorded
+in DES-IMP-004, DES-IMP-005 and the Implementation Plan.</td>
+</tr>
 </tbody>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.25</strong>, 23 October 2026: Recorded the round 19
+decisions, DEC-66 to DEC-74: three kinds of link, ideas, notes and
+hidden empty lists. Added REQ-VIS-006, REQ-DATA-015, REQ-REL-012 to
+REQ-REL-014 and REQ-ANN-010. Brought REQ-REL-005, influence, forward to
+Must. Widened REQ-VIS-002, REQ-REL-002, REQ-REL-007 to REQ-REL-011,
+REQ-NAV-001, REQ-NAV-002, REQ-NAV-016, REQ-CONT-008 and REQ-CONT-011 to
+every kind of link. Added Q-28 and Q-29.</li>
 <li><strong>0.24</strong>, 23 October 2026: Recorded DEC-65.</li>
 <li><strong>0.23</strong>, 23 October 2026: Recorded DEC-64.</li>
 <li><strong>0.22</strong>, 23 October 2026: Recorded DEC-63.</li>

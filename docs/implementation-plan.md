@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.24 (draft)"
+subtitle: "Version 0.25 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -39,23 +39,25 @@ Each folder below lists a few of the small class files it would contain. One cla
 | Folder | File | Responsibility |
 |--------------|--------------|--------------------------------------------------|
 | src/core/model | Entry.ts | The base class for moments and periods. |
-| src/core/model | Moment.ts | A moment, with its date and location. |
+| src/core/model | Moment.ts | A moment, with its date and location. It may be an idea. |
 | src/core/model | Period.ts | A period, with its start moment, end moment and the moments between. |
 | src/core/model | OngoingStop.ts | The "Ongoing" stop at the end of a period still going on. |
-| src/core/model | Dependency.ts | One "depends on" link between two moments. |
+| src/core/model | Link.ts | One link between two moments, with its kind, a cause's strength and a note. |
+| src/core/model | LinkKind.ts | The three kinds of link: depends on, caused by and influenced by (DES-REL-001). |
 | src/core/dates | HistoricDate.ts | A date with its precision and approximate flag, including BCE dates. |
 | src/core/dates | DateRange.ts | The earliest and latest possible times of a date (DES-DATE-003). |
 | src/core/dates | DateFormatter.ts | Written and spoken forms. |
 | src/core/dates | DateShortener.ts | Shortens dates in lists by how far they are from today (DES-DATE-006). |
 | src/core/data | Dataset.ts | Every entry, with lookups, and which periods an entry is part of. |
 | src/core/data | DatasetReader.ts | Reads a dataset file. |
-| src/core/graph | DependencyGraph.ts | Lookups in both directions. |
+| src/core/graph | LinkGraph.ts | Links looked up in both directions, by kind. |
 | src/core/graph | CycleDetector.ts | Finds circular dependencies. |
-| src/core/graph | PredatesRule.ts | Checks that a dependency came first (DES-REL-002). |
+| src/core/graph | PredatesRule.ts | Checks that a link's earlier end came first (DES-REL-002). |
 | src/core/graph | ContainmentRule.ts | Checks that everything in a period falls within it (DES-DATA-006). |
 | src/core/navigation | NavigationState.ts | The current entry, the active list, and the highlighted entry in each list. |
-| src/core/navigation | RelationshipList.ts | One list on an entry, such as Dependencies or a period's Moments. |
-| src/core/navigation | ListSetBuilder.ts | Decides which lists an entry shows, including a period's stops and "Ongoing" (DES-NAV-002, DES-NAV-009, DES-NAV-012). |
+| src/core/navigation | RelationshipList.ts | One list on an entry, such as Depended on or a period's Moments, with the link to each entry. |
+| src/core/navigation | ListKind.ts | The kinds of list, and which are earlier and later lists (DES-NAV-002). |
+| src/core/navigation | ListSetBuilder.ts | Decides which lists an entry shows, leaving out empty ones, including a period's stops and "Ongoing" (DES-NAV-002, DES-NAV-003, DES-NAV-009, DES-NAV-012). |
 | src/core/navigation | StepResult.ts | What Left Arrow or Right Arrow did: moved, bumped, or nothing. |
 | src/core/navigation | PathHistory.ts | For Backspace and P. |
 | src/core/find | EntryIndex.ts | Every entry in alphabetical order, with a simple search (DES-FIND-004). |
@@ -67,7 +69,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/import | WikidataCache.ts | Keeps Wikidata's answers in a folder (DES-IMP-010). |
 | src/import | WikidataEntity.ts | One Wikidata item, with its label and best statements. |
 | src/import | WikidataDateReader.ts | Turns a Wikidata date into a dataset date (DES-IMP-006). |
-| src/import | PropertyMapper.ts | Which properties are read, and what each means (DES-IMP-005). |
+| src/import | PropertyMapper.ts | Which properties are read, the kind of link each gives, and which classes are ideas (DES-IMP-005, DES-IMP-013). |
 | src/import | Curation.ts | The curation file (DES-IMP-004). |
 | src/import | EntryDates.ts | Whether an item is a moment or a period, and its dates, from the curation file or Wikidata. |
 | src/import | PeriodAnchors.ts | Finds the real moments each period starts and ends with (DES-IMP-008). |
@@ -75,7 +77,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/import | SeedCollector.ts | Gathers the seed set (DES-IMP-002). |
 | src/import | CurationApplier.ts | Applies the curation file's links and members. |
 | src/import | LabelLookup.ts | Labels of locations and tags. |
-| src/import | RecordMaker.ts | Turns the gathered items into a dataset (DES-IMP-008). |
+| src/import | RecordMaker.ts | Turns the gathered items into a dataset, choosing which end of a period each link uses (DES-IMP-008, DES-REL-007). |
 | src/import | ImportValidator.ts | Leaves out what breaks the rules (DES-IMP-007). |
 | src/import | ImportLog.ts | What each stage found, for the report. |
 | src/import | ImportReport.ts | Writes the report. |
@@ -85,7 +87,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/worker | Handlers | One file per API endpoint. |
 | src/ui | main.ts | Starts the front end. |
 | src/ui | TreeNavigator.ts | Connects the navigation state to the card, and handles keystrokes. |
-| src/ui | EntryCard.ts | The heading, summary box and description box. |
+| src/ui | EntryCard.ts | The heading, summary box, description box and note box. |
 | src/ui | SoundPlayer.ts | Plays the bump sound (DES-ANN-011). |
 | src/ui | RelationshipTabs.ts | The tab control. |
 | src/ui | RelationshipListBox.ts | The list box of the active list's entries. |
@@ -171,9 +173,11 @@ What the first import found (DEC-54):
 | "Has cause" and "has effect" are well used for history. From the Cold War and the dissolution of the Soviet Union, they bring in the World Wars, treaties and Soviet politics. | About half the seed set is political history. It is kept (DEC-55). |
 | Treaties, conferences, programmes and wars have start and end times, so Wikidata gives them as periods. But it seldom lists an event on both dates: it doesn't list Japan's surrender among World War II's events, for example. | Only 4 of about 40 found real start and end moments by themselves. The curation file names them for the Cold War, both World Wars and their main theatres, and the interwar period, giving 11 periods. The rest, such as treaties and summits, are moments (DES-IMP-008). |
 
-The latest import, from the iPhone and ChatGPT, gave 95 entries: 84 moments and 11 periods, with 65 dependencies. The report is data/import-report.md.
+The first import, from the iPhone and ChatGPT, gave 95 entries: 84 moments and 11 periods, with 65 dependencies. The report is data/import-report.md.
 
 The index (DES-FIND-004), planned for Phase 1 as part of search, was brought forward so that any entry can be chosen as the place to start (DEC-59).
+
+The page now opens the seed set, and the hand-made sample is dropped (DEC-73).
 
 
 1. Build the import tool. Gather a seed set of 50 to 200 entries from the iPhone backwards, and produce a coverage report showing how many links each Wikidata property contributed. (DES-IMP-002, DES-IMP-003, DES-IMP-007)
@@ -182,6 +186,27 @@ The index (DES-FIND-004), planned for Phase 1 as part of search, was brought for
 4. Point the page at the seed file instead of the sample file, and test with NVDA in Firefox and Chrome, and with VoiceOver in Safari.
 
 **Exit criteria:** You can explore the seed set comfortably by keyboard, and the DES-NAV, DES-KEY and DES-ANN items are agreed.
+
+### Step 0E: Kinds of link (built, in testing)
+
+This came from the question whether a series of battles is a set of dependencies or just a timeline (DEC-66). Links now say how one entry led to another.
+
+1. Give every link a kind: depends on, caused by or influenced by, with a strength for causes and a note on any link. (DES-REL-001, DES-REL-008, DES-REL-009)
+2. Show six linked lists on a moment, hiding empty ones, and let Left Arrow and Right Arrow follow any list going their way. (DES-NAV-002, DES-NAV-003, DES-KEY-001)
+3. Read strengths and notes in lists, with the Note box and the N key. Mark ideas with "Idea:". (DES-ANN-012 to DES-ANN-014)
+4. Import causes and influences from Wikidata, and link to the right end of a period. (DES-IMP-005, DES-REL-007)
+5. You test it with NVDA, and answer Q-28.
+
+What the second import found (DEC-74):
+
+| Finding | What it means |
+|--------------|--------------------------------------------------|
+| 121 moments and 11 periods, with 43 depends-on, 41 caused-by and 18 influenced-by links, and 5 ideas. | Causes now outnumber hand-made links many times over. Only 14 links come from the curation file. |
+| Wikidata has good causes for World War I, World War II and the end of the Soviet Union, with immediate and contributing causes for World War I. | These are the richest chains for history. |
+| "Influenced by" links programming languages: Fortran, ALGOL, Pascal, Simula and Unix. | Influence suits ideas and software as well as history. |
+| The Normandy landings, Operation Bolero, the Battle of the Atlantic and the Tehran Conference have no causes or effects in Wikidata. | A chain of battles would have to come from the curation file. |
+| Cisleithania and the Lands of the Crown of Saint Stephen list their crown lands, back to 976, as parts, so as dependencies. | Both are excluded. |
+| Wikidata gives the children's novel Dunno on the Moon as a cause of Perestroika. | It is excluded. |
 
 ## Phase 1: Read-only release on Cloudflare
 
@@ -209,7 +234,7 @@ The index (DES-FIND-004), planned for Phase 1 as part of search, was brought for
 
 ## Phase 4: Richer relationships
 
-- Add the "Preceded by", "Followed by", "Influenced by" and "Influenced" lists. (REQ-NAV-016, REQ-REL-004, REQ-REL-005)
+- Add the "Preceded by" and "Followed by" lists. (REQ-NAV-016, REQ-REL-004) The Influenced by and Influenced lists were brought forward to Step 0E.
 
 # Testing strategy
 
@@ -225,12 +250,13 @@ The index (DES-FIND-004), planned for Phase 1 as part of search, was brought for
 |----------------|--------------------------------------------------|--------------|
 | Wikidata's dependency coverage may be thin. The candidate properties are used unevenly. | Measure coverage in Phase 0, and use the curation file to fill the gaps. | DES-IMP-003, DES-IMP-004 |
 | Wikidata's dates may conflict with the predates rule. | Rough dates are compared as ranges, and the import reports and leaves out problem links instead of failing. | DES-REL-002, DES-IMP-007 |
-| Wikidata often links to a whole period rather than to a moment within it. | Use the period's start moment, review a sample in Phase 0, and correct links in the curation file. | DES-REL-007, DES-IMP-008 |
+| Wikidata often links to a whole period rather than to a moment within it. | Use the period's end moment for a cause and its start moment otherwise, review the report's list of moved links, and correct links in the curation file. | DES-REL-007, DES-IMP-008 |
 | elkjs, the layout library, is published under the Eclipse Public License 2.0. Combining it with AGPL-3.0 code in one published bundle may not be allowed. | Check before Phase 1. If it is a problem, load it as a separate file, or write a simpler layered layout. | DES-VIEW-010, REQ-CONT-005 |
 | Screen readers may behave differently. Focus mode handling and Mac keystrokes differ between NVDA and VoiceOver. | Test on both early, in Phase 0. | DES-SR-006, DES-SR-002 |
 
 # Change history
 
+- **0.25**, 23 October 2026: Added Step 0E, kinds of link, with what the second import found (DEC-74). The page opens the seed set. Updated the module layout. Influence moved from Phase 4 to Step 0E.
 - **0.24**, 23 October 2026: No change to the plan; version kept in step with the other documents.
 - **0.23**, 23 October 2026: No change to the plan; version kept in step with the other documents.
 - **0.22**, 23 October 2026: No change to the plan; version kept in step with the other documents.

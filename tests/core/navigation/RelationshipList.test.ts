@@ -7,7 +7,7 @@ const entries = Array.from({ length: 25 }, (_, i) => TestMoments.moment(`m${i}`,
 
 describe('RelationshipList paging', () => {
   it('moves ten entries at a time, stopping at the last', () => {
-    const list = new RelationshipList(ListKind.Dependencies, entries);
+    const list = new RelationshipList(ListKind.DependedOn, entries);
     expect(list.movePage(1)).toBe(true);
     expect(list.position).toBe(11);
     list.movePage(1);
@@ -17,7 +17,7 @@ describe('RelationshipList paging', () => {
   });
 
   it('moves back, stopping at the first', () => {
-    const list = new RelationshipList(ListKind.Dependencies, entries);
+    const list = new RelationshipList(ListKind.DependedOn, entries);
     list.moveToLast();
     list.movePage(-1);
     expect(list.position).toBe(15);

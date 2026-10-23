@@ -1,9 +1,17 @@
 import { Entry } from '../../core/model/Entry';
+import { LinkKind } from '../../core/model/LinkKind';
 import { Moment } from '../../core/model/Moment';
 import { GraphLayout, LinkPath, NodeBox, PeriodBar, Point } from './GraphLayout';
 
 const SVG = 'http://www.w3.org/2000/svg';
 const JAG = 6;
+
+/** The class that styles each kind of link: solid, dashed or dotted (DES-VIEW-003). */
+const LINK_CLASS: Record<LinkKind, string> = {
+  [LinkKind.DependsOn]: 'link',
+  [LinkKind.CausedBy]: 'link cause',
+  [LinkKind.InfluencedBy]: 'link influence',
+};
 
 /**
  * Draws a finished layout in SVG, and marks the current entry and the
@@ -51,7 +59,7 @@ export class GraphView {
       shape.classList.toggle('highlighted', entry === highlighted && entry !== current);
     }
     for (const { link, element } of this.links) {
-      element.classList.toggle('near', link.dependency === current || link.dependent === current);
+      element.classList.toggle('near', link.earlier === current || link.later === current);
     }
     this.centreOn(current);
   }
@@ -142,7 +150,7 @@ export class GraphView {
   }
 
   private link(link: LinkPath): SVGPathElement {
-    const element = this.element('path', { d: this.linkPath(link.points, link.curved), class: 'link', 'marker-end': 'url(#arrow)' });
+    const element = this.element('path', { d: this.linkPath(link.points, link.curved), class: LINK_CLASS[link.kind], 'marker-end': 'url(#arrow)' });
     this.links.push({ link, element });
     return element;
   }

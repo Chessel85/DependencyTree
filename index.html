@@ -11,7 +11,7 @@
          serve browse mode. Landmarks only added to what NVDA said (DES-SCR-001). -->
     <div class="column">
     <h1>Dependency Tree</h1>
-    <p>Prototype, Step 0C: a small hand-made sample of moments and periods, with a visual view. Add ?data=seed to the address for the data imported from Wikidata.</p>
+    <p>Prototype, Step 0E: moments and periods imported from Wikidata, joined by three kinds of link: depended on, caused by and influenced by.</p>
     <div id="entry-card">
       <h2 id="entry-name"></h2>
       <div class="card-part">
@@ -21,6 +21,11 @@
       <div class="card-part">
         <label for="entry-description">Description</label>
         <textarea id="entry-description" readonly rows="4"></textarea>
+      </div>
+      <!-- Shown only when the link to the highlighted entry has a note (DES-ANN-014). -->
+      <div class="card-part" id="entry-note-part" hidden>
+        <label for="entry-note">Note</label>
+        <textarea id="entry-note" readonly rows="2"></textarea>
       </div>
       <!-- The list comes before the tabs, so Tab reaches the list first.
            The stylesheet still shows the tabs above the list. -->
@@ -32,7 +37,7 @@
       <button type="button" id="help-open">Keyboard help</button>
     </div>
     <h2>Visual view</h2>
-    <p>Screen readers skip the drawing, because it shows the same entries as the card above. It follows the card, and clicking an entry goes to it. Blue marks the current entry, and orange the highlighted entry in the list.</p>
+    <p>Screen readers skip the drawing, because it shows the same entries as the card above. It follows the card, and clicking an entry goes to it. Blue marks the current entry, and orange the highlighted entry in the list. A solid arrow means depended on, a dashed arrow caused by, and a dotted arrow influenced by.</p>
     <div class="card-part">
       <label for="layout-choice">Layout</label>
       <select id="layout-choice"></select>

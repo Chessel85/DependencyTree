@@ -1,3 +1,4 @@
+import { LinkKind } from '../../core/model/LinkKind';
 import { Moment } from '../../core/model/Moment';
 import { Period } from '../../core/model/Period';
 
@@ -28,10 +29,11 @@ export interface NodeBox extends Box {
   span?: [number, number];
 }
 
-/** A dependency, drawn as an arrow from the earlier moment to the later one (DES-VIEW-003). */
+/** A link, drawn as an arrow from the earlier moment to the later one, styled by its kind (DES-VIEW-003). */
 export interface LinkPath {
-  dependency: Moment;
-  dependent: Moment;
+  earlier: Moment;
+  later: Moment;
+  kind: LinkKind;
   points: Point[];
   /** True for a smooth curve between the two ends; false for straight segments through every point. */
   curved: boolean;

@@ -1,8 +1,9 @@
-import { DatasetRecord, MomentRecord, PeriodRecord } from '../core/data/DatasetReader';
+import { DatasetRecord, LinkRecord, MomentRecord, PeriodRecord } from '../core/data/DatasetReader';
+import { LinkKind } from '../core/model/LinkKind';
 import { Curation } from './Curation';
 import { EntryDates } from './EntryDates';
-import { ImportedGraph } from './ImportedGraph';
-import { ImportLog } from './ImportLog';
+import { ImportedGraph, ImportedLink } from './ImportedGraph';
+import { ImportLog, PeriodEnd } from './ImportLog';
 import { LabelLookup } from './LabelLookup';
 import { PeriodAnchors } from './PeriodAnchors';
 import { PropertyMapper } from './PropertyMapper';
@@ -10,9 +11,10 @@ import { WikidataEntity } from './WikidataEntity';
 
 /**
  * Turns the gathered items into a dataset. Each period starts and ends with
- * real moments (DES-IMP-008), and one without them becomes a moment. A
- * dependency on or from a whole period is moved to its start moment, and
- * noted (DES-REL-007). Links to items outside the seed set are left out.
+ * real moments (DES-IMP-008), and one without them becomes a moment. A link
+ * on or from a whole period is moved to one of its moments, and noted
+ * (DES-REL-007). Links to items outside the seed set are left out, and two
+ * items are joined by one link at most.
  */
 export class RecordMaker {
   private readonly ids = new Map<string, string>();
@@ -85,6 +87,9 @@ export class RecordMaker {
       tags: this.tags(entity),
       wikidata: entity.id,
     };
+    if (this.curation.entry(entity.id)?.idea ?? this.mapper.isIdea(entity)) {
+      record.idea = true;
+    }
     const location = this.mapper.location(entity);
     const place = location && this.labels.label(location);
     if (place) {
@@ -108,34 +113,70 @@ export class RecordMaker {
   }
 
   private addLinks(graph: ImportedGraph, moments: Map<string, MomentRecord>): void {
-    const byId = new Map([...moments.values()].map((m) => [m.id, m]));
     for (const link of graph.links) {
-      const dependent = graph.canonical(link.dependent);
-      const dependency = graph.canonical(link.dependency);
-      if (!graph.has(dependent) || !graph.has(dependency)) {
+      const later = graph.canonical(link.later);
+      const earlier = graph.canonical(link.earlier);
+      if (!graph.has(later) || !graph.has(earlier)) {
         continue;
       }
-      const from = this.momentId(dependent);
-      const to = this.momentId(dependency);
+      const from = this.anchors.isPeriod(later) ? this.anchors.of(later)!.start : later;
+      const to = this.earlierMoment(graph, earlier, link, from);
       if (from === to) {
         continue;
       }
-      const periods = [dependent, dependency].filter((id) => this.anchors.isPeriod(id));
-      if (periods.length > 0) {
-        this.log.moved.push({
-          dependent: this.names.get(dependent)!,
-          dependency: this.names.get(dependency)!,
-          source: link.source,
-          periods: periods.map((id) => this.names.get(id)!),
-        });
+      const ends: PeriodEnd[] = [];
+      if (this.anchors.isPeriod(later)) {
+        ends.push({ period: this.names.get(later)!, end: 'start' });
       }
-      const record = byId.get(from)!;
-      record.dependsOn ??= [];
-      if (!record.dependsOn.includes(to)) {
-        record.dependsOn.push(to);
-        record.linkSources = { ...record.linkSources, [to]: link.source };
+      if (this.anchors.isPeriod(earlier)) {
+        ends.push({ period: this.names.get(earlier)!, end: to === this.anchors.of(earlier)!.start ? 'start' : 'end' });
       }
+      if (ends.length > 0) {
+        this.log.moved.push({ later: this.names.get(later)!, earlier: this.names.get(earlier)!, kind: link.kind, source: link.source, ends });
+      }
+      const record = moments.get(from)!;
+      this.addLink((record.links ??= []), this.ids.get(to)!, link);
     }
+  }
+
+  /** Adds the link, or fills in the strength and note of one already joining the same two moments. */
+  private addLink(links: LinkRecord[], to: string, link: ImportedLink): void {
+    const existing = links.find((l) => l.to === to);
+    if (!existing) {
+      links.push({
+        to,
+        kind: link.kind,
+        ...(link.strength ? { strength: link.strength } : {}),
+        ...(link.note ? { note: link.note } : {}),
+        source: link.source,
+      });
+      return;
+    }
+    if (link.kind === existing.kind && link.strength && !existing.strength) {
+      existing.strength = link.strength;
+    }
+    if (link.note && !existing.note) {
+      existing.note = link.note;
+    }
+  }
+
+  /**
+   * The moment that stands for the earlier end of a link (DES-REL-007): the
+   * entry itself, or one end of a period. A cause stands for the period's end
+   * moment, unless that came after the later moment; anything else for its
+   * start moment. The curation file can choose instead.
+   */
+  private earlierMoment(graph: ImportedGraph, id: string, link: ImportedLink, laterMoment: string): string {
+    if (!this.anchors.isPeriod(id)) {
+      return id;
+    }
+    const { start, end } = this.anchors.of(id)!;
+    if (!end || (link.at ?? (link.kind === LinkKind.CausedBy ? 'end' : 'start')) === 'start') {
+      return start;
+    }
+    const endRange = this.dates.range(graph.entries.get(end)!)!;
+    const laterRange = this.dates.range(graph.entries.get(laterMoment)!)!;
+    return link.at === 'end' || !endRange.isCertainlyAfter(laterRange) ? end : start;
   }
 
   private addMembers(graph: ImportedGraph, periods: Map<string, PeriodRecord>): void {
@@ -151,11 +192,6 @@ export class RecordMaker {
         period.contains!.push(memberId);
       }
     }
-  }
-
-  /** The moment that stands for an entry in a dependency: itself, or a period's start moment. */
-  private momentId(id: string): string {
-    return this.anchors.isPeriod(id) ? this.ids.get(this.anchors.of(id)!.start)! : this.ids.get(id)!;
   }
 
   private description(entity: WikidataEntity): string {

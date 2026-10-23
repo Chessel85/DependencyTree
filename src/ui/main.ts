@@ -1,4 +1,3 @@
-import sample from '../../data/sample.json';
 import seed from '../../data/seed.json';
 import bumpSound from '../../sounds/bump.wav';
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
@@ -28,9 +27,6 @@ import { NodeBoxMaker } from './visual/NodeBoxMaker';
 import { TimeScaleLayout } from './visual/TimeScaleLayout';
 import { VisualView } from './visual/VisualView';
 
-const START_ID = 'iphone';
-// ?data=seed opens the Wikidata seed set instead of the hand-made sample (Step 0C).
-const DATA_PARAMETER = 'data';
 const MARGIN = 24;
 const ROW_GAP = 16;
 
@@ -42,12 +38,11 @@ function byId<T extends HTMLElement>(id: string): T {
   return element as T;
 }
 
-const record = (new URLSearchParams(window.location.search).get(DATA_PARAMETER) === 'seed' ? seed : sample) as DatasetRecord;
+const record = seed as DatasetRecord;
 const dataset = new DatasetReader().read(record);
-const startId = record.start ?? START_ID;
-const start = dataset.find(startId);
+const start = record.start ? dataset.find(record.start) : undefined;
 if (!start) {
-  throw new Error(`The data has no entry with id "${startId}".`);
+  throw new Error(`The data has no entry with id "${record.start}".`);
 }
 
 const today = HistoricDate.fromJsDate(new Date());
@@ -83,7 +78,7 @@ navigator = new TreeNavigator(
   byId('entry-card'),
   byId('relationship-tabs'),
   byId('relationship-panel'),
-  new EntryCard(byId('entry-name'), byId('entry-summary'), byId('entry-description'), words),
+  new EntryCard(byId('entry-name'), byId('entry-summary'), byId('entry-description'), byId('entry-note-part'), byId('entry-note'), words),
   state,
   keys,
   words,
@@ -96,11 +91,11 @@ navigator.start();
 
 // The visual view, with a choice of two layouts (DES-VIEW-011).
 const moments = dataset.graph.allMoments.sort(Entry.byDate);
-const dependencies = dataset.graph.dependencies;
+const links = dataset.graph.links;
 const maker = new NodeBoxMaker(formatter, shortener, today);
 const widthOf = (moment: Moment) => maker.widthOf(moment);
 const rowHeight = maker.height + ROW_GAP;
-const arranger = new ElkArranger(moments, dependencies, widthOf, maker.height);
+const arranger = new ElkArranger(moments, links, widthOf, maker.height);
 const earliest = moments[0].sortKey;
 const now = today.range().earliest;
 const engines: LayoutEngine[] = [
@@ -109,7 +104,7 @@ const engines: LayoutEngine[] = [
     'Linear time',
     'Distance across the page is proportional to the years between moments, so long gaps in time show as long gaps.',
     new LinearTimeScale(earliest, now, 12, MARGIN),
-    moments, dependencies, arranger, maker, rowHeight,
+    moments, links, arranger, maker, rowHeight,
   ),
   new LayeredLayout(
     'layered',

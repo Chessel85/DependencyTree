@@ -1,13 +1,15 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { Dataset } from '../../../src/core/data/Dataset';
+import { LinkKind } from '../../../src/core/model/LinkKind';
 import { ListKind } from '../../../src/core/navigation/ListKind';
 import { ListSetBuilder } from '../../../src/core/navigation/ListSetBuilder';
 import { NavigationState } from '../../../src/core/navigation/NavigationState';
 import { StepResult } from '../../../src/core/navigation/StepResult';
 import { TestMoments } from '../../TestMoments';
 
-// battery (1800) enabled both the phone (1876) and the laptop (1981).
-// The laptop also depends on the chip (1971).
+// The phone (1876) depended on the battery (1800), and was influenced by the
+// telegraph (1837), which was caused by the railway (1825). The smartphone
+// (2007) depended on the phone and the chip (1971).
 let dataset: Dataset;
 let state: NavigationState;
 
@@ -15,72 +17,121 @@ beforeEach(() => {
   dataset = TestMoments.dataset(
     [
       TestMoments.moment('battery', 1800),
+      TestMoments.moment('railway', 1825),
+      TestMoments.moment('telegraph', 1837),
       TestMoments.moment('phone', 1876),
       TestMoments.moment('chip', 1971),
-      TestMoments.moment('laptop', 1981),
+      TestMoments.moment('smartphone', 2007),
     ],
-    [['phone', 'battery'], ['laptop', 'battery'], ['laptop', 'chip']],
+    [
+      ['phone', 'battery'],
+      ['phone', 'telegraph', LinkKind.InfluencedBy],
+      ['telegraph', 'railway', LinkKind.CausedBy],
+      ['smartphone', 'phone'],
+      ['smartphone', 'chip'],
+    ],
   );
-  state = new NavigationState(new ListSetBuilder(dataset), dataset.find('laptop')!);
+  state = new NavigationState(new ListSetBuilder(dataset), dataset.find('phone')!);
 });
 
 describe('NavigationState on moments', () => {
-  it('starts with the Dependencies list active, sorted oldest first', () => {
-    expect(state.activeList.kind).toBe(ListKind.Dependencies);
-    expect(state.activeList.entries.map((m) => m.id)).toEqual(['battery', 'chip']);
+  it('shows only the lists that have entries, earlier ones first, starting on Depended on', () => {
+    expect(state.allLists.map((l) => l.kind)).toEqual([ListKind.DependedOn, ListKind.InfluencedBy, ListKind.Enabled]);
+    expect(state.activeList.kind).toBe(ListKind.DependedOn);
   });
 
-  it('goes earlier with Left Arrow when Dependencies is active, keeping that list active', () => {
+  it('sorts a list oldest first, and keeps the link to each entry', () => {
+    state.goTo(dataset.find('smartphone')!);
+    expect(state.activeList.entries.map((m) => m.id)).toEqual(['phone', 'chip']);
+    state.switchList(-1);
+    expect(state.activeList.highlightedLink?.later.id).toBe('smartphone');
+  });
+
+  it('goes earlier with Left Arrow from any list of earlier moments', () => {
+    state.switchList(1);
+    expect(state.activeList.kind).toBe(ListKind.InfluencedBy);
     expect(state.stepEarlier()).toBe(StepResult.Moved);
-    expect(state.currentEntry.id).toBe('battery');
-    expect(state.activeList.kind).toBe(ListKind.Dependencies);
+    expect(state.currentEntry.id).toBe('telegraph');
   });
 
-  it('does nothing with Right Arrow when Dependencies is active', () => {
-    expect(state.stepLater()).toBe(StepResult.Nothing);
-    expect(state.currentEntry.id).toBe('laptop');
-  });
-
-  it('switches list and goes later, keeping the Enabled list active', () => {
-    state.stepEarlier();
-    expect(state.switchList(1)).toBe(true);
-    expect(state.activeList.kind).toBe(ListKind.Enabled);
-    expect(state.stepLater()).toBe(StepResult.Moved);
+  it('arrives on the kind of list moved through, if there is one', () => {
+    state.goTo(dataset.find('smartphone')!);
+    expect(state.stepEarlier()).toBe(StepResult.Moved);
     expect(state.currentEntry.id).toBe('phone');
-    expect(state.activeList.kind).toBe(ListKind.Enabled);
+    expect(state.activeList.kind).toBe(ListKind.DependedOn);
+  });
+
+  it('otherwise arrives on the first list going the same way through time', () => {
+    state.switchList(1);
+    state.stepEarlier();
+    expect(state.currentEntry.id).toBe('telegraph');
+    expect(state.activeList.kind).toBe(ListKind.CausedBy);
+  });
+
+  it('otherwise arrives on the first list', () => {
+    state.switchList(2);
+    state.stepLater();
+    expect(state.currentEntry.id).toBe('smartphone');
+    expect(state.activeList.kind).toBe(ListKind.DependedOn);
+  });
+
+  it('does nothing with Right Arrow in a list of earlier moments, when there are later ones', () => {
+    expect(state.stepLater()).toBe(StepResult.Nothing);
+    expect(state.currentEntry.id).toBe('phone');
+  });
+
+  it('bumps with Left Arrow on a moment with nothing earlier, whichever list is active', () => {
+    state.goTo(dataset.find('railway')!);
+    expect(state.activeList.kind).toBe(ListKind.Caused);
+    expect(state.stepEarlier()).toBe(StepResult.Bumped);
+    expect(state.currentEntry.id).toBe('railway');
+  });
+
+  it('bumps with Right Arrow on a moment with nothing later', () => {
+    state.goTo(dataset.find('smartphone')!);
+    expect(state.stepLater()).toBe(StepResult.Bumped);
+  });
+
+  it('gives a moment with no links an empty Depended on list, and bumps both ways', () => {
+    const alone = TestMoments.dataset([TestMoments.moment('alone', 1900)], []);
+    const aloneState = new NavigationState(new ListSetBuilder(alone), alone.find('alone')!);
+    expect(aloneState.allLists.map((l) => l.kind)).toEqual([ListKind.DependedOn]);
+    expect(aloneState.activeList.size).toBe(0);
+    expect(aloneState.stepEarlier()).toBe(StepResult.Bumped);
+    expect(aloneState.stepLater()).toBe(StepResult.Bumped);
   });
 
   it('goes straight to a clicked entry, and Backspace comes back', () => {
-    state.switchList(1);
-    expect(state.goTo(dataset.find('phone')!)).toBe(true);
-    expect(state.currentEntry.id).toBe('phone');
-    expect(state.activeList.kind).toBe(ListKind.Enabled);
+    expect(state.goTo(dataset.find('smartphone')!)).toBe(true);
+    expect(state.currentEntry.id).toBe('smartphone');
     expect(state.goBack()).toBe(true);
-    expect(state.currentEntry.id).toBe('laptop');
+    expect(state.currentEntry.id).toBe('phone');
   });
 
   it('does nothing when the clicked entry is already current', () => {
-    expect(state.goTo(dataset.find('laptop')!)).toBe(false);
-    expect(state.path.map((e) => e.id)).toEqual(['laptop']);
+    expect(state.goTo(dataset.find('phone')!)).toBe(false);
+    expect(state.path.map((e) => e.id)).toEqual(['phone']);
   });
 
   it('does not switch past the last list', () => {
-    state.switchList(1);
+    state.switchList(2);
     expect(state.switchList(1)).toBe(false);
   });
 
   it('follows the highlighted entry with Enter', () => {
-    state.activeList.moveBy(1);
+    state.switchList(2);
     expect(state.follow()).toBe(true);
-    expect(state.currentEntry.id).toBe('chip');
+    expect(state.currentEntry.id).toBe('smartphone');
   });
 
   it('goes back, restoring the list and highlight it left from', () => {
+    state.goTo(dataset.find('smartphone')!);
     state.activeList.moveBy(1);
     state.stepEarlier();
+    expect(state.currentEntry.id).toBe('chip');
     expect(state.goBack()).toBe(true);
-    expect(state.currentEntry.id).toBe('laptop');
-    expect(state.activeList.kind).toBe(ListKind.Dependencies);
+    expect(state.currentEntry.id).toBe('smartphone');
+    expect(state.activeList.kind).toBe(ListKind.DependedOn);
     expect(state.activeList.highlighted?.id).toBe('chip');
   });
 
@@ -90,16 +141,8 @@ describe('NavigationState on moments', () => {
 
   it('records the path taken', () => {
     state.stepEarlier();
-    state.switchList(1);
     state.stepLater();
-    expect(state.path.map((m) => m.id)).toEqual(['laptop', 'battery', 'phone']);
-  });
-
-  it('keeps an empty Dependencies list, and bumps when following it', () => {
-    state.stepEarlier();
-    expect(state.list(ListKind.Dependencies)?.size).toBe(0);
-    expect(state.stepEarlier()).toBe(StepResult.Bumped);
-    expect(state.currentEntry.id).toBe('battery');
+    expect(state.path.map((m) => m.id)).toEqual(['phone', 'battery', 'phone']);
   });
 });
 
@@ -157,11 +200,11 @@ describe('NavigationState on periods', () => {
     expect(periodState.activeList.highlighted?.id).toBe('race');
   });
 
-  it('gives a moment in a period a Part of list between Dependencies and Enabled', () => {
+  it('gives a moment in a period a Part of list', () => {
     periodState.activeList.moveBy(2);
     periodState.follow();
     expect(periodState.currentEntry.id).toBe('net');
-    expect(periodState.allLists.map((l) => l.kind)).toEqual([ListKind.Dependencies, ListKind.PartOf, ListKind.Enabled]);
+    expect(periodState.allLists.map((l) => l.kind)).toEqual([ListKind.PartOf]);
   });
 
   it("ends a period still going on with an Ongoing stop that can't be visited", () => {

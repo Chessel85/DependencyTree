@@ -1,6 +1,7 @@
 import { DatasetReader, DatasetRecord } from '../core/data/DatasetReader';
 import { DateFormatter } from '../core/dates/DateFormatter';
 import { Entry } from '../core/model/Entry';
+import { LinkKind } from '../core/model/LinkKind';
 import { Moment } from '../core/model/Moment';
 import { Period } from '../core/model/Period';
 import { ImportedGraph } from './ImportedGraph';
@@ -32,7 +33,7 @@ export class ImportReport {
       ...this.undated(),
       ...this.section(
         'Items left out for coming later',
-        "These were reached only from entries that certainly came before them, so they can't be dependencies, and the walk doesn't go through them.",
+        "These were reached only from entries that certainly came before them, so they can't be what those entries depended on, were caused by or were influenced by, and the walk doesn't go through them.",
         ['Wikidata ID', 'Name'],
         [...this.graph.tooLate.values()].map((e) => [e.id, e.label ?? '(no English label)']),
       ),
@@ -50,22 +51,22 @@ export class ImportReport {
         this.log.notPeriods.map((n) => [n.name, n.missing]),
       ),
       ...this.section(
-        'Links moved to a period\'s start moment',
-        'Wikidata linked these to a whole period, so the period\'s start moment is used instead (DES-REL-007). The curation file can move them to a better moment.',
-        ['Dependent', 'Dependency', 'Period moved to its start', 'Property'],
-        this.log.moved.map((n) => [n.dependent, n.dependency, n.periods.join(' and '), this.property(n.source)]),
+        'Links moved to one of a period\'s moments',
+        'These link to a whole period, so one of its moments is used instead (DES-REL-007): the end moment when the period is a cause, and otherwise the start moment. The curation file can choose the other end.',
+        ['Later', 'Link', 'Earlier', 'Period moved to', 'Property'],
+        this.log.moved.map((n) => [n.later, n.kind, n.earlier, n.ends.map((e) => `${e.period}, its ${e.end}`).join(' and '), this.property(n.source)]),
       ),
       ...this.section(
         'Links that broke the predates rule',
-        'Each dependency certainly came after the entry that depends on it, so the link is left out (DES-REL-002).',
-        ['Dependent', 'Its date', 'Dependency', 'Its date', 'Property'],
-        this.log.predates.map((n) => [n.dependent, n.dependentDate, n.dependency, n.dependencyDate, this.property(n.source)]),
+        'Each earlier end certainly came after the later one, so the link is left out (DES-REL-002).',
+        ['Later', 'Its date', 'Link', 'Earlier', 'Its date', 'Property'],
+        this.log.predates.map((n) => [n.later, n.laterDate, n.kind, n.earlier, n.earlierDate, this.property(n.source)]),
       ),
       ...this.section(
-        'Circular dependencies',
+        'Circular links',
         'Each circle is broken by leaving out the link that closes it (DES-REL-005).',
         ['Moments around the circle', 'Link left out', 'Property'],
-        this.log.cycles.map((n) => [n.moments.join(', then '), `${n.removed.dependent} depends on ${n.removed.dependency}`, this.property(n.removed.source)]),
+        this.log.cycles.map((n) => [n.moments.join(', then '), `${n.removed.later} ${n.removed.kind} ${n.removed.earlier}`, this.property(n.removed.source)]),
       ),
       ...this.section(
         'Entries outside their period',
@@ -85,10 +86,9 @@ export class ImportReport {
 
   private summary(): string[] {
     const periods = this.record.periods ?? [];
-    const dependencies = this.record.moments.reduce((n, m) => n + (m.dependsOn?.length ?? 0), 0);
-    const outside = this.graph.links.filter(
-      (l) => !this.graph.has(l.dependent) || !this.graph.has(l.dependency),
-    ).length;
+    const links = this.record.moments.flatMap((m) => m.links ?? []);
+    const count = (kind: LinkKind) => String(links.filter((l) => l.kind === kind).length);
+    const outside = this.graph.links.filter((l) => !this.graph.has(l.later) || !this.graph.has(l.earlier)).length;
     return this.table(
       'Summary',
       '',
@@ -97,7 +97,10 @@ export class ImportReport {
         ['Wikidata items in the seed set', String(this.graph.size)],
         ['Moments', String(this.record.moments.length)],
         ['Periods', String(periods.length)],
-        ['Dependencies in the seed file', String(dependencies)],
+        ['Depends-on links in the seed file', count(LinkKind.DependsOn)],
+        ['Caused-by links in the seed file', count(LinkKind.CausedBy)],
+        ['Influenced-by links in the seed file', count(LinkKind.InfluencedBy)],
+        ['Ideas', String(this.record.moments.filter((m) => m.idea).length)],
         ['Items left out for having no English name', String(this.graph.unnamed.size)],
         ['Items left out for having no date', String(this.graph.undated.size)],
         ['Items left out for coming later than what links to them', String(this.graph.tooLate.size)],
@@ -114,18 +117,25 @@ export class ImportReport {
       read.set(link.source, (read.get(link.source) ?? 0) + 1);
     }
     const kept = new Map<string, number>();
-    for (const moment of this.record.moments) {
-      for (const source of Object.values(moment.linkSources ?? {})) {
-        kept.set(source, (kept.get(source) ?? 0) + 1);
-      }
+    for (const link of this.record.moments.flatMap((m) => m.links ?? [])) {
+      kept.set(link.source ?? '', (kept.get(link.source ?? '') ?? 0) + 1);
     }
-    const properties = [...PropertyMapper.DEPENDS_ON, PropertyMapper.HAS_PARTS, ...PropertyMapper.ENABLED, 'curation'];
+    const meanings: [string, string][] = [
+      ...Object.entries(PropertyMapper.EARLIER).map(([p, m]): [string, string] => [p, this.meaning(m.kind, m.strength)]),
+      [PropertyMapper.HAS_PARTS, LinkKind.DependsOn],
+      ...Object.entries(PropertyMapper.LATER).map(([p, m]): [string, string] => [p, `${this.meaning(m.kind, m.strength)}, read backwards`]),
+      ['curation', 'as the curation file says'],
+    ];
     return this.table(
-      'Dependencies by property',
+      'Links by property',
       '"Read" counts every link found, including links to items outside the seed set. "Kept" counts the links in the seed file.',
-      ['Property', 'Name', 'Read', 'Kept'],
-      properties.map((p) => [p, PropertyMapper.nameOf(p), String(read.get(p) ?? 0), String(kept.get(p) ?? 0)]),
+      ['Property', 'Name', 'Gives', 'Read', 'Kept'],
+      meanings.map(([p, gives]) => [p, PropertyMapper.nameOf(p), gives, String(read.get(p) ?? 0), String(kept.get(p) ?? 0)]),
     );
+  }
+
+  private meaning(kind: LinkKind, strength?: string): string {
+    return strength ? `${kind}, ${strength}` : kind;
   }
 
   /** Each period with the real moments it starts and ends with (DES-IMP-008). */
@@ -140,11 +150,11 @@ export class ImportReport {
   }
 
   private undated(): string[] {
-    const pointedAt = (id: string) => this.graph.links.filter((l) => this.graph.canonical(l.dependency) === id && this.graph.has(l.dependent)).length;
+    const pointedAt = (id: string) => this.graph.links.filter((l) => this.graph.canonical(l.earlier) === id && this.graph.has(l.later)).length;
     return this.section(
       'Items left out for having no date',
       'These were reached, but have none of the date properties, so they are left out and not walked through. The curation file can give them a date.',
-      ['Wikidata ID', 'Name', 'Seed entries that depend on it'],
+      ['Wikidata ID', 'Name', 'Seed entries that link to it'],
       [...this.graph.undated.values()].map((e) => [e.id, e.label ?? '(no English label)', String(pointedAt(e.id))]),
     );
   }
@@ -155,15 +165,15 @@ export class ImportReport {
     return this.table(
       'Entries in the seed file',
       'Oldest first.',
-      ['Name', 'Date', 'Dependencies', 'Enabled', 'Wikidata ID'],
+      ['Name', 'Date', 'Earlier links', 'Later links', 'Wikidata ID'],
       all.map((entry) => {
         if (entry instanceof Moment) {
           const record = this.record.moments.find((m) => m.id === entry.id)!;
           return [
-            entry.name,
+            entry.isIdea ? `${entry.name} (idea)` : entry.name,
             this.formatter.written(entry.date),
-            String(dataset.graph.dependenciesOf(entry).length),
-            String(dataset.graph.enabledBy(entry).length),
+            String(dataset.graph.earlierLinks(entry).length),
+            String(dataset.graph.laterLinks(entry).length),
             record.wikidata ?? 'made by the import',
           ];
         }

@@ -18,24 +18,43 @@
         "iPhone"
       ],
       "wikidata": "Q621427",
-      "dependsOn": [
-        "lithium-ion-battery",
-        "liquid-crystal-display",
-        "touchscreen",
-        "microphone",
-        "microprocessor",
-        "mobile-phone",
-        "world-wide-web"
-      ],
-      "linkSources": {
-        "lithium-ion-battery": "P618",
-        "liquid-crystal-display": "P5307",
-        "touchscreen": "P9192",
-        "microphone": "P479",
-        "microprocessor": "curation",
-        "mobile-phone": "curation",
-        "world-wide-web": "curation"
-      }
+      "links": [
+        {
+          "to": "lithium-ion-battery",
+          "kind": "depends on",
+          "source": "P618"
+        },
+        {
+          "to": "liquid-crystal-display",
+          "kind": "depends on",
+          "source": "P5307"
+        },
+        {
+          "to": "touchscreen",
+          "kind": "depends on",
+          "source": "P9192"
+        },
+        {
+          "to": "microphone",
+          "kind": "depends on",
+          "source": "P479"
+        },
+        {
+          "to": "microprocessor",
+          "kind": "depends on",
+          "source": "curation"
+        },
+        {
+          "to": "mobile-phone",
+          "kind": "depends on",
+          "source": "curation"
+        },
+        {
+          "to": "world-wide-web",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "chatgpt",
@@ -54,14 +73,18 @@
       ],
       "wikidata": "Q115564437",
       "location": "United States",
-      "dependsOn": [
-        "proximal-policy-optimization",
-        "gpt-3"
-      ],
-      "linkSources": {
-        "proximal-policy-optimization": "P2283",
-        "gpt-3": "P2283"
-      }
+      "links": [
+        {
+          "to": "proximal-policy-optimization",
+          "kind": "depends on",
+          "source": "P2283"
+        },
+        {
+          "to": "gpt-3",
+          "kind": "depends on",
+          "source": "P2283"
+        }
+      ]
     },
     {
       "id": "truman-doctrine",
@@ -77,14 +100,18 @@
         "foreign policy doctrine"
       ],
       "wikidata": "Q171375",
-      "dependsOn": [
-        "1939-invasion-of-poland",
-        "operation-barbarossa"
-      ],
-      "linkSources": {
-        "1939-invasion-of-poland": "P1542",
-        "operation-barbarossa": "P1542"
-      }
+      "links": [
+        {
+          "to": "japanese-instrument-of-surrender",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "german-instrument-of-surrender",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "sputnik-1",
@@ -117,12 +144,13 @@
         "Soviet space program"
       ],
       "wikidata": "Q208759",
-      "dependsOn": [
-        "hp-65"
-      ],
-      "linkSources": {
-        "hp-65": "P2283"
-      }
+      "links": [
+        {
+          "to": "hp-65",
+          "kind": "depends on",
+          "source": "P2283"
+        }
+      ]
     },
     {
       "id": "fall-of-the-berlin-wall",
@@ -158,42 +186,89 @@
       ],
       "wikidata": "Q5167679",
       "location": "Soviet Union",
-      "dependsOn": [
-        "perestroika",
-        "leninism",
-        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
-        "new-union-treaty",
-        "declaration-of-the-rights-of-the-peoples-of-russia",
-        "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991",
-        "new-political-thinking",
-        "monetary-reform-in-the-soviet-union-1991",
-        "treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
-        "truman-doctrine",
-        "strategic-defense-initiative",
-        "1991-soviet-coup-d-etat-attempt",
-        "revolutions-of-1989",
-        "reykjavik-summit",
-        "on-the-cult-of-personality-and-its-consequences",
-        "19th-all-union-conference-of-the-communist-party-of-the-soviet-union"
-      ],
-      "linkSources": {
-        "perestroika": "P828",
-        "leninism": "P828",
-        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic": "P828",
-        "new-union-treaty": "P828",
-        "declaration-of-the-rights-of-the-peoples-of-russia": "P828",
-        "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991": "P828",
-        "new-political-thinking": "P828",
-        "monetary-reform-in-the-soviet-union-1991": "P828",
-        "treaty-on-the-creation-of-the-union-of-soviet-socialist-republics": "P828",
-        "truman-doctrine": "P1542",
-        "strategic-defense-initiative": "P1542",
-        "1991-soviet-coup-d-etat-attempt": "P1542",
-        "revolutions-of-1989": "P1542",
-        "reykjavik-summit": "P1542",
-        "on-the-cult-of-personality-and-its-consequences": "P1542",
-        "19th-all-union-conference-of-the-communist-party-of-the-soviet-union": "P1542"
-      }
+      "links": [
+        {
+          "to": "perestroika",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "leninism",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "new-union-treaty",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "declaration-of-the-rights-of-the-peoples-of-russia",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "new-political-thinking",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "monetary-reform-in-the-soviet-union-1991",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "strategic-defense-initiative",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "1991-soviet-coup-d-etat-attempt",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "revolutions-of-1989",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "reykjavik-summit",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "on-the-cult-of-personality-and-its-consequences",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+          "kind": "caused by",
+          "source": "P1542"
+        },
+        {
+          "to": "singing-revolution",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1537"
+        }
+      ]
     },
     {
       "id": "electromagnetic-induction",
@@ -208,12 +283,14 @@
         "electromagnetic phenomenon"
       ],
       "wikidata": "Q988780",
-      "dependsOn": [
-        "voltaic-pile"
-      ],
-      "linkSources": {
-        "voltaic-pile": "curation"
-      }
+      "links": [
+        {
+          "to": "voltaic-pile",
+          "kind": "depends on",
+          "note": "Electromagnetic induction needed the battery.",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "voltaic-pile",
@@ -243,14 +320,18 @@
       ],
       "wikidata": "Q11035",
       "location": "United States",
-      "dependsOn": [
-        "electromagnetic-induction",
-        "voltaic-pile"
-      ],
-      "linkSources": {
-        "electromagnetic-induction": "curation",
-        "voltaic-pile": "curation"
-      }
+      "links": [
+        {
+          "to": "electromagnetic-induction",
+          "kind": "depends on",
+          "source": "curation"
+        },
+        {
+          "to": "voltaic-pile",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "integrated-circuit",
@@ -266,12 +347,13 @@
         "electronic circuit"
       ],
       "wikidata": "Q80831",
-      "dependsOn": [
-        "transistor"
-      ],
-      "linkSources": {
-        "transistor": "curation"
-      }
+      "links": [
+        {
+          "to": "transistor",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "transistor",
@@ -303,14 +385,18 @@
         "communication protocol"
       ],
       "wikidata": "Q177524",
-      "dependsOn": [
-        "telephone",
-        "integrated-circuit"
-      ],
-      "linkSources": {
-        "telephone": "curation",
-        "integrated-circuit": "curation"
-      }
+      "links": [
+        {
+          "to": "telephone",
+          "kind": "depends on",
+          "source": "curation"
+        },
+        {
+          "to": "integrated-circuit",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "microprocessor",
@@ -325,12 +411,13 @@
         "processor"
       ],
       "wikidata": "Q5297",
-      "dependsOn": [
-        "integrated-circuit"
-      ],
-      "linkSources": {
-        "integrated-circuit": "curation"
-      }
+      "links": [
+        {
+          "to": "integrated-circuit",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "mobile-phone",
@@ -347,20 +434,33 @@
       ],
       "wikidata": "Q17517",
       "location": "United States",
-      "dependsOn": [
-        "integrated-circuit",
-        "microphone",
-        "antenna",
-        "loudspeaker",
-        "telephone"
-      ],
-      "linkSources": {
-        "integrated-circuit": "P527",
-        "microphone": "P527",
-        "antenna": "P527",
-        "loudspeaker": "P527",
-        "telephone": "curation"
-      }
+      "links": [
+        {
+          "to": "integrated-circuit",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "microphone",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "antenna",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "loudspeaker",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "telephone",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "world-wide-web",
@@ -378,12 +478,28 @@
         "service on Internet"
       ],
       "wikidata": "Q466",
-      "dependsOn": [
-        "arpanet"
-      ],
-      "linkSources": {
-        "arpanet": "curation"
-      }
+      "links": [
+        {
+          "to": "enquire",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "the-interactive-encyclopedia-system",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "hypercard",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "arpanet",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "lithium-ion-battery",
@@ -398,14 +514,18 @@
         "rechargeable battery"
       ],
       "wikidata": "Q2822895",
-      "dependsOn": [
-        "lithium",
-        "voltaic-pile"
-      ],
-      "linkSources": {
-        "lithium": "P527",
-        "voltaic-pile": "curation"
-      }
+      "links": [
+        {
+          "to": "lithium",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "voltaic-pile",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "apollo-11",
@@ -422,12 +542,13 @@
       ],
       "wikidata": "Q43653",
       "location": "United States",
-      "dependsOn": [
-        "integrated-circuit"
-      ],
-      "linkSources": {
-        "integrated-circuit": "curation"
-      }
+      "links": [
+        {
+          "to": "integrated-circuit",
+          "kind": "depends on",
+          "source": "curation"
+        }
+      ]
     },
     {
       "id": "war-declaration-of-austria-hungary-to-serbia",
@@ -444,14 +565,49 @@
       ],
       "wikidata": "Q130259975",
       "location": "Austria–Hungary",
-      "dependsOn": [
-        "july-crisis",
-        "assassination-of-archduke-franz-ferdinand"
-      ],
-      "linkSources": {
-        "july-crisis": "P1542",
-        "assassination-of-archduke-franz-ferdinand": "P1536"
-      }
+      "links": [
+        {
+          "to": "assassination-of-archduke-franz-ferdinand",
+          "kind": "caused by",
+          "strength": "immediate",
+          "source": "P1478"
+        },
+        {
+          "to": "1912-german-federal-election",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1479"
+        },
+        {
+          "to": "alsace-lorraine",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1479"
+        },
+        {
+          "to": "scramble-for-africa",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1479"
+        },
+        {
+          "to": "triple-alliance",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1479"
+        },
+        {
+          "to": "triple-entente",
+          "kind": "caused by",
+          "strength": "contributing",
+          "source": "P1479"
+        },
+        {
+          "to": "july-crisis",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "armistice-of-compiegne",
@@ -517,14 +673,18 @@
       ],
       "wikidata": "Q83055",
       "location": "Estonia",
-      "dependsOn": [
-        "nazism",
-        "the-main-task-of-our-time"
-      ],
-      "linkSources": {
-        "nazism": "P828",
-        "the-main-task-of-our-time": "P1542"
-      }
+      "links": [
+        {
+          "to": "nazism",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "the-main-task-of-our-time",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "1939-invasion-of-poland",
@@ -543,16 +703,29 @@
       ],
       "wikidata": "Q150812",
       "location": "Poland",
-      "dependsOn": [
-        "treaty-of-versailles",
-        "molotov-ribbentrop-pact",
-        "revanchism"
-      ],
-      "linkSources": {
-        "treaty-of-versailles": "P828",
-        "molotov-ribbentrop-pact": "P828",
-        "revanchism": "P828"
-      }
+      "links": [
+        {
+          "to": "treaty-of-versailles",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "molotov-ribbentrop-pact",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "revanchism",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "secret-additional-protocol-to-the-molotov-ribbentrop-pact",
+          "kind": "caused by",
+          "strength": "immediate",
+          "source": "P1478"
+        }
+      ]
     },
     {
       "id": "liquid-crystal-display",
@@ -626,12 +799,13 @@
         "software series"
       ],
       "wikidata": "Q95726734",
-      "dependsOn": [
-        "transfer-learning"
-      ],
-      "linkSources": {
-        "transfer-learning": "P2283"
-      }
+      "links": [
+        {
+          "to": "transfer-learning",
+          "kind": "depends on",
+          "source": "P2283"
+        }
+      ]
     },
     {
       "id": "hp-65",
@@ -647,18 +821,28 @@
         "computer"
       ],
       "wikidata": "Q220638",
-      "dependsOn": [
-        "postfix-notation",
-        "magnetic-storage-card",
-        "seven-segment-display",
-        "rechargeable-battery"
-      ],
-      "linkSources": {
-        "postfix-notation": "P2283",
-        "magnetic-storage-card": "P2283",
-        "seven-segment-display": "P527",
-        "rechargeable-battery": "P527"
-      }
+      "links": [
+        {
+          "to": "postfix-notation",
+          "kind": "depends on",
+          "source": "P2283"
+        },
+        {
+          "to": "magnetic-storage-card",
+          "kind": "depends on",
+          "source": "P2283"
+        },
+        {
+          "to": "seven-segment-display",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "rechargeable-battery",
+          "kind": "depends on",
+          "source": "P527"
+        }
+      ]
     },
     {
       "id": "perestroika",
@@ -672,13 +856,7 @@
         "reform"
       ],
       "wikidata": "Q167634",
-      "location": "Soviet Union",
-      "dependsOn": [
-        "dunno-on-the-moon"
-      ],
-      "linkSources": {
-        "dunno-on-the-moon": "P1542"
-      }
+      "location": "Soviet Union"
     },
     {
       "id": "leninism",
@@ -693,7 +871,8 @@
         "cult of personality",
         "Marxism"
       ],
-      "wikidata": "Q155059"
+      "wikidata": "Q155059",
+      "idea": true
     },
     {
       "id": "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
@@ -775,6 +954,7 @@
         "political thought"
       ],
       "wikidata": "Q4323903",
+      "idea": true,
       "location": "White House"
     },
     {
@@ -839,6 +1019,71 @@
       "wikidata": "Q570"
     },
     {
+      "id": "enquire",
+      "name": "ENQUIRE",
+      "date": {
+        "year": 1980,
+        "precision": "year"
+      },
+      "description": "Software project written in 1980 by Tim Berners-Lee at CERN.",
+      "tags": [
+        "hypertext system"
+      ],
+      "wikidata": "Q2385520",
+      "links": [
+        {
+          "to": "sintran-iii",
+          "kind": "depends on",
+          "source": "P306"
+        }
+      ]
+    },
+    {
+      "id": "the-interactive-encyclopedia-system",
+      "name": "The Interactive Encyclopedia System",
+      "date": {
+        "year": 1983,
+        "precision": "year"
+      },
+      "description": "Hypertext system.",
+      "tags": [
+        "hypertext system"
+      ],
+      "wikidata": "Q7742259",
+      "links": [
+        {
+          "to": "ms-dos",
+          "kind": "depends on",
+          "source": "P306"
+        },
+        {
+          "to": "sunos",
+          "kind": "depends on",
+          "source": "P306"
+        }
+      ]
+    },
+    {
+      "id": "hypercard",
+      "name": "HyperCard",
+      "date": {
+        "year": 1987,
+        "precision": "year"
+      },
+      "description": "Hypermedia system for Apple Macintosh and Apple IIGS computers.",
+      "tags": [
+        "hypertext system"
+      ],
+      "wikidata": "Q1053749",
+      "links": [
+        {
+          "to": "hypertalk",
+          "kind": "depends on",
+          "source": "P527"
+        }
+      ]
+    },
+    {
       "id": "lithium",
       "name": "Lithium",
       "date": {
@@ -884,12 +1129,13 @@
       ],
       "wikidata": "Q221382",
       "location": "Moscow",
-      "dependsOn": [
-        "state-committee-on-the-state-of-emergency"
-      ],
-      "linkSources": {
-        "state-committee-on-the-state-of-emergency": "P1542"
-      }
+      "links": [
+        {
+          "to": "state-committee-on-the-state-of-emergency",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "revolutions-of-1989",
@@ -955,6 +1201,20 @@
       ],
       "wikidata": "Q4053312",
       "location": "Moscow"
+    },
+    {
+      "id": "singing-revolution",
+      "name": "Singing Revolution",
+      "date": {
+        "year": 1987,
+        "precision": "year"
+      },
+      "description": "Events leading up to the end of Soviet rule in the Baltic nations.",
+      "tags": [
+        "historical event"
+      ],
+      "wikidata": "Q595321",
+      "location": "Baltic states"
     },
     {
       "id": "transfer-learning",
@@ -1026,6 +1286,93 @@
       "wikidata": "Q187510"
     },
     {
+      "id": "sintran-iii",
+      "name": "Sintran III",
+      "date": {
+        "year": 1974,
+        "precision": "year"
+      },
+      "description": "Real-time operating system.",
+      "tags": [
+        "operating system"
+      ],
+      "wikidata": "Q7525148"
+    },
+    {
+      "id": "ms-dos",
+      "name": "MS-DOS",
+      "date": {
+        "year": 1981,
+        "precision": "day",
+        "month": 8,
+        "day": 12
+      },
+      "description": "Microsoft operating system.",
+      "tags": [
+        "DOS",
+        "operating system",
+        "single-user operating system"
+      ],
+      "wikidata": "Q47604",
+      "links": [
+        {
+          "to": "cp-m",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "xenix",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "unix",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "sunos",
+      "name": "SunOS",
+      "date": {
+        "year": 1982,
+        "precision": "year"
+      },
+      "description": "Version of the Unix operating system developed by Sun Microsystems for their workstation and server computer systems.",
+      "tags": [
+        "operating system"
+      ],
+      "wikidata": "Q1208460",
+      "links": [
+        {
+          "to": "unix",
+          "kind": "depends on",
+          "source": "P144"
+        }
+      ]
+    },
+    {
+      "id": "hypertalk",
+      "name": "HyperTalk",
+      "date": {
+        "year": 1987,
+        "precision": "year"
+      },
+      "description": "Programming language.",
+      "tags": [
+        "scripting language"
+      ],
+      "wikidata": "Q58329",
+      "links": [
+        {
+          "to": "pascal",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
       "id": "treaty-of-versailles",
       "name": "Treaty of Versailles",
       "date": {
@@ -1041,12 +1388,13 @@
       ],
       "wikidata": "Q8736",
       "location": "Hall of Mirrors",
-      "dependsOn": [
-        "paris-peace-conference"
-      ],
-      "linkSources": {
-        "paris-peace-conference": "P828"
-      }
+      "links": [
+        {
+          "to": "paris-peace-conference",
+          "kind": "caused by",
+          "source": "P828"
+        }
+      ]
     },
     {
       "id": "molotov-ribbentrop-pact",
@@ -1064,14 +1412,18 @@
       ],
       "wikidata": "Q130796",
       "location": "Moscow",
-      "dependsOn": [
-        "treaty-of-berlin-1926",
-        "battles-of-khalkhin-gol"
-      ],
-      "linkSources": {
-        "treaty-of-berlin-1926": "P144",
-        "battles-of-khalkhin-gol": "P1542"
-      }
+      "links": [
+        {
+          "to": "treaty-of-berlin-1926",
+          "kind": "depends on",
+          "source": "P144"
+        },
+        {
+          "to": "battles-of-khalkhin-gol",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "revanchism",
@@ -1086,7 +1438,22 @@
         "phenomenon",
         "international relations"
       ],
-      "wikidata": "Q1136718"
+      "wikidata": "Q1136718",
+      "idea": true
+    },
+    {
+      "id": "secret-additional-protocol-to-the-molotov-ribbentrop-pact",
+      "name": "Secret Additional Protocol to the Molotov–Ribbentrop Pact",
+      "date": {
+        "year": 1939,
+        "precision": "year"
+      },
+      "description": "Protocol to the 1939 neutrality pact between Nazi Germany and the Soviet Union.",
+      "tags": [
+        "secret treaty"
+      ],
+      "wikidata": "Q4413308",
+      "location": "Moscow"
     },
     {
       "id": "nazism",
@@ -1101,21 +1468,8 @@
         "fascism",
         "antisemitism"
       ],
-      "wikidata": "Q7310"
-    },
-    {
-      "id": "dunno-on-the-moon",
-      "name": "Dunno on the Moon",
-      "date": {
-        "year": 1965,
-        "precision": "year"
-      },
-      "description": "1965 novel by Nikolay Nosov.",
-      "tags": [
-        "literary work"
-      ],
-      "wikidata": "Q3647984",
-      "location": "Soviet Union"
+      "wikidata": "Q7310",
+      "idea": true
     },
     {
       "id": "state-committee-on-the-state-of-emergency",
@@ -1134,14 +1488,18 @@
       ],
       "wikidata": "Q3684508",
       "location": "Soviet Union",
-      "dependsOn": [
-        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
-        "gorbachev-s-anti-alcohol-campaign"
-      ],
-      "linkSources": {
-        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic": "P828",
-        "gorbachev-s-anti-alcohol-campaign": "P1542"
-      }
+      "links": [
+        {
+          "to": "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
+          "kind": "caused by",
+          "source": "P828"
+        },
+        {
+          "to": "gorbachev-s-anti-alcohol-campaign",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
     },
     {
       "id": "the-main-task-of-our-time",
@@ -1158,6 +1516,89 @@
       "wikidata": "Q125253429"
     },
     {
+      "id": "cp-m",
+      "name": "CP/M",
+      "date": {
+        "year": 1974,
+        "precision": "year"
+      },
+      "description": "Operating system.",
+      "tags": [
+        "operating system"
+      ],
+      "wikidata": "Q219528"
+    },
+    {
+      "id": "xenix",
+      "name": "Xenix",
+      "date": {
+        "year": 1980,
+        "precision": "year"
+      },
+      "description": "Discontinued Unix version published by Microsoft.",
+      "tags": [
+        "Unix-like operating system"
+      ],
+      "wikidata": "Q589680"
+    },
+    {
+      "id": "unix",
+      "name": "Unix",
+      "date": {
+        "year": 1969,
+        "precision": "year"
+      },
+      "description": "Family of computer operating systems that derive from the original AT&T Unix from 1969.",
+      "tags": [
+        "project",
+        "class",
+        "Unix-like operating system"
+      ],
+      "wikidata": "Q11368",
+      "links": [
+        {
+          "to": "multics",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "pascal",
+      "name": "Pascal",
+      "date": {
+        "year": 1970,
+        "precision": "year"
+      },
+      "description": "Programming language.",
+      "tags": [
+        "imperative programming language"
+      ],
+      "wikidata": "Q81571",
+      "links": [
+        {
+          "to": "algol",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "algol-60",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "algol-w",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "simula",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
       "id": "paris-peace-conference",
       "name": "Paris Peace Conference",
       "date": {
@@ -1172,12 +1613,13 @@
       ],
       "wikidata": "Q199820",
       "location": "Paris",
-      "dependsOn": [
-        "war-declaration-of-austria-hungary-to-serbia"
-      ],
-      "linkSources": {
-        "war-declaration-of-austria-hungary-to-serbia": "P828"
-      }
+      "links": [
+        {
+          "to": "armistice-of-compiegne",
+          "kind": "caused by",
+          "source": "P828"
+        }
+      ]
     },
     {
       "id": "treaty-of-berlin-1926",
@@ -1227,26 +1669,139 @@
       "location": "Soviet Union"
     },
     {
-      "id": "july-crisis",
-      "name": "July Crisis",
+      "id": "multics",
+      "name": "Multics",
       "date": {
-        "year": 1914,
-        "precision": "day",
-        "month": 7,
-        "day": 23
+        "year": 1965,
+        "precision": "year"
       },
-      "description": "1914 events leading to World War I.",
+      "description": "Operating system.",
       "tags": [
-        "international crisis"
+        "operating system"
       ],
-      "wikidata": "Q917435",
-      "location": "Europe",
-      "dependsOn": [
-        "assassination-of-archduke-franz-ferdinand"
+      "wikidata": "Q739186",
+      "location": "United States"
+    },
+    {
+      "id": "algol",
+      "name": "ALGOL",
+      "date": {
+        "year": 1959,
+        "precision": "year"
+      },
+      "description": "Family of imperative computer programming languages.",
+      "tags": [
+        "programming language",
+        "procedural programming language",
+        "imperative programming language"
       ],
-      "linkSources": {
-        "assassination-of-archduke-franz-ferdinand": "P1542"
-      }
+      "wikidata": "Q188436",
+      "links": [
+        {
+          "to": "fortran",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "algol-60",
+      "name": "ALGOL 60",
+      "date": {
+        "year": 1960,
+        "precision": "year"
+      },
+      "description": "Member of the ALGOL family of computer programming languages.",
+      "tags": [
+        "version, edition or translation",
+        "programming language"
+      ],
+      "wikidata": "Q1209759"
+    },
+    {
+      "id": "algol-w",
+      "name": "ALGOL W",
+      "date": {
+        "year": 1966,
+        "precision": "year"
+      },
+      "description": "Programming language based on a proposal for ALGOL X.",
+      "tags": [
+        "programming language",
+        "ALGOL",
+        "procedural programming language"
+      ],
+      "wikidata": "Q1538458",
+      "links": [
+        {
+          "to": "algol-60",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "simula",
+      "name": "Simula",
+      "date": {
+        "year": 1962,
+        "precision": "year"
+      },
+      "description": "Programming language.",
+      "tags": [
+        "programming language",
+        "simulation language",
+        "object-based language"
+      ],
+      "wikidata": "Q212569",
+      "links": [
+        {
+          "to": "algol-60",
+          "kind": "influenced by",
+          "source": "P737"
+        },
+        {
+          "to": "simscript",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "fortran",
+      "name": "Fortran",
+      "date": {
+        "year": 1957,
+        "precision": "year"
+      },
+      "description": "General-purpose programming language.",
+      "tags": [
+        "programming language",
+        "structured programming language",
+        "imperative programming language"
+      ],
+      "wikidata": "Q83303",
+      "links": [
+        {
+          "to": "speedcoding",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "simscript",
+      "name": "SIMSCRIPT",
+      "date": {
+        "year": 1962,
+        "precision": "year"
+      },
+      "description": "Simulation language.",
+      "tags": [
+        "simulation language"
+      ],
+      "wikidata": "Q7390408",
+      "links": []
     },
     {
       "id": "assassination-of-archduke-franz-ferdinand",
@@ -1265,6 +1820,349 @@
       ],
       "wikidata": "Q192050",
       "location": "Latin Bridge"
+    },
+    {
+      "id": "1912-german-federal-election",
+      "name": "1912 German federal election",
+      "date": {
+        "year": 1912,
+        "precision": "day",
+        "month": 1,
+        "day": 12
+      },
+      "description": "Germany's federal elections in 1912.",
+      "tags": [
+        "Reichstag election in the German Empire"
+      ],
+      "wikidata": "Q462740",
+      "location": "German Empire"
+    },
+    {
+      "id": "alsace-lorraine",
+      "name": "Alsace–Lorraine",
+      "date": {
+        "year": 1871,
+        "precision": "day",
+        "month": 5,
+        "day": 20
+      },
+      "description": "1871–1918 territory of the German Empire.",
+      "tags": [
+        "territory",
+        "administrative territorial entity",
+        "historical region"
+      ],
+      "wikidata": "Q155144",
+      "location": "German Empire"
+    },
+    {
+      "id": "scramble-for-africa",
+      "name": "Scramble for Africa",
+      "date": {
+        "year": 1885,
+        "precision": "year"
+      },
+      "description": "1880s–1900s Western European colonisation of Africa.",
+      "tags": [
+        "partition",
+        "colonisation of Africa"
+      ],
+      "wikidata": "Q179848"
+    },
+    {
+      "id": "triple-alliance",
+      "name": "Triple Alliance",
+      "date": {
+        "year": 1882,
+        "precision": "year"
+      },
+      "description": "Defensive alliance between Germany, Austria–Hungary and Italy (1882-1915).",
+      "tags": [
+        "military alliance",
+        "former administrative territorial entity",
+        "triad"
+      ],
+      "wikidata": "Q153867",
+      "links": [
+        {
+          "to": "german-empire",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "kingdom-of-italy",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "austria-hungary",
+          "kind": "depends on",
+          "source": "P527"
+        }
+      ]
+    },
+    {
+      "id": "triple-entente",
+      "name": "Triple Entente",
+      "date": {
+        "year": 1892,
+        "precision": "day",
+        "month": 8,
+        "day": 17
+      },
+      "description": "Early 20th century alliance between France, Russia and the United Kingdom.",
+      "tags": [
+        "multinational military coalition"
+      ],
+      "wikidata": "Q177859",
+      "location": "France",
+      "links": [
+        {
+          "to": "french-third-republic",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "united-kingdom-of-great-britain-and-ireland",
+          "kind": "depends on",
+          "source": "P527"
+        },
+        {
+          "to": "russian-empire",
+          "kind": "depends on",
+          "source": "P527"
+        }
+      ]
+    },
+    {
+      "id": "july-crisis",
+      "name": "July Crisis",
+      "date": {
+        "year": 1914,
+        "precision": "day",
+        "month": 7,
+        "day": 23
+      },
+      "description": "1914 events leading to World War I.",
+      "tags": [
+        "international crisis"
+      ],
+      "wikidata": "Q917435",
+      "location": "Europe",
+      "links": [
+        {
+          "to": "assassination-of-archduke-franz-ferdinand",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
+    },
+    {
+      "id": "speedcoding",
+      "name": "Speedcoding",
+      "date": {
+        "year": 1953,
+        "precision": "year"
+      },
+      "description": "Programming language.",
+      "tags": [
+        "programming language",
+        "procedural programming language"
+      ],
+      "wikidata": "Q7475416",
+      "links": [
+        {
+          "to": "assembly-language",
+          "kind": "influenced by",
+          "source": "P737"
+        }
+      ]
+    },
+    {
+      "id": "german-empire",
+      "name": "German Empire",
+      "date": {
+        "year": 1871,
+        "precision": "day",
+        "month": 1,
+        "day": 1
+      },
+      "description": "German nation-state in Central Europe from 1871 to 1918.",
+      "tags": [
+        "historical period",
+        "historical country"
+      ],
+      "wikidata": "Q43287",
+      "links": []
+    },
+    {
+      "id": "kingdom-of-italy",
+      "name": "Kingdom of Italy",
+      "date": {
+        "year": 1861,
+        "precision": "day",
+        "month": 3,
+        "day": 17
+      },
+      "description": "Kingdom in Southern Europe from 1861 to 1946.",
+      "tags": [
+        "historical country"
+      ],
+      "wikidata": "Q172579",
+      "links": [
+        {
+          "to": "unification-of-italy",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
+    },
+    {
+      "id": "austria-hungary",
+      "name": "Austria–Hungary",
+      "date": {
+        "year": 1867,
+        "precision": "day",
+        "month": 3,
+        "day": 1
+      },
+      "description": "1867–1918 empire in Central Europe.",
+      "tags": [
+        "historical country"
+      ],
+      "wikidata": "Q28513",
+      "location": "Austria–Hungary",
+      "links": []
+    },
+    {
+      "id": "french-third-republic",
+      "name": "French Third Republic",
+      "date": {
+        "year": 1870,
+        "precision": "day",
+        "month": 9,
+        "day": 4
+      },
+      "description": "Nation of France from 1870 to 1940.",
+      "tags": [
+        "historical country"
+      ],
+      "wikidata": "Q70802",
+      "location": "France",
+      "links": [
+        {
+          "to": "franco-prussian-war",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
+    },
+    {
+      "id": "united-kingdom-of-great-britain-and-ireland",
+      "name": "United Kingdom of Great Britain and Ireland",
+      "date": {
+        "year": 1801,
+        "precision": "day",
+        "month": 1,
+        "day": 1
+      },
+      "description": "Historical sovereign state (1801–1922).",
+      "tags": [
+        "historical country"
+      ],
+      "wikidata": "Q174193",
+      "location": "United Kingdom of Great Britain and Ireland"
+    },
+    {
+      "id": "russian-empire",
+      "name": "Russian Empire",
+      "date": {
+        "year": 1721,
+        "precision": "day",
+        "month": 10,
+        "day": 22
+      },
+      "description": "Former empire in Eurasia and North America (1721–1917).",
+      "tags": [
+        "sovereign state",
+        "historical country"
+      ],
+      "wikidata": "Q34266",
+      "location": "Russian Empire",
+      "links": []
+    },
+    {
+      "id": "assembly-language",
+      "name": "Assembly language",
+      "date": {
+        "year": 1949,
+        "precision": "year"
+      },
+      "description": "Any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture's machine code instructions.",
+      "tags": [
+        "programming language",
+        "non-structured programming language",
+        "low-level programming language"
+      ],
+      "wikidata": "Q165436"
+    },
+    {
+      "id": "unification-of-italy",
+      "name": "Unification of Italy",
+      "date": {
+        "year": 1815,
+        "precision": "year"
+      },
+      "description": "Creation of the politically and administratively integrated nation of Italy (1815–1871).",
+      "tags": [
+        "political movement",
+        "social movement",
+        "historical period"
+      ],
+      "wikidata": "Q51122",
+      "idea": true,
+      "location": "Italy"
+    },
+    {
+      "id": "franco-prussian-war",
+      "name": "Franco-Prussian War",
+      "date": {
+        "year": 1870,
+        "precision": "day",
+        "month": 7,
+        "day": 19
+      },
+      "description": "1870–1871 military conflict of the Second French Empire versus Prussia and its allies.",
+      "tags": [
+        "war"
+      ],
+      "wikidata": "Q46083",
+      "location": "France",
+      "links": [
+        {
+          "to": "ems-dispatch",
+          "kind": "caused by",
+          "source": "P1542"
+        }
+      ]
+    },
+    {
+      "id": "ems-dispatch",
+      "name": "Ems dispatch",
+      "date": {
+        "year": 1870,
+        "precision": "day",
+        "month": 7,
+        "day": 13
+      },
+      "description": "Prussian telegram and press release that incited the French Empire to start the Franco-Prussian War.",
+      "tags": [
+        "telegram",
+        "press release",
+        "international incident"
+      ],
+      "wikidata": "Q168694",
+      "location": "Bad Ems"
     },
     {
       "id": "apollo-applications-program",
@@ -1342,6 +2240,37 @@
       ],
       "wikidata": "Q696389",
       "location": "Northeast Asia"
+    },
+    {
+      "id": "central-powers",
+      "name": "Central Powers",
+      "date": {
+        "year": 1914,
+        "precision": "year"
+      },
+      "description": "Military coalition in World War I.",
+      "tags": [
+        "military alliance"
+      ],
+      "wikidata": "Q152283",
+      "location": "Berlin"
+    },
+    {
+      "id": "unification-of-germany",
+      "name": "Unification of Germany",
+      "date": {
+        "year": 1866,
+        "precision": "day",
+        "month": 8,
+        "day": 18
+      },
+      "description": "Creation of a politically and administratively integrated nation state of German-speaking populations on 18 January 1871, in the form of the German Empire.",
+      "tags": [
+        "historical process",
+        "political union"
+      ],
+      "wikidata": "Q154705",
+      "location": "Germany"
     },
     {
       "id": "battle-of-the-border",

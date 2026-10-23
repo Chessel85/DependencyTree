@@ -33,7 +33,7 @@ export class RelationshipListBox {
     this.options = list.entries.map((entry, index) => {
       const option = document.createElement('li');
       option.setAttribute('role', 'option');
-      option.textContent = this.words.entry(entry);
+      option.textContent = this.words.entry(entry, list.linkAt(index));
       option.setAttribute('aria-posinset', String(index + 1));
       option.setAttribute('aria-setsize', String(list.size));
       option.addEventListener('click', () => this.onChoose(index));

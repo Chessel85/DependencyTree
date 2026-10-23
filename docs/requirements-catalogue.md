@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.24 (draft)"
+subtitle: "Version 0.25 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -58,8 +58,9 @@ Each requirement is a row in a table, with these columns:
 | ID | Requirement | Priority | Status | Source |
 |------------|--------------------------------------------------|--------|--------|--------------|
 | REQ-VIS-001 | The product is a web application named "Dependency Tree". | Must | Agreed | Brief |
-| REQ-VIS-002 | The application presents inventions, historical moments, political movements, and technological, scientific and engineering developments, together with the things each one depended on. | Must | Agreed | Brief |
+| REQ-VIS-002 | The application presents inventions, historical moments, ideas, political movements, and technological, scientific and engineering developments, together with what each one depended on, what caused it and what influenced it. | Must | Agreed | Brief, revised in Round 19 |
 | REQ-VIS-003 | The application helps a user answer questions of the form "what had to exist first for X to be possible?", for example "why did it take so long to build an iPhone?" | Must | Agreed | Brief |
+| REQ-VIS-006 | The application helps a user understand why things happened as they did, not only in what order. A plain timeline of events is not the aim: links between entries say how one led to another. | Must | Agreed | Round 19 |
 | REQ-VIS-004 | The dataset is intended to be community provided in the long term. | Should | Agreed | Brief |
 | REQ-VIS-005 | The structure is called a "tree", in the product and in these documents. Strictly speaking it is a web, because an entry can have many dependents as well as many dependencies. But from any starting entry, looking back in time, it reads as a tree, and "tree" is the better name. | Must | Agreed | Round 1 |
 
@@ -99,35 +100,39 @@ Each requirement is a row in a table, with these columns:
 | REQ-DATA-012 | Each entry can hold alternative names, for use by search. | Should | Proposed | Analyst |
 | REQ-DATA-013 | Something that lasts for a period contains the moments that happened within it, including its start and end moments. Example: the Roman Republic contains the writing of the Twelve Tables. | Must | Agreed | Round 2, confirmed in Round 3 |
 | REQ-DATA-014 | Dates can be in the future, for things that are planned. Example: the 2028 Olympic Games. | Must | Agreed | Round 4 |
+| REQ-DATA-015 | An entry can be an idea, such as revanchism or Leninism, as well as an event or an invention. Ideas are part of the picture: they can cause and influence other entries. | Must | Agreed | Round 19 |
 
 # Relationships (REL)
 
 | ID | Requirement | Priority | Status | Source |
 |------------|--------------------------------------------------|--------|--------|--------------|
-| REQ-REL-001 | An entry can depend on one or more other entries. A dependency means "this could not have happened without that". Example: a laptop depends on thin, low-power screens. | Must | Agreed | Brief |
-| REQ-REL-002 | A dependency must have happened before the entry that depends on it. Example: something can depend on the writing of the Twelve Tables while the Roman Republic is still going on. | Must | Agreed | Brief, clarified in Round 2 |
+| REQ-REL-001 | An entry can depend on one or more other entries. A dependency means "this could not have happened without that". It suits inventions and developments best. Example: a laptop depends on thin, low-power screens. | Must | Agreed | Brief |
+| REQ-REL-002 | Whatever an entry depends on, was caused by or was influenced by must have happened before it. Example: something can depend on the writing of the Twelve Tables while the Roman Republic is still going on. | Must | Agreed | Brief, clarified in Rounds 2 and 19 |
 | REQ-REL-003 | An entry can be part of another entry. Periods can be part of larger periods. Example: the Tang dynasty is part of Chinese civilisation. | Must | Agreed | Brief, confirmed in Round 4 |
 | REQ-REL-004 | An entry can be preceded by or followed by another entry. Example: Windows 95 followed Windows 3.1. | Later | Agreed | Brief |
-| REQ-REL-005 | An entry can be influenced by another entry. This is a softer link than a dependency. Example: the US Constitution was influenced by the governance of the Iroquois Confederacy. | Later | Agreed | Brief |
-| REQ-REL-007 | The system rejects circular dependencies, where an entry ends up depending on itself through a chain of other entries. | Must | Proposed | Analyst |
-| REQ-REL-008 | For any moment, the user can see both its dependencies (what it needed) and the entries it enabled (its dependents). | Must | Agreed | Round 1 |
-| REQ-REL-009 | The rule in REQ-REL-002 takes account of how precisely each date is known. A dependency is only rejected when it certainly happened later than the entry that depends on it. | Must | Agreed | Round 2, confirmed in Round 4 |
-| REQ-REL-010 | A dependency can carry a short note explaining why it exists, for example "lithium-ion batteries made the laptop portable". | Should | Proposed | Analyst |
-| REQ-REL-011 | Dependencies are always between moments, never to or from a period as a whole. Example: Roman law depends on the writing of the Twelve Tables, not on the Roman Republic. | Must | Agreed | Round 2, revised in Round 3 |
+| REQ-REL-005 | An entry can be influenced by another entry. This is a softer link than a dependency or a cause. Example: the US Constitution was influenced by the governance of the Iroquois Confederacy. | Must | Agreed | Brief, brought forward in Round 19 |
+| REQ-REL-007 | The system rejects circular links, where an entry ends up depending on, being caused by or being influenced by itself through a chain of other entries. | Must | Proposed | Analyst |
+| REQ-REL-008 | For any moment, the user can see every link in both directions: what it depended on and what it enabled, what caused it and what it caused, and what influenced it and what it influenced. | Must | Agreed | Round 1, widened in Round 19 |
+| REQ-REL-009 | The rule in REQ-REL-002 takes account of how precisely each date is known. A link is only rejected when its earlier end certainly happened later than its later end. | Must | Agreed | Round 2, confirmed in Round 4 |
+| REQ-REL-010 | A link of any kind can carry a short note explaining why it exists, for example "lithium-ion batteries made the laptop portable". Where a note would explain a step that is itself an event, the event is added instead. | Should | Agreed | Analyst, agreed in Round 19 |
+| REQ-REL-011 | Links of every kind are always between moments, never to or from a period as a whole. Example: Roman law depends on the writing of the Twelve Tables, not on the Roman Republic. | Must | Agreed | Round 2, revised in Rounds 3 and 19 |
+| REQ-REL-012 | Every link has a kind: depends on, caused by or influenced by. A cause brought the later entry about, but need not be something it could not have happened without. Causes suit historical events best. Example: World War II was caused in part by the Treaty of Versailles. | Must | Agreed | Round 19 |
+| REQ-REL-013 | Any kind of link can join any two moments, whatever they are about, so that inventions, events and ideas can be joined. Example: the atomic bombing of Hiroshima depended on the atomic bomb, an invention. | Must | Agreed | Round 19 |
+| REQ-REL-014 | A cause can record how directly it brought its effect about: as an immediate cause, an ordinary cause or a contributing factor. | Should | Agreed | Round 19 |
 
 # Navigation (NAV)
 
 | ID | Requirement | Priority | Status | Source |
 |------------|--------------------------------------------------|--------|--------|--------------|
-| REQ-NAV-001 | From any moment, the user can move to any of its dependencies, which lie earlier in time. | Must | Agreed | Round 1 |
-| REQ-NAV-002 | From any moment, the user can move to any of the entries it enabled, which lie later in time. | Must | Agreed | Round 1 |
+| REQ-NAV-001 | From any moment, the user can move to anything it depended on, was caused by or was influenced by, which lie earlier in time. | Must | Agreed | Round 1, widened in Round 19 |
+| REQ-NAV-002 | From any moment, the user can move to anything it enabled, caused or influenced, which lie later in time. | Must | Agreed | Round 1, widened in Round 19 |
 | REQ-NAV-003 | The user can browse each kind of relationship of the current entry separately, and choose which kind to browse. | Must | Agreed | Round 1 |
 | REQ-NAV-004 | The user can go back along the path they took. | Must | Proposed | Analyst |
 | REQ-NAV-005 | The user can ask for a summary of the current entry at any time. | Should | Proposed | Analyst |
 | REQ-NAV-006 | The user can ask for the path they have taken to reach the current entry. | Should | Proposed | Analyst |
 | REQ-NAV-007 | The user can list the full chain of dependencies of an entry, every ancestor back to the earliest, as a flat, sortable list. | Could | Proposed | Analyst |
 | REQ-NAV-015 | When a requested move isn't possible, the user stays where they are. For now this is silent, except for a sound when Left Arrow or Right Arrow has nothing to go to. This is to be reviewed after testing. | Must | Agreed | Analyst, revised in Rounds 6 and 11 |
-| REQ-NAV-016 | When later relationship types are added, they can be browsed in the same way as dependencies. | Later | Agreed | Round 1 |
+| REQ-NAV-016 | When later relationship types, such as preceded by and followed by, are added, they can be browsed in the same way as the others. | Later | Agreed | Round 1 |
 | REQ-NAV-023 | The user can move from a period into any of the moments it contains, and from a moment up to the periods it belongs to. | Must | Agreed | Round 2, confirmed in Round 4 |
 | REQ-NAV-024 | Within a period, the user can move through its moments in date order. | Must | Agreed | Round 4 |
 
@@ -140,6 +145,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-ANN-007 | Every move is confirmed by a short announcement that tells the user where they are, including their position within any list. | Must | Proposed | Analyst |
 | REQ-ANN-008 | Dates are announced in natural spoken form, including how precisely they are known, for example "around 509 BCE". | Must | Proposed | Analyst |
 | REQ-ANN-009 | Short sounds can be used instead of words, where a sound is quicker to understand. Example: a sound when the user can't go any further. | Should | Agreed | Round 5 |
+| REQ-ANN-010 | The user can always tell which kind of link joins two entries, how directly a cause acted, and whether a link has a note. | Must | Agreed | Round 19 |
 
 # Visual presentation (VIEW)
 
@@ -181,9 +187,9 @@ Each requirement is a row in a table, with these columns:
 | REQ-CONT-005 | The data and the code are published under licences that let anyone use them, and stop anyone from claiming them as their own or limiting others' use. The data is published under CC0. The code is published under AGPL-3.0. | Should | Agreed | Analyst, Rounds 4 and 5 |
 | REQ-CONT-006 | The first release is read-only for users. | Must | Agreed | Round 1 |
 | REQ-CONT-007 | The initial dataset has 50 to 200 entries, drawn from Wikidata and centred on one or more working examples. "The road to the iPhone" and ChatGPT are the current examples, but they aren't fixed. | Must | Agreed | Round 1, Round 14 |
-| REQ-CONT-008 | "Depends on" and "part of" relationships are imported from Wikidata. | Must | Agreed | Round 1 |
+| REQ-CONT-008 | Links of every kind, and "part of" relationships, are imported from Wikidata, keeping the kind of each link and how directly each cause acted. | Must | Agreed | Round 1, widened in Round 19 |
 | REQ-CONT-010 | Entries and relationships that are missing or wrong in Wikidata can be added or corrected, and those corrections survive a fresh import. | Must | Proposed | Analyst |
-| REQ-CONT-011 | Data problems found during import, such as missing dates, dependencies that break REQ-REL-002, and circular dependencies, are reported rather than dropped silently. | Must | Proposed | Analyst |
+| REQ-CONT-011 | Data problems found during import, such as missing dates, links that break REQ-REL-002, and circular links, are reported rather than dropped silently. | Must | Proposed | Analyst |
 
 # Maintainability (CODE)
 
@@ -229,7 +235,12 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-There are no open questions at the moment. Answered questions are in the Decision Log.
+Answered questions are in the Decision Log.
+
+| ID | Question | Notes |
+|--------|--------------------------------------------------|--------------------------------------------------|
+| Q-28 | Is it clear to hear how strong a cause is, and that a link has a note, from a word at the end of a list entry? For example: "Assassination of Archduke Franz Ferdinand, 1914, immediate, note." | The product owner asked how strength should be shown: in a separate list for each strength, or in words at the end of each entry. The analyst built words at the end (DES-ANN-013, DES-ANN-014), because separate lists would mean up to three more tabs. To be answered after testing with NVDA. |
+| Q-29 | Does it work for a link to a whole period to use its end moment when the period is a cause, and its start moment otherwise? | Agreed for now in DEC-69, to be reviewed as the data grows. The import report lists every link moved this way. |
 
 # Decision log
 
@@ -300,9 +311,19 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-63 | Say "Event:" before a moment | 16, 23 October 2026 | On arriving at a moment, NVDA reads "Event:" before its name, so it is clear what kind of entry it is. A period needs no word before it, because its range of dates shows it is a period. Recorded as DES-ANN-001. |
 | DEC-64 | "Event:" everywhere in the tree | 17, 23 October 2026 | Space didn't say "Event:". A moment's name now starts with "Event:" wherever the tree names it, so the user can always tell a moment from a period. Extends DEC-63. Recorded as DES-ANN-012. |
 | DEC-65 | No "Event:" in lists of moments | 18, 23 October 2026 | DEC-64 went too far: the Dependencies and Enabled lists obviously hold events, so their entries don't need "Event:". It stays where moments and periods could be confused: on arrival, in the index, in Space, and in the heading and summary box. Recorded as DES-ANN-012. |
+| DEC-66 | Three kinds of link | 19, 23 October 2026 | Every link has a kind: depends on, caused by or influenced by. Each link is stored once and read in both directions: Depended on and Enabled, Caused by and Caused, Influenced by and Influenced. Dependencies suit inventions, and causes suit historical events, because a series of battles is mostly a timeline unless the links say how one led to another. The Dependencies list is renamed Depended on, to match the others. Recorded as REQ-VIS-002, REQ-VIS-006, REQ-REL-005, REQ-REL-012, REQ-NAV-001, REQ-NAV-002, DES-REL-001 and DES-NAV-002. |
+| DEC-67 | How strong a cause is | 19, 23 October 2026 | A cause can be immediate, ordinary or contributing, as Wikidata records them. The product owner asked how to present this. The analyst proposed a word at the end of the list entry, now Q-28. Recorded as REQ-REL-014, DES-REL-008 and DES-ANN-013. |
+| DEC-68 | Any link between any two moments | 19, 23 October 2026 | Inventions, events and ideas can be joined by any kind of link. Example: Hiroshima depended on the atomic bomb. Recorded as REQ-REL-013. |
+| DEC-69 | Which end of a period a link uses | 19, 23 October 2026 | A link to a whole period uses its end moment when the period is a cause, and its start moment for the other kinds. The curation file can choose the other end. Agreed for now, to see how it goes (Q-29). Example: the Paris Peace Conference was caused by World War I, so it links to the Armistice of Compiègne. Recorded as DES-REL-007. |
+| DEC-70 | Notes on links | 19, 23 October 2026 | Where a step needs explaining, adding the event in the middle is preferred to a note, but notes are kept for steps too small to be events. Example: "the Allies build up troops in Britain" is an event, Operation Bolero. A note is shown on the card only when it has content. Recorded as REQ-REL-010, DES-REL-009, DES-ANN-014 and DES-SR-006. |
+| DEC-71 | Ideas are kept | 19, 23 October 2026 | Ideas that Wikidata gives as causes, such as revanchism and Leninism, are part of the picture. They are moments, dated by when they first appeared, and their names start with "Idea:". Recorded as REQ-DATA-015, DES-DATA-009, DES-ANN-012 and DES-IMP-013. |
+| DEC-72 | Empty lists are hidden | 19, 23 October 2026 | With six kinds of linked list, a moment shows only the lists that have entries. Left Arrow and Right Arrow now follow any list going their way through time, and the bump sound plays when there is nothing at all that way. Recorded as DES-NAV-003, DES-NAV-005, DES-KEY-001, DES-KEY-013 and DES-ANN-011. |
+| DEC-73 | The hand-made sample is dropped | 19, 23 October 2026 | The page opens the Wikidata seed set, and the sample file and its tests are removed. Recorded as DES-IMP-011. |
+| DEC-74 | The second import | 19, 23 October 2026 | The analyst imported again with the three kinds of link: 121 moments and 11 periods, with 43 depends-on, 41 caused-by and 18 influenced-by links, and 5 ideas. Wikidata has causes for World War I, World War II and the end of the Soviet Union, and influences between programming languages, but none for the Normandy landings, Operation Bolero or the Battle of the Atlantic, so such a chain would come from the curation file. Cisleithania and the Lands of the Crown of Saint Stephen are excluded, because they list centuries of crown lands as their parts. A children's novel given as an effect of Perestroika is excluded. Recorded in DES-IMP-004, DES-IMP-005 and the Implementation Plan. |
 
 # Change history
 
+- **0.25**, 23 October 2026: Recorded the round 19 decisions, DEC-66 to DEC-74: three kinds of link, ideas, notes and hidden empty lists. Added REQ-VIS-006, REQ-DATA-015, REQ-REL-012 to REQ-REL-014 and REQ-ANN-010. Brought REQ-REL-005, influence, forward to Must. Widened REQ-VIS-002, REQ-REL-002, REQ-REL-007 to REQ-REL-011, REQ-NAV-001, REQ-NAV-002, REQ-NAV-016, REQ-CONT-008 and REQ-CONT-011 to every kind of link. Added Q-28 and Q-29.
 - **0.24**, 23 October 2026: Recorded DEC-65.
 - **0.23**, 23 October 2026: Recorded DEC-64.
 - **0.22**, 23 October 2026: Recorded DEC-63.

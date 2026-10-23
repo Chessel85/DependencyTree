@@ -1,4 +1,4 @@
-import { Dependency } from '../../core/model/Dependency';
+import { Link } from '../../core/model/Link';
 import { Moment } from '../../core/model/Moment';
 import { ElkArranger } from './ElkArranger';
 import { Arrangement, LinkPath, NodeBox } from './GraphLayout';
@@ -20,7 +20,7 @@ export class TimeScaleLayout implements LayoutEngine {
     readonly note: string,
     private readonly scale: TimeScale,
     private readonly moments: readonly Moment[],
-    private readonly dependencies: readonly Dependency[],
+    private readonly links: readonly Link[],
     private readonly arranger: ElkArranger,
     private readonly maker: NodeBoxMaker,
     private readonly rowHeight: number,
@@ -40,15 +40,16 @@ export class TimeScaleLayout implements LayoutEngine {
       this.maker.make(m, this.scale.x(m), rows[i] * this.rowHeight, this.scale.span(m.date.range())),
     );
     const byMoment = new Map(nodes.map((n) => [n.moment, n]));
-    const links = this.dependencies.map((d) => this.link(d, byMoment.get(d.dependency)!, byMoment.get(d.dependent)!));
+    const links = this.links.map((l) => this.link(l, byMoment.get(l.earlier)!, byMoment.get(l.later)!));
     return { nodes, links, ticks: this.scale.ticks(nodes), todayX: this.scale.todayX };
   }
 
   /** From the right-hand side of the earlier box to the left-hand side of the later one. */
-  private link(d: Dependency, from: NodeBox, to: NodeBox): LinkPath {
+  private link(l: Link, from: NodeBox, to: NodeBox): LinkPath {
     return {
-      dependency: d.dependency,
-      dependent: d.dependent,
+      earlier: l.earlier,
+      later: l.later,
+      kind: l.kind,
       points: [
         { x: from.x + from.width, y: from.y + from.height / 2 },
         { x: to.x, y: to.y + to.height / 2 },
