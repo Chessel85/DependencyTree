@@ -1,0 +1,71 @@
+{
+  "note": "Corrections applied on every Wikidata import (DES-IMP-004). Every item is named by its Wikidata ID. Years are astronomical: 1 BCE is 0. The first seeds, links and dates are carried over from the hand-made sample.",
+  "root": "Q621427",
+  "maxEntries": 200,
+  "seeds": [
+    "Q171375",
+    "Q80811",
+    "Q208759",
+    "Q69163529",
+    "Q5167679"
+  ],
+  "exclude": [],
+  "entries": {
+    "Q621427": {
+      "id": "iphone",
+      "name": "iPhone",
+      "note": "The original iPhone. Q2766 is the whole iPhone series, which has no date."
+    },
+    "Q2822895": {
+      "date": { "year": 1991, "precision": "year" },
+      "note": "Wikidata has no date. Sony sold the first commercial lithium-ion battery in 1991."
+    },
+    "Q83341": {
+      "date": { "year": 1968, "precision": "year" },
+      "note": "Wikidata has no date. George Heilmeier's team at RCA demonstrated the first liquid-crystal displays in 1968."
+    },
+    "Q165970": {
+      "date": { "year": 1965, "precision": "year" },
+      "note": "Wikidata has no date. E. A. Johnson described the capacitive touchscreen in 1965."
+    },
+    "Q956129": {
+      "start": { "year": 1970, "precision": "decade" },
+      "note": "Wikidata has no dates. The Information Age is usually said to have begun in the 1970s, and is still going on."
+    }
+  },
+  "addLinks": [
+    { "dependent": "Q988780", "dependency": "Q663273", "note": "Electromagnetic induction needed the battery." },
+    { "dependent": "Q11035", "dependency": "Q988780" },
+    { "dependent": "Q11035", "dependency": "Q663273" },
+    { "dependent": "Q80831", "dependency": "Q5339" },
+    { "dependent": "Q177524", "dependency": "Q11035" },
+    { "dependent": "Q177524", "dependency": "Q80831" },
+    { "dependent": "Q5297", "dependency": "Q80831" },
+    { "dependent": "Q17517", "dependency": "Q11035" },
+    { "dependent": "Q17517", "dependency": "Q80831" },
+    { "dependent": "Q466", "dependency": "Q177524" },
+    { "dependent": "Q2822895", "dependency": "Q663273" },
+    { "dependent": "Q621427", "dependency": "Q5297" },
+    { "dependent": "Q621427", "dependency": "Q2822895" },
+    { "dependent": "Q621427", "dependency": "Q83341" },
+    { "dependent": "Q621427", "dependency": "Q165970" },
+    { "dependent": "Q621427", "dependency": "Q17517" },
+    { "dependent": "Q621427", "dependency": "Q466" },
+    { "dependent": "Q43653", "dependency": "Q80831" }
+  ],
+  "removeLinks": [],
+  "addMembers": [
+    { "period": "Q8683", "member": "Q171375" },
+    { "period": "Q8683", "member": "Q1932" },
+    { "period": "Q8683", "member": "Q177524" },
+    { "period": "Q8683", "member": "Q69163529" },
+    { "period": "Q8683", "member": "Q5167679" },
+    { "period": "Q1932", "member": "Q80811" },
+    { "period": "Q1932", "member": "Q43653" },
+    { "period": "Q1932", "member": "Q208759" },
+    { "period": "Q956129", "member": "Q5297" },
+    { "period": "Q956129", "member": "Q17517" },
+    { "period": "Q956129", "member": "Q466" },
+    { "period": "Q956129", "member": "Q621427" }
+  ]
+}

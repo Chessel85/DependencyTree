@@ -25,6 +25,10 @@ export interface MomentRecord {
   tags: string[];
   location?: string;
   dependsOn?: string[];
+  /** The Wikidata item this moment was imported from (DES-DATA-005). */
+  wikidata?: string;
+  /** Where each dependency came from: a Wikidata property, or "curation" (DES-IMP-003). */
+  linkSources?: Record<string, string>;
 }
 
 /**
@@ -40,9 +44,13 @@ export interface PeriodRecord {
   start: string;
   end?: string;
   contains?: string[];
+  /** The Wikidata item this period was imported from (DES-DATA-005). */
+  wikidata?: string;
 }
 
 export interface DatasetRecord {
+  /** The entry to open first. */
+  start?: string;
   moments: MomentRecord[];
   periods?: PeriodRecord[];
 }

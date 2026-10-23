@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.18 (draft)"
+subtitle: "Version 0.19 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -228,7 +228,13 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-There are no open questions at the moment. Answered questions are in the Decision Log.
+Answered questions are in the Decision Log.
+
+| ID | Question | Background |
+|--------|----------------|--------------------------------------------------|
+| Q-25 | Should the seed set keep the political history that "has cause" and "has effect" bring in? | From the Cold War and the dissolution of the Soviet Union, these links bring in about 40 entries, such as World War I, the Treaty of Versailles, perestroika and the 1991 coup attempt. They are real dependencies, but crowd out the road to the iPhone. The choices: keep them; exclude the political seeds and keep only the Space Race; or stop reading "has cause" and "has effect". |
+| Q-26 | Should undated technology items be given dates in the curation file? | 56 items were left out for having no date. Some matter to the iPhone, such as the microphone, accelerometer, proximity sensor, loudspeaker, antenna and rechargeable battery. Dating them by hand would bring them, and what they depend on, into the seed set. |
+| Q-27 | How should the start and end moments of a period be named? | The import writes "Start of the" and then the period's name. That reads well for "Start of the Cold War" and "Start of the space race", but not for "Start of the World War I" or "Start of the Nazism". The choices: leave it and correct names in the curation file; drop "the" when the name begins with a capital letter, giving "Start of Cold War"; or use a form such as "World War I begins". |
 
 # Decision log
 
@@ -287,9 +293,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-51 | Left Arrow and Right Arrow only go to other entries | 11, 23 October 2026 | In a period's Moments list, Left Arrow and Right Arrow moved through the list. For consistency they now do nothing there; Up Arrow and Down Arrow move, and Enter goes into an entry. The bump sound moves too: it now plays when Left Arrow is pressed on an empty Dependencies list, or Right Arrow on an empty Enabled list. Recorded as DES-KEY-010, DES-KEY-013, DES-ANN-011 and DES-NAV-012. |
 | DEC-52 | Visual layout experiment built | 12, 23 October 2026 | Step 0D is built, with four layouts chosen from a drop-down list. The analyst decided that the drawing is hidden from screen readers, because the card already gives everything it shows, and that clicking an entry goes to it and is recorded in the path. Recorded as DES-VIEW-008, DES-VIEW-011 and DES-VIEW-012. Led to Q-24. |
 | DEC-53 | Linear and layered layouts, with a choice | 12, 23 October 2026 | The user must be able to switch between linear time and the layered layout, so both are kept. Compressed time and time slots are dropped. Answers Q-24. Recorded as REQ-VIEW-014, DES-VIEW-005 and DES-VIEW-011. |
+| DEC-54 | Wikidata import built | 13, 23 October 2026 | Step 0C is built. The analyst checked the proposed properties against real data and widened them: the root is the original iPhone (Q621427), hardware properties count as dependencies, and launch dates and "mul" labels are read. The sample's links and periods are carried over through the curation file. The page keeps the sample unless ?data=seed is added. Recorded as DES-IMP-002, DES-IMP-004, DES-IMP-005 and DES-IMP-009 to DES-IMP-011. Led to Q-25 to Q-27. |
 
 # Change history
 
+- **0.19**, 23 October 2026: Recorded DEC-54, the Wikidata import. Added Q-25 to Q-27.
 - **0.18**, 23 October 2026: Recorded DEC-53, answering Q-24. Added REQ-VIEW-014.
 - **0.17**, 23 October 2026: Recorded DEC-52, and added Q-24.
 - **0.16**, 23 October 2026: Recorded DEC-51, and revised REQ-NAV-015 and REQ-NAV-024.

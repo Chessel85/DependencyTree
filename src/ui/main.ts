@@ -1,4 +1,5 @@
 import sample from '../../data/sample.json';
+import seed from '../../data/seed.json';
 import bumpSound from '../../sounds/bump.wav';
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
 import { DatasetReader, DatasetRecord } from '../core/data/DatasetReader';
@@ -26,6 +27,8 @@ import { TimeScaleLayout } from './visual/TimeScaleLayout';
 import { VisualView } from './visual/VisualView';
 
 const START_ID = 'iphone';
+// ?data=seed opens the Wikidata seed set instead of the hand-made sample (Step 0C).
+const DATA_PARAMETER = 'data';
 const MARGIN = 24;
 const ROW_GAP = 16;
 
@@ -37,10 +40,12 @@ function byId<T extends HTMLElement>(id: string): T {
   return element as T;
 }
 
-const dataset = new DatasetReader().read(sample as DatasetRecord);
-const start = dataset.find(START_ID);
+const record = (new URLSearchParams(window.location.search).get(DATA_PARAMETER) === 'seed' ? seed : sample) as DatasetRecord;
+const dataset = new DatasetReader().read(record);
+const startId = record.start ?? START_ID;
+const start = dataset.find(startId);
 if (!start) {
-  throw new Error(`The sample has no entry with id "${START_ID}".`);
+  throw new Error(`The data has no entry with id "${startId}".`);
 }
 
 const today = HistoricDate.fromJsDate(new Date());

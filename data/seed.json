@@ -1,0 +1,2301 @@
+{
+  "licence": "CC0-1.0",
+  "note": "Imported from Wikidata on 2026-10-23 by npm run import, with data/curation.json applied. Years are astronomical: 1 BCE is 0. Don't edit by hand: correct the curation file and import again.",
+  "start": "iphone",
+  "moments": [
+    {
+      "id": "iphone",
+      "name": "iPhone",
+      "date": {
+        "year": 2007,
+        "precision": "day",
+        "month": 1,
+        "day": 9
+      },
+      "description": "First smartphone of the iPhone line by Apple Inc.",
+      "tags": [
+        "smartphone model",
+        "iPhone"
+      ],
+      "wikidata": "Q621427",
+      "dependsOn": [
+        "lithium-ion-battery",
+        "liquid-crystal-display",
+        "touchscreen",
+        "microprocessor",
+        "mobile-phone",
+        "world-wide-web"
+      ],
+      "linkSources": {
+        "lithium-ion-battery": "P618",
+        "liquid-crystal-display": "P5307",
+        "touchscreen": "P9192",
+        "microprocessor": "curation",
+        "mobile-phone": "curation",
+        "world-wide-web": "curation"
+      }
+    },
+    {
+      "id": "truman-doctrine",
+      "name": "Truman Doctrine",
+      "date": {
+        "year": 1947,
+        "precision": "day",
+        "month": 3,
+        "day": 12
+      },
+      "description": "United States Cold War policy to contain communism in Europe and elsewhere.",
+      "tags": [
+        "foreign policy doctrine"
+      ],
+      "wikidata": "Q171375"
+    },
+    {
+      "id": "sputnik-1",
+      "name": "Sputnik 1",
+      "date": {
+        "year": 1957,
+        "precision": "day",
+        "month": 10,
+        "day": 4
+      },
+      "description": "First artificial Earth satellite.",
+      "tags": [
+        "artificial satellite of the Earth"
+      ],
+      "wikidata": "Q80811"
+    },
+    {
+      "id": "start-of-apollo-soyuz",
+      "name": "Start of the Apollo–Soyuz",
+      "date": {
+        "year": 1975,
+        "precision": "day",
+        "month": 7,
+        "day": 15
+      },
+      "description": "The start of the Apollo–Soyuz.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "Soviet space program"
+      ],
+      "dependsOn": [
+        "hp-65"
+      ],
+      "linkSources": {
+        "hp-65": "P2283"
+      }
+    },
+    {
+      "id": "end-of-apollo-soyuz",
+      "name": "End of the Apollo–Soyuz",
+      "date": {
+        "year": 1975,
+        "precision": "day",
+        "month": 7,
+        "day": 24
+      },
+      "description": "The end of the Apollo–Soyuz.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "Soviet space program"
+      ]
+    },
+    {
+      "id": "fall-of-the-berlin-wall",
+      "name": "Fall of the Berlin Wall",
+      "date": {
+        "year": 1989,
+        "precision": "day",
+        "month": 11,
+        "day": 9
+      },
+      "description": "Historical event in November 1989 where the Berlin Wall was opened and demolished.",
+      "tags": [
+        "historical event",
+        "demolition"
+      ],
+      "wikidata": "Q69163529",
+      "location": "East Berlin"
+    },
+    {
+      "id": "dissolution-of-the-soviet-union",
+      "name": "Dissolution of the Soviet Union",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 26
+      },
+      "description": "Process leading to the late-1991 breakup of the USSR.",
+      "tags": [
+        "dissolution of an administrative territorial entity",
+        "end cause",
+        "dissolution"
+      ],
+      "wikidata": "Q5167679",
+      "location": "Soviet Union",
+      "dependsOn": [
+        "start-of-perestroika",
+        "leninism",
+        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
+        "new-union-treaty",
+        "declaration-of-the-rights-of-the-peoples-of-russia",
+        "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991",
+        "new-political-thinking",
+        "monetary-reform-in-the-soviet-union-1991",
+        "start-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+        "start-of-cold-war",
+        "strategic-defense-initiative",
+        "start-of-1991-soviet-coup-d-etat-attempt",
+        "start-of-revolutions-of-1989",
+        "start-of-reykjavik-summit",
+        "on-the-cult-of-personality-and-its-consequences",
+        "start-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+        "q33593042"
+      ],
+      "linkSources": {
+        "start-of-perestroika": "P828",
+        "leninism": "P828",
+        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic": "P828",
+        "new-union-treaty": "P828",
+        "declaration-of-the-rights-of-the-peoples-of-russia": "P828",
+        "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991": "P828",
+        "new-political-thinking": "P828",
+        "monetary-reform-in-the-soviet-union-1991": "P828",
+        "start-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics": "P828",
+        "start-of-cold-war": "P1542",
+        "strategic-defense-initiative": "P1542",
+        "start-of-1991-soviet-coup-d-etat-attempt": "P1542",
+        "start-of-revolutions-of-1989": "P1542",
+        "start-of-reykjavik-summit": "P1542",
+        "on-the-cult-of-personality-and-its-consequences": "P1542",
+        "start-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union": "P1542",
+        "q33593042": "P1542"
+      }
+    },
+    {
+      "id": "electromagnetic-induction",
+      "name": "Electromagnetic induction",
+      "date": {
+        "year": 1831,
+        "precision": "year"
+      },
+      "description": "Production of voltage by a varying magnetic field.",
+      "tags": [
+        "physical phenomenon",
+        "electromagnetic phenomenon"
+      ],
+      "wikidata": "Q988780",
+      "dependsOn": [
+        "voltaic-pile"
+      ],
+      "linkSources": {
+        "voltaic-pile": "curation"
+      }
+    },
+    {
+      "id": "voltaic-pile",
+      "name": "Voltaic pile",
+      "date": {
+        "year": 1800,
+        "precision": "year"
+      },
+      "description": "First electrical battery that could continuously provide an electric current to a circuit.",
+      "tags": [
+        "battery"
+      ],
+      "wikidata": "Q663273"
+    },
+    {
+      "id": "telephone",
+      "name": "Telephone",
+      "date": {
+        "year": 1876,
+        "precision": "year"
+      },
+      "description": "Telecommunications device that permits two or more users to conduct a conversation.",
+      "tags": [
+        "type of physical object",
+        "type of product",
+        "type of device"
+      ],
+      "wikidata": "Q11035",
+      "location": "United States",
+      "dependsOn": [
+        "electromagnetic-induction",
+        "voltaic-pile"
+      ],
+      "linkSources": {
+        "electromagnetic-induction": "curation",
+        "voltaic-pile": "curation"
+      }
+    },
+    {
+      "id": "integrated-circuit",
+      "name": "Integrated circuit",
+      "date": {
+        "year": 1958,
+        "precision": "year"
+      },
+      "description": "Electronic circuit formed on a small, flat piece of semiconductor material.",
+      "tags": [
+        "type of electronic component",
+        "electronic component",
+        "electronic circuit"
+      ],
+      "wikidata": "Q80831",
+      "dependsOn": [
+        "transistor"
+      ],
+      "linkSources": {
+        "transistor": "curation"
+      }
+    },
+    {
+      "id": "transistor",
+      "name": "Transistor",
+      "date": {
+        "year": 1947,
+        "precision": "month",
+        "month": 12
+      },
+      "description": "A semiconductor device.",
+      "tags": [
+        "type of electronic component",
+        "semiconductor device",
+        "active electronic component"
+      ],
+      "wikidata": "Q5339"
+    },
+    {
+      "id": "arpanet",
+      "name": "ARPANET",
+      "date": {
+        "year": 1969,
+        "precision": "year"
+      },
+      "description": "Early packet switching network (1969–1990).",
+      "tags": [
+        "computer network",
+        "decentralized computing",
+        "communication protocol"
+      ],
+      "wikidata": "Q177524",
+      "dependsOn": [
+        "telephone",
+        "integrated-circuit"
+      ],
+      "linkSources": {
+        "telephone": "curation",
+        "integrated-circuit": "curation"
+      }
+    },
+    {
+      "id": "microprocessor",
+      "name": "Microprocessor",
+      "date": {
+        "year": 1971,
+        "precision": "year"
+      },
+      "description": "Computer processor contained on an integrated-circuit chip.",
+      "tags": [
+        "processor type",
+        "processor"
+      ],
+      "wikidata": "Q5297",
+      "dependsOn": [
+        "integrated-circuit"
+      ],
+      "linkSources": {
+        "integrated-circuit": "curation"
+      }
+    },
+    {
+      "id": "mobile-phone",
+      "name": "Mobile phone",
+      "date": {
+        "year": 1973,
+        "precision": "year"
+      },
+      "description": "Portable device to make telephone calls using a radio link.",
+      "tags": [
+        "type of device",
+        "form of communication",
+        "telephone"
+      ],
+      "wikidata": "Q17517",
+      "location": "United States",
+      "dependsOn": [
+        "integrated-circuit",
+        "telephone"
+      ],
+      "linkSources": {
+        "integrated-circuit": "P527",
+        "telephone": "curation"
+      }
+    },
+    {
+      "id": "world-wide-web",
+      "name": "World Wide Web",
+      "date": {
+        "year": 1989,
+        "precision": "day",
+        "month": 3,
+        "day": 12
+      },
+      "description": "Global system of interlinked hypertext documents accessed via the Internet.",
+      "tags": [
+        "information system",
+        "hypertext system",
+        "service on Internet"
+      ],
+      "wikidata": "Q466",
+      "dependsOn": [
+        "arpanet"
+      ],
+      "linkSources": {
+        "arpanet": "curation"
+      }
+    },
+    {
+      "id": "lithium-ion-battery",
+      "name": "Lithium-ion battery",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "Rechargeable battery type.",
+      "tags": [
+        "battery chemistry type",
+        "rechargeable battery"
+      ],
+      "wikidata": "Q2822895",
+      "dependsOn": [
+        "lithium",
+        "voltaic-pile"
+      ],
+      "linkSources": {
+        "lithium": "P527",
+        "voltaic-pile": "curation"
+      }
+    },
+    {
+      "id": "liquid-crystal-display",
+      "name": "Liquid-crystal display",
+      "date": {
+        "year": 1968,
+        "precision": "year"
+      },
+      "description": "Display that uses the light-modulating properties of liquid crystals.",
+      "tags": [
+        "display technology",
+        "flat-panel display"
+      ],
+      "wikidata": "Q83341"
+    },
+    {
+      "id": "touchscreen",
+      "name": "Touchscreen",
+      "date": {
+        "year": 1965,
+        "precision": "year"
+      },
+      "description": "Input/output device usually layered on the top of an electronic visual display.",
+      "tags": [
+        "input device",
+        "human interface device",
+        "output device"
+      ],
+      "wikidata": "Q165970"
+    },
+    {
+      "id": "apollo-11",
+      "name": "Apollo 11",
+      "date": {
+        "year": 1969,
+        "precision": "day",
+        "month": 7,
+        "day": 16
+      },
+      "description": "First Moon landing and fifth crewed flight of the United States Apollo program.",
+      "tags": [
+        "human spaceflight"
+      ],
+      "wikidata": "Q43653",
+      "location": "United States",
+      "dependsOn": [
+        "integrated-circuit"
+      ],
+      "linkSources": {
+        "integrated-circuit": "curation"
+      }
+    },
+    {
+      "id": "start-of-cold-war",
+      "name": "Start of the Cold War",
+      "date": {
+        "year": 1945,
+        "precision": "year"
+      },
+      "description": "The start of the Cold War.",
+      "tags": [
+        "cold war",
+        "perpetual war",
+        "proxy war"
+      ],
+      "dependsOn": [
+        "start-of-world-war-ii",
+        "start-of-eastern-front"
+      ],
+      "linkSources": {
+        "start-of-world-war-ii": "P1542",
+        "start-of-eastern-front": "P1542"
+      }
+    },
+    {
+      "id": "end-of-cold-war",
+      "name": "End of the Cold War",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 25
+      },
+      "description": "The end of the Cold War.",
+      "tags": [
+        "cold war",
+        "perpetual war",
+        "proxy war"
+      ]
+    },
+    {
+      "id": "start-of-space-race",
+      "name": "Start of the space race",
+      "date": {
+        "year": 1957,
+        "precision": "day",
+        "month": 10,
+        "day": 4
+      },
+      "description": "The start of the space race.",
+      "tags": [
+        "competition",
+        "space exploration",
+        "race to space"
+      ]
+    },
+    {
+      "id": "end-of-space-race",
+      "name": "End of the space race",
+      "date": {
+        "year": 1975,
+        "precision": "month",
+        "month": 7
+      },
+      "description": "The end of the space race.",
+      "tags": [
+        "competition",
+        "space exploration",
+        "race to space"
+      ]
+    },
+    {
+      "id": "start-of-information-age",
+      "name": "Start of the Information Age",
+      "date": {
+        "year": 1970,
+        "precision": "decade"
+      },
+      "description": "The start of the Information Age.",
+      "tags": [
+        "historical period"
+      ]
+    },
+    {
+      "id": "iphone-os-1",
+      "name": "iPhone OS 1",
+      "date": {
+        "year": 2007,
+        "precision": "day",
+        "month": 6,
+        "day": 29
+      },
+      "description": "First major version of the mobile operating system by Apple.",
+      "tags": [
+        "software version",
+        "iOS"
+      ],
+      "wikidata": "Q17058718",
+      "dependsOn": [
+        "darwin"
+      ],
+      "linkSources": {
+        "darwin": "P144"
+      }
+    },
+    {
+      "id": "iphone-os-2",
+      "name": "iPhone OS 2",
+      "date": {
+        "year": 2008,
+        "precision": "day",
+        "month": 7,
+        "day": 11
+      },
+      "description": "Second major release of iOS by Apple Inc.",
+      "tags": [
+        "software version",
+        "iOS"
+      ],
+      "wikidata": "Q16927834",
+      "dependsOn": [
+        "darwin"
+      ],
+      "linkSources": {
+        "darwin": "P144"
+      }
+    },
+    {
+      "id": "iphone-os-3",
+      "name": "iPhone OS 3",
+      "date": {
+        "year": 2009,
+        "precision": "day",
+        "month": 6,
+        "day": 17
+      },
+      "description": "Third version of iPhone OS by Apple Inc.",
+      "tags": [
+        "software version",
+        "iOS"
+      ],
+      "wikidata": "Q16969690",
+      "dependsOn": [
+        "darwin"
+      ],
+      "linkSources": {
+        "darwin": "P144"
+      }
+    },
+    {
+      "id": "hp-65",
+      "name": "HP-65",
+      "date": {
+        "year": 1974,
+        "precision": "year"
+      },
+      "description": "First programmable scientific handheld calculator; with RPN and magnetic card reader, produced by Hewlett-Packard from 1974.",
+      "tags": [
+        "mobile device",
+        "programmable calculator",
+        "computer"
+      ],
+      "wikidata": "Q220638",
+      "dependsOn": [
+        "postfix-notation",
+        "magnetic-storage-card",
+        "seven-segment-display"
+      ],
+      "linkSources": {
+        "postfix-notation": "P2283",
+        "magnetic-storage-card": "P2283",
+        "seven-segment-display": "P527"
+      }
+    },
+    {
+      "id": "start-of-perestroika",
+      "name": "Start of the perestroika",
+      "date": {
+        "year": 1985,
+        "precision": "year"
+      },
+      "description": "The start of the perestroika.",
+      "tags": [
+        "reform"
+      ],
+      "dependsOn": [
+        "dunno-on-the-moon"
+      ],
+      "linkSources": {
+        "dunno-on-the-moon": "P1542"
+      }
+    },
+    {
+      "id": "end-of-perestroika",
+      "name": "End of the perestroika",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "The end of the perestroika.",
+      "tags": [
+        "reform"
+      ]
+    },
+    {
+      "id": "leninism",
+      "name": "Leninism",
+      "date": {
+        "year": 1920,
+        "precision": "decade"
+      },
+      "description": "Communist ideology and state ideology of socialist states, as developed by Vladimir Lenin.",
+      "tags": [
+        "political ideology",
+        "cult of personality",
+        "Marxism"
+      ],
+      "wikidata": "Q155059"
+    },
+    {
+      "id": "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
+      "name": "Declaration of State Sovereignty of the Russian Soviet Federative Socialist Republic",
+      "date": {
+        "year": 1990,
+        "precision": "day",
+        "month": 6,
+        "day": 12
+      },
+      "description": "Political act of the Russian Soviet Federative Socialist Republic.",
+      "tags": [
+        "statute",
+        "declaration"
+      ],
+      "wikidata": "Q4156971",
+      "location": "Moscow"
+    },
+    {
+      "id": "new-union-treaty",
+      "name": "New Union Treaty",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "Draft treaty of 1991.",
+      "tags": [
+        "concept",
+        "document",
+        "proposed state merger"
+      ],
+      "wikidata": "Q218877",
+      "location": "Novo-Ogaryovo"
+    },
+    {
+      "id": "declaration-of-the-rights-of-the-peoples-of-russia",
+      "name": "Declaration of the Rights of the Peoples of Russia",
+      "date": {
+        "year": 1917,
+        "precision": "day",
+        "month": 11,
+        "day": 2
+      },
+      "description": "1917 Soviet document by Lenin and Stalin.",
+      "tags": [
+        "written work"
+      ],
+      "wikidata": "Q1047454"
+    },
+    {
+      "id": "declaration-of-the-council-of-republics-of-the-supreme-soviet-of-the-ussr-no-142-n-of-26-december-1991",
+      "name": "Declaration of the Council of Republics of the Supreme Soviet of the USSR No. 142-N of 26 December 1991",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 26
+      },
+      "description": "Document.",
+      "tags": [
+        "document",
+        "declaration",
+        "statute"
+      ],
+      "wikidata": "Q11836865",
+      "location": "Almaty"
+    },
+    {
+      "id": "new-political-thinking",
+      "name": "New political thinking",
+      "date": {
+        "year": 1980,
+        "precision": "decade"
+      },
+      "description": "Late 1980s foreign policy philosophy of the Soviet Union.",
+      "tags": [
+        "political science",
+        "political ideology",
+        "political thought"
+      ],
+      "wikidata": "Q4323903",
+      "location": "White House"
+    },
+    {
+      "id": "monetary-reform-in-the-soviet-union-1991",
+      "name": "Monetary reform in the Soviet Union, 1991",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "",
+      "tags": [
+        "currency reform"
+      ],
+      "wikidata": "Q4157879",
+      "location": "Soviet Union"
+    },
+    {
+      "id": "start-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+      "name": "Start of the Treaty on the Creation of the Union of Soviet Socialist Republics",
+      "date": {
+        "year": 1922,
+        "precision": "day",
+        "month": 12,
+        "day": 29
+      },
+      "description": "The start of the Treaty on the Creation of the Union of Soviet Socialist Republics.",
+      "tags": [
+        "document",
+        "statute",
+        "treaty"
+      ],
+      "dependsOn": [],
+      "linkSources": {}
+    },
+    {
+      "id": "end-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+      "name": "End of the Treaty on the Creation of the Union of Soviet Socialist Republics",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 8
+      },
+      "description": "The end of the Treaty on the Creation of the Union of Soviet Socialist Republics.",
+      "tags": [
+        "document",
+        "statute",
+        "treaty"
+      ]
+    },
+    {
+      "id": "sim-card",
+      "name": "SIM card",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "Smartcard for cellular devices containing authentication information necessary for connecting to the cell network.",
+      "tags": [
+        "smart card"
+      ],
+      "wikidata": "Q230110"
+    },
+    {
+      "id": "website",
+      "name": "Website",
+      "date": {
+        "year": 1990,
+        "precision": "year"
+      },
+      "description": "Set of related web pages served from a single web domain.",
+      "tags": [
+        "digital media",
+        "online publication",
+        "virtual place"
+      ],
+      "wikidata": "Q35127"
+    },
+    {
+      "id": "lithium",
+      "name": "Lithium",
+      "date": {
+        "year": 1817,
+        "precision": "year"
+      },
+      "description": "Chemical element with symbol Li and atomic number 3.",
+      "tags": [
+        "chemical element",
+        "lithophile element",
+        "active metal"
+      ],
+      "wikidata": "Q568"
+    },
+    {
+      "id": "strategic-defense-initiative",
+      "name": "Strategic Defense Initiative",
+      "date": {
+        "year": 1984,
+        "precision": "year"
+      },
+      "description": "Defunct American missile defense system (1984-1993).",
+      "tags": [
+        "closed project"
+      ],
+      "wikidata": "Q211031",
+      "location": "United States"
+    },
+    {
+      "id": "start-of-1991-soviet-coup-d-etat-attempt",
+      "name": "Start of the 1991 Soviet coup d'état attempt",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 8,
+        "day": 19
+      },
+      "description": "The start of the 1991 Soviet coup d'état attempt.",
+      "tags": [
+        "attempted coup d'état",
+        "military coup",
+        "coup d'état"
+      ],
+      "dependsOn": [
+        "state-committee-on-the-state-of-emergency"
+      ],
+      "linkSources": {
+        "state-committee-on-the-state-of-emergency": "P1542"
+      }
+    },
+    {
+      "id": "end-of-1991-soviet-coup-d-etat-attempt",
+      "name": "End of the 1991 Soviet coup d'état attempt",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 8,
+        "day": 21
+      },
+      "description": "The end of the 1991 Soviet coup d'état attempt.",
+      "tags": [
+        "attempted coup d'état",
+        "military coup",
+        "coup d'état"
+      ]
+    },
+    {
+      "id": "start-of-revolutions-of-1989",
+      "name": "Start of the Revolutions of 1989",
+      "date": {
+        "year": 1989,
+        "precision": "day",
+        "month": 3,
+        "day": 9
+      },
+      "description": "The start of the Revolutions of 1989.",
+      "tags": [
+        "revolutionary wave"
+      ]
+    },
+    {
+      "id": "end-of-revolutions-of-1989",
+      "name": "End of the Revolutions of 1989",
+      "date": {
+        "year": 1992,
+        "precision": "day",
+        "month": 4,
+        "day": 27
+      },
+      "description": "The end of the Revolutions of 1989.",
+      "tags": [
+        "revolutionary wave"
+      ]
+    },
+    {
+      "id": "start-of-reykjavik-summit",
+      "name": "Start of the Reykjavík Summit",
+      "date": {
+        "year": 1986,
+        "precision": "day",
+        "month": 10,
+        "day": 11
+      },
+      "description": "The start of the Reykjavík Summit.",
+      "tags": [
+        "summit"
+      ]
+    },
+    {
+      "id": "end-of-reykjavik-summit",
+      "name": "End of the Reykjavík Summit",
+      "date": {
+        "year": 1986,
+        "precision": "day",
+        "month": 10,
+        "day": 12
+      },
+      "description": "The end of the Reykjavík Summit.",
+      "tags": [
+        "summit"
+      ]
+    },
+    {
+      "id": "on-the-cult-of-personality-and-its-consequences",
+      "name": "On the Cult of Personality and Its Consequences",
+      "date": {
+        "year": 1956,
+        "precision": "day",
+        "month": 2,
+        "day": 25
+      },
+      "description": "Report by Nikita Khrushchev on 25 Feb. 1956, sharply critical of Stalin, charging him with a cult of personality.",
+      "tags": [
+        "oration",
+        "report"
+      ],
+      "wikidata": "Q1165372",
+      "location": "20th Congress of the Communist Party of the Soviet Union"
+    },
+    {
+      "id": "start-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+      "name": "Start of the 19th All-Union Conference of the Communist Party of the Soviet Union",
+      "date": {
+        "year": 1988,
+        "precision": "day",
+        "month": 6,
+        "day": 28
+      },
+      "description": "The start of the 19th All-Union Conference of the Communist Party of the Soviet Union.",
+      "tags": [
+        "party conference"
+      ]
+    },
+    {
+      "id": "end-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+      "name": "End of the 19th All-Union Conference of the Communist Party of the Soviet Union",
+      "date": {
+        "year": 1988,
+        "precision": "day",
+        "month": 7,
+        "day": 1
+      },
+      "description": "The end of the 19th All-Union Conference of the Communist Party of the Soviet Union.",
+      "tags": [
+        "party conference"
+      ]
+    },
+    {
+      "id": "q33593042",
+      "name": "Q33593042",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 12,
+        "day": 24
+      },
+      "description": "",
+      "tags": [
+        "letter",
+        "work of art",
+        "rule"
+      ],
+      "wikidata": "Q33593042",
+      "location": "Russian Socialist Federative Soviet Republic"
+    },
+    {
+      "id": "start-of-world-war-ii",
+      "name": "Start of the World War II",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 1
+      },
+      "description": "The start of the World War II.",
+      "tags": [
+        "world war",
+        "historical period",
+        "war"
+      ],
+      "dependsOn": [
+        "start-of-treaty-of-versailles",
+        "start-of-molotov-ribbentrop-pact",
+        "revanchism",
+        "start-of-1939-invasion-of-poland"
+      ],
+      "linkSources": {
+        "start-of-treaty-of-versailles": "P828",
+        "start-of-molotov-ribbentrop-pact": "P828",
+        "revanchism": "P828",
+        "start-of-1939-invasion-of-poland": "P1536"
+      }
+    },
+    {
+      "id": "end-of-world-war-ii",
+      "name": "End of the World War II",
+      "date": {
+        "year": 1945,
+        "precision": "day",
+        "month": 9,
+        "day": 2
+      },
+      "description": "The end of the World War II.",
+      "tags": [
+        "world war",
+        "historical period",
+        "war"
+      ]
+    },
+    {
+      "id": "start-of-eastern-front",
+      "name": "Start of the Eastern Front",
+      "date": {
+        "year": 1941,
+        "precision": "day",
+        "month": 6,
+        "day": 22
+      },
+      "description": "The start of the Eastern Front.",
+      "tags": [
+        "war front",
+        "war"
+      ],
+      "dependsOn": [
+        "start-of-nazism",
+        "the-main-task-of-our-time"
+      ],
+      "linkSources": {
+        "start-of-nazism": "P828",
+        "the-main-task-of-our-time": "P1542"
+      }
+    },
+    {
+      "id": "end-of-eastern-front",
+      "name": "End of the Eastern Front",
+      "date": {
+        "year": 1945,
+        "precision": "day",
+        "month": 5,
+        "day": 7
+      },
+      "description": "The end of the Eastern Front.",
+      "tags": [
+        "war front",
+        "war"
+      ]
+    },
+    {
+      "id": "the-sinews-of-peace",
+      "name": "The Sinews of Peace",
+      "date": {
+        "year": 1946,
+        "precision": "day",
+        "month": 3,
+        "day": 5
+      },
+      "description": "March 5, 1946 Winston Churchill speech.",
+      "tags": [
+        "oration"
+      ],
+      "wikidata": "Q2102143",
+      "location": "Westminster College"
+    },
+    {
+      "id": "darwin",
+      "name": "Darwin",
+      "date": {
+        "year": 2000,
+        "precision": "day",
+        "month": 11,
+        "day": 15
+      },
+      "description": "Core Unix-like operating system of macOS, iOS, etc.",
+      "tags": [
+        "Unix-like operating system",
+        "BSD"
+      ],
+      "wikidata": "Q14581",
+      "dependsOn": [
+        "nextstep",
+        "freebsd"
+      ],
+      "linkSources": {
+        "nextstep": "P144",
+        "freebsd": "P144"
+      }
+    },
+    {
+      "id": "postfix-notation",
+      "name": "Postfix notation",
+      "date": {
+        "year": 1924,
+        "precision": "year"
+      },
+      "description": "Mathematical notation in which every operator follows all of its operands.",
+      "tags": [
+        "common operator notation"
+      ],
+      "wikidata": "Q379695"
+    },
+    {
+      "id": "magnetic-storage-card",
+      "name": "Magnetic storage card",
+      "date": {
+        "year": 1974,
+        "precision": "year"
+      },
+      "description": "Small and thin elongated plastic card with magnetizable layer, used for magnetic data storage in programmable pocket calculators from the 1970s and 1980s.",
+      "tags": [
+        "magnetic memory",
+        "magnetic storage",
+        "magnetic stripe card"
+      ],
+      "wikidata": "Q123000843"
+    },
+    {
+      "id": "seven-segment-display",
+      "name": "Seven-segment display",
+      "date": {
+        "year": 1903,
+        "precision": "year"
+      },
+      "description": "Form of electronic display device for displaying decimal numerals.",
+      "tags": [
+        "segment display"
+      ],
+      "wikidata": "Q1046569"
+    },
+    {
+      "id": "declaration-of-the-creation-of-the-union-of-soviet-socialist-republics",
+      "name": "Declaration of the Creation of the Union of Soviet Socialist Republics",
+      "date": {
+        "year": 1922,
+        "precision": "day",
+        "month": 12,
+        "day": 30
+      },
+      "description": "Formative document of the Union of Soviet Socialist Republics.",
+      "tags": [
+        "statute",
+        "manifesto",
+        "project"
+      ],
+      "wikidata": "Q5249463",
+      "location": "Soviet Union"
+    },
+    {
+      "id": "start-of-treaty-of-versailles",
+      "name": "Start of the Treaty of Versailles",
+      "date": {
+        "year": 1920,
+        "precision": "day",
+        "month": 1,
+        "day": 10
+      },
+      "description": "The start of the Treaty of Versailles.",
+      "tags": [
+        "peace treaty",
+        "multilateral treaty"
+      ],
+      "dependsOn": [
+        "start-of-paris-peace-conference"
+      ],
+      "linkSources": {
+        "start-of-paris-peace-conference": "P828"
+      }
+    },
+    {
+      "id": "start-of-molotov-ribbentrop-pact",
+      "name": "Start of the Molotov–Ribbentrop Pact",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 8,
+        "day": 23
+      },
+      "description": "The start of the Molotov–Ribbentrop Pact.",
+      "tags": [
+        "non-aggression pact",
+        "secret treaty"
+      ],
+      "dependsOn": [
+        "treaty-of-berlin-1926",
+        "start-of-battles-of-khalkhin-gol"
+      ],
+      "linkSources": {
+        "treaty-of-berlin-1926": "P144",
+        "start-of-battles-of-khalkhin-gol": "P1542"
+      }
+    },
+    {
+      "id": "end-of-molotov-ribbentrop-pact",
+      "name": "End of the Molotov–Ribbentrop Pact",
+      "date": {
+        "year": 1941,
+        "precision": "day",
+        "month": 6,
+        "day": 22
+      },
+      "description": "The end of the Molotov–Ribbentrop Pact.",
+      "tags": [
+        "non-aggression pact",
+        "secret treaty"
+      ]
+    },
+    {
+      "id": "revanchism",
+      "name": "Revanchism",
+      "date": {
+        "year": 1870,
+        "precision": "decade"
+      },
+      "description": "Political manifestation of the will to reverse territorial losses.",
+      "tags": [
+        "concept",
+        "phenomenon",
+        "international relations"
+      ],
+      "wikidata": "Q1136718"
+    },
+    {
+      "id": "start-of-nazism",
+      "name": "Start of the Nazism",
+      "date": {
+        "year": 1920,
+        "precision": "year"
+      },
+      "description": "The start of the Nazism.",
+      "tags": [
+        "political ideology",
+        "fascism",
+        "antisemitism"
+      ]
+    },
+    {
+      "id": "end-of-nazism",
+      "name": "End of the Nazism",
+      "date": {
+        "year": 1945,
+        "precision": "day",
+        "month": 5,
+        "day": 8
+      },
+      "description": "The end of the Nazism.",
+      "tags": [
+        "political ideology",
+        "fascism",
+        "antisemitism"
+      ]
+    },
+    {
+      "id": "dunno-on-the-moon",
+      "name": "Dunno on the Moon",
+      "date": {
+        "year": 1965,
+        "precision": "year"
+      },
+      "description": "1965 novel by Nikolay Nosov.",
+      "tags": [
+        "literary work"
+      ],
+      "wikidata": "Q3647984",
+      "location": "Soviet Union"
+    },
+    {
+      "id": "state-committee-on-the-state-of-emergency",
+      "name": "State Committee on the State of Emergency",
+      "date": {
+        "year": 1991,
+        "precision": "day",
+        "month": 8,
+        "day": 18
+      },
+      "description": "Government organization in USSR in 1991.",
+      "tags": [
+        "governing body",
+        "State Committee of the Soviet Union",
+        "project"
+      ],
+      "wikidata": "Q3684508",
+      "location": "Soviet Union",
+      "dependsOn": [
+        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic",
+        "start-of-gorbachev-s-anti-alcohol-campaign"
+      ],
+      "linkSources": {
+        "declaration-of-state-sovereignty-of-the-russian-soviet-federative-socialist-republic": "P828",
+        "start-of-gorbachev-s-anti-alcohol-campaign": "P1542"
+      }
+    },
+    {
+      "id": "the-main-task-of-our-time",
+      "name": "The Main Task of Our Time",
+      "date": {
+        "year": 1918,
+        "precision": "year"
+      },
+      "description": "1918 article by Lenin.",
+      "tags": [
+        "article",
+        "plan of management"
+      ],
+      "wikidata": "Q125253429"
+    },
+    {
+      "id": "start-of-1939-invasion-of-poland",
+      "name": "Start of the 1939 Invasion of Poland",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 1
+      },
+      "description": "The start of the 1939 Invasion of Poland.",
+      "tags": [
+        "military operation",
+        "military campaign",
+        "invasion"
+      ]
+    },
+    {
+      "id": "end-of-1939-invasion-of-poland",
+      "name": "End of the 1939 Invasion of Poland",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 10,
+        "day": 6
+      },
+      "description": "The end of the 1939 Invasion of Poland.",
+      "tags": [
+        "military operation",
+        "military campaign",
+        "invasion"
+      ]
+    },
+    {
+      "id": "nextstep",
+      "name": "NeXTSTEP",
+      "date": {
+        "year": 1989,
+        "precision": "day",
+        "month": 9,
+        "day": 18
+      },
+      "description": "Object-oriented, Unix-like operating system by NeXT, ancestor of Apple macOS.",
+      "tags": [
+        "Unix-like operating system",
+        "BSD",
+        "Unix"
+      ],
+      "wikidata": "Q831367",
+      "dependsOn": [
+        "berkeley-software-distribution",
+        "mach"
+      ],
+      "linkSources": {
+        "berkeley-software-distribution": "P144",
+        "mach": "P144"
+      }
+    },
+    {
+      "id": "freebsd",
+      "name": "FreeBSD",
+      "date": {
+        "year": 1993,
+        "precision": "day",
+        "month": 11,
+        "day": 1
+      },
+      "description": "Free Unix-like operating system.",
+      "tags": [
+        "BSD",
+        "free operating system"
+      ],
+      "wikidata": "Q34236",
+      "dependsOn": [
+        "berkeley-software-distribution",
+        "386bsd"
+      ],
+      "linkSources": {
+        "berkeley-software-distribution": "P144",
+        "386bsd": "P144"
+      }
+    },
+    {
+      "id": "start-of-paris-peace-conference",
+      "name": "Start of the Paris Peace Conference",
+      "date": {
+        "year": 1919,
+        "precision": "day",
+        "month": 1,
+        "day": 18
+      },
+      "description": "The start of the Paris Peace Conference.",
+      "tags": [
+        "peace conference"
+      ],
+      "dependsOn": [
+        "start-of-world-war-i"
+      ],
+      "linkSources": {
+        "start-of-world-war-i": "P828"
+      }
+    },
+    {
+      "id": "end-of-paris-peace-conference",
+      "name": "End of the Paris Peace Conference",
+      "date": {
+        "year": 1920,
+        "precision": "day",
+        "month": 1,
+        "day": 21
+      },
+      "description": "The end of the Paris Peace Conference.",
+      "tags": [
+        "peace conference"
+      ]
+    },
+    {
+      "id": "treaty-of-berlin-1926",
+      "name": "Treaty of Berlin (1926)",
+      "date": {
+        "year": 1926,
+        "precision": "day",
+        "month": 4,
+        "day": 24
+      },
+      "description": "1926 neutrality and non-aggression pact between Germany and the Soviet Union.",
+      "tags": [
+        "treaty"
+      ],
+      "wikidata": "Q695215",
+      "location": "Berlin"
+    },
+    {
+      "id": "start-of-battles-of-khalkhin-gol",
+      "name": "Start of the Battles of Khalkhin Gol",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 5,
+        "day": 11
+      },
+      "description": "The start of the Battles of Khalkhin Gol.",
+      "tags": [
+        "battle"
+      ]
+    },
+    {
+      "id": "end-of-battles-of-khalkhin-gol",
+      "name": "End of the Battles of Khalkhin Gol",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 16
+      },
+      "description": "The end of the Battles of Khalkhin Gol.",
+      "tags": [
+        "battle"
+      ]
+    },
+    {
+      "id": "start-of-gorbachev-s-anti-alcohol-campaign",
+      "name": "Start of the Gorbachev's anti-alcohol campaign",
+      "date": {
+        "year": 1985,
+        "precision": "year"
+      },
+      "description": "The start of the Gorbachev's anti-alcohol campaign.",
+      "tags": [
+        "prohibition",
+        "Anti-alcohol campaign"
+      ]
+    },
+    {
+      "id": "end-of-gorbachev-s-anti-alcohol-campaign",
+      "name": "End of the Gorbachev's anti-alcohol campaign",
+      "date": {
+        "year": 1987,
+        "precision": "year"
+      },
+      "description": "The end of the Gorbachev's anti-alcohol campaign.",
+      "tags": [
+        "prohibition",
+        "Anti-alcohol campaign"
+      ]
+    },
+    {
+      "id": "berkeley-software-distribution",
+      "name": "Berkeley Software Distribution",
+      "date": {
+        "year": 1977,
+        "precision": "year"
+      },
+      "description": "Free, open-source reimplementation of the AT&T UNIX operating system.",
+      "tags": [
+        "Unix",
+        "BSD"
+      ],
+      "wikidata": "Q34264"
+    },
+    {
+      "id": "mach",
+      "name": "Mach",
+      "date": {
+        "year": 1985,
+        "precision": "year"
+      },
+      "description": "Operating system kernel.",
+      "tags": [
+        "microkernel",
+        "software"
+      ],
+      "wikidata": "Q14643"
+    },
+    {
+      "id": "386bsd",
+      "name": "386BSD",
+      "date": {
+        "year": 1992,
+        "precision": "day",
+        "month": 3,
+        "day": 12
+      },
+      "description": "Operating system.",
+      "tags": [
+        "BSD",
+        "free and open-source software"
+      ],
+      "wikidata": "Q228413",
+      "dependsOn": [
+        "berkeley-software-distribution"
+      ],
+      "linkSources": {
+        "berkeley-software-distribution": "P144"
+      }
+    },
+    {
+      "id": "start-of-world-war-i",
+      "name": "Start of the World War I",
+      "date": {
+        "year": 1914,
+        "precision": "day",
+        "month": 7,
+        "day": 28
+      },
+      "description": "The start of the World War I.",
+      "tags": [
+        "world war",
+        "historical period"
+      ],
+      "dependsOn": [
+        "july-crisis",
+        "assassination-of-archduke-franz-ferdinand"
+      ],
+      "linkSources": {
+        "july-crisis": "P1542",
+        "assassination-of-archduke-franz-ferdinand": "P1536"
+      }
+    },
+    {
+      "id": "end-of-world-war-i",
+      "name": "End of the World War I",
+      "date": {
+        "year": 1918,
+        "precision": "day",
+        "month": 11,
+        "day": 11
+      },
+      "description": "The end of the World War I.",
+      "tags": [
+        "world war",
+        "historical period"
+      ]
+    },
+    {
+      "id": "july-crisis",
+      "name": "July Crisis",
+      "date": {
+        "year": 1914,
+        "precision": "day",
+        "month": 7,
+        "day": 23
+      },
+      "description": "1914 events leading to World War I.",
+      "tags": [
+        "international crisis"
+      ],
+      "wikidata": "Q917435",
+      "location": "Europe",
+      "dependsOn": [
+        "assassination-of-archduke-franz-ferdinand"
+      ],
+      "linkSources": {
+        "assassination-of-archduke-franz-ferdinand": "P1542"
+      }
+    },
+    {
+      "id": "assassination-of-archduke-franz-ferdinand",
+      "name": "Assassination of Archduke Franz Ferdinand",
+      "date": {
+        "year": 1914,
+        "precision": "day",
+        "month": 6,
+        "day": 28
+      },
+      "description": "1914 murder in Sarajevo, Austria-Hungary.",
+      "tags": [
+        "assassination",
+        "political murder",
+        "bomb attack"
+      ],
+      "wikidata": "Q192050",
+      "location": "Latin Bridge"
+    },
+    {
+      "id": "war-declaration-of-austria-hungary-to-serbia",
+      "name": "War declaration of Austria-Hungary to Serbia",
+      "date": {
+        "year": 1914,
+        "precision": "day",
+        "month": 7,
+        "day": 28
+      },
+      "description": "Initial event of First World War.",
+      "tags": [
+        "declaration of war"
+      ],
+      "wikidata": "Q130259975",
+      "location": "Austria–Hungary"
+    },
+    {
+      "id": "start-of-sputnik-programme",
+      "name": "Start of the Sputnik programme",
+      "date": {
+        "year": 1957,
+        "precision": "year"
+      },
+      "description": "The start of the Sputnik programme.",
+      "tags": [
+        "space mission",
+        "artificial satellite of the Earth"
+      ]
+    },
+    {
+      "id": "end-of-sputnik-programme",
+      "name": "End of the Sputnik programme",
+      "date": {
+        "year": 1961,
+        "precision": "year"
+      },
+      "description": "The end of the Sputnik programme.",
+      "tags": [
+        "space mission",
+        "artificial satellite of the Earth"
+      ]
+    },
+    {
+      "id": "start-of-apollo-applications-program",
+      "name": "Start of the Apollo Applications Program",
+      "date": {
+        "year": 1966,
+        "precision": "year"
+      },
+      "description": "The start of the Apollo Applications Program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program"
+      ]
+    },
+    {
+      "id": "end-of-apollo-applications-program",
+      "name": "End of the Apollo Applications Program",
+      "date": {
+        "year": 1979,
+        "precision": "year"
+      },
+      "description": "The end of the Apollo Applications Program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program"
+      ]
+    },
+    {
+      "id": "start-of-soyuz-programme",
+      "name": "Start of the Soyuz programme",
+      "date": {
+        "year": 1991,
+        "precision": "year"
+      },
+      "description": "The start of the Soyuz programme.",
+      "tags": [
+        "human spaceflight program"
+      ]
+    },
+    {
+      "id": "start-of-calculator",
+      "name": "Start of the calculator",
+      "date": {
+        "year": 1960,
+        "precision": "decade"
+      },
+      "description": "The start of the calculator.",
+      "tags": [
+        "physical tool",
+        "electronic device",
+        "calculating tool"
+      ]
+    },
+    {
+      "id": "start-of-apollo-program",
+      "name": "Start of the Apollo program",
+      "date": {
+        "year": 1961,
+        "precision": "year"
+      },
+      "description": "The start of the Apollo program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "project"
+      ]
+    },
+    {
+      "id": "end-of-apollo-program",
+      "name": "End of the Apollo program",
+      "date": {
+        "year": 1972,
+        "precision": "year"
+      },
+      "description": "The end of the Apollo program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "project"
+      ]
+    },
+    {
+      "id": "start-of-eastern-european-theatre-of-world-war-ii",
+      "name": "Start of the Eastern European theatre of World War II",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 1
+      },
+      "description": "The start of the Eastern European theatre of World War II.",
+      "tags": [
+        "theater of war"
+      ]
+    },
+    {
+      "id": "end-of-eastern-european-theatre-of-world-war-ii",
+      "name": "End of the Eastern European theatre of World War II",
+      "date": {
+        "year": 1945,
+        "precision": "day",
+        "month": 5,
+        "day": 9
+      },
+      "description": "The end of the Eastern European theatre of World War II.",
+      "tags": [
+        "theater of war"
+      ]
+    },
+    {
+      "id": "start-of-european-theater-of-world-war-ii",
+      "name": "Start of the European Theater of World War II",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 1
+      },
+      "description": "The start of the European Theater of World War II.",
+      "tags": [
+        "theater of war"
+      ]
+    },
+    {
+      "id": "end-of-european-theater-of-world-war-ii",
+      "name": "End of the European Theater of World War II",
+      "date": {
+        "year": 1945,
+        "precision": "day",
+        "month": 5,
+        "day": 8
+      },
+      "description": "The end of the European Theater of World War II.",
+      "tags": [
+        "theater of war"
+      ]
+    },
+    {
+      "id": "start-of-soviet-japanese-border-conflicts",
+      "name": "Start of the Soviet–Japanese border conflicts",
+      "date": {
+        "year": 1932,
+        "precision": "day",
+        "month": 3,
+        "day": 1
+      },
+      "description": "The start of the Soviet–Japanese border conflicts.",
+      "tags": [
+        "war",
+        "border conflict"
+      ]
+    },
+    {
+      "id": "end-of-soviet-japanese-border-conflicts",
+      "name": "End of the Soviet–Japanese border conflicts",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 16
+      },
+      "description": "The end of the Soviet–Japanese border conflicts.",
+      "tags": [
+        "war",
+        "border conflict"
+      ]
+    },
+    {
+      "id": "start-of-interwar-period",
+      "name": "Start of the interwar period",
+      "date": {
+        "year": 1918,
+        "precision": "day",
+        "month": 11,
+        "day": 11
+      },
+      "description": "The start of the interwar period.",
+      "tags": [
+        "historical period"
+      ]
+    },
+    {
+      "id": "end-of-interwar-period",
+      "name": "End of the interwar period",
+      "date": {
+        "year": 1939,
+        "precision": "day",
+        "month": 9,
+        "day": 11
+      },
+      "description": "The end of the interwar period.",
+      "tags": [
+        "historical period"
+      ]
+    }
+  ],
+  "periods": [
+    {
+      "id": "apollo-soyuz",
+      "name": "Apollo–Soyuz",
+      "description": "Joint Soviet-American human spaceflight.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "Soviet space program"
+      ],
+      "start": "start-of-apollo-soyuz",
+      "end": "end-of-apollo-soyuz",
+      "contains": [],
+      "wikidata": "Q208759"
+    },
+    {
+      "id": "cold-war",
+      "name": "Cold War",
+      "description": "1947–1991 tension between the Soviet Union and the United States and their respective allies.",
+      "tags": [
+        "cold war",
+        "perpetual war",
+        "proxy war"
+      ],
+      "start": "start-of-cold-war",
+      "end": "end-of-cold-war",
+      "contains": [
+        "fall-of-the-berlin-wall",
+        "truman-doctrine",
+        "space-race",
+        "arpanet"
+      ],
+      "wikidata": "Q8683"
+    },
+    {
+      "id": "space-race",
+      "name": "Space race",
+      "description": "Competition to explore space between USA and USSR.",
+      "tags": [
+        "competition",
+        "space exploration",
+        "race to space"
+      ],
+      "start": "start-of-space-race",
+      "end": "end-of-space-race",
+      "contains": [
+        "sputnik-1",
+        "apollo-11",
+        "apollo-soyuz"
+      ],
+      "wikidata": "Q1932"
+    },
+    {
+      "id": "information-age",
+      "name": "Information Age",
+      "description": "Historical period.",
+      "tags": [
+        "historical period"
+      ],
+      "start": "start-of-information-age",
+      "contains": [
+        "microprocessor",
+        "mobile-phone",
+        "world-wide-web",
+        "iphone"
+      ],
+      "wikidata": "Q956129"
+    },
+    {
+      "id": "perestroika",
+      "name": "Perestroika",
+      "description": "Political movement for reformation within the Communist Party of the Soviet Union during the 1980s, widely associated with Soviet leader Mikhail Gorbachev and his glasnost policy reform.",
+      "tags": [
+        "reform"
+      ],
+      "start": "start-of-perestroika",
+      "end": "end-of-perestroika",
+      "contains": [
+        "new-political-thinking"
+      ],
+      "wikidata": "Q167634"
+    },
+    {
+      "id": "treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+      "name": "Treaty on the Creation of the Union of Soviet Socialist Republics",
+      "description": "Treaty which legalised a union of several Soviet republics.",
+      "tags": [
+        "document",
+        "statute",
+        "treaty"
+      ],
+      "start": "start-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+      "end": "end-of-treaty-on-the-creation-of-the-union-of-soviet-socialist-republics",
+      "contains": [],
+      "wikidata": "Q1443926"
+    },
+    {
+      "id": "1991-soviet-coup-d-etat-attempt",
+      "name": "1991 Soviet coup d'état attempt",
+      "description": "Attempted coup d'état in the USSR against Mikhail Gorbachev's government in August 1991.",
+      "tags": [
+        "attempted coup d'état",
+        "military coup",
+        "coup d'état"
+      ],
+      "start": "start-of-1991-soviet-coup-d-etat-attempt",
+      "end": "end-of-1991-soviet-coup-d-etat-attempt",
+      "contains": [],
+      "wikidata": "Q221382"
+    },
+    {
+      "id": "revolutions-of-1989",
+      "name": "Revolutions of 1989",
+      "description": "Series of protests during 1989 overthrowing communist governments in Eastern Europe.",
+      "tags": [
+        "revolutionary wave"
+      ],
+      "start": "start-of-revolutions-of-1989",
+      "end": "end-of-revolutions-of-1989",
+      "contains": [
+        "fall-of-the-berlin-wall",
+        "dissolution-of-the-soviet-union",
+        "1991-soviet-coup-d-etat-attempt"
+      ],
+      "wikidata": "Q382861"
+    },
+    {
+      "id": "reykjavik-summit",
+      "name": "Reykjavík Summit",
+      "description": "1986 Soviet-American diplomatic summit.",
+      "tags": [
+        "summit"
+      ],
+      "start": "start-of-reykjavik-summit",
+      "end": "end-of-reykjavik-summit",
+      "contains": [],
+      "wikidata": "Q1036702"
+    },
+    {
+      "id": "19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+      "name": "19th All-Union Conference of the Communist Party of the Soviet Union",
+      "description": "1988 Soviet Union Communist Party conference.",
+      "tags": [
+        "party conference"
+      ],
+      "start": "start-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+      "end": "end-of-19th-all-union-conference-of-the-communist-party-of-the-soviet-union",
+      "contains": [],
+      "wikidata": "Q4053312"
+    },
+    {
+      "id": "world-war-ii",
+      "name": "World War II",
+      "description": "1939–1945 global conflict.",
+      "tags": [
+        "world war",
+        "historical period",
+        "war"
+      ],
+      "start": "start-of-world-war-ii",
+      "end": "end-of-world-war-ii",
+      "contains": [
+        "eastern-front",
+        "1939-invasion-of-poland",
+        "european-theater-of-world-war-ii"
+      ],
+      "wikidata": "Q362"
+    },
+    {
+      "id": "eastern-front",
+      "name": "Eastern Front",
+      "description": "1941–1945 World War II theater.",
+      "tags": [
+        "war front",
+        "war"
+      ],
+      "start": "start-of-eastern-front",
+      "end": "end-of-eastern-front",
+      "contains": [],
+      "wikidata": "Q189266"
+    },
+    {
+      "id": "treaty-of-versailles",
+      "name": "Treaty of Versailles",
+      "description": "Most important of the peace treaties of the First World War which ended the state of war between Germany and the Allied Powers.",
+      "tags": [
+        "peace treaty",
+        "multilateral treaty"
+      ],
+      "start": "start-of-treaty-of-versailles",
+      "contains": [],
+      "wikidata": "Q8736"
+    },
+    {
+      "id": "molotov-ribbentrop-pact",
+      "name": "Molotov–Ribbentrop Pact",
+      "description": "1939 neutrality pact between Nazi Germany and the Soviet Union.",
+      "tags": [
+        "non-aggression pact",
+        "secret treaty"
+      ],
+      "start": "start-of-molotov-ribbentrop-pact",
+      "end": "end-of-molotov-ribbentrop-pact",
+      "contains": [],
+      "wikidata": "Q130796"
+    },
+    {
+      "id": "nazism",
+      "name": "Nazism",
+      "description": "Ideology of the German Völkisch movement in the 20th century.",
+      "tags": [
+        "political ideology",
+        "fascism",
+        "antisemitism"
+      ],
+      "start": "start-of-nazism",
+      "end": "end-of-nazism",
+      "contains": [],
+      "wikidata": "Q7310"
+    },
+    {
+      "id": "1939-invasion-of-poland",
+      "name": "1939 Invasion of Poland",
+      "description": "German, Soviet, and Slovak attack on and takeover of Poland that marked the start of World War II.",
+      "tags": [
+        "military operation",
+        "military campaign",
+        "invasion"
+      ],
+      "start": "start-of-1939-invasion-of-poland",
+      "end": "end-of-1939-invasion-of-poland",
+      "contains": [],
+      "wikidata": "Q150812"
+    },
+    {
+      "id": "paris-peace-conference",
+      "name": "Paris Peace Conference",
+      "description": "Meeting of the Allied Powers after World War I.",
+      "tags": [
+        "peace conference"
+      ],
+      "start": "start-of-paris-peace-conference",
+      "end": "end-of-paris-peace-conference",
+      "contains": [
+        "treaty-of-versailles"
+      ],
+      "wikidata": "Q199820"
+    },
+    {
+      "id": "battles-of-khalkhin-gol",
+      "name": "Battles of Khalkhin Gol",
+      "description": "1939 Soviet–Japanese battle in Mongolia.",
+      "tags": [
+        "battle"
+      ],
+      "start": "start-of-battles-of-khalkhin-gol",
+      "end": "end-of-battles-of-khalkhin-gol",
+      "contains": [],
+      "wikidata": "Q188925"
+    },
+    {
+      "id": "gorbachev-s-anti-alcohol-campaign",
+      "name": "Gorbachev's anti-alcohol campaign",
+      "description": "",
+      "tags": [
+        "prohibition",
+        "Anti-alcohol campaign"
+      ],
+      "start": "start-of-gorbachev-s-anti-alcohol-campaign",
+      "end": "end-of-gorbachev-s-anti-alcohol-campaign",
+      "contains": [],
+      "wikidata": "Q574563"
+    },
+    {
+      "id": "world-war-i",
+      "name": "World War I",
+      "description": "1914–1918 global conflict.",
+      "tags": [
+        "world war",
+        "historical period"
+      ],
+      "start": "start-of-world-war-i",
+      "end": "end-of-world-war-i",
+      "contains": [
+        "war-declaration-of-austria-hungary-to-serbia"
+      ],
+      "wikidata": "Q361"
+    },
+    {
+      "id": "sputnik-programme",
+      "name": "Sputnik programme",
+      "description": "Index of lists with the same name.",
+      "tags": [
+        "space mission",
+        "artificial satellite of the Earth"
+      ],
+      "start": "start-of-sputnik-programme",
+      "end": "end-of-sputnik-programme",
+      "contains": [
+        "sputnik-1"
+      ],
+      "wikidata": "Q170413"
+    },
+    {
+      "id": "apollo-applications-program",
+      "name": "Apollo Applications Program",
+      "description": "American human spaceflight program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program"
+      ],
+      "start": "start-of-apollo-applications-program",
+      "end": "end-of-apollo-applications-program",
+      "contains": [
+        "apollo-soyuz"
+      ],
+      "wikidata": "Q618933"
+    },
+    {
+      "id": "soyuz-programme",
+      "name": "Soyuz programme",
+      "description": "Crewed spaceflight programme of the Soviet Union.",
+      "tags": [
+        "human spaceflight program"
+      ],
+      "start": "start-of-soyuz-programme",
+      "contains": [],
+      "wikidata": "Q207329"
+    },
+    {
+      "id": "calculator",
+      "name": "Calculator",
+      "description": "Electronic device used for calculations.",
+      "tags": [
+        "physical tool",
+        "electronic device",
+        "calculating tool"
+      ],
+      "start": "start-of-calculator",
+      "contains": [],
+      "wikidata": "Q31087"
+    },
+    {
+      "id": "apollo-program",
+      "name": "Apollo program",
+      "description": "1961–1972 American human spaceflight program.",
+      "tags": [
+        "human spaceflight program",
+        "NASA program",
+        "project"
+      ],
+      "start": "start-of-apollo-program",
+      "end": "end-of-apollo-program",
+      "contains": [
+        "apollo-11"
+      ],
+      "wikidata": "Q46611"
+    },
+    {
+      "id": "eastern-european-theatre-of-world-war-ii",
+      "name": "Eastern European theatre of World War II",
+      "description": "Theatre of conflict during World War II, encompassing Central Europe, Eastern Europe, Northeast Europe (Baltics), and Southeast Europe (Balkans).",
+      "tags": [
+        "theater of war"
+      ],
+      "start": "start-of-eastern-european-theatre-of-world-war-ii",
+      "end": "end-of-eastern-european-theatre-of-world-war-ii",
+      "contains": [
+        "eastern-front",
+        "1939-invasion-of-poland"
+      ],
+      "wikidata": "Q23908696"
+    },
+    {
+      "id": "european-theater-of-world-war-ii",
+      "name": "European Theater of World War II",
+      "description": "Huge area of heavy fighting across Europe.",
+      "tags": [
+        "theater of war"
+      ],
+      "start": "start-of-european-theater-of-world-war-ii",
+      "end": "end-of-european-theater-of-world-war-ii",
+      "contains": [
+        "1939-invasion-of-poland"
+      ],
+      "wikidata": "Q44700"
+    },
+    {
+      "id": "soviet-japanese-border-conflicts",
+      "name": "Soviet–Japanese border conflicts",
+      "description": "Armed conflict in the 1930s between the Soviets, Mongolians, and Japanese.",
+      "tags": [
+        "war",
+        "border conflict"
+      ],
+      "start": "start-of-soviet-japanese-border-conflicts",
+      "end": "end-of-soviet-japanese-border-conflicts",
+      "contains": [
+        "battles-of-khalkhin-gol"
+      ],
+      "wikidata": "Q696389"
+    },
+    {
+      "id": "interwar-period",
+      "name": "Interwar period",
+      "description": "1918–1939 period between the World Wars.",
+      "tags": [
+        "historical period"
+      ],
+      "start": "start-of-interwar-period",
+      "end": "end-of-interwar-period",
+      "contains": [],
+      "wikidata": "Q154611"
+    }
+  ]
+}

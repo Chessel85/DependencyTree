@@ -19,6 +19,7 @@ You need Node.js. In the project folder:
 1. `npm install`, once, to fetch the tools.
 2. `npm run dev`, then open http://localhost:5173 in a browser.
 3. `npm test` runs the unit tests.
+4. `npm run import` imports the seed set from Wikidata into data/seed.json, applying data/curation.json, and writes a report to data/import-report.md. Add `?data=seed` to the page address to open it.
 
 ## Licences
 

@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Requirements Catalogue</h1>
-<p class="subtitle">Version 0.18 (draft)</p>
+<p class="subtitle">Version 0.19 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -1488,8 +1488,53 @@ DES-SR-006.</td>
 </tbody>
 </table>
 <h1 id="open-questions">Open questions</h1>
-<p>There are no open questions at the moment. Answered questions are in
-the Decision Log.</p>
+<p>Answered questions are in the Decision Log.</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 21%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Background</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-25</td>
+<td>Should the seed set keep the political history that “has cause” and
+“has effect” bring in?</td>
+<td>From the Cold War and the dissolution of the Soviet Union, these
+links bring in about 40 entries, such as World War I, the Treaty of
+Versailles, perestroika and the 1991 coup attempt. They are real
+dependencies, but crowd out the road to the iPhone. The choices: keep
+them; exclude the political seeds and keep only the Space Race; or stop
+reading “has cause” and “has effect”.</td>
+</tr>
+<tr>
+<td>Q-26</td>
+<td>Should undated technology items be given dates in the curation
+file?</td>
+<td>56 items were left out for having no date. Some matter to the
+iPhone, such as the microphone, accelerometer, proximity sensor,
+loudspeaker, antenna and rechargeable battery. Dating them by hand would
+bring them, and what they depend on, into the seed set.</td>
+</tr>
+<tr>
+<td>Q-27</td>
+<td>How should the start and end moments of a period be named?</td>
+<td>The import writes “Start of the” and then the period’s name. That
+reads well for “Start of the Cold War” and “Start of the space race”,
+but not for “Start of the World War I” or “Start of the Nazism”. The
+choices: leave it and correct names in the curation file; drop “the”
+when the name begins with a capital letter, giving “Start of Cold War”;
+or use a form such as “World War I begins”.</td>
+</tr>
+</tbody>
+</table>
 <h1 id="decision-log">Decision log</h1>
 <table>
 <colgroup>
@@ -1944,10 +1989,24 @@ layout, so both are kept. Compressed time and time slots are dropped.
 Answers Q-24. Recorded as REQ-VIEW-014, DES-VIEW-005 and
 DES-VIEW-011.</td>
 </tr>
+<tr>
+<td>DEC-54</td>
+<td>Wikidata import built</td>
+<td>13, 23 October 2026</td>
+<td>Step 0C is built. The analyst checked the proposed properties
+against real data and widened them: the root is the original iPhone
+(Q621427), hardware properties count as dependencies, and launch dates
+and “mul” labels are read. The sample’s links and periods are carried
+over through the curation file. The page keeps the sample unless
+?data=seed is added. Recorded as DES-IMP-002, DES-IMP-004, DES-IMP-005
+and DES-IMP-009 to DES-IMP-011. Led to Q-25 to Q-27.</td>
+</tr>
 </tbody>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.19</strong>, 23 October 2026: Recorded DEC-54, the
+Wikidata import. Added Q-25 to Q-27.</li>
 <li><strong>0.18</strong>, 23 October 2026: Recorded DEC-53, answering
 Q-24. Added REQ-VIEW-014.</li>
 <li><strong>0.17</strong>, 23 October 2026: Recorded DEC-52, and added

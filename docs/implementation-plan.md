@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.18 (draft)"
+subtitle: "Version 0.19 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -60,11 +60,22 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/core/navigation | PathHistory.ts | For Backspace and P. |
 | src/core/announce | AnnouncementBuilder.ts | The wording of announcements. |
 | src/core/announce | Verbosity.ts | The verbosity levels. |
-| src/import | WikidataClient.ts | Queries Wikidata. |
-| src/import | PropertyMapper.ts | Turns Wikidata properties into entries and links. |
-| src/import | SeedCollector.ts | Gathers the seed set. |
-| src/import | CurationApplier.ts | Applies the curation file. |
-| src/import | ImportValidator.ts | Checks the data. |
+| src/import | main.ts | Runs the import: npm run import. |
+| src/import | WikidataSource.ts | What the import needs from Wikidata. |
+| src/import | WikidataClient.ts | Queries the live Wikidata service. |
+| src/import | WikidataCache.ts | Keeps Wikidata's answers in a folder (DES-IMP-010). |
+| src/import | WikidataEntity.ts | One Wikidata item, with its label and best statements. |
+| src/import | WikidataDateReader.ts | Turns a Wikidata date into a dataset date (DES-IMP-006). |
+| src/import | PropertyMapper.ts | Which properties are read, and what each means (DES-IMP-005). |
+| src/import | Curation.ts | The curation file (DES-IMP-004). |
+| src/import | EntryDates.ts | Whether an item is a moment or a period, and its dates, from the curation file or Wikidata. |
+| src/import | ImportedGraph.ts | The items gathered, and the links read between them. |
+| src/import | SeedCollector.ts | Gathers the seed set (DES-IMP-002). |
+| src/import | CurationApplier.ts | Applies the curation file's links and members. |
+| src/import | LabelLookup.ts | Labels of locations and tags. |
+| src/import | RecordMaker.ts | Turns the gathered items into a dataset, with start and end moments for periods (DES-IMP-008). |
+| src/import | ImportValidator.ts | Leaves out what breaks the rules (DES-IMP-007). |
+| src/import | ImportLog.ts | What each stage found, for the report. |
 | src/import | ImportReport.ts | Writes the report. |
 | src/import | SeedWriter.ts | Writes the seed file. |
 | src/worker | Router.ts | Routes API requests. |
@@ -143,7 +154,22 @@ What Claude saw in the screenshots of the first build (DEC-52):
 
 Outcome (DEC-53): linear time and layered are both kept, and the user switches between them with the Layout list. Compressed time and time slots are dropped.
 
-### Step 0C: Real data from Wikidata
+### Step 0C: Real data from Wikidata (built, in review)
+
+What the first import found (DEC-54):
+
+| Finding | What it means |
+|--------------|--------------------------------------------------|
+| The iPhone series, Q2766, has no date and only two "uses" links, to two file transfer protocols. | The root is the original iPhone, Q621427, instead. |
+| With only the properties first proposed, the walk from the iPhone stopped at 3 entries. | The original iPhone lists its battery, display, touchscreen, sensors and operating system with hardware properties, so those were added (DES-IMP-005). |
+| Of the 18 hand-made links in the sample, Wikidata has only 4. | The other 14 are added by the curation file, together with the sample's periods and their members. |
+| Many technology items have no date at all, such as the lithium-ion battery, the liquid-crystal display, the touchscreen and the microphone. | 56 items were left out for having no date (DES-IMP-009). The curation file dates the first three. This is Q-26. |
+| "Has cause" and "has effect" are well used for history. From the Cold War and the dissolution of the Soviet Union, they bring in the World Wars, treaties and Soviet politics. | About half the seed set is now political history. This is Q-25. |
+| Treaties, conferences and programmes have start and end times, so they become periods, such as the Treaty of Versailles. | 29 periods, each with a start moment made by the import, and most with an end moment. |
+| The first iPhone's later operating systems, iPhone OS 2 and 3, came after it. | The predates rule leaves those links out, and the report lists them. |
+
+The first import gave 83 Wikidata items: 108 moments, including the start and end moments made for periods, 29 periods and 69 dependencies. The report is data/import-report.md.
+
 
 1. Build the import tool. Gather a seed set of 50 to 200 entries from the iPhone backwards, and produce a coverage report showing how many links each Wikidata property contributed. (DES-IMP-002, DES-IMP-003, DES-IMP-007)
 2. Review with a sample of the data how well it works to use a period's start date where Wikidata links to a whole period. (DES-REL-007)
@@ -200,6 +226,7 @@ Outcome (DEC-53): linear time and layered are both kept, and the user switches b
 
 # Change history
 
+- **0.19**, 23 October 2026: Step 0C is built, and in review. Added the import classes to the module layout, and what the first import found (DEC-54).
 - **0.18**, 23 October 2026: Step 0D keeps linear time and layered, with a choice (DEC-53). Removed the two dropped layouts from the module layout.
 - **0.17**, 23 October 2026: Step 0D is built, and in review. Added the visual classes to the module layout, the screenshot findings, and a licence risk for elkjs.
 - **0.16**, 23 October 2026: Left Arrow and Right Arrow no longer move within a period (DEC-51), so StepResult has one fewer outcome.
