@@ -33,10 +33,13 @@ export class AnnouncementBuilder {
 
   /**
    * The list's label after arriving at an entry, so the screen reader names
-   * where the user now is: "Telephone, 1876, Dependencies" (DES-ANN-001).
+   * where the user now is: "Event: Telephone, 1876, Dependencies"
+   * (DES-ANN-001). A period needs no word before it, as its range of dates
+   * shows it is a period.
    */
   arrivalLabel(state: NavigationState): string {
-    return `${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
+    const kind = state.currentEntry instanceof Period ? '' : 'Event: ';
+    return `${kind}${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
   }
 
   /** The list's label after switching tab: just "Dependencies". An empty list shows "None" as its only item (DES-ANN-003). */

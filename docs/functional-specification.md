@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.21 (draft)"
+subtitle: "Version 0.22 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -138,7 +138,7 @@ These keystrokes apply while the navigator has focus.
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry, its shortened date and the list. For example: "Telephone, 1876, Dependencies, list. Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
+| DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry, its shortened date and the list. A moment's label starts with "Event:". A period's doesn't, because its range of dates shows it is a period. For example: "Event: Telephone, 1876, Dependencies, list. Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
 | DES-ANN-002 | Moving within a list moves focus to the entry, which the screen reader reads with its position. For example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
 | DES-ANN-003 | Switching list moves focus into the new list, whose label is just the list's name, followed by the highlighted entry. For example: "Enabled, list. Laptop, 1981, 1 of 8." An empty list holds one item, "None", so NVDA+Up Arrow has something to read: "Enabled, list. None." Enter does nothing on it. | Agreed | REQ-ANN-007, REQ-ACC-015 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
@@ -281,6 +281,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.22**, 23 October 2026: On arriving at a moment, its label starts with "Event:" (DES-ANN-001).
 - **0.21**, 23 October 2026: Periods start and end with real moments, with no made-up start or end stops (DES-DATA-008, DES-IMP-008). Page Up and Page Down move ten entries (DES-KEY-002, DES-FIND-004). Items with no English name are left out (DES-IMP-012).
 - **0.20**, 23 October 2026: Added the index (DES-FIND-004), opened with slash (DES-KEY-007). The import starts from two roots, the iPhone and ChatGPT, and skips items that came later (DES-IMP-002). Period moments are named with "begins" and "ends" (DES-IMP-008). Undated items may be dated from Wikipedia (DES-IMP-009).
 - **0.19**, 23 October 2026: Built the Wikidata import (Step 0C). Rewrote DES-IMP-002, DES-IMP-004 and DES-IMP-005 with what real data showed (DEC-54). Added DES-IMP-009 to DES-IMP-011.

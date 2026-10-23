@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.21 (draft)"
+subtitle: "Version 0.22 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -297,9 +297,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-60 | Periods start and end with real moments | 15, 23 October 2026 | A period's start and end are real moments, such as the invasion that started a war and the surrender that ended it, not entries called "begins" and "ends". So every period has at least two moments, and its first and last stops are its start and end. Replaces DEC-57. Recorded as DES-DATA-008 and DES-IMP-008. |
 | DEC-61 | Page Up and Page Down in lists | 15, 23 October 2026 | In the index list, Page Up and Page Down left NVDA saying only "Dependency tree document". They now move ten entries, in the index and in the card's lists. Recorded as DES-KEY-002 and DES-FIND-004. |
 | DEC-62 | Entries need an English name | 15, 23 October 2026 | An entry was named Q33593042, because it had no English label. An item's English Wikipedia title is now used when there is no label, and an item with neither is left out. Recorded as DES-IMP-012. |
+| DEC-63 | Say "Event:" before a moment | 16, 23 October 2026 | On arriving at a moment, NVDA reads "Event:" before its name, so it is clear what kind of entry it is. A period needs no word before it, because its range of dates shows it is a period. Recorded as DES-ANN-001. |
 
 # Change history
 
+- **0.22**, 23 October 2026: Recorded DEC-63.
 - **0.21**, 23 October 2026: Recorded DEC-60 to DEC-62, from testing the index and the seed set.
 - **0.20**, 23 October 2026: Recorded DEC-55 to DEC-59, answering Q-25 to Q-27. Added REQ-FIND-009, the index. REQ-CONT-007 allows several working examples.
 - **0.19**, 23 October 2026: Recorded DEC-54, the Wikidata import. Added Q-25 to Q-27.

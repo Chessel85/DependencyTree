@@ -21,8 +21,15 @@ function laptopState(): NavigationState {
 }
 
 describe('AnnouncementBuilder', () => {
-  it('labels the list on arrival with the entry and the list name', () => {
-    expect(words.arrivalLabel(laptopState())).toBe('laptop, 1981, Dependencies');
+  it('labels the list on arrival at a moment with "Event:", the entry and the list name', () => {
+    expect(words.arrivalLabel(laptopState())).toBe('Event: laptop, 1981, Dependencies');
+  });
+
+  it('labels the list on arrival at a period without "Event:"', () => {
+    const dataset = TestMoments.dataset([TestMoments.moment('start', 1947), TestMoments.moment('end', 1991)], []);
+    const war = TestMoments.period('war', dataset.find('start') as Moment, dataset.find('end') as Moment);
+    const state = new NavigationState(new ListSetBuilder(dataset), war);
+    expect(words.arrivalLabel(state)).toBe('war, 1947 to 1991, Moments');
   });
 
   it('labels the list after switching tab with just the list name', () => {
