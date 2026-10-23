@@ -45,7 +45,7 @@ export class AnnouncementBuilder {
    * where the user now is: "Event: Telephone, 1876, Dependencies" (DES-ANN-001).
    */
   arrivalLabel(state: NavigationState): string {
-    return `${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
+    return `${this.titledEntry(state.currentEntry)}, ${this.switchLabel(state)}`;
   }
 
   /** The list's label after switching tab: just "Dependencies". An empty list shows "None" as its only item (DES-ANN-003). */
@@ -53,8 +53,20 @@ export class AnnouncementBuilder {
     return state.activeList.kind;
   }
 
-  /** One entry in a list: "Event: Electric battery, 1800", or "Cold War, 1947 to 1991", or "Ongoing". */
+  /**
+   * One entry in a relationship list: "Electric battery, 1800", or "Cold War,
+   * 1947 to 1991", or "Ongoing". Each list holds only moments or only
+   * periods, so no "Event:" is needed (DES-ANN-012).
+   */
   entry(entry: Entry): string {
+    if (!entry.isVisitable) {
+      return entry.name;
+    }
+    return `${entry.name}, ${this.shortDate(entry)}`;
+  }
+
+  /** An entry where moments and periods are mixed, as in the index: "Event: Electric battery, 1800". */
+  titledEntry(entry: Entry): string {
     if (!entry.isVisitable) {
       return entry.name;
     }

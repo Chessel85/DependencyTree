@@ -50,9 +50,14 @@ describe('AnnouncementBuilder', () => {
     expect(words.summaryLines(laptopState().currentEntry)).toBe('Event: laptop\n1981\nLocation not known');
   });
 
-  it('gives a moment in a list "Event:" and a shortened date', () => {
+  it('gives a moment in a relationship list a shortened date and no "Event:"', () => {
     const iphone = new Moment('iphone', 'iPhone', new HistoricDate(2007, DatePrecision.Day, false, 1, 9), '', []);
-    expect(words.entry(iphone)).toBe('Event: iPhone, 2007');
+    expect(words.entry(iphone)).toBe('iPhone, 2007');
+  });
+
+  it('gives a moment in the index "Event:"', () => {
+    const iphone = new Moment('iphone', 'iPhone', new HistoricDate(2007, DatePrecision.Day, false, 1, 9), '', []);
+    expect(words.titledEntry(iphone)).toBe('Event: iPhone, 2007');
   });
 
   it('titles a moment with "Event:" and a period with just its name', () => {

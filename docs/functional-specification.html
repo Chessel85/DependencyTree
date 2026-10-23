@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.23 (draft)</p>
+<p class="subtitle">Version 0.24 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -896,8 +896,8 @@ list.</td>
 <td>On arriving at an entry, focus enters its new list, and the screen
 reader reads the list’s label and the highlighted entry. The label names
 the entry (DES-ANN-012), its shortened date and the list. For example:
-“Event: Telephone, 1876, Dependencies, list. Event: Electric battery,
-1800, 1 of 2.” An empty list’s label ends with “none”.</td>
+“Event: Telephone, 1876, Dependencies, list. Electric battery, 1800, 1
+of 2.” An empty list’s label ends with “none”.</td>
 <td>Agreed</td>
 <td>REQ-ANN-007</td>
 </tr>
@@ -978,13 +978,15 @@ the product owner.</td>
 </tr>
 <tr>
 <td>DES-ANN-012</td>
-<td>Wherever the tree names a moment, the name starts with “Event:”, so
-a moment can be told from a period. This covers the label on arrival,
-the entries in the lists and the index, the Space summary, the heading
-and the summary box. A period has no word before its name, because its
-range of dates shows it is a period. The path (P) gives names alone, as
-it is a list of names.<br>Example: “Event: iPhone, 2007”, and “Cold War,
-1947 to 1991”.</td>
+<td>Where the tree names a moment and it could be taken for a period,
+the name starts with “Event:”. This covers the label on arrival, the
+index, the Space summary, the heading and the summary box. The
+Dependencies, Enabled and Moments lists hold only moments, so their
+entries have no “Event:”. A period has no word before its name, because
+its range of dates shows it is a period. The path (P) gives names alone,
+as it is a list of names.<br>Example: arriving at the iPhone says
+“Event: iPhone, 2007, Dependencies”, and its dependencies are read as,
+for example, “Touchscreen, 1965”.</td>
 <td>Agreed</td>
 <td>REQ-ANN-007</td>
 </tr>
@@ -1667,6 +1669,8 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.24</strong>, 23 October 2026: The Dependencies, Enabled
+and Moments lists no longer say “Event:” (DES-ANN-012).</li>
 <li><strong>0.23</strong>, 23 October 2026: A moment’s name starts with
 “Event:” everywhere in the tree, not only on arrival (DES-ANN-012).</li>
 <li><strong>0.22</strong>, 23 October 2026: On arriving at a moment, its

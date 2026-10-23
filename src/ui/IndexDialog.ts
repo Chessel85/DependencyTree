@@ -50,7 +50,7 @@ export class IndexDialog {
     this.options = this.results.map((entry, i) => {
       const option = document.createElement('li');
       option.setAttribute('role', 'option');
-      option.textContent = this.words.entry(entry);
+      option.textContent = this.words.titledEntry(entry);
       option.setAttribute('aria-posinset', String(i + 1));
       option.setAttribute('aria-setsize', String(this.results.length));
       option.addEventListener('click', () => this.choose(i));
