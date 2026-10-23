@@ -78,6 +78,20 @@ export class NavigationState {
     return true;
   }
 
+  /**
+   * Goes straight to an entry, for example one clicked in the visual view
+   * (DES-VIEW-008). It is recorded in the path, as if the user had moved there.
+   */
+  goTo(entry: Entry): boolean {
+    if (!entry.isVisitable || entry === this.current) {
+      return false;
+    }
+    const from = this.current;
+    this.history.push(this.snapshot());
+    this.arrive(entry, this.activeList.kind, from);
+    return true;
+  }
+
   /** Ctrl+Left Arrow and Ctrl+Right Arrow: the previous or next list (DES-KEY-003). */
   switchList(delta: number): boolean {
     return this.selectList(this.activeIndex + delta);

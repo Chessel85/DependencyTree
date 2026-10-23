@@ -50,6 +50,20 @@ describe('NavigationState on moments', () => {
     expect(state.activeList.kind).toBe(ListKind.Enabled);
   });
 
+  it('goes straight to a clicked entry, and Backspace comes back', () => {
+    state.switchList(1);
+    expect(state.goTo(dataset.find('phone')!)).toBe(true);
+    expect(state.currentEntry.id).toBe('phone');
+    expect(state.activeList.kind).toBe(ListKind.Enabled);
+    expect(state.goBack()).toBe(true);
+    expect(state.currentEntry.id).toBe('laptop');
+  });
+
+  it('does nothing when the clicked entry is already current', () => {
+    expect(state.goTo(dataset.find('laptop')!)).toBe(false);
+    expect(state.path.map((e) => e.id)).toEqual(['laptop']);
+  });
+
   it('does not switch past the last list', () => {
     state.switchList(1);
     expect(state.switchList(1)).toBe(false);

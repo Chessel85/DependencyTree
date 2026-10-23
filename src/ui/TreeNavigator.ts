@@ -1,4 +1,5 @@
 import { AnnouncementBuilder } from '../core/announce/AnnouncementBuilder';
+import { Entry } from '../core/model/Entry';
 import { NavigationState } from '../core/navigation/NavigationState';
 import { StepResult } from '../core/navigation/StepResult';
 import { Command } from './Command';
@@ -15,11 +16,13 @@ import { SoundPlayer } from './SoundPlayer';
  * in the list move around the tree; Backspace and question mark also work
  * anywhere in the card. A move that isn't possible changes nothing and says
  * nothing (DES-NAV-008), except that Left Arrow or Right Arrow on an empty
- * Dependencies or Enabled list plays a sound (DES-ANN-011).
+ * Dependencies or Enabled list plays a sound (DES-ANN-011). Anything that
+ * shows the same position, such as the visual view, can watch for changes.
  */
 export class TreeNavigator {
   private readonly tabs: RelationshipTabs;
   private readonly listBox: RelationshipListBox;
+  private readonly watchers: (() => void)[] = [];
 
   constructor(
     cardElement: HTMLElement,
@@ -42,6 +45,16 @@ export class TreeNavigator {
   start(): void {
     this.showEntry();
     this.focusList();
+  }
+
+  /** Calls `watcher` after every change to the current entry, the active list or its highlight. */
+  watch(watcher: () => void): void {
+    this.watchers.push(watcher);
+  }
+
+  /** Goes straight to an entry, for example one clicked in the visual view (DES-VIEW-008). */
+  goTo(entry: Entry): void {
+    this.moved(this.state.goTo(entry));
   }
 
   focusList(): void {
@@ -106,6 +119,7 @@ export class TreeNavigator {
     if (this.state.selectList(index)) {
       this.tabs.select(index);
       this.listBox.build(this.state, this.words.switchLabel(this.state));
+      this.changed();
     }
   }
 
@@ -120,6 +134,7 @@ export class TreeNavigator {
     if (succeeded) {
       this.listBox.highlight(this.state.activeList.highlightedIndex);
       this.listBox.focus();
+      this.changed();
     }
   }
 
@@ -128,6 +143,7 @@ export class TreeNavigator {
       this.tabs.select(this.state.activeListIndex);
       this.listBox.build(this.state, this.words.switchLabel(this.state));
       this.focusList();
+      this.changed();
     }
   }
 
@@ -135,5 +151,12 @@ export class TreeNavigator {
     this.card.show(this.state.currentEntry);
     this.tabs.build(this.state);
     this.listBox.build(this.state, this.words.arrivalLabel(this.state));
+    this.changed();
+  }
+
+  private changed(): void {
+    for (const watcher of this.watchers) {
+      watcher();
+    }
   }
 }

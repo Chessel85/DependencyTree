@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.16 (draft)</p>
+<p class="subtitle">Version 0.17 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -513,18 +513,85 @@ keystrokes.</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
-<td>TimeAxis.ts</td>
-<td>The time axis, including the line for today.</td>
+<td>GraphLayout.ts</td>
+<td>The shapes a layout produces: boxes, links, period bars and axis
+labels.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>LayoutEngine.ts</td>
+<td>What every layout in the experiment provides.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>TimeScale.ts</td>
+<td>One way of spacing entries along the time axis.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>LinearTimeScale.ts</td>
+<td>Linear time (DES-VIEW-005).</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>CompressedTimeScale.ts</td>
+<td>Compressed, logarithmic time (DES-VIEW-005).</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>SlotTimeScale.ts</td>
+<td>One column per moment (DES-VIEW-005).</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>TickPicker.ts</td>
+<td>Chooses the year labels on the time axis.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>NodeBoxMaker.ts</td>
+<td>What a moment’s box says, and how big it is.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>ElkArranger.ts</td>
+<td>Runs the ELK layered layout (DES-VIEW-010).</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>LanePlacer.ts</td>
+<td>Puts boxes into rows so that they don’t overlap.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>TimeScaleLayout.ts</td>
+<td>Places moments by a time scale, in the layered layout’s rows.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>LayeredLayout.ts</td>
+<td>The layered layout as ELK gives it.</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>GraphLayoutAssembler.ts</td>
+<td>Adds the time axis and the band of period bars.</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
 <td>GraphView.ts</td>
-<td>Draws the neighbourhood of the current entry.</td>
+<td>Draws a layout in SVG, and marks the current and highlighted
+entries.</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
-<td>NodeRenderer.ts</td>
-<td>Draws moments and periods.</td>
+<td>LayoutChooser.ts</td>
+<td>The Layout drop-down list (DES-VIEW-011).</td>
+</tr>
+<tr>
+<td>src/ui/visual</td>
+<td>VisualView.ts</td>
+<td>Keeps the drawing in step with the navigator (REQ-VIEW-006).</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
@@ -576,8 +643,8 @@ you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008,
 DES-ANN-009, DES-ANN-011)</li>
 <li>You test it with NVDA, and we refine it.</li>
 </ol>
-<h3 id="step-0d-visual-layout-experiment">Step 0D: Visual layout
-experiment</h3>
+<h3 id="step-0d-visual-layout-experiment-built-in-review">Step 0D:
+Visual layout experiment (built, in review)</h3>
 <p>This comes after Step 0B and before Step 0C (DEC-42). Friends of the
 product owner may review it.</p>
 <ol type="1">
@@ -590,6 +657,44 @@ them. Then friends review the versions, and Be My Eyes can be used
 too.</li>
 <li>Keep the best layout, or offer a choice.</li>
 </ol>
+<p>What Claude saw in the screenshots of the first build (DEC-52):</p>
+<table>
+<colgroup>
+<col style="width: 21%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr>
+<th>Layout</th>
+<th>What it showed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear time</td>
+<td>The 150 years before the transistor are mostly empty, and the
+moments from 1947 to 2007 crowd into the right-hand third, needing about
+eight rows. It is easy to see what came when.</td>
+</tr>
+<tr>
+<td>Compressed time</td>
+<td>Gives the recent decades more room, but with only two centuries of
+data the gain is small. Where boxes nearly overlap, the curved links
+double back on themselves.</td>
+</tr>
+<tr>
+<td>Time slots</td>
+<td>Even and compact, with no crowding. But a long link, such as the
+battery to the lithium-ion battery, runs across most of the page, and
+the size of the gaps in time is lost.</td>
+</tr>
+<tr>
+<td>Layered, links around boxes</td>
+<td>The tidiest. Links never pass through boxes, and gather neatly into
+the iPhone. Distance shows only order.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="step-0c-real-data-from-wikidata">Step 0C: Real data from
 Wikidata</h3>
 <ol type="1">
@@ -694,6 +799,14 @@ correct links in the curation file.</td>
 <td>DES-REL-007, DES-IMP-008</td>
 </tr>
 <tr>
+<td>elkjs, the layout library, is published under the Eclipse Public
+License 2.0. Combining it with AGPL-3.0 code in one published bundle may
+not be allowed.</td>
+<td>Check before Phase 1. If it is a problem, load it as a separate
+file, or write a simpler layered layout.</td>
+<td>DES-VIEW-010, REQ-CONT-005</td>
+</tr>
+<tr>
 <td>Screen readers may behave differently. Focus mode handling and Mac
 keystrokes differ between NVDA and VoiceOver.</td>
 <td>Test on both early, in Phase 0.</td>
@@ -703,6 +816,9 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.17</strong>, 23 October 2026: Step 0D is built, and in
+review. Added the visual classes to the module layout, the screenshot
+findings, and a licence risk for elkjs.</li>
 <li><strong>0.16</strong>, 23 October 2026: Left Arrow and Right Arrow
 no longer move within a period (DEC-51), so StepResult has one fewer
 outcome.</li>

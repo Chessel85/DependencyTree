@@ -1,9 +1,13 @@
 body {
   font-family: system-ui, sans-serif;
   line-height: 1.5;
+  margin: 0;
+  padding: 1rem;
+}
+
+.column {
   margin: 0 auto;
   max-width: 50rem;
-  padding: 1rem;
 }
 
 #entry-card {
@@ -102,4 +106,135 @@ body {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* The visual view (DES-VIEW-001, DES-VIEW-002, DES-VIEW-004, DES-VIEW-009). */
+
+#visual-view {
+  --current: #1a5fb4;
+  --highlighted: #c64600;
+  --uncertain: #c8d3e0;
+  overflow-x: auto;
+  border: 1px solid #999;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+#visual-view svg {
+  display: block;
+  font-family: system-ui, sans-serif;
+}
+
+#visual-view .grid {
+  stroke: #e4e4e4;
+}
+
+#visual-view .tick-label,
+#visual-view .today-label {
+  font-size: 11px;
+  fill: #555;
+}
+
+#visual-view .today line {
+  stroke: #a51d2d;
+  stroke-width: 2;
+}
+
+#visual-view .today-label {
+  fill: #a51d2d;
+  font-weight: bold;
+}
+
+#visual-view .node,
+#visual-view .period {
+  cursor: pointer;
+}
+
+#visual-view .box {
+  fill: #fff;
+  stroke: #555;
+  stroke-width: 1.5;
+}
+
+#visual-view .uncertain .box {
+  fill: url(#soft);
+  stroke: none;
+}
+
+#visual-view .planned .box {
+  stroke-dasharray: 5 3;
+}
+
+#visual-view .span {
+  fill: url(#soft);
+}
+
+#visual-view .name {
+  font-size: 12px;
+  font-weight: bold;
+  fill: #222;
+}
+
+#visual-view .date {
+  font-size: 11px;
+  fill: #555;
+}
+
+#visual-view .bar {
+  fill: #e8dff5;
+  stroke: #7a5ea8;
+}
+
+#visual-view .mark {
+  fill: #7a5ea8;
+}
+
+#visual-view .bar-label {
+  font-size: 11px;
+  fill: #3d2a5c;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: #e8dff5;
+  stroke-width: 4px;
+}
+
+#visual-view .guides {
+  display: none;
+  stroke: #7a5ea8;
+  stroke-dasharray: 2 3;
+}
+
+#visual-view .period.current .guides {
+  display: inline;
+}
+
+#visual-view .link {
+  fill: none;
+  stroke: #8a8a8a;
+  stroke-width: 1.5;
+}
+
+#visual-view .arrow-head {
+  fill: #8a8a8a;
+}
+
+#visual-view .link.near {
+  stroke: var(--current);
+  stroke-width: 2.5;
+}
+
+#visual-view .current .box,
+#visual-view .current .bar {
+  stroke: var(--current);
+  stroke-width: 3;
+}
+
+#visual-view .current .box {
+  fill: #dbe8fb;
+}
+
+#visual-view .highlighted .box,
+#visual-view .highlighted .bar {
+  stroke: var(--highlighted);
+  stroke-width: 3;
 }

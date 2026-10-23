@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.16 (draft)"
+subtitle: "Version 0.17 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -227,7 +227,11 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-There are no open questions at the moment. Answered questions are in the Decision Log.
+Answered questions are in the Decision Log.
+
+| ID | Question | Notes |
+|--------|--------------------------------------------------|--------------------------------------------------|
+| Q-24 | Which layout should the visual view keep: linear time, compressed time, time slots, or the layered layout? Or should it offer a choice? | To be answered after friends have reviewed Step 0D. Each layout can be opened directly with an address ending ?layout=linear, ?layout=compressed, ?layout=slots or ?layout=layered. |
 
 # Decision log
 
@@ -284,9 +288,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-49 | The bump sound | 10, 21 October 2026 | The sound at the ends of a period is called the bump sound. The product owner recorded it, so it can be published in the repository as sounds/bump.wav. Recorded as DES-ANN-011. |
 | DEC-50 | "None" in an empty list | 11, 23 October 2026 | NVDA+Up Arrow was silent in an empty list. An empty list now shows one item, "None", and its label no longer adds "none". Recorded as DES-ANN-003. |
 | DEC-51 | Left Arrow and Right Arrow only go to other entries | 11, 23 October 2026 | In a period's Moments list, Left Arrow and Right Arrow moved through the list. For consistency they now do nothing there; Up Arrow and Down Arrow move, and Enter goes into an entry. The bump sound moves too: it now plays when Left Arrow is pressed on an empty Dependencies list, or Right Arrow on an empty Enabled list. Recorded as DES-KEY-010, DES-KEY-013, DES-ANN-011 and DES-NAV-012. |
+| DEC-52 | Visual layout experiment built | 12, 23 October 2026 | Step 0D is built, with four layouts chosen from a drop-down list. The analyst decided that the drawing is hidden from screen readers, because the card already gives everything it shows, and that clicking an entry goes to it and is recorded in the path. Recorded as DES-VIEW-008, DES-VIEW-011 and DES-VIEW-012. Led to Q-24. |
 
 # Change history
 
+- **0.17**, 23 October 2026: Recorded DEC-52, and added Q-24.
 - **0.16**, 23 October 2026: Recorded DEC-51, and revised REQ-NAV-015 and REQ-NAV-024.
 - **0.15**, 23 October 2026: Recorded DEC-50.
 - **0.14**, 21 October 2026: Recorded DEC-49, and renamed the "D'oh" sound to the bump sound.

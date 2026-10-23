@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.16 (draft)"
+subtitle: "Version 0.17 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -82,9 +82,22 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/ui | SearchPanel.ts | The Search region. |
 | src/ui | FilterPanel.ts | The Filters region. |
 | src/ui | HelpDialog.ts | Keyboard help. |
-| src/ui/visual | TimeAxis.ts | The time axis, including the line for today. |
-| src/ui/visual | GraphView.ts | Draws the neighbourhood of the current entry. |
-| src/ui/visual | NodeRenderer.ts | Draws moments and periods. |
+| src/ui/visual | GraphLayout.ts | The shapes a layout produces: boxes, links, period bars and axis labels. |
+| src/ui/visual | LayoutEngine.ts | What every layout in the experiment provides. |
+| src/ui/visual | TimeScale.ts | One way of spacing entries along the time axis. |
+| src/ui/visual | LinearTimeScale.ts | Linear time (DES-VIEW-005). |
+| src/ui/visual | CompressedTimeScale.ts | Compressed, logarithmic time (DES-VIEW-005). |
+| src/ui/visual | SlotTimeScale.ts | One column per moment (DES-VIEW-005). |
+| src/ui/visual | TickPicker.ts | Chooses the year labels on the time axis. |
+| src/ui/visual | NodeBoxMaker.ts | What a moment's box says, and how big it is. |
+| src/ui/visual | ElkArranger.ts | Runs the ELK layered layout (DES-VIEW-010). |
+| src/ui/visual | LanePlacer.ts | Puts boxes into rows so that they don't overlap. |
+| src/ui/visual | TimeScaleLayout.ts | Places moments by a time scale, in the layered layout's rows. |
+| src/ui/visual | LayeredLayout.ts | The layered layout as ELK gives it. |
+| src/ui/visual | GraphLayoutAssembler.ts | Adds the time axis and the band of period bars. |
+| src/ui/visual | GraphView.ts | Draws a layout in SVG, and marks the current and highlighted entries. |
+| src/ui/visual | LayoutChooser.ts | The Layout drop-down list (DES-VIEW-011). |
+| src/ui/visual | VisualView.ts | Keeps the drawing in step with the navigator (REQ-VIEW-006). |
 | src/ui/visual | ZoomController.ts | Zoom and pan. |
 | tests | | Tests that mirror the src folders above. |
 
@@ -112,7 +125,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 3. Add the period keystrokes, announcements and the bump sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
 4. You test it with NVDA, and we refine it.
 
-### Step 0D: Visual layout experiment
+### Step 0D: Visual layout experiment (built, in review)
 
 This comes after Step 0B and before Step 0C (DEC-42). Friends of the product owner may review it.
 
@@ -120,6 +133,15 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 2. Try the three ways of spacing entries in time, and a layered layout that keeps links out of boxes. (DES-VIEW-005, DES-VIEW-010)
 3. Claude checks each version by taking screenshots and looking at them. Then friends review the versions, and Be My Eyes can be used too.
 4. Keep the best layout, or offer a choice.
+
+What Claude saw in the screenshots of the first build (DEC-52):
+
+| Layout | What it showed |
+|--------------|--------------------------------------------------|
+| Linear time | The 150 years before the transistor are mostly empty, and the moments from 1947 to 2007 crowd into the right-hand third, needing about eight rows. It is easy to see what came when. |
+| Compressed time | Gives the recent decades more room, but with only two centuries of data the gain is small. Where boxes nearly overlap, the curved links double back on themselves. |
+| Time slots | Even and compact, with no crowding. But a long link, such as the battery to the lithium-ion battery, runs across most of the page, and the size of the gaps in time is lost. |
+| Layered, links around boxes | The tidiest. Links never pass through boxes, and gather neatly into the iPhone. Distance shows only order. |
 
 ### Step 0C: Real data from Wikidata
 
@@ -173,10 +195,12 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 | Wikidata's dependency coverage may be thin. The candidate properties are used unevenly. | Measure coverage in Phase 0, and use the curation file to fill the gaps. | DES-IMP-003, DES-IMP-004 |
 | Wikidata's dates may conflict with the predates rule. | Rough dates are compared as ranges, and the import reports and leaves out problem links instead of failing. | DES-REL-002, DES-IMP-007 |
 | Wikidata often links to a whole period rather than to a moment within it. | Use the period's start moment, review a sample in Phase 0, and correct links in the curation file. | DES-REL-007, DES-IMP-008 |
+| elkjs, the layout library, is published under the Eclipse Public License 2.0. Combining it with AGPL-3.0 code in one published bundle may not be allowed. | Check before Phase 1. If it is a problem, load it as a separate file, or write a simpler layered layout. | DES-VIEW-010, REQ-CONT-005 |
 | Screen readers may behave differently. Focus mode handling and Mac keystrokes differ between NVDA and VoiceOver. | Test on both early, in Phase 0. | DES-SR-006, DES-SR-002 |
 
 # Change history
 
+- **0.17**, 23 October 2026: Step 0D is built, and in review. Added the visual classes to the module layout, the screenshot findings, and a licence risk for elkjs.
 - **0.16**, 23 October 2026: Left Arrow and Right Arrow no longer move within a period (DEC-51), so StepResult has one fewer outcome.
 - **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Steps 0A and 0B are built. Updated the module layout to match the code.

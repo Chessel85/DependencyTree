@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Requirements Catalogue</h1>
-<p class="subtitle">Version 0.16 (draft)</p>
+<p class="subtitle">Version 0.17 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -1479,8 +1479,32 @@ DES-SR-006.</td>
 </tbody>
 </table>
 <h1 id="open-questions">Open questions</h1>
-<p>There are no open questions at the moment. Answered questions are in
-the Decision Log.</p>
+<p>Answered questions are in the Decision Log.</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 46%" />
+<col style="width: 46%" />
+</colgroup>
+<thead>
+<tr>
+<th>ID</th>
+<th>Question</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Q-24</td>
+<td>Which layout should the visual view keep: linear time, compressed
+time, time slots, or the layered layout? Or should it offer a
+choice?</td>
+<td>To be answered after friends have reviewed Step 0D. Each layout can
+be opened directly with an address ending ?layout=linear,
+?layout=compressed, ?layout=slots or ?layout=layered.</td>
+</tr>
+</tbody>
+</table>
 <h1 id="decision-log">Decision log</h1>
 <table>
 <colgroup>
@@ -1916,10 +1940,22 @@ now plays when Left Arrow is pressed on an empty Dependencies list, or
 Right Arrow on an empty Enabled list. Recorded as DES-KEY-010,
 DES-KEY-013, DES-ANN-011 and DES-NAV-012.</td>
 </tr>
+<tr>
+<td>DEC-52</td>
+<td>Visual layout experiment built</td>
+<td>12, 23 October 2026</td>
+<td>Step 0D is built, with four layouts chosen from a drop-down list.
+The analyst decided that the drawing is hidden from screen readers,
+because the card already gives everything it shows, and that clicking an
+entry goes to it and is recorded in the path. Recorded as DES-VIEW-008,
+DES-VIEW-011 and DES-VIEW-012. Led to Q-24.</td>
+</tr>
 </tbody>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.17</strong>, 23 October 2026: Recorded DEC-52, and added
+Q-24.</li>
 <li><strong>0.16</strong>, 23 October 2026: Recorded DEC-51, and revised
 REQ-NAV-015 and REQ-NAV-024.</li>
 <li><strong>0.15</strong>, 23 October 2026: Recorded DEC-50.</li>
