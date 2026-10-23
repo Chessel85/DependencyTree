@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Functional Specification</h1>
-<p class="subtitle">Version 0.17 (draft)</p>
+<p class="subtitle">Version 0.18 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -1133,11 +1133,14 @@ an experiment, and the best kept, or offered as a choice:<br>• Linear
 time, where distance is proportional to the years between entries.<br>•
 Compressed (logarithmic) time, which gives recent centuries more
 room.<br>• Time slots, where each entry has its own column in date
-order, however far apart the dates are.<br>Built in Step 0D. In all
-three, each moment starts in the row the layered layout (DES-VIEW-010)
+order, however far apart the dates are.<br>Built in Step 0D. Linear time
+is kept (DEC-53). Compressed time and time slots are dropped. In linear
+time, each moment starts in the row the layered layout (DES-VIEW-010)
 gives it, and moves to the nearest free row if its box would overlap
-another. Links are smooth curves, and can pass behind other boxes.</td>
-<td>Proposed</td>
+another. Links are smooth curves, and can pass behind other boxes. Deep
+history and the crowded recent centuries (REQ-VIEW-005) are left to zoom
+(DES-VIEW-007).</td>
+<td>Agreed</td>
 <td>REQ-VIEW-005</td>
 </tr>
 <tr>
@@ -1178,13 +1181,14 @@ straight segments.</td>
 </tr>
 <tr>
 <td>DES-VIEW-011</td>
-<td>While the experiment runs, a drop-down list called Layout, below the
-card, offers four layouts: Linear time, Compressed time, Time slots, and
-Layered with links around boxes. A note under it says what to look for
-in each. The choice is kept in the page address, for example
-?layout=slots, so a reviewer can share a link to one layout.</td>
-<td>Proposed</td>
-<td>REQ-VIEW-005, REQ-VIEW-013</td>
+<td>A drop-down list called Layout, below the card, switches the visual
+view between two layouts: Linear time (DES-VIEW-005) and Layered
+(DES-VIEW-010). Linear time is the default. A note under it says how the
+chosen layout spaces the moments. The choice is kept in the page
+address, for example ?layout=layered, so a link can open one
+layout.</td>
+<td>Agreed</td>
+<td>REQ-VIEW-014, REQ-VIEW-013</td>
 </tr>
 <tr>
 <td>DES-VIEW-012</td>
@@ -1551,6 +1555,10 @@ REQ-CONT-006)</li>
 </ul>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.18</strong>, 23 October 2026: The visual view keeps two
+layouts, linear time and layered, and the user switches between them
+(DES-VIEW-005, DES-VIEW-011). Compressed time and time slots are
+dropped.</li>
 <li><strong>0.17</strong>, 23 October 2026: Built the visual layout
 experiment (Step 0D). Added DES-VIEW-011, the Layout chooser, and
 DES-VIEW-012, the drawing being hidden from screen readers. Updated

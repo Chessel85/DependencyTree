@@ -15,7 +15,6 @@ import { KeyBindings } from './KeyBindings';
 import { LiveAnnouncer } from './LiveAnnouncer';
 import { SoundPlayer } from './SoundPlayer';
 import { TreeNavigator } from './TreeNavigator';
-import { CompressedTimeScale } from './visual/CompressedTimeScale';
 import { ElkArranger } from './visual/ElkArranger';
 import { GraphView } from './visual/GraphView';
 import { LayeredLayout } from './visual/LayeredLayout';
@@ -23,7 +22,6 @@ import { LayoutChooser } from './visual/LayoutChooser';
 import { LayoutEngine } from './visual/LayoutEngine';
 import { LinearTimeScale } from './visual/LinearTimeScale';
 import { NodeBoxMaker } from './visual/NodeBoxMaker';
-import { SlotTimeScale } from './visual/SlotTimeScale';
 import { TimeScaleLayout } from './visual/TimeScaleLayout';
 import { VisualView } from './visual/VisualView';
 
@@ -74,7 +72,7 @@ navigator = new TreeNavigator(
 );
 navigator.start();
 
-// The visual view and its layout experiment (Step 0D).
+// The visual view, with a choice of two layouts (DES-VIEW-011).
 const moments = dataset.graph.allMoments.sort(Entry.byDate);
 const dependencies = dataset.graph.dependencies;
 const maker = new NodeBoxMaker(formatter, shortener, today);
@@ -87,28 +85,14 @@ const engines: LayoutEngine[] = [
   new TimeScaleLayout(
     'linear',
     'Linear time',
-    'Distance across the page is proportional to the years between moments. Long gaps show honestly, but recent moments crowd together and need more rows.',
+    'Distance across the page is proportional to the years between moments, so long gaps in time show as long gaps.',
     new LinearTimeScale(earliest, now, 12, MARGIN),
-    moments, dependencies, arranger, maker, rowHeight,
-  ),
-  new TimeScaleLayout(
-    'compressed',
-    'Compressed time',
-    'Recent years get more room than distant ones, on a logarithmic scale. Look at whether the crowding eases, and whether the uneven spacing of the years is confusing.',
-    new CompressedTimeScale(earliest, now, 2000, MARGIN),
-    moments, dependencies, arranger, maker, rowHeight,
-  ),
-  new TimeScaleLayout(
-    'slots',
-    'Time slots',
-    'Each moment has its own column in date order, however far apart the dates are. Compact and even, but the size of the gaps in time is lost.',
-    new SlotTimeScale(moments, widthOf, ROW_GAP, MARGIN),
     moments, dependencies, arranger, maker, rowHeight,
   ),
   new LayeredLayout(
     'layered',
-    'Layered, links around boxes',
-    'Columns in date order, placed to reduce crossing links, with links routed around the boxes in straight segments. Moments from the same year can share a column.',
+    'Layered',
+    'Moments in columns in date order, arranged so that links go around boxes and cross as little as possible. Distance across the page shows order, not time.',
     moments, arranger, maker, MARGIN,
   ),
 ];

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.17 (draft)"
+subtitle: "Version 0.18 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -83,11 +83,9 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/ui | FilterPanel.ts | The Filters region. |
 | src/ui | HelpDialog.ts | Keyboard help. |
 | src/ui/visual | GraphLayout.ts | The shapes a layout produces: boxes, links, period bars and axis labels. |
-| src/ui/visual | LayoutEngine.ts | What every layout in the experiment provides. |
+| src/ui/visual | LayoutEngine.ts | What every layout provides. |
 | src/ui/visual | TimeScale.ts | One way of spacing entries along the time axis. |
 | src/ui/visual | LinearTimeScale.ts | Linear time (DES-VIEW-005). |
-| src/ui/visual | CompressedTimeScale.ts | Compressed, logarithmic time (DES-VIEW-005). |
-| src/ui/visual | SlotTimeScale.ts | One column per moment (DES-VIEW-005). |
 | src/ui/visual | TickPicker.ts | Chooses the year labels on the time axis. |
 | src/ui/visual | NodeBoxMaker.ts | What a moment's box says, and how big it is. |
 | src/ui/visual | ElkArranger.ts | Runs the ELK layered layout (DES-VIEW-010). |
@@ -125,7 +123,7 @@ The architecture document required by DES-CODE-006 will be kept in step with thi
 3. Add the period keystrokes, announcements and the bump sound, which you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008, DES-ANN-009, DES-ANN-011)
 4. You test it with NVDA, and we refine it.
 
-### Step 0D: Visual layout experiment (built, in review)
+### Step 0D: Visual layout experiment (built, layouts chosen)
 
 This comes after Step 0B and before Step 0C (DEC-42). Friends of the product owner may review it.
 
@@ -142,6 +140,8 @@ What Claude saw in the screenshots of the first build (DEC-52):
 | Compressed time | Gives the recent decades more room, but with only two centuries of data the gain is small. Where boxes nearly overlap, the curved links double back on themselves. |
 | Time slots | Even and compact, with no crowding. But a long link, such as the battery to the lithium-ion battery, runs across most of the page, and the size of the gaps in time is lost. |
 | Layered, links around boxes | The tidiest. Links never pass through boxes, and gather neatly into the iPhone. Distance shows only order. |
+
+Outcome (DEC-53): linear time and layered are both kept, and the user switches between them with the Layout list. Compressed time and time slots are dropped.
 
 ### Step 0C: Real data from Wikidata
 
@@ -200,6 +200,7 @@ What Claude saw in the screenshots of the first build (DEC-52):
 
 # Change history
 
+- **0.18**, 23 October 2026: Step 0D keeps linear time and layered, with a choice (DEC-53). Removed the two dropped layouts from the module layout.
 - **0.17**, 23 October 2026: Step 0D is built, and in review. Added the visual classes to the module layout, the screenshot findings, and a licence risk for elkjs.
 - **0.16**, 23 October 2026: Left Arrow and Right Arrow no longer move within a period (DEC-51), so StepResult has one fewer outcome.
 - **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.

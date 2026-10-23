@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.17 (draft)"
+subtitle: "Version 0.18 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -154,6 +154,7 @@ Each requirement is a row in a table, with these columns:
 | REQ-VIEW-011 | The visual view shows periods with the moments they contain, and shows how precisely each date is known. | Must | Agreed | Round 2, confirmed in Round 3 |
 | REQ-VIEW-012 | The visual view shows clearly which periods are still going on. | Must | Agreed | Round 4 |
 | REQ-VIEW-013 | Links between entries are drawn so that they don't pass through other entries. | Should | Agreed | Round 7 |
+| REQ-VIEW-014 | The user can switch the visual view between a layout where distance across the page is proportional to time, and a layout that keeps links clear of other entries. | Must | Agreed | Round 12 |
 
 # Search and filtering (FIND)
 
@@ -227,11 +228,7 @@ These IDs are retired and won't be reused. Most moved to the Functional Specific
 
 # Open questions
 
-Answered questions are in the Decision Log.
-
-| ID | Question | Notes |
-|--------|--------------------------------------------------|--------------------------------------------------|
-| Q-24 | Which layout should the visual view keep: linear time, compressed time, time slots, or the layered layout? Or should it offer a choice? | To be answered after friends have reviewed Step 0D. Each layout can be opened directly with an address ending ?layout=linear, ?layout=compressed, ?layout=slots or ?layout=layered. |
+There are no open questions at the moment. Answered questions are in the Decision Log.
 
 # Decision log
 
@@ -289,9 +286,11 @@ Answered questions are in the Decision Log.
 | DEC-50 | "None" in an empty list | 11, 23 October 2026 | NVDA+Up Arrow was silent in an empty list. An empty list now shows one item, "None", and its label no longer adds "none". Recorded as DES-ANN-003. |
 | DEC-51 | Left Arrow and Right Arrow only go to other entries | 11, 23 October 2026 | In a period's Moments list, Left Arrow and Right Arrow moved through the list. For consistency they now do nothing there; Up Arrow and Down Arrow move, and Enter goes into an entry. The bump sound moves too: it now plays when Left Arrow is pressed on an empty Dependencies list, or Right Arrow on an empty Enabled list. Recorded as DES-KEY-010, DES-KEY-013, DES-ANN-011 and DES-NAV-012. |
 | DEC-52 | Visual layout experiment built | 12, 23 October 2026 | Step 0D is built, with four layouts chosen from a drop-down list. The analyst decided that the drawing is hidden from screen readers, because the card already gives everything it shows, and that clicking an entry goes to it and is recorded in the path. Recorded as DES-VIEW-008, DES-VIEW-011 and DES-VIEW-012. Led to Q-24. |
+| DEC-53 | Linear and layered layouts, with a choice | 12, 23 October 2026 | The user must be able to switch between linear time and the layered layout, so both are kept. Compressed time and time slots are dropped. Answers Q-24. Recorded as REQ-VIEW-014, DES-VIEW-005 and DES-VIEW-011. |
 
 # Change history
 
+- **0.18**, 23 October 2026: Recorded DEC-53, answering Q-24. Added REQ-VIEW-014.
 - **0.17**, 23 October 2026: Recorded DEC-52, and added Q-24.
 - **0.16**, 23 October 2026: Recorded DEC-51, and revised REQ-NAV-015 and REQ-NAV-024.
 - **0.15**, 23 October 2026: Recorded DEC-50.

@@ -172,7 +172,7 @@
 <body>
 <header id="title-block-header">
 <h1 class="title">Dependency Tree — Implementation Plan</h1>
-<p class="subtitle">Version 0.17 (draft)</p>
+<p class="subtitle">Version 0.18 (draft)</p>
 <p class="date">2026-10-21</p>
 </header>
 <nav id="TOC" role="doc-toc">
@@ -520,7 +520,7 @@ labels.</td>
 <tr>
 <td>src/ui/visual</td>
 <td>LayoutEngine.ts</td>
-<td>What every layout in the experiment provides.</td>
+<td>What every layout provides.</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
@@ -531,16 +531,6 @@ labels.</td>
 <td>src/ui/visual</td>
 <td>LinearTimeScale.ts</td>
 <td>Linear time (DES-VIEW-005).</td>
-</tr>
-<tr>
-<td>src/ui/visual</td>
-<td>CompressedTimeScale.ts</td>
-<td>Compressed, logarithmic time (DES-VIEW-005).</td>
-</tr>
-<tr>
-<td>src/ui/visual</td>
-<td>SlotTimeScale.ts</td>
-<td>One column per moment (DES-VIEW-005).</td>
 </tr>
 <tr>
 <td>src/ui/visual</td>
@@ -643,8 +633,8 @@ you supply. (DES-NAV-012, DES-KEY-010, DES-KEY-011, DES-ANN-008,
 DES-ANN-009, DES-ANN-011)</li>
 <li>You test it with NVDA, and we refine it.</li>
 </ol>
-<h3 id="step-0d-visual-layout-experiment-built-in-review">Step 0D:
-Visual layout experiment (built, in review)</h3>
+<h3 id="step-0d-visual-layout-experiment-built-layouts-chosen">Step 0D:
+Visual layout experiment (built, layouts chosen)</h3>
 <p>This comes after Step 0B and before Step 0C (DEC-42). Friends of the
 product owner may review it.</p>
 <ol type="1">
@@ -695,6 +685,9 @@ the iPhone. Distance shows only order.</td>
 </tr>
 </tbody>
 </table>
+<p>Outcome (DEC-53): linear time and layered are both kept, and the user
+switches between them with the Layout list. Compressed time and time
+slots are dropped.</p>
 <h3 id="step-0c-real-data-from-wikidata">Step 0C: Real data from
 Wikidata</h3>
 <ol type="1">
@@ -816,6 +809,9 @@ keystrokes differ between NVDA and VoiceOver.</td>
 </table>
 <h1 id="change-history">Change history</h1>
 <ul>
+<li><strong>0.18</strong>, 23 October 2026: Step 0D keeps linear time
+and layered, with a choice (DEC-53). Removed the two dropped layouts
+from the module layout.</li>
 <li><strong>0.17</strong>, 23 October 2026: Step 0D is built, and in
 review. Added the visual classes to the module layout, the screenshot
 findings, and a licence risk for elkjs.</li>

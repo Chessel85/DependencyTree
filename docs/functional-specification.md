@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.17 (draft)"
+subtitle: "Version 0.18 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -193,12 +193,12 @@ Nowhere earlier to go. The current entry is the electric battery, which has no d
 | DES-VIEW-002 | Moments are drawn as dots. Periods are drawn as horizontal bars from their start moment to their end moment. The moments in between are drawn as labelled marks along the bar. Smaller periods are drawn as thinner bars inside it. (Proposed)<br>A period that is still going on is drawn with a jagged right-hand edge at today's date. (Agreed) | Agreed in part | REQ-VIEW-011, REQ-VIEW-012 |
 | DES-VIEW-003 | A dependency arrow runs from one moment to another (DES-REL-006). Where a moment is part of a period, the arrow starts or ends at its mark on the period's bar. | Proposed | REQ-VIEW-011, REQ-REL-011 |
 | DES-VIEW-004 | Uncertain dates are drawn with soft, faded edges spanning their range of possible times (DES-DATE-003). Exact dates are drawn with sharp edges. | Proposed | REQ-VIEW-011, REQ-DATA-005 |
-| DES-VIEW-005 | Three ways of spacing entries along the time axis are to be tried in an experiment, and the best kept, or offered as a choice:<br>• Linear time, where distance is proportional to the years between entries.<br>• Compressed (logarithmic) time, which gives recent centuries more room.<br>• Time slots, where each entry has its own column in date order, however far apart the dates are.<br>Built in Step 0D. In all three, each moment starts in the row the layered layout (DES-VIEW-010) gives it, and moves to the nearest free row if its box would overlap another. Links are smooth curves, and can pass behind other boxes. | Proposed | REQ-VIEW-005 |
+| DES-VIEW-005 | Three ways of spacing entries along the time axis are to be tried in an experiment, and the best kept, or offered as a choice:<br>• Linear time, where distance is proportional to the years between entries.<br>• Compressed (logarithmic) time, which gives recent centuries more room.<br>• Time slots, where each entry has its own column in date order, however far apart the dates are.<br>Built in Step 0D. Linear time is kept (DEC-53). Compressed time and time slots are dropped. In linear time, each moment starts in the row the layered layout (DES-VIEW-010) gives it, and moves to the nearest free row if its box would overlap another. Links are smooth curves, and can pass behind other boxes. Deep history and the crowded recent centuries (REQ-VIEW-005) are left to zoom (DES-VIEW-007). | Agreed | REQ-VIEW-005 |
 | DES-VIEW-006 | By default, only the neighbourhood of the current entry is drawn, a few steps in each direction. An option draws its whole ancestry. | Proposed | REQ-VIEW-005, REQ-NFR-002 |
 | DES-VIEW-007 | Horizontal and vertical zoom are independent. They are controlled by the mouse wheel with modifier keys, by pinch gestures, and by on-screen buttons. | Proposed | REQ-VIEW-003 |
 | DES-VIEW-008 | Clicking an entry makes it current, and updates the navigator to match. Built in Step 0D: clicking a moment's box or a period's bar goes there, and the move is recorded in the path, so Backspace comes back. | Proposed | REQ-VIEW-009 |
 | DES-VIEW-010 | Entries are laid out with a layered graph drawing method, which places entries to reduce crossing links and routes links around boxes rather than through them. A library such as ELK (elkjs) is a candidate, to be judged in the experiment.<br>Built in Step 0D with elkjs. Moments from an earlier year always go in an earlier column, so time still runs left to right, but distance shows only order. Links are drawn in straight segments. | Proposed | REQ-VIEW-001, REQ-VIEW-013 |
-| DES-VIEW-011 | While the experiment runs, a drop-down list called Layout, below the card, offers four layouts: Linear time, Compressed time, Time slots, and Layered with links around boxes. A note under it says what to look for in each. The choice is kept in the page address, for example ?layout=slots, so a reviewer can share a link to one layout. | Proposed | REQ-VIEW-005, REQ-VIEW-013 |
+| DES-VIEW-011 | A drop-down list called Layout, below the card, switches the visual view between two layouts: Linear time (DES-VIEW-005) and Layered (DES-VIEW-010). Linear time is the default. A note under it says how the chosen layout spaces the moments. The choice is kept in the page address, for example ?layout=layered, so a link can open one layout. | Agreed | REQ-VIEW-014, REQ-VIEW-013 |
 | DES-VIEW-012 | The drawing is hidden from screen readers and is not in the Tab order, because it shows nothing that the card doesn't. A short paragraph above it says so. | Proposed | REQ-ACC-001, REQ-ACC-015 |
 | DES-VIEW-009 | A line marks today's date. Anything dated after it is planned, and is drawn with a dashed outline. | Agreed | REQ-DATA-014 |
 
@@ -275,6 +275,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.18**, 23 October 2026: The visual view keeps two layouts, linear time and layered, and the user switches between them (DES-VIEW-005, DES-VIEW-011). Compressed time and time slots are dropped.
 - **0.17**, 23 October 2026: Built the visual layout experiment (Step 0D). Added DES-VIEW-011, the Layout chooser, and DES-VIEW-012, the drawing being hidden from screen readers. Updated DES-VIEW-001, DES-VIEW-005, DES-VIEW-008 and DES-VIEW-010 with what was built.
 - **0.16**, 23 October 2026: In a period's Moments list, Left Arrow and Right Arrow now do nothing; Up Arrow and Down Arrow move through the stops (DES-KEY-010, DES-NAV-012). The bump sound now plays when Left Arrow or Right Arrow has nothing to go to (DES-ANN-011).
 - **0.15**, 23 October 2026: An empty list shows "None" as its only item (DES-ANN-003).

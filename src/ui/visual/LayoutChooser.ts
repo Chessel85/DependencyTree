@@ -3,9 +3,9 @@ import { LayoutEngine } from './LayoutEngine';
 const ADDRESS_PARAMETER = 'layout';
 
 /**
- * The drop-down list of layouts in the experiment (DES-VIEW-011), with a note
- * on the chosen one. The choice is kept in the page address, so a reviewer
- * can share a link to a particular layout.
+ * The drop-down list of layouts (DES-VIEW-011), with a note on the chosen
+ * one. The choice is kept in the page address, so anyone can share a link
+ * to a particular layout.
  */
 export class LayoutChooser {
   constructor(
