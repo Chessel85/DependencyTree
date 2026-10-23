@@ -81,10 +81,10 @@ describe('NavigationState on moments', () => {
     expect(state.path.map((m) => m.id)).toEqual(['laptop', 'battery', 'phone']);
   });
 
-  it('keeps an empty Dependencies list, and does nothing when following it', () => {
+  it('keeps an empty Dependencies list, and bumps when following it', () => {
     state.stepEarlier();
     expect(state.list(ListKind.Dependencies)?.size).toBe(0);
-    expect(state.stepEarlier()).toBe(StepResult.Nothing);
+    expect(state.stepEarlier()).toBe(StepResult.Bumped);
     expect(state.currentEntry.id).toBe('battery');
   });
 });
@@ -117,16 +117,15 @@ describe('NavigationState on periods', () => {
     expect(periodState.activeList.entries.map((e) => e.id)).toEqual(['war-start', 'race', 'net', 'war-end']);
   });
 
-  it('steps through the stops with Left Arrow and Right Arrow, bumping at the ends', () => {
-    expect(periodState.stepEarlier()).toBe(StepResult.Bumped);
-    expect(periodState.stepLater()).toBe(StepResult.Highlighted);
-    expect(periodState.activeList.highlighted?.id).toBe('race');
-    periodState.activeList.moveToLast();
-    expect(periodState.stepLater()).toBe(StepResult.Bumped);
+  it('does nothing with Left Arrow or Right Arrow in the Moments list', () => {
+    expect(periodState.stepEarlier()).toBe(StepResult.Nothing);
+    expect(periodState.stepLater()).toBe(StepResult.Nothing);
+    expect(periodState.currentEntry.id).toBe('war');
+    expect(periodState.activeList.highlighted?.id).toBe('war-start');
   });
 
   it('goes into a smaller period with Enter, showing its Moments list', () => {
-    periodState.stepLater();
+    periodState.activeList.moveBy(1);
     expect(periodState.follow()).toBe(true);
     expect(periodState.currentEntry.id).toBe('race');
     expect(periodState.activeList.kind).toBe(ListKind.Moments);
@@ -134,7 +133,7 @@ describe('NavigationState on periods', () => {
   });
 
   it('goes up through Part of, with the period it came from highlighted', () => {
-    periodState.stepLater();
+    periodState.activeList.moveBy(1);
     periodState.follow();
     expect(periodState.switchList(1)).toBe(true);
     expect(periodState.activeList.kind).toBe(ListKind.PartOf);
@@ -156,6 +155,6 @@ describe('NavigationState on periods', () => {
     expect(eraState.activeList.entries.map((e) => e.name)).toEqual(['era-start', 'chip', 'Ongoing']);
     eraState.activeList.moveToLast();
     expect(eraState.follow()).toBe(false);
-    expect(eraState.stepLater()).toBe(StepResult.Bumped);
+    expect(eraState.stepLater()).toBe(StepResult.Nothing);
   });
 });

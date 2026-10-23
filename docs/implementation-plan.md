@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.14 (draft)"
+subtitle: "Version 0.16 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -56,7 +56,7 @@ Each folder below lists a few of the small class files it would contain. One cla
 | src/core/navigation | NavigationState.ts | The current entry, the active list, and the highlighted entry in each list. |
 | src/core/navigation | RelationshipList.ts | One list on an entry, such as Dependencies or a period's Moments. |
 | src/core/navigation | ListSetBuilder.ts | Decides which lists an entry shows, including a period's stops and "Ongoing" (DES-NAV-002, DES-NAV-009, DES-NAV-012). |
-| src/core/navigation | StepResult.ts | What Left Arrow or Right Arrow did: moved, stepped within a period, bumped, or nothing. |
+| src/core/navigation | StepResult.ts | What Left Arrow or Right Arrow did: moved, bumped, or nothing. |
 | src/core/navigation | PathHistory.ts | For Backspace and P. |
 | src/core/announce | AnnouncementBuilder.ts | The wording of announcements. |
 | src/core/announce | Verbosity.ts | The verbosity levels. |
@@ -177,6 +177,7 @@ This comes after Step 0B and before Step 0C (DEC-42). Friends of the product own
 
 # Change history
 
+- **0.16**, 23 October 2026: Left Arrow and Right Arrow no longer move within a period (DEC-51), so StepResult has one fewer outcome.
 - **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Steps 0A and 0B are built. Updated the module layout to match the code.
 - **0.11**, 21 October 2026: Step 0A now builds a card of standard controls. Updated the module layout to match.

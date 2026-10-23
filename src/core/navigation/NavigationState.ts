@@ -53,17 +53,17 @@ export class NavigationState {
   }
 
   /**
-   * Left Arrow. In a period's Moments list, it steps to the previous stop.
-   * In a Dependencies list, it goes to the highlighted entry. Otherwise it
-   * does nothing (DES-KEY-001, DES-KEY-010, DES-KEY-013).
+   * Left Arrow. In a Dependencies list, it goes to the highlighted entry, or
+   * bumps if the list is empty. Otherwise it does nothing, including in a
+   * period's Moments list (DES-KEY-001, DES-KEY-013, DES-ANN-011).
    */
   stepEarlier(): StepResult {
-    return this.step(ListKind.Dependencies, -1);
+    return this.step(ListKind.Dependencies);
   }
 
   /** Right Arrow: the same as Left Arrow, but later in time, using the Enabled list. */
   stepLater(): StepResult {
-    return this.step(ListKind.Enabled, 1);
+    return this.step(ListKind.Enabled);
   }
 
   /** Enter: goes to the highlighted entry in the active list (DES-KEY-004, DES-KEY-011). */
@@ -105,15 +105,11 @@ export class NavigationState {
     return true;
   }
 
-  private step(followKind: ListKind, delta: number): StepResult {
-    const list = this.activeList;
-    if (list.kind === ListKind.Moments) {
-      return list.moveBy(delta) ? StepResult.Highlighted : StepResult.Bumped;
+  private step(followKind: ListKind): StepResult {
+    if (this.activeList.kind !== followKind) {
+      return StepResult.Nothing;
     }
-    if (list.kind === followKind) {
-      return this.follow() ? StepResult.Moved : StepResult.Nothing;
-    }
-    return StepResult.Nothing;
+    return this.follow() ? StepResult.Moved : StepResult.Bumped;
   }
 
   /**

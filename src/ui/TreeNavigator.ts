@@ -14,8 +14,8 @@ import { SoundPlayer } from './SoundPlayer';
  * Connects the navigation state to the card of standard controls. Keystrokes
  * in the list move around the tree; Backspace and question mark also work
  * anywhere in the card. A move that isn't possible changes nothing and says
- * nothing (DES-NAV-008), except at the ends of a period, where a sound plays
- * (DES-ANN-011).
+ * nothing (DES-NAV-008), except that Left Arrow or Right Arrow on an empty
+ * Dependencies or Enabled list plays a sound (DES-ANN-011).
  */
 export class TreeNavigator {
   private readonly tabs: RelationshipTabs;
@@ -90,7 +90,6 @@ export class TreeNavigator {
   private stepped(result: StepResult): void {
     switch (result) {
       case StepResult.Moved: return this.moved(true);
-      case StepResult.Highlighted: return this.highlighted(true);
       case StepResult.Bumped: return this.bump.play();
       case StepResult.Nothing: return;
     }

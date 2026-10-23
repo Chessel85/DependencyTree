@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.15 (draft)"
+subtitle: "Version 0.16 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -126,10 +126,10 @@ Each requirement is a row in a table, with these columns:
 | REQ-NAV-005 | The user can ask for a summary of the current entry at any time. | Should | Proposed | Analyst |
 | REQ-NAV-006 | The user can ask for the path they have taken to reach the current entry. | Should | Proposed | Analyst |
 | REQ-NAV-007 | The user can list the full chain of dependencies of an entry, every ancestor back to the earliest, as a flat, sortable list. | Could | Proposed | Analyst |
-| REQ-NAV-015 | When a requested move isn't possible, the user stays where they are. For now this is silent, except at the ends of a period. This is to be reviewed after testing. | Must | Agreed | Analyst, revised in Round 6 |
+| REQ-NAV-015 | When a requested move isn't possible, the user stays where they are. For now this is silent, except for a sound when Left Arrow or Right Arrow has nothing to go to. This is to be reviewed after testing. | Must | Agreed | Analyst, revised in Rounds 6 and 11 |
 | REQ-NAV-016 | When later relationship types are added, they can be browsed in the same way as dependencies. | Later | Agreed | Round 1 |
 | REQ-NAV-023 | The user can move from a period into any of the moments it contains, and from a moment up to the periods it belongs to. | Must | Agreed | Round 2, confirmed in Round 4 |
-| REQ-NAV-024 | Within a period, the user can step through its moments in date order. | Must | Agreed | Round 4 |
+| REQ-NAV-024 | Within a period, the user can move through its moments in date order. | Must | Agreed | Round 4 |
 
 # Screen reader announcements (ANN)
 
@@ -283,9 +283,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-48 | Periods built | 10, 21 October 2026 | Step 0B is built with three real periods: the Cold War, the Space Race inside it, and the Information Age, which is still going on. The "D'oh" sound is sounds/bump.wav. Recorded as DES-ANN-011 and DES-NAV-012. |
 | DEC-49 | The bump sound | 10, 21 October 2026 | The sound at the ends of a period is called the bump sound. The product owner recorded it, so it can be published in the repository as sounds/bump.wav. Recorded as DES-ANN-011. |
 | DEC-50 | "None" in an empty list | 11, 23 October 2026 | NVDA+Up Arrow was silent in an empty list. An empty list now shows one item, "None", and its label no longer adds "none". Recorded as DES-ANN-003. |
+| DEC-51 | Left Arrow and Right Arrow only go to other entries | 11, 23 October 2026 | In a period's Moments list, Left Arrow and Right Arrow moved through the list. For consistency they now do nothing there; Up Arrow and Down Arrow move, and Enter goes into an entry. The bump sound moves too: it now plays when Left Arrow is pressed on an empty Dependencies list, or Right Arrow on an empty Enabled list. Recorded as DES-KEY-010, DES-KEY-013, DES-ANN-011 and DES-NAV-012. |
 
 # Change history
 
+- **0.16**, 23 October 2026: Recorded DEC-51, and revised REQ-NAV-015 and REQ-NAV-024.
 - **0.15**, 23 October 2026: Recorded DEC-50.
 - **0.14**, 21 October 2026: Recorded DEC-49, and renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Recorded DEC-46 to DEC-48.

@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.15 (draft)"
+subtitle: "Version 0.16 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -74,7 +74,7 @@ From any one moment, looking back through its dependencies, the structure branch
 The navigator behaves differently on a moment and on a period (DEC-19):
 
 - **On a moment**, the user browses its lists, such as Dependencies and Enabled, and presses Enter to go to an entry in one of them.
-- **On a period**, the user steps through its moments in date order with Left Arrow and Right Arrow, and presses Enter to go into one of them.
+- **On a period**, the user moves through its moments in date order with Up Arrow and Down Arrow, and presses Enter to go into one of them.
 
 ## Lists on a moment
 
@@ -94,7 +94,7 @@ The navigator behaves differently on a moment and on a period (DEC-19):
 | DES-NAV-009 | A period is presented as a row of stops in date order, from its start moment to its end moment. If the period is still going on, the last stop is "Ongoing", at today's date. | Agreed | REQ-NAV-023, REQ-NAV-024, REQ-DATA-006 |
 | DES-NAV-010 | On arriving at a period from one of its moments, through the Part of list, that moment is highlighted. Otherwise, the start moment is highlighted. | Proposed | REQ-ACC-015 |
 | DES-NAV-011 | A smaller period inside a larger one is a single stop, placed at the date of its start moment. Enter goes into it. | Proposed | REQ-NAV-023, REQ-REL-003 |
-| DES-NAV-012 | A period that is part of a larger period has a Part of list, reached with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up works the same way everywhere. (Agreed)<br>The period's stops are its first list, called Moments. While Moments is active, Left Arrow and Right Arrow step through the stops, and Enter goes into the highlighted one. While Part of is active, Up Arrow and Down Arrow move through it, and Enter goes to the highlighted larger period. (Proposed, built in Step 0B) | Agreed in part | REQ-NAV-023, REQ-NAV-003 |
+| DES-NAV-012 | A period that is part of a larger period has a Part of list, reached with Ctrl+Left Arrow and Ctrl+Right Arrow, as on a moment. So going up works the same way everywhere. (Agreed)<br>The period's stops are its first list, called Moments. While Moments is active, Up Arrow and Down Arrow move through the stops, and Enter goes into the highlighted one. While Part of is active, Up Arrow and Down Arrow move through it, and Enter goes to the highlighted larger period. (Proposed, built in Step 0B) | Agreed in part | REQ-NAV-023, REQ-NAV-003 |
 
 ## Anywhere
 
@@ -115,13 +115,13 @@ These keystrokes apply while the navigator has focus.
 | DES-KEY-002 | Up Arrow and Down Arrow move through the active list (Agreed). Home and End go to its first and last entry (Proposed). | Agreed in part | REQ-NAV-003 |
 | DES-KEY-003 | Ctrl+Left Arrow and Ctrl+Right Arrow go to the previous and next list on Windows. Option+Left Arrow and Option+Right Arrow do the same on macOS, where Ctrl+Left Arrow and Ctrl+Right Arrow switch desktops. | Agreed | REQ-NAV-003, REQ-ACC-008 |
 | DES-KEY-004 | Enter goes to the highlighted entry in the active list. | Agreed | REQ-NAV-001, REQ-NAV-002, REQ-NAV-023 |
-| DES-KEY-013 | Left Arrow when the Dependencies list isn't active, and Right Arrow when the Enabled list isn't active, do nothing, silently. | Agreed | REQ-NAV-015 |
+| DES-KEY-013 | Left Arrow when the Dependencies list isn't active, and Right Arrow when the Enabled list isn't active, do nothing, silently. This includes a period's Moments and Part of lists. | Agreed | REQ-NAV-015 |
 
 ### On a period
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-KEY-010 | Left Arrow and Right Arrow move to the previous and next stop in the period (DES-NAV-009). Home and End go to the first and last stop (Proposed). | Agreed in part | REQ-NAV-024 |
+| DES-KEY-010 | Up Arrow and Down Arrow move to the previous and next stop in the period (DES-NAV-009), and Home and End go to the first and last stop, as in any list. Left Arrow and Right Arrow do nothing here (DES-KEY-013), so they only ever go to another entry, the same everywhere in the application. | Agreed | REQ-NAV-024 |
 | DES-KEY-011 | Enter goes into the highlighted moment or smaller period, which becomes the current entry. | Agreed | REQ-NAV-023 |
 
 ### Anywhere
@@ -143,10 +143,10 @@ These keystrokes apply while the navigator has focus.
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
 | DES-ANN-005 | When filters hide entries, the announcement includes the number hidden. Example: "Dependencies, 3, 2 hidden by filters." | Proposed | REQ-ANN-006 |
 | DES-ANN-006 | A new announcement replaces any announcement that hasn't been spoken yet. | Proposed | REQ-ANN-004 |
-| DES-ANN-007 | When there is nowhere to go, nothing is announced. The only exception is the sound at the ends of a period (DES-ANN-011). This is to be reviewed after testing, and spoken messages such as "No earlier entries" may be added if silence is confusing. | Agreed | REQ-NAV-015 |
+| DES-ANN-007 | When there is nowhere to go, nothing is announced. The only exception is the bump sound (DES-ANN-011). This is to be reviewed after testing, and spoken messages such as "No earlier entries" may be added if silence is confusing. | Agreed | REQ-NAV-015 |
 | DES-ANN-008 | Arriving at a period works the same way, through the label of its Moments list. For example: "Information Age, 1970s to present, Moments, list. iPhone, 2007, 5 of 6." | Agreed | REQ-ANN-007 |
 | DES-ANN-009 | Moving to the end of a period that is still going on announces "Ongoing". | Agreed | REQ-DATA-006 |
-| DES-ANN-011 | When the user presses Left Arrow at the start of a period's Moments list, or Right Arrow at its end, a short bump sound plays, and nothing else changes. On a period still going on, the end is the "Ongoing" stop. Up Arrow and Down Arrow at the ends are silent, as in any list. The sound is sounds/bump.wav, recorded by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
+| DES-ANN-011 | When the user presses Left Arrow on an empty Dependencies list, or Right Arrow on an empty Enabled list, a short bump sound plays, and nothing else changes. For example, Left Arrow on the electric battery, which has no dependencies. Up Arrow and Down Arrow at the ends of a list are silent, as in any list. The sound is sounds/bump.wav, recorded by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
 
 ## Worked examples
 
@@ -163,15 +163,18 @@ Moving into and through a period. The current entry is the writing of the Twelve
 
 1. Ctrl+Right Arrow: "Part of, 1. Roman Republic, 509 BCE to 27 BCE, 1 of 1."
 2. Enter: "Roman Republic, 509 BCE to 27 BCE, 6 moments. Twelve Tables, around 450 BCE, 2 of 6." The Twelve Tables is highlighted, because the user came from it (DES-NAV-010).
-3. Left Arrow: "Start of the Roman Republic, around 509 BCE, 1 of 6."
-4. Left Arrow again: the bump sound plays. The user is already at the start.
-5. Right Arrow: "Twelve Tables, around 450 BCE, 2 of 6."
+3. Up Arrow: "Start of the Roman Republic, around 509 BCE, 1 of 6."
+4. Left Arrow: nothing happens. Left Arrow and Right Arrow don't move within a list.
+5. Down Arrow: "Twelve Tables, around 450 BCE, 2 of 6."
 6. Enter: "Twelve Tables, around 450 BCE. Dependencies, 2." The user is on a moment again, and its lists work as before.
 
 A period that is still going on. The current entry is the People's Republic of China, and the user is on its last moment.
 
-1. Right Arrow: "Ongoing."
-2. Right Arrow again: the bump sound plays.
+1. Down Arrow: "Ongoing." It can't be gone to, so Enter does nothing.
+
+Nowhere earlier to go. The current entry is the electric battery, which has no dependencies.
+
+1. Left Arrow: the bump sound plays, and the user stays where they are.
 
 ## Screen reader integration
 
@@ -270,6 +273,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.16**, 23 October 2026: In a period's Moments list, Left Arrow and Right Arrow now do nothing; Up Arrow and Down Arrow move through the stops (DES-KEY-010, DES-NAV-012). The bump sound now plays when Left Arrow or Right Arrow has nothing to go to (DES-ANN-011).
 - **0.15**, 23 October 2026: An empty list shows "None" as its only item (DES-ANN-003).
 - **0.14**, 21 October 2026: Renamed the "D'oh" sound to the bump sound.
 - **0.13**, 21 October 2026: Built periods (Step 0B). Removed landmarks (DES-SCR-001). After switching tab, the list's label is just its name (DES-ANN-003). Dates in lists are shortened by how far they are from today (DES-DATE-006). The old list box stays until focus has moved (DES-SR-007). Updated DES-ANN-001, DES-ANN-008, DES-ANN-011, DES-NAV-012 and DES-SR-006 for periods.
