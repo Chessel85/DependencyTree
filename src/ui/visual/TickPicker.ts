@@ -16,7 +16,7 @@ export class TickPicker {
     return kept;
   }
 
-  /** For layouts where distance doesn't mean time: each year at the first box from that year. */
+  /** For layouts where distance doesn't mean time: each year at the first dot from that year. */
   fromNodes(nodes: readonly NodeBox[]): AxisTick[] {
     const firstByYear = new Map<number, number>();
     for (const node of nodes) {

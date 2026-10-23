@@ -16,7 +16,7 @@ export interface Box {
   height: number;
 }
 
-/** A moment, drawn as a labelled box. */
+/** A moment, drawn as a dot, with its name and date in a tooltip (DES-VIEW-002). */
 export interface NodeBox extends Box {
   moment: Moment;
   name: string;

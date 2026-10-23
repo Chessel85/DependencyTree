@@ -11,8 +11,8 @@ const GAP = 24;
 
 /**
  * Finishes a layout: the time axis goes at the top, then a band of period
- * bars, then the moments. Each bar runs from its start moment's box to its
- * end moment's box, or to today if the period is still going on
+ * bars, then the moments. Each bar runs from its start moment's dot to its
+ * end moment's dot, or to today if the period is still going on
  * (DES-VIEW-002). A period inside another is drawn as a thinner bar.
  */
 export class GraphLayoutAssembler {

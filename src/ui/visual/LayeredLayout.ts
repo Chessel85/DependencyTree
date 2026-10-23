@@ -7,7 +7,7 @@ import { TickPicker } from './TickPicker';
 
 /**
  * The layered layout as ELK gives it (DES-VIEW-010): moments in columns in
- * date order, with links routed in straight segments around the boxes.
+ * date order, with links routed in straight segments around the dots.
  * Distance across the page shows order, not how much time passed.
  */
 export class LayeredLayout implements LayoutEngine {

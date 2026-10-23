@@ -15,8 +15,9 @@ const LINK_CLASS: Record<LinkKind, string> = {
 
 /**
  * Draws a finished layout in SVG, and marks the current entry and the
- * highlighted entry (DES-VIEW-001). Clicking a moment or a period chooses it
- * (DES-VIEW-008). The drawing is hidden from screen readers, because the card
+ * highlighted entry (DES-VIEW-001). Moments are dots and periods are bars,
+ * with no text on them; pointing at one shows its name in a tooltip
+ * (DES-VIEW-002). Clicking a moment or a period chooses it (DES-VIEW-008). The drawing is hidden from screen readers, because the card
  * already gives everything it shows (DES-VIEW-012).
  */
 export class GraphView {
@@ -83,7 +84,11 @@ export class GraphView {
     for (const [offset, opacity] of [['0', '0'], ['0.2', '1'], ['0.8', '1'], ['1', '0']]) {
       soft.append(this.element('stop', { offset, 'stop-color': 'var(--uncertain)', 'stop-opacity': opacity }));
     }
-    defs.append(marker, soft);
+    const fuzzy = this.element('radialGradient', { id: 'fuzzy' });
+    for (const [offset, opacity] of [['0', '1'], ['0.5', '1'], ['1', '0']]) {
+      fuzzy.append(this.element('stop', { offset, 'stop-color': 'var(--dot)', 'stop-opacity': opacity }));
+    }
+    defs.append(marker, soft, fuzzy);
     return defs;
   }
 
@@ -119,8 +124,7 @@ export class GraphView {
     for (const mark of bar.marks) {
       group.append(this.element('circle', { cx: String(mark), cy: String(y + height / 2), r: '3', class: 'mark' }));
     }
-    group.append(this.text(bar.period.name, x + 8, y + height / 2 + 4, 'bar-label'));
-    group.append(this.guides(bar, layout));
+    group.append(this.tooltip(bar.period.name), this.guides(bar, layout));
     return group;
   }
 
@@ -161,7 +165,7 @@ export class GraphView {
       return `M ${first.x} ${first.y} ` + rest.map((p) => `L ${p.x} ${p.y}`).join(' ');
     }
     const last = rest[rest.length - 1];
-    const pull = Math.max(40, Math.abs(last.x - first.x) / 2);
+    const pull = Math.abs(last.x - first.x) / 2;
     return `M ${first.x} ${first.y} C ${first.x + pull} ${first.y}, ${last.x - pull} ${last.y}, ${last.x} ${last.y}`;
   }
 
@@ -169,18 +173,15 @@ export class GraphView {
     const group = this.chosenBy(node.moment, 'node');
     group.classList.toggle('uncertain', node.uncertain);
     group.classList.toggle('planned', node.planned);
-    if (node.span && node.span[1] - node.span[0] > 2) {
+    const cy = node.y + node.height / 2;
+    // Only an uncertain date gets a bar for its range, so exact dates stay plain dots (DES-VIEW-004).
+    if (node.uncertain && node.span && node.span[1] - node.span[0] > node.width) {
       const [left, right] = node.span;
-      group.append(this.element('rect', {
-        x: String(left), y: String(node.y + node.height + 2), width: String(right - left), height: '5', class: 'span',
-      }));
+      group.append(this.element('rect', { x: String(left), y: String(cy - 2), width: String(right - left), height: '4', class: 'span' }));
     }
     group.append(
-      this.element('rect', {
-        x: String(node.x), y: String(node.y), width: String(node.width), height: String(node.height), rx: '6', class: 'box',
-      }),
-      this.text(node.name, node.x + 8, node.y + 17, 'name'),
-      this.text(node.date, node.x + 8, node.y + 32, 'date'),
+      this.element('circle', { cx: String(node.x + node.width / 2), cy: String(cy), r: String(node.width / 2), class: 'dot' }),
+      this.tooltip(`${node.name}, ${node.date}`),
     );
     return group;
   }
@@ -190,6 +191,13 @@ export class GraphView {
     group.addEventListener('click', () => this.onChoose(entry));
     this.shapes.set(entry, group);
     return group;
+  }
+
+  /** The browser shows a title as a tooltip when the pointer rests on its parent. */
+  private tooltip(content: string): SVGTitleElement {
+    const title = this.element('title', {});
+    title.textContent = content;
+    return title;
   }
 
   private text(content: string, x: number, y: number, className: string): SVGTextElement {

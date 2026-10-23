@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.25 (draft)"
+subtitle: "Version 0.26 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -320,9 +320,11 @@ Answered questions are in the Decision Log.
 | DEC-72 | Empty lists are hidden | 19, 23 October 2026 | With six kinds of linked list, a moment shows only the lists that have entries. Left Arrow and Right Arrow now follow any list going their way through time, and the bump sound plays when there is nothing at all that way. Recorded as DES-NAV-003, DES-NAV-005, DES-KEY-001, DES-KEY-013 and DES-ANN-011. |
 | DEC-73 | The hand-made sample is dropped | 19, 23 October 2026 | The page opens the Wikidata seed set, and the sample file and its tests are removed. Recorded as DES-IMP-011. |
 | DEC-74 | The second import | 19, 23 October 2026 | The analyst imported again with the three kinds of link: 121 moments and 11 periods, with 43 depends-on, 41 caused-by and 18 influenced-by links, and 5 ideas. Wikidata has causes for World War I, World War II and the end of the Soviet Union, and influences between programming languages, but none for the Normandy landings, Operation Bolero or the Battle of the Atlantic, so such a chain would come from the curation file. Cisleithania and the Lands of the Crown of Saint Stephen are excluded, because they list centuries of crown lands as their parts. A children's novel given as an effect of Perestroika is excluded. Recorded in DES-IMP-004, DES-IMP-005 and the Implementation Plan. |
+| DEC-75 | No text in the drawing | 20, 23 October 2026 | Screenshots showed the labelled boxes crowding the visual view. Long names took up decades of space, and links between close moments looped back on themselves. Moments are now dots and periods plain bars, with names shown only in tooltips. Recorded in DES-VIEW-002. |
 
 # Change history
 
+- **0.26**, 23 October 2026: Recorded DEC-75: the visual view has no text on its moments and periods, only tooltips.
 - **0.25**, 23 October 2026: Recorded the round 19 decisions, DEC-66 to DEC-74: three kinds of link, ideas, notes and hidden empty lists. Added REQ-VIS-006, REQ-DATA-015, REQ-REL-012 to REQ-REL-014 and REQ-ANN-010. Brought REQ-REL-005, influence, forward to Must. Widened REQ-VIS-002, REQ-REL-002, REQ-REL-007 to REQ-REL-011, REQ-NAV-001, REQ-NAV-002, REQ-NAV-016, REQ-CONT-008 and REQ-CONT-011 to every kind of link. Added Q-28 and Q-29.
 - **0.24**, 23 October 2026: Recorded DEC-65.
 - **0.23**, 23 October 2026: Recorded DEC-64.

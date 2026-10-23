@@ -114,6 +114,7 @@ body {
   --current: #1a5fb4;
   --highlighted: #c64600;
   --uncertain: #c8d3e0;
+  --dot: #555;
   overflow-x: auto;
   border: 1px solid #999;
   border-radius: 0.5rem;
@@ -150,34 +151,26 @@ body {
   cursor: pointer;
 }
 
-#visual-view .box {
+/* A white ring keeps each dot clear of the links that meet it. */
+#visual-view .dot {
+  fill: var(--dot);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+#visual-view .uncertain .dot {
+  fill: url(#fuzzy);
+}
+
+#visual-view .planned .dot {
   fill: #fff;
-  stroke: #555;
+  stroke: var(--dot);
   stroke-width: 1.5;
-}
-
-#visual-view .uncertain .box {
-  fill: url(#soft);
-  stroke: none;
-}
-
-#visual-view .planned .box {
-  stroke-dasharray: 5 3;
+  stroke-dasharray: 2 2;
 }
 
 #visual-view .span {
   fill: url(#soft);
-}
-
-#visual-view .name {
-  font-size: 12px;
-  font-weight: bold;
-  fill: #222;
-}
-
-#visual-view .date {
-  font-size: 11px;
-  fill: #555;
 }
 
 #visual-view .bar {
@@ -189,14 +182,6 @@ body {
   fill: #7a5ea8;
 }
 
-#visual-view .bar-label {
-  font-size: 11px;
-  fill: #3d2a5c;
-  pointer-events: none;
-  paint-order: stroke;
-  stroke: #e8dff5;
-  stroke-width: 4px;
-}
 
 #visual-view .guides {
   display: none;
@@ -231,18 +216,29 @@ body {
   stroke-width: 2.5;
 }
 
-#visual-view .current .box,
 #visual-view .current .bar {
   stroke: var(--current);
   stroke-width: 3;
 }
 
-#visual-view .current .box {
-  fill: #dbe8fb;
-}
-
-#visual-view .highlighted .box,
 #visual-view .highlighted .bar {
   stroke: var(--highlighted);
   stroke-width: 3;
+}
+
+/* The current and highlighted dots are larger as well as coloured. */
+#visual-view .current .dot,
+#visual-view .highlighted .dot {
+  r: 8px;
+  stroke-dasharray: none;
+}
+
+#visual-view .current .dot {
+  fill: var(--current);
+  stroke: #fff;
+}
+
+#visual-view .highlighted .dot {
+  fill: var(--highlighted);
+  stroke: #fff;
 }

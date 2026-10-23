@@ -3,7 +3,7 @@ import { Link } from '../../core/model/Link';
 import { Moment } from '../../core/model/Moment';
 import { Point } from './GraphLayout';
 
-/** Where ELK put each moment, and the route of each link around the boxes. */
+/** Where ELK put each moment, and the route of each link around the dots. */
 export interface ElkArrangement {
   positions: Map<Moment, Point>;
   routes: Map<Link, Point[]>;
@@ -11,7 +11,7 @@ export interface ElkArrangement {
 
 /**
  * Runs the ELK layered layout on the moments (DES-VIEW-010). It places them
- * in columns so that crossing links are few, and routes links around boxes.
+ * in columns so that crossing links are few, and routes links around dots.
  * Moments from an earlier year are always in an earlier column, so time still
  * runs left to right. The layout is worked out once, the first time it is
  * asked for, and shared by every layout that uses it.
@@ -22,8 +22,7 @@ export class ElkArranger {
   constructor(
     private readonly moments: readonly Moment[],
     private readonly links: readonly Link[],
-    private readonly widthOf: (moment: Moment) => number,
-    private readonly height: number,
+    private readonly size: number,
   ) {}
 
   result(): Promise<ElkArrangement> {
@@ -31,13 +30,13 @@ export class ElkArranger {
   }
 
   private async arrange(): Promise<ElkArrangement> {
-    const { moments, links, widthOf, height } = this;
+    const { moments, links, size } = this;
     const years = [...new Set(moments.map((m) => m.date.year))].sort((a, b) => a - b);
     const byId = new Map(moments.map((m) => [m.id, m]));
     const children: ElkNode[] = moments.map((m) => ({
       id: m.id,
-      width: widthOf(m),
-      height,
+      width: size,
+      height: size,
       layoutOptions: { 'elk.partitioning.partition': String(years.indexOf(m.date.year)) },
     }));
     const edges: ElkExtendedEdge[] = links.map((l, i) => ({

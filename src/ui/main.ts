@@ -7,7 +7,6 @@ import { DateShortener } from '../core/dates/DateShortener';
 import { EntryIndex } from '../core/find/EntryIndex';
 import { HistoricDate } from '../core/dates/HistoricDate';
 import { Entry } from '../core/model/Entry';
-import { Moment } from '../core/model/Moment';
 import { ListSetBuilder } from '../core/navigation/ListSetBuilder';
 import { NavigationState } from '../core/navigation/NavigationState';
 import { EntryCard } from './EntryCard';
@@ -93,9 +92,8 @@ navigator.start();
 const moments = dataset.graph.allMoments.sort(Entry.byDate);
 const links = dataset.graph.links;
 const maker = new NodeBoxMaker(formatter, shortener, today);
-const widthOf = (moment: Moment) => maker.widthOf(moment);
-const rowHeight = maker.height + ROW_GAP;
-const arranger = new ElkArranger(moments, links, widthOf, maker.height);
+const rowHeight = maker.size + ROW_GAP;
+const arranger = new ElkArranger(moments, links, maker.size);
 const earliest = moments[0].sortKey;
 const now = today.range().earliest;
 const engines: LayoutEngine[] = [
@@ -109,7 +107,7 @@ const engines: LayoutEngine[] = [
   new LayeredLayout(
     'layered',
     'Layered',
-    'Moments in columns in date order, arranged so that links go around boxes and cross as little as possible. Distance across the page shows order, not time.',
+    'Moments in columns in date order, arranged so that links go around dots and cross as little as possible. Distance across the page shows order, not time.',
     moments, arranger, maker, MARGIN,
   ),
 ];
