@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Functional Specification"
-subtitle: "Version 0.22 (draft)"
+subtitle: "Version 0.23 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -138,7 +138,7 @@ These keystrokes apply while the navigator has focus.
 
 | ID | Design | Status | Satisfies |
 |--------------|--------------------------------------------------|----------|--------------|
-| DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry, its shortened date and the list. A moment's label starts with "Event:". A period's doesn't, because its range of dates shows it is a period. For example: "Event: Telephone, 1876, Dependencies, list. Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
+| DES-ANN-001 | On arriving at an entry, focus enters its new list, and the screen reader reads the list's label and the highlighted entry. The label names the entry (DES-ANN-012), its shortened date and the list. For example: "Event: Telephone, 1876, Dependencies, list. Event: Electric battery, 1800, 1 of 2." An empty list's label ends with "none". | Agreed | REQ-ANN-007 |
 | DES-ANN-002 | Moving within a list moves focus to the entry, which the screen reader reads with its position. For example: "Smartphone, 1994, 3 of 12." | Proposed | REQ-ANN-007 |
 | DES-ANN-003 | Switching list moves focus into the new list, whose label is just the list's name, followed by the highlighted entry. For example: "Enabled, list. Laptop, 1981, 1 of 8." An empty list holds one item, "None", so NVDA+Up Arrow has something to read: "Enabled, list. None." Enter does nothing on it. | Agreed | REQ-ANN-007, REQ-ACC-015 |
 | DES-ANN-004 | There are three verbosity levels:<br>• Brief: names only<br>• Normal: as in the examples in this section (the default)<br>• Full: Normal, plus the first sentence of the description | Proposed | REQ-ACC-010 |
@@ -148,6 +148,7 @@ These keystrokes apply while the navigator has focus.
 | DES-ANN-008 | Arriving at a period works the same way, through the label of its Moments list. For example: "Information Age, 1970s to present, Moments, list. iPhone, 2007, 5 of 6." | Agreed | REQ-ANN-007 |
 | DES-ANN-009 | Moving to the end of a period that is still going on announces "Ongoing". | Agreed | REQ-DATA-006 |
 | DES-ANN-011 | When the user presses Left Arrow on an empty Dependencies list, or Right Arrow on an empty Enabled list, a short bump sound plays, and nothing else changes. For example, Left Arrow on the electric battery, which has no dependencies. Up Arrow and Down Arrow at the ends of a list are silent, as in any list. The sound is sounds/bump.wav, recorded by the product owner. | Agreed | REQ-NAV-015, REQ-ANN-009 |
+| DES-ANN-012 | Wherever the tree names a moment, the name starts with "Event:", so a moment can be told from a period. This covers the label on arrival, the entries in the lists and the index, the Space summary, the heading and the summary box. A period has no word before its name, because its range of dates shows it is a period. The path (P) gives names alone, as it is a list of names.<br>Example: "Event: iPhone, 2007", and "Cold War, 1947 to 1991". | Agreed | REQ-ANN-007 |
 
 ## Worked examples
 
@@ -281,6 +282,7 @@ The Contains list, proposed in version 0.3, is also withdrawn. A period's moment
 
 # Change history
 
+- **0.23**, 23 October 2026: A moment's name starts with "Event:" everywhere in the tree, not only on arrival (DES-ANN-012).
 - **0.22**, 23 October 2026: On arriving at a moment, its label starts with "Event:" (DES-ANN-001).
 - **0.21**, 23 October 2026: Periods start and end with real moments, with no made-up start or end stops (DES-DATA-008, DES-IMP-008). Page Up and Page Down move ten entries (DES-KEY-002, DES-FIND-004). Items with no English name are left out (DES-IMP-012).
 - **0.20**, 23 October 2026: Added the index (DES-FIND-004), opened with slash (DES-KEY-007). The import starts from two roots, the iPhone and ChatGPT, and skips items that came later (DES-IMP-002). Period moments are named with "begins" and "ends" (DES-IMP-008). Undated items may be dated from Wikipedia (DES-IMP-009).

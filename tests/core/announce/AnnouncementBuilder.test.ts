@@ -47,12 +47,18 @@ describe('AnnouncementBuilder', () => {
   });
 
   it('puts the name, date and location on separate lines of the summary box', () => {
-    expect(words.summaryLines(laptopState().currentEntry)).toBe('laptop\n1981\nLocation not known');
+    expect(words.summaryLines(laptopState().currentEntry)).toBe('Event: laptop\n1981\nLocation not known');
   });
 
-  it('gives an entry in a list a shortened date', () => {
+  it('gives a moment in a list "Event:" and a shortened date', () => {
     const iphone = new Moment('iphone', 'iPhone', new HistoricDate(2007, DatePrecision.Day, false, 1, 9), '', []);
-    expect(words.entry(iphone)).toBe('iPhone, 2007');
+    expect(words.entry(iphone)).toBe('Event: iPhone, 2007');
+  });
+
+  it('titles a moment with "Event:" and a period with just its name', () => {
+    const start = TestMoments.moment('start', 1947);
+    expect(words.title(start)).toBe('Event: start');
+    expect(words.title(TestMoments.period('war', start, undefined))).toBe('war');
   });
 
   it('gives a period its range of dates, and "present" if still going on', () => {
@@ -63,7 +69,7 @@ describe('AnnouncementBuilder', () => {
   });
 
   it('summarises the entry and its lists', () => {
-    expect(words.summary(laptopState())).toBe('laptop, 1981. Dependencies, 2. Enabled, none.');
+    expect(words.summary(laptopState())).toBe('Event: laptop, 1981. Dependencies, 2. Enabled, none.');
   });
 
   it('announces the path oldest first, even when the user walked back in time', () => {

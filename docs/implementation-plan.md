@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Implementation Plan"
-subtitle: "Version 0.22 (draft)"
+subtitle: "Version 0.23 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -231,6 +231,7 @@ The index (DES-FIND-004), planned for Phase 1 as part of search, was brought for
 
 # Change history
 
+- **0.23**, 23 October 2026: No change to the plan; version kept in step with the other documents.
 - **0.22**, 23 October 2026: No change to the plan; version kept in step with the other documents.
 - **0.21**, 23 October 2026: Periods start and end with real moments, found by the new PeriodAnchors class or named in the curation file (DEC-60).
 - **0.20**, 23 October 2026: Added ChatGPT as a second root, the walk skipping later items, and the index, brought forward from Phase 1 (DEC-55 to DEC-59).

@@ -22,24 +22,30 @@ export class AnnouncementBuilder {
     private readonly shortener: DateShortener,
   ) {}
 
+  /**
+   * An entry's name as the tree gives it: a moment's starts with "Event:",
+   * so it can be told from a period, whose range of dates already shows
+   * what it is (DES-ANN-012).
+   */
+  title(entry: Entry): string {
+    return entry instanceof Moment ? `Event: ${entry.name}` : entry.name;
+  }
+
   /** The summary box: the name, the date, and the location or kind of period, one per line. */
   summaryLines(entry: Entry): string {
     if (entry instanceof Period) {
       return [entry.name, this.fullDate(entry), entry.isOngoing ? 'Period, still going on' : 'Period'].join('\n');
     }
     const location = entry instanceof Moment ? entry.location : undefined;
-    return [entry.name, this.fullDate(entry), location ?? 'Location not known'].join('\n');
+    return [this.title(entry), this.fullDate(entry), location ?? 'Location not known'].join('\n');
   }
 
   /**
    * The list's label after arriving at an entry, so the screen reader names
-   * where the user now is: "Event: Telephone, 1876, Dependencies"
-   * (DES-ANN-001). A period needs no word before it, as its range of dates
-   * shows it is a period.
+   * where the user now is: "Event: Telephone, 1876, Dependencies" (DES-ANN-001).
    */
   arrivalLabel(state: NavigationState): string {
-    const kind = state.currentEntry instanceof Period ? '' : 'Event: ';
-    return `${kind}${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
+    return `${this.entry(state.currentEntry)}, ${this.switchLabel(state)}`;
   }
 
   /** The list's label after switching tab: just "Dependencies". An empty list shows "None" as its only item (DES-ANN-003). */
@@ -47,12 +53,12 @@ export class AnnouncementBuilder {
     return state.activeList.kind;
   }
 
-  /** One entry in a list: "Electric battery, 1800", or "Cold War, 1947 to 1991", or "Ongoing". */
+  /** One entry in a list: "Event: Electric battery, 1800", or "Cold War, 1947 to 1991", or "Ongoing". */
   entry(entry: Entry): string {
     if (!entry.isVisitable) {
       return entry.name;
     }
-    return `${entry.name}, ${this.shortDate(entry)}`;
+    return `${this.title(entry)}, ${this.shortDate(entry)}`;
   }
 
   /** A tab: "Dependencies (2)". */
@@ -69,7 +75,7 @@ export class AnnouncementBuilder {
       .filter((list): list is RelationshipList => list !== undefined)
       .map((list) => `${list.kind}, ${list.size === 0 ? 'none' : list.size}.`)
       .join(' ');
-    return `${entry.name}, ${this.fullDate(entry)}${place}. ${counts}`;
+    return `${this.title(entry)}, ${this.fullDate(entry)}${place}. ${counts}`;
   }
 
   /** D */

@@ -15,7 +15,7 @@ export class EntryCard {
   ) {}
 
   show(entry: Entry): void {
-    this.heading.textContent = entry.name;
+    this.heading.textContent = this.words.title(entry);
     this.fill(this.summary, this.words.summaryLines(entry));
     this.fill(this.description, this.words.description(entry));
   }

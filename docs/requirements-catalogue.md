@@ -1,6 +1,6 @@
 ---
 title: "Dependency Tree — Requirements Catalogue"
-subtitle: "Version 0.22 (draft)"
+subtitle: "Version 0.23 (draft)"
 date: 2026-10-21
 lang: en-GB
 ---
@@ -298,9 +298,11 @@ There are no open questions at the moment. Answered questions are in the Decisio
 | DEC-61 | Page Up and Page Down in lists | 15, 23 October 2026 | In the index list, Page Up and Page Down left NVDA saying only "Dependency tree document". They now move ten entries, in the index and in the card's lists. Recorded as DES-KEY-002 and DES-FIND-004. |
 | DEC-62 | Entries need an English name | 15, 23 October 2026 | An entry was named Q33593042, because it had no English label. An item's English Wikipedia title is now used when there is no label, and an item with neither is left out. Recorded as DES-IMP-012. |
 | DEC-63 | Say "Event:" before a moment | 16, 23 October 2026 | On arriving at a moment, NVDA reads "Event:" before its name, so it is clear what kind of entry it is. A period needs no word before it, because its range of dates shows it is a period. Recorded as DES-ANN-001. |
+| DEC-64 | "Event:" everywhere in the tree | 17, 23 October 2026 | Space didn't say "Event:". A moment's name now starts with "Event:" wherever the tree names it, so the user can always tell a moment from a period. Extends DEC-63. Recorded as DES-ANN-012. |
 
 # Change history
 
+- **0.23**, 23 October 2026: Recorded DEC-64.
 - **0.22**, 23 October 2026: Recorded DEC-63.
 - **0.21**, 23 October 2026: Recorded DEC-60 to DEC-62, from testing the index and the seed set.
 - **0.20**, 23 October 2026: Recorded DEC-55 to DEC-59, answering Q-25 to Q-27. Added REQ-FIND-009, the index. REQ-CONT-007 allows several working examples.
